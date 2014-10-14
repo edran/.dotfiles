@@ -1,0 +1,15 @@
+[user]
+	name = Nantas Nardelli
+	email = nantas.nardelli@gmail.com
+[color]
+	ui = true
+[core]
+	autocrlf = input
+	compression = -1
+[alias]
+	st = status
+	ci = commit
+	co = checkout
+	br = branch
+[branch]
+	autosetuprebase = always
