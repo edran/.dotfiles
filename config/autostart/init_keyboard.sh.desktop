@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=$HOME/.dotfiles/init_keyboard.sh
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=Set Keyboard (from .dotfiles)
+Name=Set Keyboard (from .dotfiles)
+Comment[en_GB]=
+Comment=
