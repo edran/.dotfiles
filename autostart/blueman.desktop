@@ -1,0 +1,12 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=Blueman Applet
+Comment=Blueman Bluetooth Manager
+Icon=blueman
+Exec=blueman-applet
+Terminal=false
+Type=Application
+Categories=
+NotShowIn=LXDE
+X-Ubuntu-Gettext-Domain=blueman
+X-GNOME-Autostart-enabled=false

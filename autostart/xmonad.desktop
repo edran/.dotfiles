@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Exec=xmonad --replace
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name[en_GB]=xmonad
+Name=xmonad
+Comment[en_GB]=
+Comment=
