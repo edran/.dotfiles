@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=$HOME/.dotfiles/init_keyboard.sh
+Exec=/home/edran/bin/init_keyboard.sh
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true
