@@ -1,16 +1,16 @@
 #!/bin/bash
 
-rm ~/.inputrc
-rm ~/.profile
-rm ~/.gitconfig
-rm ~/.config/autostart
-rm ~/bin
+rm $HOME/.inputrc
+rm $HOME/.profile
+rm $HOME/.gitconfig
+rm $HOME/.config/autostart
+rm $HOME/bin
 
-ln -s ~/.dotfiles/.inputrc ~/.inputrc
-ln -s ~/.dotfiles/.profile ~/.profile
-ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/config/autostart ~/.config/autostart
-ln -s ~/.dotfiles/bin ~/bin
+ln -s $HOME/.dotfiles/.inputrc $HOME/.inputrc
+ln -s $HOME/.dotfiles/.profile $HOME/.profile
+ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
+ln -s $HOME/.dotfiles/config/autostart $HOME/.config/autostart
+ln -s $HOME/.dotfiles/bin $HOME/bin
 
 THIS_DIR="$(pwd)"
 
