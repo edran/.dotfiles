@@ -1,28 +1,50 @@
 #!/bin/bash
 
+if [[ $UID != 0 ]]; then
+    echo "Please run this script with sudo:"
+    echo "sudo $0 $*"
+    exit 1
+fi
+
+echo "Removing folders..."
 rm $HOME/.inputrc
 rm $HOME/.profile
 rm $HOME/.gitconfig
-rm $HOME/.config/autostart
-rm $HOME/bin
+rm $HOME/.bashrc
+rm -rf $HOME/bin
 
-ln -s $HOME/.dotfiles/.inputrc $HOME/.inputrc
-ln -s $HOME/.dotfiles/.profile $HOME/.profile
-ln -s $HOME/.dotfiles/.gitconfig $HOME/.gitconfig
-ln -s $HOME/.dotfiles/config/autostart $HOME/.config/autostart
+echo "Linking dotfiles"
+ln -s $HOME/.dotfiles/inputrc $HOME/.inputrc
+ln -s $HOME/.dotfiles/profile $HOME/.profile
+ln -s $HOME/.dotfiles/gitconfig $HOME/.gitconfig
+ln -s $HOME/.dotfiles/bashrc $HOME/.bashrc
 ln -s $HOME/.dotfiles/bin $HOME/bin
 
 THIS_DIR="$(pwd)"
 
-if [ -z "$(which emacs24)" ] ; then
-    echo "++++++ Installing emacs"
-    sudo apt-get update
-    sudo apt-get install emacs24
+echo "Installing missing software"
+if [ -z "$(which emacs)" ] ; then
+    echo "++++++ Installing emacs (from source)"
+    sudo apt-get build-dep emacs23
+    cur http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-24.3.tar.gz | tar xvf
+    cd emacs-24.3
+    ./configure
+    make
+    sudo make install
+    cd ..
+    rm -rf emacs-24.3/
+    rm emacs-24.3.tar.gz
 fi
 
 if [ -z "$(which ag)" ] ; then
     echo "++++++ Installing ag"
-    sudo apt-get install silversearcher-ag
+    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    git clone https://github.com/ggreer/the_silver_searcher
+    cd the_silver_searcher
+    ./build
+    sudo make install
+    cd ..
+    rm the_silver_searcher
 fi
 
 if [ -z "$(which xcape)" ] ; then
