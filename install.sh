@@ -1,24 +1,44 @@
 #!/bin/bash
 
+set -w # errors yeah
+
 if [[ $UID != 0 ]]; then
     echo "Please run this script with sudo:"
     echo "sudo $0 $*"
     exit 1
 fi
 
-echo "Removing folders..."
-rm $HOME/.inputrc
-rm $HOME/.profile
-rm $HOME/.gitconfig
-rm $HOME/.bashrc
-rm -rf $HOME/bin
+echo "This script is going to remove many files in your home."
+read -p "Are you sure you want to run it? [y,n]" -n 1 -r
+if [[ ! $REPLY =~ ^[Yy]$ ]]
+then
+    exit 1
+fi
+
+HBACKUP="$HOME/.home_backup"
+echo "Backupping home config files..."
+
+if [ ! -d "$HBACKUP" ]; then
+    mkdir -v $HBACKUP
+fi
+
+mv -v $HOME/.inputrc $HBACKUP
+mv -v $HOME/.profile $HBACKUP
+mv -v $HOME/.gitconfig $HBACKUP
+mv -v $HOME/.bashrc $HBACKUP
+mv -v $HOME/.bash_aliases $HBACKUP
+mv -v $HOME/bin $HBACKUP
+rm -rf $HBACKUP
+mv -v $HOME/.config $HBACKUP
+
 
 echo "Linking dotfiles"
-ln -s $HOME/.dotfiles/inputrc $HOME/.inputrc
-ln -s $HOME/.dotfiles/profile $HOME/.profile
-ln -s $HOME/.dotfiles/gitconfig $HOME/.gitconfig
-ln -s $HOME/.dotfiles/bashrc $HOME/.bashrc
-ln -s $HOME/.dotfiles/bin $HOME/bin
+ln -sv $HOME/.dotfiles/inputrc $HOME/.inputrc
+ln -sv $HOME/.dotfiles/profile $HOME/.profile
+ln -sv $HOME/.dotfiles/gitconfig $HOME/.gitconfig
+ln -sv $HOME/.dotfiles/bashrc $HOME/.bashrc
+ln -sv $HOME/.dotfiles/bin $HOME/bin
+ln -sv $HOME/.dotfiles/config $HOME/.config
 
 THIS_DIR="$(pwd)"
 
@@ -38,7 +58,8 @@ fi
 
 if [ -z "$(which ag)" ] ; then
     echo "++++++ Installing ag"
-    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev liblzma-dev
+    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev \
+        liblzma-dev
     git clone https://github.com/ggreer/the_silver_searcher
     cd the_silver_searcher
     ./build
@@ -49,7 +70,8 @@ fi
 
 if [ -z "$(which xcape)" ] ; then
     echo "++++++ Installing xcape"
-    sudo apt-get install git gcc make pkg-config libx11-dev libxtst-dev libxi-dev
+    sudo apt-get install git gcc make pkg-config libx11-dev \
+        libxtst-dev libxi-dev
     mkdir xcape
     cd xcape
     git clone https://github.com/alols/xcape.git .
@@ -68,7 +90,9 @@ fi
 
 if [ -z "$(which pyenv)" ] ; then
     echo "++++++ Installing pyenv"
-    curl -L https://raw.githubusercontent.com/yyuu/pyenv-installer/master/bin/pyenv-installer | bash
+    curl -L \
+        https://raw.githubusercontent.com/yyuu/\
+pyenv-installer/master/bin/pyenv-installer | bash
     sudo apt-get build-dep python2.7 python3.4
     sudo apt-get install build-essential wget libreadline-dev libncurses5-dev \
         libssl1.0.0 tk8.5-dev zlib1g-dev liblzma-dev
@@ -77,6 +101,17 @@ if [ -z "$(which pyenv)" ] ; then
     pip install --install-option="--user" virtualenv
     pip install --install-option="--user" stevedore
     pip install --install-option="--user" virtualenvwrapper
+fi
+
+# ROS
+
+if [ -z "$(which roscore)" ] ; then
+    echo "++++++ Installing ROS"
+    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > \
+/etc/apt/sources.list.d/ros-latest.list'
+    sudo apt-get update
+    sudo apt-get install
+    sudo apt-get install ros-hydro-desktop-full
 fi
 
 echo "============ Dev install, done"

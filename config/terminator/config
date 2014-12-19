@@ -1,0 +1,24 @@
+[global_config]
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  title_transmit_bg_color = "#d30102"
+  focus = system
+[keybindings]
+[profiles]
+  [[default]]
+    scrollbar_position = hidden
+    use_system_font = False
+    palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 12
+    scrollback_infinite = True
+[layouts]
+  [[default]]
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+      profile = solarized-dark
+    [[[window0]]]
+      type = Window
+      parent = ""
+[plugins]
