@@ -2,6 +2,15 @@
 
 set -e # errors yeah
 
+BACKUP="$HOME/.home_backup"
+DOTF="$(pwd)"
+
+if [[ ! "$DOTF" == *.dotfiles ]]; then
+    echo "Please run this script from the .dotfiles directory"
+    echo "cd .dotfiles; ./install.sh"
+    exit 1
+fi
+
 if [[ $UID != 0 ]]; then
     echo "Please run this script with sudo:"
     echo "sudo $0 $*"
@@ -17,36 +26,35 @@ fi
 
 echo # for newline
 
-HBACKUP="$HOME/.home_backup"
 echo "Backupping home config files..."
 
-if [ ! -d "$HBACKUP" ]; then
-    mkdir -v $HBACKUP
+if [ ! -d "$BACKUP" ]; then
+    mkdir -v $BACKUP
 else
-    rm -rf $HBACKUP
-    mkdir -v $HBACKUP
+    rm -rf $BACKUP
+    mkdir -v $BACKUP
 fi
 
 set +e
 
 
-mv -v $HOME/.inputrc $HBACKUP
-mv -v $HOME/.profile $HBACKUP
-mv -v $HOME/.gitconfig $HBACKUP
-mv -v $HOME/.bashrc $HBACKUP
-mv -v $HOME/.bash_aliases $HBACKUP
-mv -v $HOME/bin $HBACKUP
-mv -v $HOME/.config $HBACKUP
+mv -v $HOME/.inputrc $BACKUP
+mv -v $HOME/.profile $BACKUP
+mv -v $HOME/.gitconfig $BACKUP
+mv -v $HOME/.bashrc $BACKUP
+mv -v $HOME/.bash_aliases $BACKUP
+mv -v $HOME/bin $BACKUP
+mv -v $HOME/.config $BACKUP
 
 set -e
 
 echo "Linking dotfiles"
-ln -sv $HOME/.dotfiles/inputrc $HOME/.inputrc
-ln -sv $HOME/.dotfiles/profile $HOME/.profile
-ln -sv $HOME/.dotfiles/gitconfig $HOME/.gitconfig
-ln -sv $HOME/.dotfiles/bashrc $HOME/.bashrc
-ln -sv $HOME/.dotfiles/bin $HOME/bin
-ln -sv $HOME/.dotfiles/config $HOME/.config
+ln -sv $DOTF/inputrc $HOME/.inputrc
+ln -sv $DOTF/profile $HOME/.profile
+ln -sv $DOTF/gitconfig $HOME/.gitconfig
+ln -sv $DOTF/bashrc $HOME/.bashrc
+ln -sv $DOTF/bin $HOME/bin
+ln -sv $DOTF/config $HOME/.config
 
 THIS_DIR="$(pwd)"
 
