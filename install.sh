@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -w # errors yeah
+set -e # errors yeah
 
 if [[ $UID != 0 ]]; then
     echo "Please run this script with sudo:"
@@ -9,18 +9,26 @@ if [[ $UID != 0 ]]; then
 fi
 
 echo "This script is going to remove many files in your home."
-read -p "Are you sure you want to run it? [y,n]" -n 1 -r
+read -p "Are you sure you want to run it? [y,n] " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     exit 1
 fi
+
+echo # for newline
 
 HBACKUP="$HOME/.home_backup"
 echo "Backupping home config files..."
 
 if [ ! -d "$HBACKUP" ]; then
     mkdir -v $HBACKUP
+else
+    rm -rf $HBACKUP
+    mkdir -v $HBACKUP
 fi
+
+set +e
+
 
 mv -v $HOME/.inputrc $HBACKUP
 mv -v $HOME/.profile $HBACKUP
@@ -28,9 +36,9 @@ mv -v $HOME/.gitconfig $HBACKUP
 mv -v $HOME/.bashrc $HBACKUP
 mv -v $HOME/.bash_aliases $HBACKUP
 mv -v $HOME/bin $HBACKUP
-rm -rf $HBACKUP
 mv -v $HOME/.config $HBACKUP
 
+set -e
 
 echo "Linking dotfiles"
 ln -sv $HOME/.dotfiles/inputrc $HOME/.inputrc
