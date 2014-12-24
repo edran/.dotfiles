@@ -116,7 +116,7 @@ ecs() {
 ets() {
     emacsclient -t -a emacs "/sudo::$*"
 }
-export PYTHONSTARTUP="$(python -m jedi repl)"
+# export PYTHONSTARTUP="$(python -m jedi repl)"
 
 # ROS STUFF
 

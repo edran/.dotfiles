@@ -104,20 +104,20 @@ fi
 
 # python
 
-if [ -z "$(which pyenv)" ] ; then
-    echo "++++++ Installing pyenv"
-    curl -L \
-        https://raw.githubusercontent.com/yyuu/\
-pyenv-installer/master/bin/pyenv-installer | bash
-    sudo apt-get build-dep python2.7 python3.4
-    sudo apt-get install build-essential wget libreadline-dev libncurses5-dev \
-        libssl1.0.0 tk8.5-dev zlib1g-dev liblzma-dev
-    echo "++++++ Installing pip for python3"
-    sudo apt-get install python3-pip
-    pip install --install-option="--user" virtualenv
-    pip install --install-option="--user" stevedore
-    pip install --install-option="--user" virtualenvwrapper
-fi
+# if [ -z "$(which pyenv)" ] ; then
+#     echo "++++++ Installing pyenv"
+#     curl -L \
+#         https://raw.githubusercontent.com/yyuu/\
+# pyenv-installer/master/bin/pyenv-installer | bash
+#     sudo apt-get build-dep python2.7 python3.4
+#     sudo apt-get install build-essential wget libreadline-dev libncurses5-dev \
+#         libssl1.0.0 tk8.5-dev zlib1g-dev liblzma-dev
+#     echo "++++++ Installing pip for python3"
+#     sudo apt-get install python3-pip
+#     pip install --install-option="--user" virtualenv
+#     pip install --install-option="--user" stevedore
+#     pip install --install-option="--user" virtualenvwrapper
+# fi
 
 # ROS
 
@@ -139,7 +139,7 @@ fi
 
 if [ -z "$(which xmonad)" ] ; then
     echo "++++++ Installing xmonad"
-    sudo apt-get install xmonad xmonad-contrib gnome-panel
+    sudo apt-get install xmonad xmonad-contrib gnome-panel suckless-tools
 fi
 
 echo "============ Common install, done"
