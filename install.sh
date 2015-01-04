@@ -99,7 +99,7 @@ fi
 
 if [ -z "$(which tex)" ] ; then
     echo "++++++ Installing TeX distribution"
-    sudo apt-get install texlive-full auctex
+    sudo apt-get install texlive-full auctex tex-gyre
 fi
 
 # python
@@ -126,9 +126,17 @@ if [ -z "$(which roscore)" ] ; then
     sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > \
 /etc/apt/sources.list.d/ros-latest.list'
     sudo apt-get update
-    sudo apt-get install
     sudo apt-get install ros-hydro-desktop-full
 fi
+
+# Octave
+
+if [ -z "$(which octave)" ] ; then
+    echo "++++++ Installing Octave"
+    sudo apt-get install octave3.2 octave3.2-info octave3.2-doc
+fi
+
+
 
 echo "============ Dev install, done"
 
