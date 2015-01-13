@@ -61,8 +61,8 @@ THIS_DIR="$(pwd)"
 echo "Installing missing software"
 if [ -z "$(which emacs)" ] ; then
     echo "++++++ Installing emacs (from source)"
-    sudo apt-get build-dep emacs23
-    cur http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-24.3.tar.gz | tar xvf
+    sudo apt-get build-dep emacs23 curl
+    curl http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-24.3.tar.gz | tar -zxv
     cd emacs-24.3
     ./configure
     make
@@ -78,10 +78,10 @@ if [ -z "$(which ag)" ] ; then
         liblzma-dev
     git clone https://github.com/ggreer/the_silver_searcher
     cd the_silver_searcher
-    ./build
+    ./build.sh
     sudo make install
     cd ..
-    rm the_silver_searcher
+    sudo rm -rf the_silver_searcher
 fi
 
 if [ -z "$(which xcape)" ] ; then
@@ -147,7 +147,7 @@ fi
 
 if [ -z "$(which xmonad)" ] ; then
     echo "++++++ Installing xmonad"
-    sudo apt-get install xmonad xmonad-contrib gnome-panel suckless-tools
+    sudo apt-get install xmonad gnome-panel suckless-tools
 fi
 
 echo "============ Common install, done"
