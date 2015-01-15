@@ -10,7 +10,7 @@
     palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 12
+    font = Ubuntu Mono 10
     scrollback_infinite = True
 [layouts]
   [[default]]
