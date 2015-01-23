@@ -138,6 +138,19 @@ if [ -z "$(which octave)" ] ; then
 fi
 
 
+if [ -z "$(which idea)" ] ; then
+    add-apt-repository ppa:webupd8team/java
+    apt-get update
+    apt-get install oracle-java7-installer
+    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select \
+        true | sudo /usr/bin/debconf-set-selections
+    update-java-alternatives -s java-7-oracle
+    wget -O ~/.dotfiles/bin/intellij.tar.gz \
+        http://download.jetbrains.com/idea/ideaIC-14.0.2.tar.gz
+    tar xfz ~/.dotfiles/bin/intellij.tar.gz
+    rm -v ~/.dotfiles/bin/intellij.tar.gz
+    mv ~/.dotfiles/bin/idea-IC-139.659.2 ~/.dotfiles/bin/idea-dir
+fi
 
 echo "============ Dev install, done"
 

@@ -1,0 +1,3 @@
+#!/bin/bash
+~/.dotfiles/bin/idea-dir/bin/idea.sh
+exit 0
