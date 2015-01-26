@@ -143,3 +143,9 @@ PROMPT_COMMAND='history -a;echo -en "\033[m\033[38;5;2m"$(( $(sed -nu "s/MemFree
 if [ -d "$HOME/.dotfiles/z" ] ; then
     . $HOME/.dotfiles/z/z.sh
 fi
+
+export CLASSPATH=".:/usr/local/lib/antlr-4.4-complete.jar:$CLASSPATH"
+export JAVA_HOME="/usr/lib/jvm/java-7-oracle/"
+export JDK_HOME="/usr/lib/jvm/java-7-oracle/"
+alias antlr4='java -Xmx500M -cp \"/usr/local/lib/antlr-4.4-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
+alias grun='java org.antlr.v4.runtime.misc.TestRig'
