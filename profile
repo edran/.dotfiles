@@ -25,16 +25,16 @@ if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 
 if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-export WORKON_HOME=$HOME/.virtualenvs
-export PROJECT_HOME=$HOME/Devel
-source $HOME/.local/bin/virtualenvwrapper.sh
+# export WORKON_HOME=$HOME/.virtualenvs
+# export PROJECT_HOME=$HOME/Devel
+# source $HOME/.local/bin/virtualenvwrapper.sh
 
 init-keyboard
