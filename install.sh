@@ -123,10 +123,11 @@ fi
 
 if [ -z "$(which roscore)" ] ; then
     echo "++++++ Installing ROS"
-    sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu precise main" > \
+    sudo sh -c \
+    'echo "deb http://packages.ros.org/ros/ubuntu precise main" > \
 /etc/apt/sources.list.d/ros-latest.list'
     sudo apt-get update
-    sudo apt-get install ros-hydro-desktop-full
+    sudo apt-get install ros-hydro-desktop-full python-wstool
 fi
 
 # Octave
