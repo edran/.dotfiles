@@ -66,32 +66,6 @@ xterm*|rxvt*)
     ;;
 esac
 
-# enable color support of ls and also add handy aliases
-if [ -x /usr/bin/dircolors ]; then
-    test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
-    alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
-    alias grep='grep --color=auto'
-    alias fgrep='fgrep --color=auto'
-    alias egrep='egrep --color=auto'
-fi
-
-# some more ls aliases
-alias ll='ls -alF'
-alias la='ls -A'
-alias l='ls -CF'
-
-# Add an "alert" alias for long running commands.  Use like so:
-#   sleep 10; alert
-alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
-
-# Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
 if [ -f "$HOME/.dotfiles/bash_aliases" ]; then
     . $HOME/.dotfiles/bash_aliases
 fi
@@ -106,9 +80,6 @@ fi
 export ALTERNATE_EDITOR=""
 export EDITOR="emacsclient -t -n -a nano"
 export GIT_EDITOR="emacsclient -t -n -a nano"
-alias ec='emacsclient -c -n -a nano'
-alias et='emacsclient -t -a nano'
-alias virtualenv3='virtualenv -p python3.4'
 
 ecs() {
     emacsclient -c -n -a emacs "/sudo::$*"
@@ -140,12 +111,10 @@ PS1='\[\e[m\n\e[1;30m\][$$:$PPID \j:\!\[\e[1;30m\]]\[\e[0;36m\] \T \d \[\e[1;30m
 PROMPT_COMMAND='history -a;echo -en "\033[m\033[38;5;2m"$(( $(sed -nu "s/MemFree:[\t ]\+\([0-9]\+\) kB/\1/p" /proc/meminfo)/1024))"\033[38;5;22m/"$(($(sed -nu "s/MemTotal:[\t ]\+\([0-9]\+\) kB/\1/Ip" /proc/meminfo)/1024 ))MB"\t\033[m\033[38;5;55m$(< /proc/loadavg)\033[m"'
 
 # load z
-if [ -d "$HOME/.dotfiles/z" ] ; then
-    . $HOME/.dotfiles/z/z.sh
-fi
+# if [ -d "$HOME/.dotfiles/z" ] ; then
+#     . $HOME/.dotfiles/z/z.sh
+# fi
 
 export CLASSPATH=".:/usr/local/lib/antlr-4.4-complete.jar:$CLASSPATH"
 export JAVA_HOME="/usr/lib/jvm/java-7-oracle/"
 export JDK_HOME="/usr/lib/jvm/java-7-oracle/"
-alias antlr4='java -Xmx500M -cp \"/usr/local/lib/antlr-4.4-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java org.antlr.v4.runtime.misc.TestRig'
