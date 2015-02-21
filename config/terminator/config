@@ -5,13 +5,52 @@
 [keybindings]
 [profiles]
   [[default]]
+    palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
     scrollbar_position = hidden
     use_system_font = False
-    palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
+    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 10
+    font = Ubuntu Mono 8
     scrollback_infinite = True
+  [[Zenburn]]
+    palette = "#3f3f3f:#cc9393:#7f9f7f:#e3ceab:#dfaf8f:#cc9393:#8cd0d3:#dcdccc:#3f3f3f:#cc9393:#7f9f7f:#e3ceab:#dfaf8f:#cc9393:#8cd0d3:#dcdccc"
+    background_color = "#3f3f3f"
+    background_image = None
+    cursor_color = "#dcdcdc"
+    foreground_color = "#dcdcdc"
+    scrollbar_position = hidden
+    use_system_font = False
+    cursor_shape = ibeam
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 8
+    scrollback_infinite = True
+  [[solarized-dark]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    foreground_color = "#eee8d5"
+    background_color = "#002b36"
+    cursor_color = "#eee8d5"
+    scrollbar_position = hidden
+    use_system_font = False
+    cursor_shape = ibeam
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 8
+    scrollback_infinite = True
+  [[solarized-light]]
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    background_color = "#eee8d5"
+    foreground_color = "#002b36"
+    cursor_color = "#002b36"
+    scrollbar_position = hidden
+    use_system_font = False
+    cursor_shape = ibeam
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 8
+    scrollback_infinite = True
+
 [layouts]
   [[default]]
     [[[child1]]]
