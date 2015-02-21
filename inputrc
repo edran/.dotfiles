@@ -1,2 +1,9 @@
 $include /etc/inputrc
-set completion-ignore-case On
+
+set completion-ignore-case on
+set completion-map-case on
+set colored-stats on
+set show-all-if-ambiguous on
+set match-hidden-files off
+set mark-symlinked-directories on
+set show-mode-in-prompt on
