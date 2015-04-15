@@ -1,0 +1,3 @@
+#!/bin/bash
+~/.dotfiles/bin/clion-dir/bin/clion.sh
+exit 0
