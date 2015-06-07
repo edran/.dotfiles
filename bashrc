@@ -30,12 +30,11 @@ fi
 ####################################################################
 
 # Prompt
-
 PS1="\[\e[31m\][\[\e[33m\]\$PWD\[\e[31m\]]\[\e[0m\] "
 PROMPT_COMMAND='echo -ne "\033];${PWD}"; echo -ne "\007"'
 if [ -f $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh ]; then
   GIT_PROMPT_ONLY_IN_REPO=1
-  GIT_PROMPT_LEADING_SPACE=0
+  GIT_PROMPT_LEADING_SPACE=1
   Time12a="\$(date +%H:%M"
   PathShort="\w"
   GIT_PROMPT_SEPARATOR="|"
@@ -75,7 +74,7 @@ if [ -d "$HOME/.dotfiles/z" ] ; then
     . $HOME/.dotfiles/z/z.sh
 fi
 
-source /opt/ros/hydro/setup.bash
+# source /opt/ros/hydro/setup.bash
 
 # Other variables
 export CLASSPATH=".:/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH"
