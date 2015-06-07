@@ -30,3 +30,10 @@ if [ -z "$(which xcape)" ] ; then
 else
     echo "====== xcape is already installed"
 fi
+
+if [ -z "$(which htop)" ] ; then
+    echo "++++++ Installing htop"
+    sudo apt-get install htop
+else
+    echo "====== htop is already installed"
+fi

@@ -63,9 +63,9 @@ THIS_DIR="$(pwd)"
 echo "~~~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~~~~~"
 /bin/bash ./install/emacs_install.sh
 /bin/bash ./install/dev_install.sh
-# /bin/bash ./install/tools_install.sh
-# /bin/bash ./install/env_install.sh
-# /bin/bash ./install/ros_install.sh
+/bin/bash ./install/tools_install.sh
+/bin/bash ./install/env_install.sh
+/bin/bash ./install/ros_install.sh
 /bin/bash ./install/other_install.sh
 
 echo "~~~~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~~~~"
