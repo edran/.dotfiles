@@ -26,7 +26,7 @@ fi
 
 echo # for newline
 
-echo "Backupping home config files..."
+echo "~~~~~~~~~~~~~~~ Backupping home config files... ~~~~~~~~~~~~~~~"
 
 if [ ! -d "$BACKUP" ]; then
     mkdir -v $BACKUP
@@ -37,7 +37,6 @@ fi
 
 set +e
 
-
 mv -v $HOME/.inputrc $BACKUP
 mv -v $HOME/.profile $BACKUP
 mv -v $HOME/.gitconfig $BACKUP
@@ -45,123 +44,28 @@ mv -v $HOME/.bashrc $BACKUP
 mv -v $HOME/.bash_aliases $BACKUP
 mv -v $HOME/bin $BACKUP
 mv -v $HOME/.config $BACKUP
+mv -v $HOME/.fonts $BACKUP
 
 set -e
 
-echo "Linking dotfiles"
+echo "~~~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~~~~~"
+
 ln -sv $DOTF/inputrc $HOME/.inputrc
 ln -sv $DOTF/profile $HOME/.profile
 ln -sv $DOTF/gitconfig $HOME/.gitconfig
 ln -sv $DOTF/bashrc $HOME/.bashrc
 ln -sv $DOTF/bin $HOME/bin
 ln -sv $DOTF/config $HOME/.config
+ln -sv $DOTF/fonts $HOME/.fonts
 
 THIS_DIR="$(pwd)"
 
-echo "Installing missing software"
-if [ -z "$(which emacs)" ] ; then
-    echo "++++++ Installing emacs (from source)"
-    sudo apt-get build-dep emacs23 curl
-    curl http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-24.3.tar.gz | tar -zxv
-    cd emacs-24.3
-    ./configure
-    make
-    sudo make install
-    cd ..
-    rm -rf emacs-24.3/
-    rm emacs-24.3.tar.gz
-fi
+echo "~~~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~~~~~"
+/bin/bash ./install/emacs_install.sh
+/bin/bash ./install/dev_install.sh
+# /bin/bash ./install/tools_install.sh
+# /bin/bash ./install/env_install.sh
+# /bin/bash ./install/ros_install.sh
+/bin/bash ./install/other_install.sh
 
-if [ -z "$(which ag)" ] ; then
-    echo "++++++ Installing ag"
-    sudo apt-get install -y automake pkg-config libpcre3-dev zlib1g-dev \
-        liblzma-dev
-    git clone https://github.com/ggreer/the_silver_searcher
-    cd the_silver_searcher
-    ./build.sh
-    sudo make install
-    cd ..
-    sudo rm -rf the_silver_searcher
-fi
-
-if [ -z "$(which xcape)" ] ; then
-    echo "++++++ Installing xcape"
-    sudo apt-get install git gcc make pkg-config libx11-dev \
-        libxtst-dev libxi-dev
-    mkdir xcape
-    cd xcape
-    git clone https://github.com/alols/xcape.git .
-    make
-    sudo make install
-    cd ..
-    rm -rf xcape
-fi
-
-if [ -z "$(which tex)" ] ; then
-    echo "++++++ Installing TeX distribution"
-    sudo apt-get install texlive-full auctex tex-gyre
-fi
-
-# python
-
-# if [ -z "$(which pyenv)" ] ; then
-#     echo "++++++ Installing pyenv"
-#     curl -L \
-#         https://raw.githubusercontent.com/yyuu/\
-# pyenv-installer/master/bin/pyenv-installer | bash
-#     sudo apt-get build-dep python2.7 python3.4
-#     sudo apt-get install build-essential wget libreadline-dev libncurses5-dev \
-#         libssl1.0.0 tk8.5-dev zlib1g-dev liblzma-dev
-#     echo "++++++ Installing pip for python3"
-#     sudo apt-get install python3-pip
-#     pip install --install-option="--user" virtualenv
-#     pip install --install-option="--user" stevedore
-#     pip install --install-option="--user" virtualenvwrapper
-# fi
-
-# ROS
-
-if [ -z "$(which roscore)" ] ; then
-    echo "++++++ Installing ROS"
-    sudo sh -c \
-    'echo "deb http://packages.ros.org/ros/ubuntu precise main" > \
-/etc/apt/sources.list.d/ros-latest.list'
-    sudo apt-get update
-    sudo apt-get install ros-hydro-desktop-full python-wstool
-fi
-
-# Octave
-
-if [ -z "$(which octave)" ] ; then
-    echo "++++++ Installing Octave"
-    sudo apt-get install octave3.2 octave3.2-info octave3.2-doc
-fi
-
-
-if [ -z "$(which idea)" ] ; then
-    add-apt-repository ppa:webupd8team/java
-    apt-get update
-    apt-get install oracle-java7-installer
-    echo oracle-java7-installer shared/accepted-oracle-license-v1-1 select \
-        true | sudo /usr/bin/debconf-set-selections
-    update-java-alternatives -s java-7-oracle
-    wget -O ~/.dotfiles/bin/intellij.tar.gz \
-        http://download.jetbrains.com/idea/ideaIC-14.0.2.tar.gz
-    tar xfz ~/.dotfiles/bin/intellij.tar.gz
-    rm -v ~/.dotfiles/bin/intellij.tar.gz
-    mv ~/.dotfiles/bin/idea-IC-139.659.2 ~/.dotfiles/bin/idea-dir
-fi
-
-echo "============ Dev install, done"
-
-if [ -z "$(which cmus)" ] ; then
-    echo "++++++ Installing cmus"
-    sudo apt-get install cmus
-fi
-
-if [ -z "$(which xmonad)" ] ; then
-    echo "++++++ Installing xmonad"
-    sudo apt-get install xmonad gnome-panel suckless-tools
-fi
-
-echo "============ Common install, done"
+echo "~~~~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~~~~"
