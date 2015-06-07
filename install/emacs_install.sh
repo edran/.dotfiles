@@ -16,6 +16,5 @@ if [ -z "$(which emacs)" ] ; then
     rm -rf emacs-$VERSION/
     rm emacs-$VERSION.tar.gz
 else
-    echo "emacs is already installed"
+    echo "====== emacs is already installed"
 fi
-
