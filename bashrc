@@ -74,7 +74,7 @@ if [ -d "$HOME/.dotfiles/z" ] ; then
     . $HOME/.dotfiles/z/z.sh
 fi
 
-# source /opt/ros/hydro/setup.bash
+source /opt/ros/indigo/setup.bash
 
 # Other variables
 export CLASSPATH=".:/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH"
