@@ -37,3 +37,10 @@ if [ -z "$(which virtualbox)" ] ; then
 else
     echo "====== Virtualbox is already installed"
 fi
+
+if [ -z "$(which powertop)" ] ; then
+    echo "++++++ Installing powertop"
+    sudo apt-get install powertop
+else
+    echo "====== Powertop is already installed"
+fi
