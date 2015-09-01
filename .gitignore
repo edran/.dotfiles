@@ -29,3 +29,10 @@
 /bin/irony-server
 /bin/clion-dir/
 /config/brasero
+/config/gtk-2.0/
+/config/gtk-3.0/
+/config/ibus/
+/config/libaccounts-glib/
+/config/pulse/
+/config/unity/
+/config/VirtualBox/

@@ -1,21 +1,14 @@
 [global_config]
-  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
+  always_split_with_profile = True
   title_transmit_bg_color = "#d30102"
   focus = system
-  always_split_with_profile = True
+  enabled_plugins = LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
 [keybindings]
 [profiles]
-  [[default]]
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
-    palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
-    scroll_on_output = False
-    show_titlebar = False
-    font = Ubuntu Mono 9
-    scrollback_infinite = True
   [[solarized-dark]]
+    scrollbar_position = hidden
     palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    background_image = None
     cursor_shape = ibeam
     use_system_font = False
     cursor_color = "#eee8d5"
@@ -25,21 +18,36 @@
     font = Ubuntu Mono 9
     background_color = "#002b36"
     scrollback_infinite = True
+  [[monokai]]
     scrollbar_position = hidden
-  [[solarized-light]]
-    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    palette = "#181915:#7a0137:#498702:#c5bb63:#3465a4:#75507b:#4194b0:#d3d7cf:#45473c:#e00265:#6dca04:#e6db74:#1d71ca:#af5fff:#5cd1f8:#ffffff"
+    background_image = None
     cursor_shape = ibeam
     use_system_font = False
-    cursor_color = "#002b36"
-    foreground_color = "#002b36"
+    cursor_color = "#c20257"
+    foreground_color = "#ffffff"
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
-    background_color = "#eee8d5"
+    background_color = "#121212"
     scrollback_infinite = True
+  [[Atom]]
     scrollbar_position = hidden
+    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#d0d0d0"
+    foreground_color = "#c5c8c6"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 9
+    background_color = "#161719"
+    scrollback_infinite = True
   [[zenburn]]
+    scrollbar_position = hidden
     palette = "#3f3f3f:#cc9393:#7f9f7f:#e3ceab:#dfaf8f:#cc9393:#8cd0d3:#dcdccc:#3f3f3f:#cc9393:#7f9f7f:#e3ceab:#dfaf8f:#cc9393:#8cd0d3:#dcdccc"
+    background_image = None
     cursor_shape = ibeam
     use_system_font = False
     cursor_color = "#dcdcdc"
@@ -49,138 +57,144 @@
     font = Ubuntu Mono 9
     background_color = "#3f3f3f"
     scrollback_infinite = True
-    scrollbar_position = hidden
-  [[monokai]]
-    palette = "#181915:#7a0137:#498702:#c5bb63:#3465a4:#75507b:#4194b0:#d3d7cf:#45473c:#e00265:#6dca04:#e6db74:#1d71ca:#af5fff:#5cd1f8:#ffffff"
-    cursor_color = "#c20257"
-    foreground_color = "#ffffff"
-    background_color = "#121212"
+  [[default]]
     scrollbar_position = hidden
     use_system_font = False
+    background_image = None
     cursor_shape = ibeam
+    palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
     scrollback_infinite = True
   [[nervous]]
+    scrollbar_position = hidden
     palette = "#1a1a1a:#7a0b00:#8eaa29:#714286:#615882:#d05310:#ededa3:#b9c6e0:#b9c6e0:#ededa3:#d05310:#714286:#615882:#8eaa29:#7a0b00:#1a1a1a"
-    background_color = "#1a1a1a"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
     cursor_color = "#dcdcdc"
     foreground_color = "#b9c6e0"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
+    background_color = "#1a1a1a"
     scrollback_infinite = True
   [[PaulMillr]]
+    scrollbar_position = hidden
     palette = "#2a2a2a:#ff0000:#79ff0f:#d3bf00:#396bd7:#b449be:#66ccff:#bbbbbb:#666666:#ff0080:#66ff66:#f3d64e:#709aed:#db67e6:#7adff2:#ffffff"
-    background_color = "#000000"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
     cursor_color = "#4d4d4d"
     foreground_color = "#f2f2f2"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
     scrollback_infinite = True
-[[Espresso Libre]]
-    palette = "#000000:#cc0000:#1a921c:#f0e53a:#0066ff:#c5656b:#06989a:#d3d7cf:#555753:#ef2929:#9aff87:#fffb5c:#43a8ed:#ff818a:#34e2e2:#eeeeec"
-    background_color = "#2a211c"
-    cursor_color = "#ffffff"
-    foreground_color = "#b8a898"
+  [[Espresso]]
     scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
-    scroll_on_output = False
-    show_titlebar = False
-    font = Ubuntu Mono 9
-    scrollback_infinite = True
-[[Espresso]]
     palette = "#353535:#d25252:#a5c261:#ffc66d:#6c99bb:#d197d9:#bed6ff:#eeeeec:#535353:#f00c0c:#c2e075:#e1e48b:#8ab7d9:#efb5f7:#dcf4ff:#ffffff"
-    background_color = "#323232"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
     cursor_color = "#d6d6d6"
     foreground_color = "#ffffff"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
+    background_color = "#323232"
     scrollback_infinite = True
-[[Earthsong]]
+  [[Earthsong]]
+    scrollbar_position = hidden
     palette = "#121418:#c94234:#85c54c:#f5ae2e:#1398b9:#d0633d:#509552:#e5c6aa:#675f54:#ff645a:#98e036:#e0d561:#5fdaff:#ff9269:#84f088:#f6f7ec"
-    background_color = "#292520"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
     cursor_color = "#f6f7ec"
     foreground_color = "#e5c7a9"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
+    background_color = "#292520"
     scrollback_infinite = True
-[[DimmedMonokai]]
-    palette = "#3a3d43:#be3f48:#879a3b:#c5a635:#4f76a1:#855c8d:#578fa4:#b9bcba:#888987:#fb001f:#0f722f:#c47033:#186de3:#fb0067:#2e706d:#fdffb9"
-    background_color = "#1f1f1f"
-    cursor_color = "#f83e19"
-    foreground_color = "#b9bcba"
+  [[solarized-light]]
     scrollbar_position = hidden
-    use_system_font = False
+    palette = "#073642:#dc322f:#859900:#b58900:#268bd2:#d33682:#2aa198:#eee8d5:#002b36:#cb4b16:#586e75:#657b83:#839496:#6c71c4:#93a1a1:#fdf6e3"
+    background_image = None
     cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#002b36"
+    foreground_color = "#002b36"
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
+    background_color = "#eee8d5"
     scrollback_infinite = True
-[[Cobalt2]]
-    palette = "#000000:#ff0000:#38de21:#ffe50a:#1460d2:#ff005d:#00bbbb:#bbbbbb:#555555:#f40e17:#3bd01d:#edc809:#5555ff:#ff55ff:#6ae3fa:#ffffff"
-    background_color = "#132738"
-    cursor_color = "#f0cc09"
-    foreground_color = "#ffffff"
+  [[Brogrammer]]
     scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
-    scroll_on_output = False
-    show_titlebar = False
-    font = Ubuntu Mono 9
-    scrollback_infinite = True
-[[Argonaut]]
-    palette = "#232323:#ff000f:#8ce10b:#ffb900:#008df8:#6d43a6:#00d8eb:#ffffff:#444444:#ff2740:#abe15b:#ffd242:#0092ff:#9a5feb:#67fff0:#ffffff"
-    background_color = "#0e1019"
-    cursor_color = "#ff0018"
-    foreground_color = "#fffaf4"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
-    scroll_on_output = False
-    show_titlebar = False
-    font = Ubuntu Mono 9
-    scrollback_infinite = True
-[[Atom]]
-    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
-    background_color = "#161719"
-    cursor_color = "#d0d0d0"
-    foreground_color = "#c5c8c6"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
-    scroll_on_output = False
-    show_titlebar = False
-    font = Ubuntu Mono 9
-    scrollback_infinite = True
-[[Brogrammer]]
     palette = "#1f1f1f:#f81118:#2dc55e:#ecba0f:#2a84d2:#4e5ab7:#1081d6:#d6dbe5:#d6dbe5:#de352e:#1dd361:#f3bd09:#1081d6:#5350b9:#0f7ddb:#ffffff"
-    background_color = "#131313"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
     cursor_color = "#b9b9b9"
     foreground_color = "#d6dbe5"
-    scrollbar_position = hidden
-    use_system_font = False
-    cursor_shape = ibeam
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 9
+    background_color = "#131313"
+    scrollback_infinite = True
+  [[Espresso Libre]]
+    scrollbar_position = hidden
+    palette = "#000000:#cc0000:#1a921c:#f0e53a:#0066ff:#c5656b:#06989a:#d3d7cf:#555753:#ef2929:#9aff87:#fffb5c:#43a8ed:#ff818a:#34e2e2:#eeeeec"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#ffffff"
+    foreground_color = "#b8a898"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 9
+    background_color = "#2a211c"
+    scrollback_infinite = True
+  [[DimmedMonokai]]
+    scrollbar_position = hidden
+    palette = "#3a3d43:#be3f48:#879a3b:#c5a635:#4f76a1:#855c8d:#578fa4:#b9bcba:#888987:#fb001f:#0f722f:#c47033:#186de3:#fb0067:#2e706d:#fdffb9"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#f83e19"
+    foreground_color = "#b9bcba"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 9
+    background_color = "#1f1f1f"
+    scrollback_infinite = True
+  [[Cobalt2]]
+    scrollbar_position = hidden
+    palette = "#000000:#ff0000:#38de21:#ffe50a:#1460d2:#ff005d:#00bbbb:#bbbbbb:#555555:#f40e17:#3bd01d:#edc809:#5555ff:#ff55ff:#6ae3fa:#ffffff"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#f0cc09"
+    foreground_color = "#ffffff"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 9
+    background_color = "#132738"
+    scrollback_infinite = True
+  [[Argonaut]]
+    scrollbar_position = hidden
+    palette = "#232323:#ff000f:#8ce10b:#ffb900:#008df8:#6d43a6:#00d8eb:#ffffff:#444444:#ff2740:#abe15b:#ffd242:#0092ff:#9a5feb:#67fff0:#ffffff"
+    background_image = None
+    cursor_shape = ibeam
+    use_system_font = False
+    cursor_color = "#ff0018"
+    foreground_color = "#fffaf4"
+    scroll_on_output = False
+    show_titlebar = False
+    font = Ubuntu Mono 9
+    background_color = "#0e1019"
     scrollback_infinite = True
 [layouts]
   [[default]]
