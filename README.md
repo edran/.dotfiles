@@ -1,12 +1,12 @@
-## Dotfiles
+# Dotfiles
 
-Work in progress.
-Compatible with `Ubuntu 12.04`.
-Likely not to include `.emacs.d`.
+A costant work in progress.
+
+Compatible with `Ubuntu 14.04` and `12.04` (see `precise` branch).
+Does not include my emacs and xmonad configurations yet, as to avoid
+the various dependecies that come with them.
 
 # Installation
 * `$ git clone --recursive git@github.com:edran/.dotfiles`
 * `$ ./.dotfiles/install.sh`
-* Download both IntelliJ and CLion and put them in /bin
-  (For lolz, just in case)
 * `$ pip install thefuck`
