@@ -38,19 +38,20 @@ BACKUP="$HOME/.home_backup"
 DOTF="$(pwd)"
 
 if [[ ! "$DOTF" == *.dotfiles ]]; then
-    echo "Please run this script from the .dotfiles directory"
-    echo "cd .dotfiles; ./install.sh"
+    print_rd "Please run this script from the .dotfiles directory\n"
+    print_rd "cd .dotfiles; ./install.sh\n"
     exit 1
 fi
 
 if [[ $UID != 0 ]]; then
-    echo "Please run this script with sudo:"
-    echo "sudo $0 $*"
+    print_rd "Please run this script with sudo:\n"
+    print_rd "sudo $0 $*\n"
     exit 1
 fi
 
-echo "This script is going to remove many files in your home."
-read -p "Are you sure you want to run it? [y,n] " -n 1 -r
+print_yl "This script is going to remove many files in your home.\n"
+print_yl "Are you sure you want to run it? [y,n]"
+read -p " " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
     exit 1
@@ -58,7 +59,17 @@ fi
 
 echo # for newline
 
-echo "~~~~~~~~~~~~~~~ Backupping home config files... ~~~~~~~~~~~~~~~"
+print_bl "~~~~~~~~~~~~ Backupping home config files... ~~~~~~~~~~~~\n"
+
+backup_file () {
+    if [ ! -f "$1" ]; then
+        print_rd "Tried backing up $1, but file does not exists!\n"
+    else
+        mv -v $1 $BACKUP
+    fi
+}
+
+# Creating / Cleaning up backup folder
 
 if [ ! -d "$BACKUP" ]; then
     mkdir -v $BACKUP
@@ -67,20 +78,16 @@ else
     mkdir -v $BACKUP
 fi
 
-set +e
+backup_file $HOME/.inputrc
+backup_file $HOME/.profile
+backup_file $HOME/.gitconfig
+backup_file $HOME/.bashrc
+backup_file $HOME/.bash_aliases
+backup_file $HOME/bin
+backup_file $HOME/.config
+backup_file $HOME/.fonts
 
-mv -v $HOME/.inputrc $BACKUP
-mv -v $HOME/.profile $BACKUP
-mv -v $HOME/.gitconfig $BACKUP
-mv -v $HOME/.bashrc $BACKUP
-mv -v $HOME/.bash_aliases $BACKUP
-mv -v $HOME/bin $BACKUP
-mv -v $HOME/.config $BACKUP
-mv -v $HOME/.fonts $BACKUP
-
-set -e
-
-echo "~~~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~~~~~"
+print_bl "~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~\n"
 
 ln -sv $DOTF/inputrc $HOME/.inputrc
 ln -sv $DOTF/profile $HOME/.profile
@@ -92,7 +99,8 @@ ln -sv $DOTF/fonts $HOME/.fonts
 
 THIS_DIR="$(pwd)"
 
-echo "~~~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~~~~~"
+print_bl "~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~\n"
+
 /bin/bash ./install/emacs_install.sh
 /bin/bash ./install/dev_install.sh
 /bin/bash ./install/tools_install.sh
@@ -100,4 +108,4 @@ echo "~~~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~~~~~"
 /bin/bash ./install/ros_install.sh
 /bin/bash ./install/other_install.sh
 
-echo "~~~~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~~~~"
+print_gr "~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~\n"
