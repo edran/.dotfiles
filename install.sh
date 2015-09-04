@@ -21,10 +21,11 @@ if [[ $UID != 0 ]]; then
 fi
 
 print_yl "This script is going to remove many files in your home.\n"
-print_yl "Are you sure you want to run it? [y,n]"
+print_yl "Are you sure you want to run it? [Y,n]"
 read -p " " -n 1 -r
 if [[ ! $REPLY =~ ^[Yy]$ ]]
 then
+    echo # for newline
     exit 1
 fi
 
@@ -33,7 +34,7 @@ echo # for newline
 print_bl "~~~~~~~~~~~~ Backupping home config files... ~~~~~~~~~~~~\n"
 
 backup_file () {
-    if [ ! -f "$1" ]; then
+    if [[ ! -f "$1" && ! -d "$1" ]]; then
         print_rd "Tried backing up $1, but file does not exists!\n"
     else
         mv -v $1 $BACKUP
@@ -41,7 +42,6 @@ backup_file () {
 }
 
 # Creating / Cleaning up backup folder
-
 if [ ! -d "$BACKUP" ]; then
     mkdir -v $BACKUP
 else
@@ -59,7 +59,6 @@ backup_file $HOME/.config
 backup_file $HOME/.fonts
 
 print_bl "~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~\n"
-
 ln -sv $DOTF/inputrc $HOME/.inputrc
 ln -sv $DOTF/profile $HOME/.profile
 ln -sv $DOTF/gitconfig $HOME/.gitconfig
@@ -68,15 +67,10 @@ ln -sv $DOTF/bin $HOME/bin
 ln -sv $DOTF/config $HOME/.config
 ln -sv $DOTF/fonts $HOME/.fonts
 
-THIS_DIR="$(pwd)"
+print_gr "~~~~~~~~~~~~~~ Home folder set up correctly ~~~~~~~~~~~~~\n"
 
-print_bl "~~~~~~~~~~~~~~~ Installing missing software ~~~~~~~~~~~~~\n"
 
-/bin/bash ./install/emacs_install.sh
-/bin/bash ./install/dev_install.sh
-/bin/bash ./install/tools_install.sh
-/bin/bash ./install/env_install.sh
-/bin/bash ./install/ros_install.sh
-/bin/bash ./install/other_install.sh
-
+print_bl "~~~~~~~~~~~~~~~~ Installing dependencies ~~~~~~~~~~~~~~~~\n"
+. ./install/install_dependencies.sh
+install_dependencies
 print_gr "~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~\n"
