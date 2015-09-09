@@ -23,15 +23,14 @@ install_emacs () {
     if [ -z "$(which emacs)" ] ; then
         print_bl "Installing emacs (from source)\n"
         sudo apt-get build-dep emacs24 curl
-        curl http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-"$(VERSION)".tar.gz \
-            | tar -zxv
-        cd emacs-"$(VERSION)"
+        curl http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-$VERSION.tar.gz | tar -zxv
+        cd emacs-$VERSION
         ./configure
         make
         sudo make install
         cd ..
-        rm -rf emacs-"$(VERSION)"/
-        rm emacs-"$(VERSION)".tar.gz
+        rm -rf emacs-$VERSION/
+        
     else
         print_yl "emacs is already installed\n"
     fi
