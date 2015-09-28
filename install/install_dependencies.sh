@@ -9,13 +9,15 @@ install_packages () {
     for i in "$@"
     do
         if [ -z "$(which $i)" ] ; then
-            array+=($1)
+            array+=($i)
         else
             print_yl "$i is already installed\n"
         fi
     done
-    print_bl "Installing ${array[@]}\n"
-    sudo apt-get install "${array[@]}"
+    if [ ${#array[@]} -gt 0 ] ; then
+	print_bl "Installing ${array[@]} \n"
+	sudo apt-get install "${array[@]}"
+    fi
 }
 
 install_emacs () {
@@ -132,6 +134,8 @@ install_dependencies () {
     # TODO xmonad/haskell stuff here
     # TODO pyenv
     install_packages \
+        redshift \
+        vim \
         htop \
         terminator \
         virtualbox \
