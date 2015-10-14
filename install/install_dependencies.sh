@@ -108,6 +108,13 @@ install_gcc () {
     fi
 }
 
+install_git () {
+    sudo apt-get install python-software-properties
+    sudo add-apt-repository ppa:git-core/ppa
+    sudo apt-get update
+    sudo apt-get install git
+}
+
 install_ros () {
     if [ ! -d /opt/ros/indigo/ ] ; then
         print_bl "Installing ROS\n"
@@ -124,6 +131,7 @@ $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 }
 
 install_dependencies () {
+    install_git
     install_emacs
     install_ag
     install_xcape

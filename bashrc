@@ -76,5 +76,4 @@ fi
 
 source /opt/ros/indigo/setup.bash
 
-# Other variables
-export CLASSPATH=".:/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH"
+JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
