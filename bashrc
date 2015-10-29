@@ -86,3 +86,5 @@ fi
 
 export TORCH_DIR="/home/edran/torch"
 export PROTOBUF_DIR="/home/edran/protobuf"
+
+export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
