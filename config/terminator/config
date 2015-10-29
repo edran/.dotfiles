@@ -15,7 +15,7 @@
     foreground_color = "#eee8d5"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#002b36"
     scrollback_infinite = True
   [[monokai]]
@@ -28,7 +28,7 @@
     foreground_color = "#ffffff"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#121212"
     scrollback_infinite = True
   [[Atom]]
@@ -41,7 +41,7 @@
     foreground_color = "#c5c8c6"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#161719"
     scrollback_infinite = True
   [[zenburn]]
@@ -54,7 +54,7 @@
     foreground_color = "#dcdcdc"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#3f3f3f"
     scrollback_infinite = True
   [[default]]
@@ -65,7 +65,7 @@
     palette = "#2e3436:#842020:#4e9a06:#c4a000:#3465a4:#cc0000:#06989a:#d3d7cf:#555753:#ba5252:#8ae234:#fce94f:#729fcf:#ef2929:#34e2e2:#eeeeec"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     scrollback_infinite = True
   [[nervous]]
     scrollbar_position = hidden
@@ -77,7 +77,7 @@
     foreground_color = "#b9c6e0"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#1a1a1a"
     scrollback_infinite = True
   [[PaulMillr]]
@@ -90,7 +90,7 @@
     foreground_color = "#f2f2f2"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     scrollback_infinite = True
   [[Espresso]]
     scrollbar_position = hidden
@@ -102,7 +102,7 @@
     foreground_color = "#ffffff"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#323232"
     scrollback_infinite = True
   [[Earthsong]]
@@ -115,7 +115,7 @@
     foreground_color = "#e5c7a9"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#292520"
     scrollback_infinite = True
   [[solarized-light]]
@@ -128,7 +128,7 @@
     foreground_color = "#002b36"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#eee8d5"
     scrollback_infinite = True
   [[Brogrammer]]
@@ -141,7 +141,7 @@
     foreground_color = "#d6dbe5"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#131313"
     scrollback_infinite = True
   [[Espresso Libre]]
@@ -154,7 +154,7 @@
     foreground_color = "#b8a898"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#2a211c"
     scrollback_infinite = True
   [[DimmedMonokai]]
@@ -167,7 +167,7 @@
     foreground_color = "#b9bcba"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#1f1f1f"
     scrollback_infinite = True
   [[Cobalt2]]
@@ -180,7 +180,7 @@
     foreground_color = "#ffffff"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#132738"
     scrollback_infinite = True
   [[Argonaut]]
@@ -193,7 +193,7 @@
     foreground_color = "#fffaf4"
     scroll_on_output = False
     show_titlebar = False
-    font = Ubuntu Mono 9
+    font = Ubuntu Mono 10
     background_color = "#0e1019"
     scrollback_infinite = True
 [layouts]
