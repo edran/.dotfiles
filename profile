@@ -38,3 +38,5 @@ fi
 # source $HOME/.local/bin/virtualenvwrapper.sh
 
 init-keyboard
+
+# . /home/edran/torch/install/bin/torch-activate

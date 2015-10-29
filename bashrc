@@ -74,7 +74,15 @@ if [ -d "$HOME/.dotfiles/z" ] ; then
     . $HOME/.dotfiles/z/z.sh
 fi
 
-source /opt/ros/indigo/setup.bash
+# ROS activation
+if [ -d "/opt/ros/indigo" ] ; then
+    source /opt/ros/indigo/setup.bash
+fi
 
-# Other variables
-export CLASSPATH=".:/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH"
+# Torch activation
+if [ -d "/home/edran/torch/install/bin/" ] ; then
+    . /home/edran/torch/install/bin/torch-activate
+fi
+
+export TORCH_DIR="/home/edran/torch"
+export PROTOBUF_DIR="/home/edran/protobuf"
