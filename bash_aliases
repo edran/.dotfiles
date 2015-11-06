@@ -14,14 +14,6 @@ alias givenet_starscream='ssh -R 3128:127.0.0.1:3128 youbot@starscream.inf.ed.ac
 alias givenet_blackout='ssh -R 3128:127.0.0.1:3128 youbot@blackout.inf.ed.ac.uk'
 alias givenet_thundercracker='ssh -R 3128:127.0.0.1:3128 youbot@thundercracker.inf.ed.ac.uk'
 
-
-
-# Java
-alias antlr4='java -Xmx500M -cp \
-"/usr/local/lib/antlr-4.5-complete.jar:$CLASSPATH" org.antlr.v4.Tool'
-alias grun='java org.antlr.v4.runtime.misc.TestRig'
-
-
 # Emacs
 alias ec='emacsclient -c -n -a nano'
 alias et='emacsclient -t -a nano'
@@ -32,9 +24,6 @@ alias virtualenv3='virtualenv -p python3.4'
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
