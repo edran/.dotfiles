@@ -66,6 +66,7 @@ ln -sv $DOTF/bashrc $HOME/.bashrc
 ln -sv $DOTF/bin $HOME/bin
 ln -sv $DOTF/config $HOME/.config
 ln -sv $DOTF/fonts $HOME/.fonts
+ln -sv $DOTF/venvs $HOME/venvs
 
 print_gr "~~~~~~~~~~~~~~ Home folder set up correctly ~~~~~~~~~~~~~\n"
 

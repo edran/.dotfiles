@@ -32,7 +32,7 @@ install_emacs () {
         sudo make install
         cd ..
         rm -rf emacs-$VERSION/
-        
+
     else
         print_yl "emacs is already installed\n"
     fi
@@ -131,6 +131,12 @@ $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
     fi
 }
 
+install_python () {
+    sudo apt-get install python-pip
+    sudo pip install --upgrade pip
+    sudo pip install virtualenv
+}
+
 install_dependencies () {
     install_git
     install_emacs
@@ -138,6 +144,7 @@ install_dependencies () {
     install_xcape
     install_gcc
     install_ros
+    install_python
     # install_idea
     # TODO xmonad/haskell stuff here
     # TODO pyenv
