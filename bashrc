@@ -80,11 +80,13 @@ if [ -d "/opt/ros/indigo" ] ; then
 fi
 
 # Torch activation
-if [ -d "/home/edran/torch/install/bin/" ] ; then
-    . /home/edran/torch/install/bin/torch-activate
+if [ -d "$HOME/torch/install/bin/" ] ; then
+    . $HOME/torch/install/bin/torch-activate
 fi
 
-export TORCH_DIR="/home/edran/torch"
-export PROTOBUF_DIR="/home/edran/protobuf"
+export TORCH_DIR="$HOME/torch"
+export PROTOBUF_DIR="$HOME/protobuf"
 
 export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
+
+export VIRTUALENV_MASTER_PATH="$HOME/.dotfiles/venvs"
