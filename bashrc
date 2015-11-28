@@ -40,29 +40,23 @@ complete -o default -F _pip_completion pip
 ####################################################################
 
 # Prompt
-PS1="\[\e[31m\][\[\e[33m\]\$PWD\[\e[31m\]]\[\e[0m\] "
-PROMPT_COMMAND='echo -ne "\033];${PWD}"; echo -ne "\007"'
+START_PART="\[\e[1;31m\]["
+END_PART="\[\e[1;31m\]]\[\e[0;0m\] "
+PWD_PART="\[\e[0;33m\]\w"
+HOST_PART="\[\e[0;32m\]\h"
+USER_PART="\[\e[0;34m\]\u"
+AT_PART="\[\e[0;37m\]@"
+COL_PART="\[\e[0;37m\]:"
+PS1="$START_PART$USER_PART$AT_PART$HOST_PART$COL_PART$PWD_PART$END_PART"
+
 if [ -f $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh ]; then
   GIT_PROMPT_ONLY_IN_REPO=1
-  GIT_PROMPT_LEADING_SPACE=1
-  Time12a="\$(date +%H:%M"
-  PathShort="\w"
-  GIT_PROMPT_SEPARATOR="|"
-  GIT_PROMPT_BRANCH="\[\e[35m\]"
-  GIT_PROMPT_STAGED="\[\e[31m\]●"
-  GIT_PROMPT_CONFLICTS="\[\e[31m\]✖ "
-  GIT_PROMPT_CHANGED="\[\e[34m\]✚ "
-  GIT_PROMPT_REMOTE=" "
-  GIT_PROMPT_UNTRACKED="\[\e[36m\]…"
-  GIT_PROMPT_STASHED="\[\e[34m\]⚑ "
-  GIT_PROMPT_CLEAN="\[\e[32m\]✔"
-  GIT_PROMPT_COMMAND_OK="\[\e[32m\]✔ "
-  GIT_PROMPT_COMMAND_FAIL="\[\e[31m\]✘ "
-  GIT_PROMPT_SYMBOLS_AHEAD="↑·"
-  GIT_PROMPT_SYMBOLS_BEHIND="↓·"
-  GIT_PROMPT_SYMBOLS_PREHASH=":"
-  GIT_PROMPT_START="\[\e[31m\][\[\e[33m\]\$PWD\[\e[0m\]|"
-  GIT_PROMPT_END="\[\e[31m\]]\[\e[0m\] "
+  GIT_PROMPT_LEADING_SPACE=0
+  GIT_PROMPT_PREFIX="\[\e[1;34m\]["
+  GIT_PROMPT_SUFFIX="\[\e[1;34m\]]"
+  GIT_PROMPT_SEPARATOR="\[\e[0;37m\]|"
+  GIT_PROMPT_THEME=Single_line
+  GIT_PROMPT_START="$PS1"
   . $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh
 fi
 
