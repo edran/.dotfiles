@@ -57,6 +57,7 @@ backup_file $HOME/.bash_aliases
 backup_file $HOME/bin
 backup_file $HOME/.config
 backup_file $HOME/.fonts
+backup_file $HOME/.tmux.conf
 
 print_bl "~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~\n"
 ln -sv $DOTF/inputrc $HOME/.inputrc
@@ -67,6 +68,7 @@ ln -sv $DOTF/bin $HOME/bin
 ln -sv $DOTF/config $HOME/.config
 ln -sv $DOTF/fonts $HOME/.fonts
 ln -sv $DOTF/venvs $HOME/venvs
+ln -sv $DOTF/tmux.conf $HOME/.tmux.conf
 
 print_gr "~~~~~~~~~~~~~~ Home folder set up correctly ~~~~~~~~~~~~~\n"
 
