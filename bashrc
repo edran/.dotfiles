@@ -1,18 +1,38 @@
-#! /bin/env bash
+#!/bin/env bash
 
+# Don't run if not interactive
 [ -z "$PS1" ] && return
+
+# Don't save duplicates and space-prefixed commands
 HISTCONTROL=ignoreboth
+
+# When exiting the shell, append the history instead of overwriting it
 shopt -s histappend
-HISTSIZE=1000
-HISTFILESIZE=2000
+
+HISTSIZE=10000
+HISTFILESIZE=20000
+
+# Better history format
+export HISTTIMEFORMAT="%h %d %H:%M:%S> "
+
+# Update rows/columns with windows size changes
 shopt -s checkwinsize
+
+# Frendlier less for non-text input
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
+
+# set working chroot
 if [ -z "$debian_chroot" ] && [ -r /etc/debian_chroot ]; then
     debian_chroot=$(cat /etc/debian_chroot)
 fi
+
+# Force colors in bash
 case "$TERM" in
     xterm-color) color_prompt=yes;;
 esac
+
+force_color_prompt=yes
+
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
 	color_prompt=yes
@@ -20,9 +40,13 @@ if [ -n "$force_color_prompt" ]; then
 	color_prompt=
     fi
 fi
+
+# load aliases
 if [ -f "$HOME/.dotfiles/bash_aliases" ]; then
     . $HOME/.dotfiles/bash_aliases
 fi
+
+# bash completion
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
