@@ -10,3 +10,5 @@ the various dependecies that come with them.
 * `$ git clone --recursive git@github.com:edran/.dotfiles`
 * `$ ./.dotfiles/install.sh`
 * `$ pip install thefuck`
+* `$ sudo apt-get install xsel`
+* `$ sudo apt-get install rxvt-unicode rxvt-unicode-256color`

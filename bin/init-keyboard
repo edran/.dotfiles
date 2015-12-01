@@ -1,5 +1,11 @@
 #!/bin/bash
 
-echo "Setting Caps Lock to be both Esc and CTRL"
-setxkbmap -option 'caps:ctrl_modifier'
-xcape -e 'Control_L=Escape'
+if [ -x setxkbmap ]; then
+	echo "Setting Caps Lock to be both Esc and CTRL"
+	setxkbmap -option 'caps:ctrl_modifier'
+fi
+
+if [ -x xcape ]; then
+	echo "Setting CTRL_L to Escape"
+	xcape -e 'Control_L=Escape'
+fi
