@@ -118,3 +118,8 @@ export PROTOBUF_DIR="$HOME/protobuf"
 export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
 
 export VIRTUALENV_MASTER_PATH="$HOME/.dotfiles/venvs"
+
+git-ssh() {
+    eval `ssh-agent -s`
+    ssh-add ~/.ssh/github_rsa
+}
