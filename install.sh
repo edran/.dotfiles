@@ -60,8 +60,10 @@ backup_file $HOME/.fonts
 backup_file $HOME/.tmux.conf
 backup_file $HOME/.Xresources
 backup_file $HOME/.urxvt
+backup_file $HOME/.emacs.d
 
 print_bl "~~~~~~~~~~~~~~~~~~~ Linking dotfiles ~~~~~~~~~~~~~~~~~~~~\n"
+
 ln -sv $DOTF/inputrc $HOME/.inputrc
 ln -sv $DOTF/profile $HOME/.profile
 ln -sv $DOTF/gitconfig $HOME/.gitconfig
@@ -73,11 +75,13 @@ ln -sv $DOTF/venvs $HOME/venvs
 ln -sv $DOTF/tmux.conf $HOME/.tmux.conf
 ln -sv $DOTF/Xresources $HOME/.Xresources
 ln -sv $DOTF/urxvt $HOME/.urxvt
+ln -sv $DOTF/spacemacs $HOME/.spacemacs.d
 
 print_gr "~~~~~~~~~~~~~~ Home folder set up correctly ~~~~~~~~~~~~~\n"
 
-
 print_bl "~~~~~~~~~~~~~~~~ Installing dependencies ~~~~~~~~~~~~~~~~\n"
+
 . ./install/install_dependencies.sh
 install_dependencies
+
 print_gr "~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~\n"
