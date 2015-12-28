@@ -12,3 +12,6 @@ the various dependecies that come with them.
 * `$ pip install thefuck`
 * `$ sudo apt-get install xsel`
 * `$ sudo apt-get install rxvt-unicode rxvt-unicode-256color`
+
+# TO DO
+* Add source-code-pro installation instructions

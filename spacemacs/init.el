@@ -1,7 +1,3 @@
-;; -*- mode: emacs-lisp -*-
-;; This file is loaded by Spacemacs at startup.
-;; It must be stored in your home directory.
-
 (defun dotspacemacs/layers ()
   "Configuration Layers declaration.
 You should not put any user code in this function besides modifying the variable
@@ -18,23 +14,52 @@ values."
    ;; of a list then all discovered layers will be installed.
    dotspacemacs-configuration-layers
    '(
-     ;; ----------------------------------------------------------------
-     ;; Example of useful layers you may want to use right away.
-     ;; Uncomment some layer names and press <SPC f e R> (Vim style) or
-     ;; <M-m f e R> (Emacs style) to install them.
-     ;; ----------------------------------------------------------------
-     auto-completion
+
+     ;; ---------- editing
+     (auto-completion :variables
+                     auto-completion-return-key-behavior 'complete
+                     auto-completion-tab-key-behavior 'cycle
+                     auto-completion-enable-help-tooltip t
+                     auto-completion-enable-sort-by-usage t)
+
+     (ibuffer :variables ibuffer-group-buffers-by 'projects)
+
+     colors
      better-defaults
-     emacs-lisp
-     git
-     markdown
-     org
+     syntax-checking
+     (spell-checking :variables
+                     spell-checking-enable-auto-dictionary t)
+
+     ;; ---------- tools
+     (org)
+     (version-control)
+     (git :variables
+          git-magit-status-fullscreen t
+          magit-save-repository-buffers 'dontask
+          magit-revert-buffers 'silent
+          ;; Commit counts for all branches/tags
+          magit-refs-show-commit-count 'all)
+     (github :variables
+             gh-profile-default-profile "edran")
      (shell :variables
+            shell-default-shell 'shell
             shell-default-height 30
             shell-default-position 'bottom)
-     spell-checking
-     syntax-checking
-     version-control
+     (restclient)
+     ;; dash ;; requires zeal installed on OS
+
+     ;; ---------- languages
+     (emacs-lisp)
+     (ipython-notebook)
+     (html :variables css-indent-offset 2)
+     (latex :variables latex-enable-auto-fill t)
+     (markdown)
+     (python)
+     (yaml)
+
+     ;; ---------- personal
+
+     (edran)
      )
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -198,7 +223,8 @@ user code."
   "Configuration function for user code.
  This function is called at the very end of Spacemacs initialization after
 layers configuration. You are free to put any user code."
-)
+  (setq powerline-default-separator 'slant))
 
-;; Do not write anything past this comment. This is where Emacs will
-;; auto-generate custom variable definitions.
+;; Use external custom file
+(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+(load custom-file 'no-error 'no-message)
