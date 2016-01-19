@@ -157,5 +157,6 @@ install_dependencies () {
         powertop \
         octave \
         texlive-full auctex tex-gyre \
-        cmus
+        cmus \
+        tree
 }
