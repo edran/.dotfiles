@@ -217,6 +217,7 @@ values."
   "Initialization function for user code.
 It is called immediately after `dotspacemacs/init'.  You are free to put any
 user code."
+  (setq magit-repository-directories '("~/Git/"))
   )
 
 (defun dotspacemacs/user-config ()
