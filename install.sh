@@ -84,4 +84,9 @@ print_bl "~~~~~~~~~~~~~~~~ Installing dependencies ~~~~~~~~~~~~~~~~\n"
 . ./install/install_dependencies.sh
 install_dependencies
 
+print_bl "~~~~~~~~~~~~~~~~~~~ Configuring fonts ~~~~~~~~~~~~~~~~~~~\n"
+
+. ./install/config_fonts.sh
+config_fonts.sh
+
 print_gr "~~~~~~~~~~~~~ Everything has been installed ~~~~~~~~~~~~~\n"
