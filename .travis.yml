@@ -1,0 +1,16 @@
+language: c
+os:
+  - linux
+
+env:
+  global:
+    - DOTPATH=~/.dotfiles
+
+install:
+  - sudo apt-get install git
+
+before_script:
+  cd $DOTPATH
+
+script:
+  sudo ./install.sh
