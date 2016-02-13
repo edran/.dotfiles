@@ -5,7 +5,7 @@ dist: trusty
 
 env:
   global:
-    - REPO_NAME=edran/.dotfiles
+    - REPO_NAME=~/edran/.dotfiles
     - DOT_PATH=~/.dotfiles
 
 install:
