@@ -5,14 +5,16 @@ dist: trusty
 
 env:
   global:
-    - REPO_NAME=~/edran/.dotfiles
+    - REPO_NAME="edran/.dotfiles"
+    - CI_PATH=`pwd`/$REPO_NAME
     - DOT_PATH=~/.dotfiles
 
 install:
   - sudo apt-get install git
 
 before_script:
-  - mv $REPO_NAME $DOT_PATH
+  - pwd
+  - mv $CI_PATH $DOT_PATH
   - cd $DOT_PATH
 
 script:
