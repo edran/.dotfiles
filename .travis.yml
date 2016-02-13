@@ -12,8 +12,8 @@ install:
   - sudo apt-get install git
 
 before_script:
-  mv $REPO_NAME $DOT_PATH
-  cd $DOT_PATH
+  - mv $REPO_NAME $DOT_PATH
+  - cd $DOT_PATH
 
 script:
   sudo ./install.sh
