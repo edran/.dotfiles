@@ -5,13 +5,15 @@ dist: trusty
 
 env:
   global:
-    - DOTPATH=~/.dotfiles
+    - REPO_NAME=edran/.dotfiles
+    - DOT_PATH=~/.dotfiles
 
 install:
   - sudo apt-get install git
 
 before_script:
-  cd $DOTPATH
+  mv $REPO_NAME $DOT_PATH
+  cd $DOT_PATH
 
 script:
   sudo ./install.sh
