@@ -1,0 +1,28 @@
+backup:
+  - ".inputrc"
+  - ".profile"
+  - ".gitconfig"
+  - ".bashrc"
+  - ".bash_aliases"
+  - "bin"
+  - ".config"
+  - ".fonts"
+  - ".tmux.conf"
+  - ".Xresources"
+  - ".urxvt"
+  - ".emacs.d"
+
+linking:
+  - ["inputrc", ".inputrc"]
+  - ["profile", ".profile"]
+  - ["gitconfig", ".gitconfig"]
+  - ["bashrc", ".bashrc"]
+  - ["bash_aliases", ".bash_aliases"]
+  - ["bin", "bin"]
+  - ["config", ".config"]
+  - ["fonts", ".fonts"]
+  - ["venvs", "venvs"]
+  - ["tmux.conf", ".tmux.conf"]
+  - ["Xresources", ".Xresources"]
+  - ["urxvt", ".urxvt"]
+  - ["spacemacs", ".spacemacs.d"]

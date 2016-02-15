@@ -6,9 +6,13 @@ class DotInstaller(object):
     def __init__(self, apps_path):
         self.pkgs_installer = PkgsInstaller()
         pkgs_installer.load_apps(apps_path)
-
         self.bk_home_path = "~/.home_backup"
+        settings = []
+        with open("setup.yml") as setup_f:
+            settings = yaml.safe_load(setup_f)
 
+        self.backup_files = settings["backup"]
+        self.link_files = settings["linking"]
     def checks(self):
         # check for sudo
         raw_input("")
@@ -18,18 +22,6 @@ class DotInstaller(object):
         self.link_home()
 
     def backup_home(self):
-        files = [".inputrc",
-                 ".profile",
-                 ".gitconfig",
-                 ".bashrc",
-                 ".bash_aliases",
-                 "bin",
-                 ".config",
-                 ".fonts",
-                 ".tmux.conf",
-                 ".Xresources",
-                 ".urxvt",
-                 ".emacs.d"]
         mv = plumbum.cmd.mv
         mkdir = plumbum.cmd.mkdir
         rm = plumbum.cmd.rm
@@ -43,13 +35,19 @@ class DotInstaller(object):
             print("Deleting and re-creating backup folder at %s" %
                   (self.bk_home_path))
             rm("-rf ", back_dir)
-        for f in files:
+        for f in self.bk_files:
             print("Backing up %s" % f)
             f_path = plumbum.local.path("~/" + f)
             mv(f_path, back_dir)
 
-    def link_home(sefl):
+    def link_home(self):
         ln = plumbum.cmd.ln
+        for f in self.link_files:
+            dot_path = self.dotfiles + f[0]
+            home_path = plumbum.local.path("~/" + f[1])
+            print("Linking %s to %s" %
+                  (dot_path, home_path))
+            ln("-s", dot_path, home_path)
 
     def setup_os(self):
         self.install_pkgs()
