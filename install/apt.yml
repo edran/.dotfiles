@@ -1,0 +1,22 @@
+apt: # needed
+  - vim
+  - htop
+  - terminator
+  - virtualbox
+  - powertop
+  - octave
+  - texlive-full
+  - auctex
+  - tex-gyre
+  - cmus
+  - tree
+
+others:
+  python2:
+    - sudo apt-get install python-pip
+    - sudo pip install --upgrade pip
+    - sudo pip install virtualenv
+  python3:
+    - sudo apt-get install python3-pip
+    - sudo pip3 install --upgrade pip
+    - sudo pip3 install virtualenv
