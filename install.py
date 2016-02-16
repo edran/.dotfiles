@@ -7,12 +7,12 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose",
                         help="increase output verbosity",
-                        action="count")
+                        action="count",
+                        default=0)
     parser.add_argument("-s", "--skip_checks",
                         help="Skip checks before proceeding with installation",
-                        action="store_true")
-    parser.add_argument()
-    parser.add_argument()
+                        action="store_true",
+                        default=False)
     parse.parse_args()
 
     di = dot_installer.DotInstaller()
