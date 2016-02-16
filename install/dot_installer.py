@@ -1,3 +1,5 @@
+import sys
+import os
 import yaml
 import pprint
 import plumbum
@@ -13,9 +15,25 @@ class DotInstaller(object):
 
         self.backup_files = settings["backup"]
         self.link_files = settings["linking"]
+
     def checks(self):
         # check for sudo
-        raw_input("")
+        if os.getuid() != 0:
+            print("This script requires root permissions. Run it with",
+                  "sudo please!")
+            sys.exit(1)
+        # make sure you really want to go through it
+        while True:
+            response = raw_input("This installation procedure is going",
+                                 " to make changes to your home. Are you",
+                                 " sure you want to do this? [Y/n]")
+            if response.lower() == "y":
+                break
+            elif response.lower() == "n":
+                print("Exiting installation procedure!")
+                sys.exit(0)
+            else:
+                print("Invalid answer: %s" % (response))
 
     def setup_home(self):
         self.backup_home()
