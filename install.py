@@ -13,10 +13,12 @@ def main():
                         help="Skip checks before proceeding with installation",
                         action="store_true",
                         default=False)
-    parser.parse_args()
+    args = parser.parse_args()
 
     di = dot_installer.DotInstaller("install/apt.yml", "install/setup.yml")
-    di.checks()
+    if not args.skip_checks:
+        di.checks()
+    print("All done!")
 
 if __name__ == "__main__":
     main()

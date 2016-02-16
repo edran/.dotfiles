@@ -3,19 +3,8 @@ os: linux
 sudo: required
 dist: trusty
 
-env:
-  global:
-    - REPO_NAME="edran/.dotfiles"
-    - CI_PATH=`pwd`
-    - DOT_PATH=~/.dotfiles
-
 install:
-  - sudo apt-get install git
-
-before_script:
-  - pwd
-  - mv $CI_PATH $DOT_PATH
-  - cd $DOT_PATH
+  - sudo install/deps.sh
 
 script:
-  sudo ./install.sh
+  sudo ./install.py

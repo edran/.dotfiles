@@ -26,10 +26,10 @@ class DotInstaller(object):
             sys.exit(1)
         # make sure you really want to go through it
         while True:
-            response = raw_input("This installation procedure is going",
-                                 " to make changes to your home. Are you",
-                                 " sure you want to do this? [Y/n]")
-            if response.lower() == "y":
+            response =input("This installation procedure is going"
+                            " to make changes to your home.\nAre you"
+                            " sure you want to do this? [Y/n] ")
+            if response.lower() == "y" or response == "":
                 break
             elif response.lower() == "n":
                 print("Exiting installation procedure!")
