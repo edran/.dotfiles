@@ -5,12 +5,14 @@ import pprint
 import plumbum
 
 class DotInstaller(object):
-    def __init__(self, apps_path):
+    def __init__(self, apps_path, setup_path):
+        self.apps_path = apps_path
+        self.setup_path = setup_path
         self.pkgs_installer = PkgsInstaller()
-        pkgs_installer.load_apps(apps_path)
+        self.pkgs_installer.load_apps(apps_path)
         self.bk_home_path = "~/.home_backup"
         settings = []
-        with open("setup.yml") as setup_f:
+        with open(self.setup_path) as setup_f:
             settings = yaml.safe_load(setup_f)
 
         self.backup_files = settings["backup"]

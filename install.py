@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
-import install.dot_installer
+from install import dot_installer
 
 def main():
     parser = argparse.ArgumentParser()
@@ -15,7 +15,7 @@ def main():
                         default=False)
     parser.parse_args()
 
-    di = dot_installer.DotInstaller()
+    di = dot_installer.DotInstaller("install/apt.yml", "install/setup.yml")
     di.checks()
 
 if __name__ == "__main__":
