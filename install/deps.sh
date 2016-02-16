@@ -7,6 +7,6 @@ DEBIAN_FRONTEND=noninteractive
 
 sudo apt-get -y install python3-pip
 
-sudo pip3 install -y --upgrade pip
-sudo pip3 install -y plumbum
-sudo pip3 install -y yaml
+sudo pip3 install --upgrade pip
+sudo pip3 install plumbum
+sudo pip3 install yaml
