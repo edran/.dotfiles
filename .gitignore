@@ -1,3 +1,8 @@
+# Python Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
 /config/google-chrome/
 /config/menus/
 /config/Mendeley Ltd./
