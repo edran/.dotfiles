@@ -13,7 +13,7 @@ def main():
                         help="Skip checks before proceeding with installation",
                         action="store_true",
                         default=False)
-    parse.parse_args()
+    parser.parse_args()
 
     di = dot_installer.DotInstaller()
     di.checks()
