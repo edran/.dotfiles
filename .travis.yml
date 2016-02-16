@@ -7,7 +7,6 @@ dist: trusty
 
 install:
   - pip install -r install/requirements.txt
-  - sudo install/deps.sh
 
 script:
   - sudo ./install.py
