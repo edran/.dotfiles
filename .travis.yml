@@ -9,4 +9,4 @@ install:
   - pip install -r install/requirements.txt
 
 script:
-  - sudo ./install.py
+  - sudo ~/virtualenv/python3.5/bin/python install.py
