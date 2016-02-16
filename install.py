@@ -1,9 +1,7 @@
 #!/usr/bin/python3
 
 import argparse
-
-def install():
-    im = InstallManager()
+import install.dot_installer
 
 def main():
     parser = argparse.ArgumentParser()
@@ -16,3 +14,9 @@ def main():
     parser.add_argument()
     parser.add_argument()
     parse.parse_args()
+
+    di = dot_installer.DotInstaller()
+    di.checks()
+
+if __name__ == "__main__":
+    main()
