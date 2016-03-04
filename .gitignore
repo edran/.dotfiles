@@ -49,3 +49,4 @@ __pycache__/
 /venvs/*
 /config/unity-tweak-tool
 /fonts/adobe-fonts/source-code-pro/
+/config/chromium/
