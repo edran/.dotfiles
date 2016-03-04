@@ -1,17 +1,26 @@
-apt: # needed
+apt:
+  # terminal
   - vim
+  - cmus
+  - powertop
+  - tree
   - htop
+  ## following are for ranger
+  - ranger
+  - caca-utils
+  - highlight
+  - atool
+  - w3m
+  - poppler-utils
+  - mediainfo
+  # other
   - terminator
   - virtualbox
-  - powertop
   - octave
   - texlive-full
   - auctex
   - tex-gyre
-  - cmus
-  - tree
-
-others:
+  others:
   python2:
     - sudo apt-get install python-pip
     - sudo pip install --upgrade pip
