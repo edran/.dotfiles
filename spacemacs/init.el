@@ -8,55 +8,29 @@
    dotspacemacs-configuration-layers
    '(
      ;; ---------- editing
-     (auto-completion
-      :variables
-      auto-completion-return-key-behavior 'complete
-      auto-completion-tab-key-behavior 'cycle
-      auto-completion-enable-help-tooltip t
-      auto-completion-enable-sort-by-usage t)
-
-     (ibuffer
-      :variables
-      ibuffer-group-buffers-by 'projects)
+     (auto-completion)
+     (ibuffer)
 
      (colors)
      (better-defaults)
      (syntax-checking)
-     (spell-checking
-      :variables
-      spell-checking-enable-auto-dictionary t)
+     (spell-checking)
 
      ;; ---------- tools
      (themes-megapack)
      (org)
      (version-control)
-     (git
-      :variables
-      git-magit-status-fullscreen t
-      magit-save-repository-buffers 'dontask
-      magit-revert-buffers 'silent
-      ;; Commit counts for all branches/tags
-      magit-refs-show-commit-count 'all)
-     (github
-      :variables
-      gh-profile-default-profile "edran")
-     (shell
-      :variables
-      shell-default-shell 'shell
-      shell-default-height 30
-      shell-default-position 'bottom)
+     (git)
+     (github)
+     (shell)
      (restclient)
      ;; dash ;; requires zeal installed on OS
 
      ;; ---------- languages
      (emacs-lisp)
      (ipython-notebook)
-     (html
-      :variables
-      css-indent-offset 2)
-     (latex
-      :variables
-      latex-enable-auto-fill t)
+     (html)
+     (latex)
      (markdown)
      (python)
      (yaml)
@@ -117,12 +91,44 @@
   (setq-default
    ;; Magit
    magit-repository-directories '("~/Git/")
+   git-magit-status-fullscreen t
+   magit-save-repository-buffers 'dontask
+   magit-revert-buffers 'silent
+   ;; Commit counts for all branches/tags
+   magit-refs-show-commit-count 'all
+
+   ;; GitHub
+   gh-profile-default-profile "edran"
+
+   ;; Shell
+   shell-default-shell 'shell
+   shell-default-height 30
+   shell-default-position 'bottom
 
    ;; Evil
    evil-shift-round nil ;; Don't shift to nearest multiplier
 
    ;; Whitespace mode
    whitespace-style '(face tabs tab-mark)
+
+   ;; Spell checking
+   spell-checking-enable-auto-dictionary t
+
+   ;; ibuffer
+   ibuffer-group-buffers-by 'projects
+
+   ;; auto-completion
+   auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+   auto-completion-return-key-behavior 'complete
+   auto-completion-tab-key-behavior 'cycle
+   auto-completion-enable-help-tooltip t
+   auto-completion-enable-sort-by-usage t
+
+   ;; html-mode
+   css-indent-offset 2
+
+   ;; latex
+   latex-enable-auto-fill t
    )
   )
 
