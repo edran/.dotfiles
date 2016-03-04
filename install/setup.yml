@@ -1,6 +1,7 @@
 backup:
   - ".inputrc"
   - ".profile"
+  - ".xsession"
   - ".gitconfig"
   - ".bashrc"
   - ".bash_aliases"
@@ -13,8 +14,9 @@ backup:
   - ".emacs.d"
 
 linking:
-  - ["inputrc", ".inputrc"]
   - ["profile", ".profile"]
+  - ["inputrc", ".inputrc"]
+  - ["xsession", ".xsession"]
   - ["gitconfig", ".gitconfig"]
   - ["bashrc", ".bashrc"]
   - ["bash_aliases", ".bash_aliases"]

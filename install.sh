@@ -62,8 +62,8 @@ backup_everything () {
     backup_file $HOME/.tmux.conf
     backup_file $HOME/.Xresources
     backup_file $HOME/.urxvt
+    backup_file $HOME/.xsession
     backup_file $HOME/.emacs.d
-
 }
 
 
@@ -80,8 +80,8 @@ link_everything () {
     ln -sv $DOTF/Xresources $HOME/.Xresources
     ln -sv $DOTF/urxvt $HOME/.urxvt
     ln -sv $DOTF/spacemacs $HOME/.spacemacs.d
+    ln -sv $DOTF/xsession $HOME/.xsession
 }
-
 
 # -------------------------------
 
