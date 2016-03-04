@@ -15,8 +15,10 @@
      (better-defaults)
      (syntax-checking)
      (spell-checking)
+     (evil-snipe) ;; better jumping (f / t)
 
      ;; ---------- tools
+     (semantic)
      (themes-megapack)
      (org)
      (version-control)
@@ -24,6 +26,11 @@
      (github)
      (shell)
      (restclient)
+     (command-log) ;; useful for teaching
+     (eyebrowse)
+     (ranger)
+     ;; TODO checkout elfeed
+     ;; TODO install erc
      ;; dash ;; requires zeal installed on OS
 
      ;; ---------- languages
@@ -35,7 +42,12 @@
      (python)
      (yaml)
      (lua)
+     (c-c++)
+     (shell-scripts)
 
+     ;; ---------- other
+     (games)
+     (theming)
      ;; ---------- personal
      (edran)
      ;; (edran-torch)
@@ -101,9 +113,10 @@
    gh-profile-default-profile "edran"
 
    ;; Shell
-   shell-default-shell 'shell
+   shell-default-shell 'eshell
    shell-default-height 30
    shell-default-position 'bottom
+   shell-enable-smart-eshell t
 
    ;; Evil
    evil-shift-round nil ;; Don't shift to nearest multiplier
@@ -129,6 +142,9 @@
 
    ;; latex
    latex-enable-auto-fill t
+
+   ;; vim
+   evil-snipe-enable-alternate-f-and-t-behaviors t
    )
   )
 
