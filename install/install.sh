@@ -3,7 +3,7 @@
 set -u
 set -e # sigh
 
-. install/common.sh
+. ./common.sh
 
 PATH_BACKUP="$HOME/.home_backup"
 PATH_DOTFILES="~/.dotfiles"
