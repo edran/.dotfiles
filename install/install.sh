@@ -6,7 +6,7 @@ set -e # sigh
 . ./common.sh
 
 PATH_BACKUP="$HOME/.home_backup"
-PATH_DOTFILES=$(pwd)/../
+PATH_DOTFILES=$(pwd)/..
 PATH_BACKUP_FILE="$PATH_DOTFILES/install/backup.txt"
 PATH_LINK_FILE="$PATH_DOTFILES/install/link.txt"
 
@@ -85,7 +85,7 @@ print_bl "~~~~ Configuring puppet"
 . ./puppet.sh
 
 install_puppet
-sudo ln -sv $PATH_DOTFILES/puppet /etc/puppet/
+sudo ln -sv $PATH_DOTFILES/puppet /etc/puppet
 puppet_sync
 
 print_gr "~~~~ Everything has been installed\n"
