@@ -78,4 +78,14 @@ print_bl "~~~~ Configuring fonts\n"
 . ./config_fonts.sh
 config_fonts
 
+print_gr "~~~~ Fonts have been configured\n"
+
+print_bl "~~~~ Configuring puppet"
+
+. ./puppet.sh
+
+install_puppet
+sudo ln -sv $PATH_DOTFILES/puppet /etc/puppet/
+puppet_sync
+
 print_gr "~~~~ Everything has been installed\n"
