@@ -5,4 +5,4 @@ dist: trusty
 
 script:
   - cd install
-  - ./install.sh
+  - sudo ./install.sh -n
