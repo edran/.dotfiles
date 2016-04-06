@@ -1,0 +1,13 @@
+inputrc        .inputrc
+profile        .profile
+gitconfig      .gitconfig
+bashrc         .bashrc
+bin            bin
+config         .config
+fonts          .fonts
+venvs          venvs
+tmux.conf      .tmux.conf
+Xresources     .Xresources
+urxvt          .urxvt
+spacemacs      .spacemacs.d
+xsession       .xsession
