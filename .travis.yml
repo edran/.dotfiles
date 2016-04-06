@@ -1,12 +1,8 @@
-language: python
-python:
-  - 3.5
+language: bash
 os: linux
 sudo: required
 dist: trusty
 
-install:
-  - pip install -r install/requirements.txt
-
 script:
-  - sudo ~/virtualenv/python3.5/bin/python install.py --skip_checks
+  - cd install
+  - ./install.sh
