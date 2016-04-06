@@ -6,13 +6,13 @@ set -e # sigh
 . ./common.sh
 
 PATH_BACKUP="$HOME/.home_backup"
-PATH_DOTFILES="~/.dotfiles"
+PATH_DOTFILES=$(pwd)/../
 PATH_BACKUP_FILE="$PATH_DOTFILES/install/backup.txt"
 PATH_LINK_FILE="$PATH_DOTFILES/install/link.txt"
 
 backup_everything () {
     # Creating / Cleaning up backup folder
-    if [ ! -d "$BACKUP" ]; then
+    if [ ! -d "$PATH_BACKUP" ]; then
         mkdir -v $PATH_BACKUP
     else
         rm -rf $PATH_BACKUP
@@ -23,7 +23,7 @@ backup_everything () {
 
     for i in "${BKPS[@]}"
     do
-        backup_file $HOME/$i
+        backup_file $HOME/$i $PATH_BACKUP
     done
 }
 
@@ -42,7 +42,7 @@ link_everything () {
 OPTIND=1
 no_check=false
 
-while getopts "h?n:" opt; do
+while getopts "h?n" opt; do
     case "$opt" in
         h|\?)
             echo "Usage:\n    `sudo ./install.sh`"
@@ -55,25 +55,27 @@ done
 
 shift $((OPTIND-1))
 
+set +u
 [ "$1" = "--" ] && shift
+set -u
 
 if [ "$no_check" == false ] ; then
     initial_check
 fi
 
-print_bl "---- Backupping home config files\n"
+print_bl "~~~~ Backupping home config files\n"
 
 backup_everything
 
-print_bl "---- Linking dotfiles \n"
+print_bl "~~~~ Linking dotfiles \n"
 
 link_everything
 
-print_gr "---- Home folder set up correctly\n"
+print_gr "~~~~ Home folder set up correctly\n"
 
-print_bl "---- Configuring fonts\n"
+print_bl "~~~~ Configuring fonts\n"
 
 . ./config_fonts.sh
-config_fonts.sh
+config_fonts
 
-print_gr "---- Everything has been installed\n"
+print_gr "~~~~ Everything has been installed\n"

@@ -6,7 +6,7 @@ backup_file () {
     if [[ ! -f "$1" && ! -d "$1" ]]; then
         print_rd "Tried backing up $1, but file does not exists!\n"
     else
-        mv -v $1 $BACKUP
+        mv -v $1 $2
     fi
 }
 
