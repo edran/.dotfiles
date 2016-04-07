@@ -3,6 +3,8 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+/puppet
+
 /config/google-chrome/
 /config/menus/
 /config/Mendeley Ltd./

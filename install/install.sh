@@ -85,6 +85,7 @@ print_bl "~~~~ Configuring puppet"
 . ./puppet.sh
 
 install_puppet
+git clone https://github.com/edran/pers_puppet $PATH_DOTFILES/puppet
 sudo ln -sv $PATH_DOTFILES/puppet /etc/puppet
 puppet_sync
 
