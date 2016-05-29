@@ -1,12 +1,19 @@
 language: python
-python:
-  - 3.5
+python: "2.7"
 os: linux
 sudo: required
 dist: trusty
 
+before_install:
+  # Make sure everything's up to date.
+  - sudo apt-get update -qq
+
 install:
-  - pip install -r install/requirements.txt
+  # Install Ansible.
+  - pip install ansible
+
+  # Add ansible.cfg to pick up roles path.
+  # - "printf '[defaults]\nroles_path = ../' > ansible.cfg"
 
 script:
-  - sudo ~/virtualenv/python3.5/bin/python install.py --skip_checks
+  # We'll add some commands to test the role here.
