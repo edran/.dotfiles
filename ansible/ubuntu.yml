@@ -8,5 +8,6 @@
       include_vars: ../vars.yml
 
     - include: tasks/linking.yml
+      when: do_link
 
     - include: tasks/packages.yml

@@ -12,4 +12,5 @@ install:
   - pip install ansible
 
 script:
-  - ansible-playbook -i ~/.dotfiles/ansible/inventory ~/.dotfiles/ansible/ubuntu.yml
+  - cd install
+  - sudo ./install.sh -n
