@@ -14,3 +14,6 @@ install:
 script:
   - cd install
   - sudo ./install.sh -n
+  - ansible-playbook -i ../ansible/inventory ../ansible/ubuntu.yml
+
+

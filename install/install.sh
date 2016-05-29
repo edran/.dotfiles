@@ -79,10 +79,3 @@ print_bl "~~~~ Configuring fonts\n"
 config_fonts
 
 print_gr "~~~~ Fonts have been configured\n"
-
-print_bl "~~~~ Installing packages with Ansible\n"
-
-ansible-playbook -i $PATH_DOTFILES/ansible/inventory $PATH_DOTFILES/ansible/ubuntu.yml
-
-
-print_gr "~~~~ Ansible has finished\n"
