@@ -1,0 +1,18 @@
+---
+- name: Link dotfiles to destination
+  file: src={{ item.src }} dest={{ item.dest }} state=link
+  with_items:
+    - { src: "~/.dotfiles/profile", dest: "~/.profile"}
+    - { src: "~/.dotfiles/inputrc", dest: "~/.inputrc"}
+    - { src: "~/.dotfiles/xsession", dest: "~/.xsession"}
+    - { src: "~/.dotfiles/gitconfig", dest: "~/.gitconfig"}
+    - { src: "~/.dotfiles/bashrc", dest: "~/.bashrc"}
+    - { src: "~/.dotfiles/bash_aliases", dest: "~/.bash_aliases"}
+    - { src: "~/.dotfiles/bin", dest: "~/bin"}
+    - { src: "~/.dotfiles/config", dest: "~/.config"}
+    - { src: "~/.dotfiles/fonts", dest: "~/.fonts"}
+    - { src: "~/.dotfiles/venvs", dest: "~/venvs"}
+    - { src: "~/.dotfiles/tmux.conf", dest: "~/.tmux.conf"}
+    - { src: "~/.dotfiles/Xresources", dest: "~/.Xresources"}
+    - { src: "~/.dotfiles/urxvt", dest: "~/.urxvt"}
+    - { src: "~/.dotfiles/spacemacs", dest: "~/.spacemacs.d"}
