@@ -1,0 +1,13 @@
+.inputrc
+.profile
+.gitconfig
+.bashrc
+.bash_aliases
+bin
+.config
+.fonts
+.tmux.conf
+.Xresources
+.urxvt
+.xsession
+.emacs.d
