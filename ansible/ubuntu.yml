@@ -7,9 +7,6 @@
     - name: Load variables
       include_vars: ../vars.yml
 
-    - name: make sure dotfiles are present
-      git: repo=dotfiles_git_repo dest=~/.dotfiles
-
     - include: tasks/linking.yml
 
     - include: tasks/packages.yml
