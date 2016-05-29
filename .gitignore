@@ -52,3 +52,9 @@ __pycache__/
 /config/chromium/
 /config/ranger/
 /config/RescueTime.com/
+/bin/ffmpeg
+/bin/ffprobe
+/bin/ffserver
+/bin/x264
+/config/QtProject.conf
+/config/enchant/
