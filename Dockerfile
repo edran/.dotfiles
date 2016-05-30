@@ -2,21 +2,7 @@ FROM ubuntu:14.04
 MAINTAINER Nantas Nardelli <nantas.nardelli@gmail.com>
 
 RUN locale-gen en_US.UTF-8
-RUN apt-get update -qq && \
-    apt-get install -qq \
-      build-essential \
-      sudo \
-      fontconfig \
-      git \
-      libyaml-dev \
-      libffi-dev \
-      libssl-dev \
-      python \
-      python-dev \
-      python-pip \
-    && apt-get clean
 
-RUN pip install ansible
 RUN useradd tester
 ADD . /home/tester/.dotfiles
 
@@ -28,6 +14,10 @@ USER tester
 ENV HOME /home/tester
 ENV GIT_AUTHOR_NAME Nantas Nardelli
 ENV GIT_AUTHOR_EMAIL nantas.nardelli@gmail.com
+
+WORKDIR /home/tester/.dotfiles/install
+
+run ./basic_dependencies.sh
 
 WORKDIR /home/tester/.dotfiles
 RUN git submodule update --init
