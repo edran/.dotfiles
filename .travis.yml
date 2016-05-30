@@ -14,6 +14,9 @@ install:
 script:
   - cd install
   - sudo ./install.sh -n
-  - ansible-playbook -i ../ansible/inventory ../ansible/ubuntu.yml
-
-
+  - ansible-playbook -i ../ansible/inventory ../ansible/ubuntu.yml --sudo
+  - >
+    ansible-playbook -i tests/inventory tests/test.yml --connection=local --sudo
+    | grep -q 'changed=0.*failed=0'
+    && (echo 'Idempotence test: pass' && exit 0)
+    || (echo 'Idempotence test: fail' && exit 1)

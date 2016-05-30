@@ -4,4 +4,4 @@
 
 - name: Manage apt packages
   apt: name={{item}} state=installed
-  with_dict: apt
+  with_items: apt
