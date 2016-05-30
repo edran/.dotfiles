@@ -15,7 +15,7 @@ apt:
   - mediainfo
   # other
   - terminator
-  - virtualbox
+  # - virtualbox
   # - octave
   # - texlive-full
   # - auctex

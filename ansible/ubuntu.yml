@@ -11,3 +11,8 @@
       when: do_link
 
     - include: tasks/packages.yml
+
+    - name: Run docker.ubuntu
+      hosts: all
+      roles:
+        - angstwad.docker_ubuntu
