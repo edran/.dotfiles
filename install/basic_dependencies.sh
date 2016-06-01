@@ -1,9 +1,9 @@
 #!/bin/bash
+. ./common.sh
 
 set -e
 set -u
-
-. ./common.sh
+set -x
 
 print_bl "Checking dependencies..."
 sudo apt-get update -qq
@@ -20,6 +20,7 @@ sudo apt-get install -qq \
      python-pip
 sudo apt-get clean
 
-sudo pip install -yq ansible
+yes | sudo pip install setuptools --upgrade
+yes | sudo pip install -q ansible
 
 print_gr "DONE\n"
