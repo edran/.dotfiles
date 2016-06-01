@@ -3,7 +3,7 @@ apt_repos:
   - 'deb http://repository.spotify.com stable non-free'
 
 apt_keys:
-  - {url: http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc}
+  - {url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'}
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
 
 apt_packages:
