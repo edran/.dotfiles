@@ -1,0 +1,28 @@
+apt_repos:
+  - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
+  - 'deb http://repository.spotify.com stable non-free'
+
+apt_keys:
+  - {url: http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc}
+  - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
+
+apt_packages:
+  - aptitude
+  - terminator
+  
+  - virtualbox-5.0
+  # media
+  - cmus
+  - spotify-client-qt
+  - spotify-client-gnome-support
+  # utils
+  - powertop
+  - tree
+  - htop
+  ## util: ranger
+  - ranger
+  - atool
+  - caca-utils
+  - highlight
+  - w3m-el
+  - cmigemo

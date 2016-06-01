@@ -5,8 +5,5 @@
     - "~/Public"
     - "~/Templates"
 
-- name: Install Aptitude
-  sudo: yes
-  apt:
-    name: aptitude
-    state: latest
+- include: apt.yml
+- include: gsetting.yml
