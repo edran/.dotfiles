@@ -3,6 +3,10 @@ __pycache__/
 *.py[cod]
 *$py.class
 
+# stuff
+*~
+
+# config files
 /config/google-chrome/
 /config/menus/
 /config/Mendeley Ltd./
