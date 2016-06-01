@@ -5,6 +5,7 @@
     - "~/Public"
     - "~/Templates"
 
-- include: xcape.yml
 - include: apt.yml
 - include: gsetting.yml
+- include: xcape.yml
+- include: ag.yml
