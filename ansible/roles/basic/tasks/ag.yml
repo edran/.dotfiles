@@ -20,7 +20,7 @@
 
 - name: Checkout ag
   git:
-    repo: "ggreer/the_silver_searcher"
+    repo: "git://github.com/ggreer/the_silver_searcher"
     dest: "/tmp/ag"
     force: no
     accept_hostkey: yes
