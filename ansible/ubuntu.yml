@@ -3,7 +3,8 @@
   hosts: localhost
   connection: local
   roles:
-    - jamesdbloom.install-docker
+    - basic
+    - dev_basic
   
   tasks:
     - name: Load variables

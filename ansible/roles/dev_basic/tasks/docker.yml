@@ -1,0 +1,17 @@
+- name: Install docker
+  sudo: yes
+  roles:
+    - jamesdbloom.install-docker
+
+- name: Add Current User to Docker group
+  sudo: yes
+  user:
+    name: "{{ ansible_env.USER }}"
+    groups: docker
+    append: yes
+
+- name: Start Docker Service
+  sudo: yes
+  service:
+    name: docker
+    state: started

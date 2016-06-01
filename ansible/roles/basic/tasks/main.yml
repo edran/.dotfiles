@@ -1,0 +1,12 @@
+- name: Remove installation files
+  file: path={{ item }} state=absent
+  with_items:
+    - "~/examples.desktop"
+    - "~/Public"
+    - "~/Templates"
+
+- name: Install Aptitude
+  sudo: yes
+  apt:
+    name: aptitude
+    state: latest

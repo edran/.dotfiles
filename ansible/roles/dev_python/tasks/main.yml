@@ -1,0 +1,11 @@
+- name: Update to latest pip
+  sudo: yes
+  pip: 
+    name=pip 
+    state=latest
+
+- name: Install default python packages
+  pip:
+    requirements: "{{ ansible_env.PWD }}/roles/dev_python/files/requirements.txt"
+    state: latest
+    virtualenv: ~/.virtualenvs/main_3
