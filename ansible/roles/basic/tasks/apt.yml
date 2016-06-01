@@ -1,13 +1,15 @@
-- name: Add apt keys
+- name: Add apt keys via URL
   sudo: yes
   apt_key: 
-    {% if item.url is defined %}
-    url={{ item.url }}
-    {% else %}
-    keyserver={{ item.keyserver }}
-    id={{ item.id }}
-    {% endif %}
-      with_items: apt_keys
+    url={{ item.url|default() }}
+  with_items: apt_keys_url
+
+- name: Add apt keys via id
+  sudo: yes
+  apt_key:
+    keyserver={{ item.keyserver|default() }}
+    id={{ item.id|default() }}
+  with_items: apt_keys_id
 
 - name: Add apt repositories
   sudo: yes
