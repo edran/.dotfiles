@@ -79,3 +79,11 @@ print_bl "~~~~ Configuring fonts\n"
 config_fonts
 
 print_gr "~~~~ Fonts have been configured\n"
+
+print_bl "~~~~ Running ansible\n"
+
+. ./ansible_install.sh
+
+ansible_install $PATH_DOTFILES
+
+print_gr "~~~~ ALL DONE!\n"

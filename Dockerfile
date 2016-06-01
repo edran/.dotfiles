@@ -24,3 +24,4 @@ RUN git submodule update --init
 
 WORKDIR /home/tester/.dotfiles/install
 RUN sudo ./install.sh -n
+RUN sudo ./ansible_install.sh
