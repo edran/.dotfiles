@@ -28,12 +28,6 @@
     accept_hostkey: yes
   when: result.rc !=0
 
-- name: Configure xcape
-  command: "./configure"
-  args:
-    chdir: /tmp/xcape
-  when: result.rc !=0
-
 - name: Make xcape
   command: "make"
   args:
