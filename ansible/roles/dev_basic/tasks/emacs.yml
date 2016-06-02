@@ -3,9 +3,9 @@
   package: name=build-essential state=present
 
 - name: Install emacs build deps
-    apt:
-      pkg=emacs24
-      state=build-dep
+  apt:
+    pkg: emacs24
+    state: build-dep
 
 - name: Download emacs source
   get_url:
