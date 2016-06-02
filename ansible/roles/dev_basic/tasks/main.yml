@@ -3,5 +3,7 @@
     path: "{{ ansible_env.HOME}}/Dev"
     state: directory
 
-- include apt.yml
+# - include: apt.yml
 - include: docker.yml
+- include: emacs.yml
+# - include: vim.yml

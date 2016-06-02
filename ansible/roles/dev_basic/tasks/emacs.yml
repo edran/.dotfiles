@@ -1,0 +1,38 @@
+---
+- name: build-essential....
+  package: name=build-essential state=present
+
+- name: Install emacs build deps
+    apt:
+      pkg=emacs24
+      state=build-dep
+
+- name: Download emacs source
+  get_url:
+    url: "http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-{{emacs_version}}.tar.gz"
+    dest: "/tmp/emacs.tar.gz"
+
+- name: Untar source
+  unarchive:
+    copy: no
+    src: "/tmp/emacs.tar.gz"
+    dest: "/opt"
+    creates: "/opt/emacs{{emacs_version}}"
+
+- name: Configure source
+  command: ./configure
+  args:
+    chdir: "/opt/emacs{{emacs_version}}"
+    creates: "/opt/emacs{{emacs_version}}/Makefile"
+
+- name: Build source
+  command: make
+  args:
+    chdir: "/opt/emacs{{emacs_version}}"
+    creates: "/opt/emacs{{emacs_version}}/src/emacs"
+
+- name: Install emacs
+  command: make install
+  args:
+    chdir: "/opt/emacs{{emacs_version}}"
+    creates: "/usr/local/bin/emacs"
