@@ -18,6 +18,9 @@ apt_keys_id:
 
 apt_packages:
   - aptitude
+  - ca-certificates
+  - wget
+  - curl
   - terminator
   - virtualbox-5.0
   # - skype # FIXME
