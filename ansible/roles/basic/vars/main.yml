@@ -1,6 +1,14 @@
 apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
+  - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
+  - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
+  - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+  - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
+  - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse"
+  - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}} multiverse"
+  - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}}-updates multiverse"
+  - "deb-src http://archive.ubuntu.com/ubuntu/  {{ansible_distribution_release}}-updates multiverse"
 
 apt_keys_url:
   - {url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'}
@@ -12,6 +20,7 @@ apt_packages:
   - aptitude
   - terminator
   - virtualbox-5.0
+  - skype
   # media
   - cmus
   - spotify-client-qt
