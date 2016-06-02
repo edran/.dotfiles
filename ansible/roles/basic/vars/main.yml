@@ -38,5 +38,4 @@ apt_packages:
   - cmigemo
 
 gsetting_settings:
-  - { key: 'org.gnome.desktop.session.idle-delay', value: 'uint32 600' }
-  - { key: 'org.gnome.desktop.input-sources', value: 'xkb-options \"[\'ctrl:nocaps\']\"' }
+  - { key: 'org.gnome.desktop.input-sources', value: "xkb-options \"[\'ctrl\:nocaps\']\"" }
