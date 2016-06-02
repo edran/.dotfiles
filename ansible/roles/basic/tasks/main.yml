@@ -6,6 +6,6 @@
     - "~/Templates"
 
 - include: apt.yml
-- include: gsetting.yml
 - include: xcape.yml
 - include: ag.yml
+- include: gsetting.yml

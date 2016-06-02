@@ -13,3 +13,5 @@
 	br = branch
 [branch]
 	autosetuprebase = always
+[github "github"]
+	user = edran

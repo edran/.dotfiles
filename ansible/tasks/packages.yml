@@ -1,7 +1,0 @@
----
-- name: Include apt package list
-  include_vars: vars/apt.yml
-
-- name: Manage apt packages
-  apt: name={{item}} state=installed
-  with_items: apt
