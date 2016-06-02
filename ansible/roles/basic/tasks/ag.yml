@@ -1,4 +1,4 @@
-- name: get currently installed xcape version
+- name: get currently installed ag version
   command: "ag --version"
   sudo: yes
   register: result

@@ -1,0 +1,5 @@
+- name: Add gsettings
+  gsetting: user="{{username}}"
+            key="{{item.key}}"
+            value="{{item.value}}"
+  with_items: gsetting_settings

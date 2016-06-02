@@ -20,7 +20,7 @@ apt_packages:
   - aptitude
   - terminator
   - virtualbox-5.0
-  - skype
+  # - skype # FIXME
   # media
   - cmus
   - spotify-client-qt
@@ -36,3 +36,7 @@ apt_packages:
   - highlight
   - w3m-el
   - cmigemo
+
+gsetting_settings:
+  - { key: 'org.gnome.desktop.session.idle-delay', value: 'uint32 600' }
+  - { key: 'org.gnome.desktop.input-sources', value: 'xkb-options \"[\'ctrl:nocaps\']\"' }
