@@ -2,7 +2,6 @@
 
 set -e
 set -u
-set -x
 
 # requires $1 to be dotfiles dir
 ansible_install () {

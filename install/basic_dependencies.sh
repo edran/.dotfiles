@@ -3,7 +3,6 @@
 
 set -e
 set -u
-set -x
 
 print_bl "Checking dependencies..."
 sudo apt-get update -qq

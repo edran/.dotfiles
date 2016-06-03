@@ -31,7 +31,6 @@ initial_check () {
 }
 
 # ------------- PRINTING
-set +x
 
 RED='\033[0;31m'
 BLUE='\033[1;34m'
@@ -62,5 +61,3 @@ print_yl () {
     printf "$1"
     echo -en "${NC}"
 }
-
-set -x # not such a reasonable choice, really...
