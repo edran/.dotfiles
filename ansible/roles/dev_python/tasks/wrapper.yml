@@ -1,0 +1,11 @@
+- name: Create environment directory
+  file:
+    path: "{{ ansible_env.HOME}}/.venvs"
+    state: directory
+
+- name: Install virtualenvwrapper
+  pip: name=virtualenvwrapper executable=pip-{{ item }}
+  sudo: true
+  with_items:
+    - 2.7
+    - 3.4

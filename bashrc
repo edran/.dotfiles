@@ -93,7 +93,6 @@ ets() { emacsclient -t -a emacs "/sudo::$*"; }
 export TERM=xterm-256color
 
 # External sources
-
 if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
@@ -123,3 +122,10 @@ git-ssh() {
     eval `ssh-agent -s`
     ssh-add ~/.ssh/github_rsa
 }
+
+VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
+export PROJECT_HOME="$HOME/Dev"
+export WORKON_HOME="$HOME/.venvs"
+if [ -x "/usr/local/bin/virtualenvwrapper.sh" ] ; then
+    source /usr/local/bin/virtualenvwrapper.sh
+fi

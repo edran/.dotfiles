@@ -1,11 +1,13 @@
-- name: Update to latest pip
-  sudo: yes
-  pip: 
-    name=pip 
-    state=latest
+- include: apt.yml
 
-- name: Install default python packages
+- name: Update pip and pip3
+  sudo: true
   pip:
-    requirements: "{{ ansible_env.PWD }}/roles/dev_python/files/requirements.txt"
+    name: pip
+    executable: pip-{{ item }}
     state: latest
-    virtualenv: ~/.virtualenvs/main_3
+  with_items:
+    - 2.7
+    - 3.4
+
+- include: vwrapper.yml

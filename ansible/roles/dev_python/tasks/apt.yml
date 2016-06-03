@@ -1,0 +1,7 @@
+- name: Install apt packages
+  sudo: yes
+  apt:
+    pkg={{ item }}
+    state=present
+    update_cache=yes
+  with_items: "{{ apt_packages | default([]) }}"
