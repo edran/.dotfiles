@@ -28,13 +28,6 @@
   when: tmux_present|failed
 
 - name: Configure source
-  command: sh autogen.sh
-  args:
-    chdir: "/opt/tmux-{{tmux_version}}"
-  when: tmux_present|failed
-
-
-- name: Configure source
   command: ./configure
   args:
     chdir: "/opt/tmux-{{tmux_version}}"
