@@ -20,7 +20,6 @@ apt_keys_id:
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
 
 apt_packages:
-  - ubuntu-desktop
   - google-chrome-stable
   - aptitude
   - ca-certificates
