@@ -10,29 +10,29 @@
 - name: Download emacs source
   get_url:
     url: "http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-{{emacs_version}}.tar.gz"
-    dest: "/tmp/emacs.tar.gz"
+    dest: "/tmp/emacs-{{emacs_version}}.tar.gz"
 
 - name: Untar source
   unarchive:
     copy: no
-    src: "/tmp/emacs.tar.gz"
+    src: "/tmp/emacs-{{emacs_version}}.tar.gz"
     dest: "/opt"
-    creates: "/opt/emacs{{emacs_version}}"
+    creates: "/opt/emacs-{{emacs_version}}"
 
 - name: Configure source
   command: ./configure
   args:
-    chdir: "/opt/emacs{{emacs_version}}"
-    creates: "/opt/emacs{{emacs_version}}/Makefile"
+    chdir: "/opt/emacs-{{emacs_version}}"
+    creates: "/opt/emacs-{{emacs_version}}/Makefile"
 
 - name: Build source
   command: make
   args:
-    chdir: "/opt/emacs{{emacs_version}}"
-    creates: "/opt/emacs{{emacs_version}}/src/emacs"
+    chdir: "/opt/emacs-{{emacs_version}}"
+    creates: "/opt/emacs-{{emacs_version}}/src/emacs"
 
 - name: Install emacs
   command: make install
   args:
-    chdir: "/opt/emacs{{emacs_version}}"
+    chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
