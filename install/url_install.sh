@@ -28,6 +28,6 @@ yes | sudo pip install -q ansible
 
 echo "[i] Installing edran/.dotfiles..."
 
-git clone --depth=5 https://github.com/edran/.dotfiles.git "$HOME/.dotfiles"
+git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive
 cd "$HOME/.dotfiles/install"
 sudo ./install.sh
