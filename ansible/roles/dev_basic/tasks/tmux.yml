@@ -1,0 +1,56 @@
+---
+- name: Check if tmux is present
+  command: "tmux{{tmux_version}} --version"
+  ignore_errors: yes
+  register: tmux_present
+
+- name: build-essential....
+  package: name=build-essential state=present
+
+- name: Install tmux build deps
+  apt:
+    pkg: tmux24
+    state: build-dep
+  when: tmux_present|failed
+
+- name: Download tmux source
+  get_url:
+    url: "https://github.com/tmux/tmux/releases/download/2.2/tmux-{{tmux_version}}.tar.gz"
+    dest: "/tmp/tmux-{{tmux_version}}.tar.gz"
+  when: tmux_present|failed
+
+- name: Untar source
+  unarchive:
+    copy: no
+    src: "/tmp/tmux-{{tmux_version}}.tar.gz"
+    dest: "/opt"
+    creates: "/opt/tmux-{{tmux_version}}"
+  when: tmux_present|failed
+
+- name: Configure source
+  command: sh ./autogen.sh
+  args:
+    chdir: "/opt/tmux-{{tmux_version}}"
+  when: tmux_present|failed
+
+
+- name: Configure source
+  command: ./configure
+  args:
+    chdir: "/opt/tmux-{{tmux_version}}"
+    creates: "/opt/tmux-{{tmux_version}}/Makefile"
+  when: tmux_present|failed
+
+- name: Build source
+  command: make
+  args:
+    chdir: "/opt/tmux-{{tmux_version}}"
+    creates: "/opt/tmux-{{tmux_version}}/src/tmux"
+  when: tmux_present|failed
+
+- name: Install tmux
+  command: make install
+  args:
+    chdir: "/opt/tmux-{{tmux_version}}"
+    creates: "/usr/local/bin/tmux"
+  when: tmux_present|failed

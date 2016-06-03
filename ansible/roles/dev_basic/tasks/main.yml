@@ -9,3 +9,4 @@
 - include: ag.yml
 - include: docker.yml
 - include: emacs.yml
+- include: tmux.yml

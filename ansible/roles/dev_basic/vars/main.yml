@@ -24,3 +24,4 @@ apt_packages:
  - cmigemo
 
 emacs_version: 24.5
+tmux_version: 2.2
