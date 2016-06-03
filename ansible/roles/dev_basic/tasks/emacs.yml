@@ -1,4 +1,9 @@
 ---
+- name: Check if emacs is present
+  command: "emacs{{emacs_version}} --version"
+  ignore_errors: yes
+  register: emacs_present
+
 - name: build-essential....
   package: name=build-essential state=present
 
@@ -6,11 +11,13 @@
   apt:
     pkg: emacs24
     state: build-dep
+  when: emacs_present|failed
 
 - name: Download emacs source
   get_url:
     url: "http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-{{emacs_version}}.tar.gz"
     dest: "/tmp/emacs-{{emacs_version}}.tar.gz"
+  when: emacs_present|failed
 
 - name: Untar source
   unarchive:
@@ -18,21 +25,25 @@
     src: "/tmp/emacs-{{emacs_version}}.tar.gz"
     dest: "/opt"
     creates: "/opt/emacs-{{emacs_version}}"
+  when: emacs_present|failed
 
 - name: Configure source
   command: ./configure
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/opt/emacs-{{emacs_version}}/Makefile"
+  when: emacs_present|failed
 
 - name: Build source
   command: make
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/opt/emacs-{{emacs_version}}/src/emacs"
+  when: emacs_present|failed
 
 - name: Install emacs
   command: make install
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
+  when: emacs_present|failed

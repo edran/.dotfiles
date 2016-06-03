@@ -3,5 +3,18 @@ apt_repos:
 apt_keys:
 
 apt_packages:
+ - vim
+ # terminal utils
+ - powertop
+ - tree
+ - htop
+ - tree
+ ## util: ranger
+ - ranger
+ - atool
+ - caca-utils
+ - highlight
+ - w3m-el
+ - cmigemo
 
 emacs_version: 24.5

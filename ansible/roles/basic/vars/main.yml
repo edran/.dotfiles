@@ -23,22 +23,12 @@ apt_packages:
   - curl
   - terminator
   - virtualbox-5.0
+  - redshift
   # - skype # FIXME
   # media
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support
-  # utils
-  - powertop
-  - tree
-  - htop
-  ## util: ranger
-  - ranger
-  - atool
-  - caca-utils
-  - highlight
-  - w3m-el
-  - cmigemo
 
 gsetting_settings:
   - { key: 'org.gnome.desktop.input-sources', value: "xkb-options \"['ctrl:nocaps']\"" }
