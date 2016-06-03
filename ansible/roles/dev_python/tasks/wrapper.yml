@@ -4,8 +4,8 @@
     state: directory
 
 - name: Install virtualenvwrapper
-  pip: name=virtualenvwrapper executable=pip-{{ item }}
+  pip: name=virtualenvwrapper executable={{ item }}
   sudo: true
   with_items:
-    - 2.7
-    - 3.4
+    - pip
+    - pip3

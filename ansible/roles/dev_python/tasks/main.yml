@@ -4,10 +4,10 @@
   sudo: true
   pip:
     name: pip
-    executable: pip-{{ item }}
+    executable: {{ item }}
     state: latest
   with_items:
-    - 2.7
-    - 3.4
+    - pip
+    - pip3
 
 - include: vwrapper.yml
