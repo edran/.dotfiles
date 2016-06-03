@@ -1,0 +1,3 @@
+---
+gsettings_settings:
+  - { key: 'org.gnome.desktop.input-sources', value: "xkb-options \"['ctrl:nocaps']\"" }

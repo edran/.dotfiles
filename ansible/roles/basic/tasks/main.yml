@@ -6,4 +6,3 @@
     - "~/Templates"
 
 - include: apt.yml
-- include: gsetting.yml

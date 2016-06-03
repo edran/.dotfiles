@@ -31,6 +31,3 @@ apt_packages:
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support
-
-gsetting_settings:
-  - { key: 'org.gnome.desktop.input-sources', value: "xkb-options \"['ctrl:nocaps']\"" }

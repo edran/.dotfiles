@@ -1,0 +1,3 @@
+---
+# tasks file for user_config
+- include: gsettings.yml

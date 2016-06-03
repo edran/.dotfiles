@@ -5,3 +5,4 @@
   roles:
     - basic
     - dev_basic
+    - user_config
