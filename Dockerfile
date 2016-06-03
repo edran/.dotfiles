@@ -15,5 +15,7 @@ ENV HOME /home/tester
 ENV GIT_AUTHOR_NAME Nantas Nardelli
 ENV GIT_AUTHOR_EMAIL nantas.nardelli@gmail.com
 
+RUN sudo apt-get install curl
+
 WORKDIR /home/tester
 RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)"
