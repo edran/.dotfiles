@@ -30,4 +30,4 @@ echo "[i] Installing edran/.dotfiles..."
 
 git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive
 cd "$HOME/.dotfiles/install"
-sudo ./install.sh
+sudo ./install.sh -n

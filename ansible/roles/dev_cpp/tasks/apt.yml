@@ -2,6 +2,12 @@
   sudo: yes
   apt_repository: "state=present repo='{{ item }}'"
   with_items: apt_repos
+  register: ansible_added
+
+- name: apt update cache
+  apt:
+    update_cache: yes
+  when: ansible_added.changed
 
 - name: Install apt packages
   sudo: yes
