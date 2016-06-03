@@ -28,7 +28,7 @@
   when: tmux_present|failed
 
 - name: Configure source
-  command: sh ./autogen.sh
+  command: sh autogen.sh
   args:
     chdir: "/opt/tmux-{{tmux_version}}"
   when: tmux_present|failed
