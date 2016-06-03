@@ -1,0 +1,12 @@
+- name: Add apt repositories
+  sudo: yes
+  apt_repository: "state=present repo='{{ item }}'"
+  with_items: apt_repos
+
+- name: Install apt packages
+  sudo: yes
+  apt:
+    pkg={{ item }}
+    state=present
+    update_cache=yes
+  with_items: apt_packages
