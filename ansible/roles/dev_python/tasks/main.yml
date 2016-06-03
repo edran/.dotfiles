@@ -4,7 +4,7 @@
   sudo: true
   pip:
     name: pip
-    executable: {{ item }}
+    executable: "{{ item }}"
     state: latest
   with_items:
     - pip
