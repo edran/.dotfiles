@@ -11,10 +11,11 @@
 #     id={{ item.id }}
 #   with_items: "{{ apt_keys_id | default([]) }}"
 
-# - name: Add apt repositories
-#   sudo: yes
-#   apt_repository: "state=present repo='{{ item }}'"
-#   with_items: "{{ apt_repos | default([]) }}"
+
+- name: Add apt repositories
+  sudo: yes
+  apt_repository: "state=present repo='{{ item }}'"
+  with_items: "{{ apt_repos | default([]) }}"
 
 - name: Install apt packages
   sudo: yes

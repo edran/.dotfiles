@@ -9,7 +9,7 @@
 
 - name: Install tmux build deps
   apt:
-    pkg: tmux24
+    pkg: tmux
     state: build-dep
   when: tmux_present|failed
 

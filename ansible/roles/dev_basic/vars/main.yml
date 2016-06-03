@@ -1,27 +1,29 @@
 apt_repos:
+  - 'ppa:git-core/ppa'
 
 apt_keys:
 
 apt_packages:
- - vim
- - terminator
- - rxvt-unicode-256color
- - ncurses-term
- # terminal utils
- - powertop
- - tree
- - htop
- - tree
- - wget
- - curl
-
- ## util: ranger
- - ranger
- - atool
- - caca-utils
- - highlight
- - w3m-el
- - cmigemo
+  - git-core
+  - git
+  - vim
+  - terminator
+  - rxvt-unicode-256color
+  - ncurses-term
+  # terminal utils
+  - powertop
+  - tree
+  - htop
+  - tree
+  - wget
+  - curl
+  ## ranger
+  - ranger
+  - atool
+  - caca-utils
+  - highlight
+  - w3m-el
+  - cmigemo
 
 emacs_version: 24.5
 tmux_version: 2.2
