@@ -4,3 +4,17 @@ gsettings_settings:
   - { key: 'org.compiz.core:/org/compiz/profiles/unity/plugins/core/', value: 'hsize 2' }
   - { key: 'org.compiz.core:/org/compiz/profiles/unity/plugins/core/', value: 'vsize 2' }
   - { key: 'gsettings set com.canonical.Unity.Lenses disabled-scopes', value: "\"['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']\"" }
+
+linking_paths:
+  - {dot: "dots/inputrc", dest: ".inputrc"}
+  - {dot: "dots/profile", dest: ".profile"}
+  - {dot: "dots/gitconfig", dest: ".gitconfig"}
+  - {dot: "dots/bashrc", dest: ".bashrc"}
+  - {dot: "bin", dest: "bin"}
+  - {dot: "dots/config", dest: ".config"}
+  - {dot: "dots/fonts", dest: ".fonts"}
+  - {dot: "dots/tmux.conf", dest: ".conf"}
+  - {dot: "dots/Xresources", dest: ".Xresources"}
+  - {dot: "dots/urxvt", dest: ".urxvt"}
+  - {dot: "spacemacs", dest: ".spacemacs.d"}
+  - {dot: "dots/xsession", dest: ".xsession"}

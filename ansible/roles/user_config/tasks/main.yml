@@ -1,3 +1,9 @@
 ---
-# tasks file for user_config
+- name: Symlink dotfiles
+  file:
+    src={{ ansible_env.PWD/../dots/{{ item.dot }}
+    dest={{ ansible_env.HOME }}/.{{ item.dest }}
+    state=link
+  with_dict: linking_paths
+
 - include: gsettings.yml
