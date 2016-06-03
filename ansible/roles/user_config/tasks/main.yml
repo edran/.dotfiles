@@ -1,7 +1,7 @@
 ---
 - name: Symlink dotfiles
   file:
-    src: "{{ ansible_env.PWD }}/../dots/{{ item.dot }}"
+    src: "{{ ansible_env.PWD }}/../{{ item.dot }}"
     dest: "{{ ansible_env.HOME }}/.{{ item.dest }}"
     state: link
   with_items: linking_paths
