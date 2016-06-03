@@ -32,13 +32,6 @@ if [ "$no_check" == false ] ; then
     initial_check
 fi
 
-print_bl "~~~~ Configuring fonts\n"
-
-. ./config_fonts.sh
-config_fonts
-
-print_gr "~~~~ Fonts have been configured\n"
-
 print_bl "~~~~ Running ansible\n"
 
 . ./ansible_install.sh
