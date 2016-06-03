@@ -2,6 +2,7 @@ apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
   - 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+  - 'ppa:linrunner/tlp'
   # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
@@ -20,6 +21,7 @@ apt_keys_id:
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
 
 apt_packages:
+  - ubuntu-restricted-extras
   - google-chrome-stable
   - aptitude
   - ca-certificates
@@ -30,3 +32,8 @@ apt_packages:
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support
+  # Thinkpad
+  - tlp
+  - tlp-rdw
+  - tp-smapi-dkms
+  - acpi-call-dkms
