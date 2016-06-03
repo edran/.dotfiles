@@ -1,6 +1,8 @@
 apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
+  - 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+  # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
@@ -12,19 +14,18 @@ apt_repos:
 
 apt_keys_url:
   - {url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'}
+  - {url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'}
 
 apt_keys_id:
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
 
 apt_packages:
+  - google-chrome-stable
   - aptitude
   - ca-certificates
-  - wget
-  - curl
-  - terminator
+  # - skype # FIXME
   - virtualbox-5.0
   - redshift
-  # - skype # FIXME
   # media
   - cmus
   - spotify-client-qt

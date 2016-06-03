@@ -5,5 +5,7 @@
     state: directory
 
 - include: apt.yml
+- include: xcape.yml
+- include: ag.yml
 - include: docker.yml
 - include: emacs.yml

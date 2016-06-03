@@ -4,11 +4,17 @@ apt_keys:
 
 apt_packages:
  - vim
+ - terminator
+ - rxvt-unicode-256color
+ - ncurses-term
  # terminal utils
  - powertop
  - tree
  - htop
  - tree
+ - wget
+ - curl
+
  ## util: ranger
  - ranger
  - atool
