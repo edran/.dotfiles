@@ -12,6 +12,10 @@ Compatible with `Ubuntu 14.04`. Installation is based on ansible.
 * `$ sudo ./install.sh`
 * Download & Install Chrome if necessary.
 
+# Update local installation
+
+`ansible-playbook -i ansible/inventory ansible/ubuntu.yml --sudo`
+
 # TO DO
 * `$ sudo apt-get install xsel`
 * Add source-code-pro installation instructions
