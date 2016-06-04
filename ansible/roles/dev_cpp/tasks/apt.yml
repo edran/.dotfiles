@@ -1,9 +1,9 @@
 - name: Add apt repositories
   sudo: yes
   apt_repository:
-    state:present
+    state: present
     repo: "{{ item }}"
-  with_items: apt_repos
+  with_items: "{{ apt_repos }}"
   register: ansible_added
 
 - name: apt update cache
@@ -17,4 +17,4 @@
     pkg: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: apt_packages
+  with_items: "{{ apt_packages }}"

@@ -8,4 +8,4 @@
     name: virtualenvwrapper
     executable: "{{ item }}"
   sudo: true
-  with_items: pip_executables
+  with_items: "{{ pip_executables }}"
