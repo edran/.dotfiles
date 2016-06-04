@@ -8,7 +8,7 @@
   with_items: linking_paths
 
 - name: Add trim to all SSDs
-  command: sed -ie 's/^exec fstrim-all*$/& --no-model-check/g' file
+  command: sed -ie 's/^exec fstrim-all*$/& --no-model-check/g' /etc/cron.weekly/fstrim
   sudo: yes
 
 - include: gsettings.yml
