@@ -14,7 +14,6 @@ apt_repos:
 
 apt_keys_url:
   - {url: 'http://download.virtualbox.org/virtualbox/debian/oracle_vbox.asc'}
-  - {url: 'https://dl-ssl.google.com/linux/linux_signing_key.pub'}
 
 apt_keys_id:
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}

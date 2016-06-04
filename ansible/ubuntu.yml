@@ -4,7 +4,6 @@
   connection: local
   roles:
     - basic
-    - { role: cmprescott.chrome, become: yes }
     - dev_basic
     - dev_python
     - dev_cpp
