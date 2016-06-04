@@ -1,15 +1,15 @@
-- name: get currently installed xcape version
+- name: xcape | Check current version
   command: "xcape --version"
   sudo: yes
   register: result
   ignore_errors: True
 
-- name: Install xcape build dependencies
+- name: xcape | Install build deps
   sudo: yes
   apt:
-    pkg={{ item }}
-    state=present
-    update_cache=yes
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
     - git
     - gcc
@@ -20,7 +20,7 @@
     - libxi-dev
   when: result.rc !=0
 
-- name: Checkout xcape
+- name: xcape | Checkout
   git:
     repo: "git://github.com/alols/xcape.git"
     dest: "/tmp/xcape"
@@ -28,15 +28,15 @@
     accept_hostkey: yes
   when: result.rc !=0
 
-- name: Make xcape
+- name: xcape | Make
   command: "make"
   args:
-    chdir: /tmp/xcape
+    chdir: "/tmp/xcape"
   when: result.rc !=0
 
-- name: Install xcape
+- name: xcape | Install
   command: "make install"
   sudo: yes
   args:
-    chdir: /tmp/xcape
+    chdir: "/tmp/xcape"
   when: result.rc !=0

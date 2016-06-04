@@ -1,7 +1,7 @@
 ---
 - name: Create development home directory
   file:
-    path: "{{ ansible_env.HOME}}/Dev"
+    path: "{{ ansible_env.HOME }}/Dev"
     state: directory
 
 - include: apt.yml

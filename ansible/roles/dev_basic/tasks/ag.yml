@@ -1,15 +1,15 @@
-- name: get currently installed ag version
+- name: ag | Check current installation
   command: "ag --version"
   sudo: yes
   register: result
   ignore_errors: True
 
-- name: Install ag build dependencies
+- name: ag | Install build deps
   sudo: yes
   apt:
-    pkg={{ item }}
-    state=present
-    update_cache=yes
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items:
     - automake
     - pkg-config
@@ -18,7 +18,7 @@
     - liblzma-dev
   when: result.rc !=0
 
-- name: Checkout ag
+- name: ag | Checkout
   git:
     repo: "git://github.com/ggreer/the_silver_searcher"
     dest: "/tmp/ag"
@@ -26,15 +26,15 @@
     accept_hostkey: yes
   when: result.rc !=0
 
-- name: Make ag
+- name: ag | Make
   command: "./build.sh"
   args:
-    chdir: /tmp/ag
+    chdir: "/tmp/ag"
   when: result.rc !=0
 
-- name: Install ag
+- name: ag | Install
   command: "make install"
   sudo: yes
   args:
-    chdir: /tmp/ag
+    chdir: "/tmp/ag"
   when: result.rc !=0
