@@ -6,7 +6,7 @@
 
 - name: Emacs | Install build-essential
   package:
-    name: Emacs | build-essential
+    name: build-essential
     state: present
 
 - name: Emacs | Install build deps
