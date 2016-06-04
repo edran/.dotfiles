@@ -2,7 +2,7 @@
 - name: Symlink dotfiles
   file:
     src: "{{ ansible_env.PWD }}/../{{ item.dot }}"
-    dest: "{{ ansible_env.HOME }}/.{{ item.dest }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
     state: link
     force: yes
   with_items: "{{ linking_paths }}"
@@ -16,3 +16,6 @@
             key="{{item.key}}"
             value="{{item.value}}"
   with_items: "{{ gsettings_settings }}"
+
+- name: Ensure files are 0644
+  command: find /etc/apt/sources.list.d/* -type f -exec chmod 0644 {} \;

@@ -62,3 +62,6 @@ __pycache__/
 /bin/x264
 /dots/config/QtProject.conf
 /dots/config/enchant/
+/dots/ssh/github_rsa
+/dots/ssh/github_rsa.pub
+/dots/ssh/known_hosts
