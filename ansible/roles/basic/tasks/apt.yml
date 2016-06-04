@@ -2,21 +2,21 @@
   sudo: yes
   apt_key: 
     url: "{{ item.url|default() }}"
-  with_items: {{ apt_keys_url }}
+  with_items: "{{ apt_keys_url }}"
 
 - name: Add apt keys via id
   sudo: yes
   apt_key:
     keyserver: "{{ item.keyserver|default() }}"
     id: "{{ item.id|default() }}"
-  with_items: {{ apt_keys_id }}
+  with_items: "{{ apt_keys_id }}"
 
 - name: Add apt repositories
   sudo: yes
   apt_repository:
     state: present
     repo: "{{ item }}"
-  with_items: {{ apt_repos }}
+  with_items: "{{ apt_repos }}"
   register: ansible_added
 
 - name: apt update cache
@@ -30,4 +30,4 @@
     pkg: "{{ item }}"
     state: present
     update_cache: yes
-  with_items: {{ apt_packages }}
+  with_items: "{{ apt_packages }}"
