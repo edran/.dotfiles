@@ -9,22 +9,26 @@ if [ -d "$HOME/.dotfiles" ]; then
 fi
 
 echo "[i] Updating and installing ansible dependencies..."
-sudo apt-get update -qq
-sudo apt-get install -qq \
-     build-essential \
-     sudo \
-     fontconfig \
-     git \
-     libyaml-dev \
-     libffi-dev \
-     libssl-dev \
-     python \
-     python-dev \
-     python-pip
-sudo apt-get clean
+{
+    sudo apt-get update -qq
+    sudo apt-get install -qq \
+         build-essential \
+         sudo \
+         fontconfig \
+         git \
+         libyaml-dev \
+         libffi-dev \
+         libssl-dev \
+         python \
+         python-dev \
+         python-pip
+    sudo apt-get clean
+} > /dev/null 2>&1
 
+{
 yes | sudo pip install setuptools --upgrade
 yes | sudo pip install -q ansible
+} > /dev/null 2>&1
 
 echo "[i] Installing edran/.dotfiles..."
 
