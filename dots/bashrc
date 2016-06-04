@@ -42,8 +42,8 @@ if [ -n "$force_color_prompt" ]; then
 fi
 
 # load aliases
-if [ -f "$HOME/.dotfiles/bash_aliases" ]; then
-    . $HOME/.dotfiles/bash_aliases
+if [ -f "$HOME/.dotfiles/dots/bash_aliases" ]; then
+    . $HOME/.dotfiles/dots/bash_aliases
 fi
 
 # bash completion

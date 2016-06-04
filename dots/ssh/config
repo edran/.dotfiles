@@ -1,0 +1,7 @@
+Host better-inf
+   User edran
+   HostName 139.59.166.88
+
+host install-test
+   User edran
+   HostName 178.62.81.116

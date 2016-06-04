@@ -4,6 +4,7 @@
     src: "{{ ansible_env.PWD }}/../{{ item.dot }}"
     dest: "{{ ansible_env.HOME }}/.{{ item.dest }}"
     state: link
+    force: yes
   with_items: linking_paths
 
 - include: gsettings.yml
