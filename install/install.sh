@@ -3,9 +3,6 @@
 set -u
 set -e # sigh
 
-. ./common.sh
-
-PATH_BACKUP="$HOME/.home_backup"
 PATH_DOTFILES=$(pwd)/../
 
 OPTIND=1
@@ -32,10 +29,10 @@ if [ "$no_check" == false ] ; then
     initial_check
 fi
 
-print_bl "~~~~ Running ansible\n"
+echo "[i] Running ansible"
 
 . ./ansible_install.sh
 
 ansible_install $PATH_DOTFILES
 
-print_gr "~~~~ ALL DONE!\n"
+echo "[i] All done!"
