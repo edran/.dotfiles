@@ -6,8 +6,6 @@
     name: pip
     executable: "{{ item }}"
     state: latest
-  with_items:
-    - pip
-    - pip3
+  with_items: pip_executables
 
 - include: vwrapper.yml

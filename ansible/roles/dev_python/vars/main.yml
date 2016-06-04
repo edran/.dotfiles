@@ -1,3 +1,7 @@
 apt_packages:
   - python-pip
   - python3-pip
+
+pip_executables:
+  - pip
+  - pip3

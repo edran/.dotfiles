@@ -1,6 +1,8 @@
 - name: Add apt repositories
   sudo: yes
-  apt_repository: "state=present repo='{{ item }}'"
+  apt_repository:
+    state:present
+    repo: "{{ item }}"
   with_items: apt_repos
   register: ansible_added
 
@@ -12,7 +14,7 @@
 - name: Install apt packages
   sudo: yes
   apt:
-    pkg={{ item }}
-    state=present
-    update_cache=yes
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
   with_items: apt_packages
