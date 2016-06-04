@@ -19,6 +19,19 @@
   with_items: "{{ apt_repos }}"
   register: ansible_added
 
+- name: "apt | ensure previous repository for Google Chrome is absent"
+  sudo: yes
+  apt_repository:
+    repo: 'deb http://dl.google.com/linux/chrome/deb/ stable main'
+    state: absent
+
+# workaround for missing x86 distribution
+- name: "apt | ensure Google chrome repo present, using a workaround for missing x86 distribution"
+  sudo: yes
+  copy:
+    content: "deb [arch=amd64] https://dl.google.com/linux/chrome/deb/ stable main"
+    dest: "/etc/apt/sources.list.d/google-chrome.list"
+
 - name: apt update cache
   apt:
     update_cache: yes
@@ -31,3 +44,4 @@
     state: present
     update_cache: yes
   with_items: "{{ apt_packages }}"
+

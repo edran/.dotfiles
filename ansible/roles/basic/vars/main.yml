@@ -1,7 +1,6 @@
 apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
-  - 'deb http://dl.google.com/linux/chrome/deb/ stable main'
   - 'ppa:linrunner/tlp'
   # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
