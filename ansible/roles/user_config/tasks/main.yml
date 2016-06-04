@@ -7,4 +7,8 @@
     force: yes
   with_items: linking_paths
 
+- name: Add trim to all SSDs
+  command: sed -ie 's/^exec fstrim-all*$/& --no-model-check/g' file
+  sudo: yes
+
 - include: gsettings.yml
