@@ -1,2 +1,3 @@
 ---
 - src: jamesdbloom.install-docker
+- src: cmprescott.chrome
