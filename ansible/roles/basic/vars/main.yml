@@ -25,6 +25,7 @@ apt_packages:
   # - skype # FIXME
   - virtualbox-5.0
   - redshift
+  - redshift-gtk
   # media
   - vlc
   - cmus
