@@ -7,5 +7,5 @@ fi
 
 if [ -x xcape ]; then
 	echo "Setting CTRL_L to Escape"
-	xcape -e 'Control_L=Escape'
+	xcape
 fi

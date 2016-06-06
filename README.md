@@ -1,7 +1,5 @@
 # edran's dotfiles
 
-***
-
 <p align="center">
 <a href="https://travis-ci.org/edran/.dotfiles">
 <img src="https://travis-ci.org/edran/.dotfiles.svg"
