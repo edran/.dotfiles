@@ -31,8 +31,7 @@ fi
 
 echo "[i] Running ansible"
 
-. ./ansible_install.sh
-
-ansible_install $PATH_DOTFILES
+ansible-galaxy install -r $PATH_DOTFILES/ansible/requirements.yml
+ansible-playbook -i $PATH_DOTFILES/ansible/inventory $1/ansible/ubuntu.yml --sudo
 
 echo "[i] All done!"
