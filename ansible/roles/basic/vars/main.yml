@@ -26,6 +26,7 @@ apt_packages:
   - virtualbox-5.0
   - redshift
   # media
+  - vlc
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support

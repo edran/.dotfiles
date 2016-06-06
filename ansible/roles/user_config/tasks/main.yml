@@ -17,5 +17,11 @@
             value="{{item.value}}"
   with_items: "{{ gsettings_settings }}"
 
+- name: Check sources.list.d exists
+  stat:
+    path: /etc/monit/conf.d
+  register: check_path
+
 - name: Ensure files are 0644
   command: find /etc/apt/sources.list.d/* -type f -exec chmod 0644 {} \;
+  when: check_path.stat.exists == false
