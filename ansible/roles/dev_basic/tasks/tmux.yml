@@ -1,6 +1,6 @@
 ---
 - name: Tmux | Check current installation
-  command: "tmux{{tmux_version}} --version"
+  command: "tmux -V"
   ignore_errors: yes
   register: tmux_present
 

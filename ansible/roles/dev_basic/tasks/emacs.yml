@@ -1,6 +1,6 @@
 ---
 - name: Emacs | Check current installation
-  command: "emacs{{emacs_version}} --version"
+  command: "emacs-{{emacs_version}} --version"
   ignore_errors: yes
   register: emacs_present
 

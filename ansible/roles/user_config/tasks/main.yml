@@ -1,7 +1,7 @@
 ---
 - name: Symlink dotfiles
   file:
-    src: "{{ ansible_env.PWD }}/../{{ item.dot }}"
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.dot }}"
     dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
     state: link
     force: yes
@@ -19,9 +19,21 @@
 
 - name: Check sources.list.d exists
   stat:
-    path: /etc/monit/conf.d
+    path: /etc/apt/sources.list.d
   register: check_path
 
-- name: Ensure files are 0644
-  command: find /etc/apt/sources.list.d/* -type f -exec chmod 0644 {} \;
-  when: check_path.stat.exists == false
+- name: Ensure apt sources files are 0644
+  file:
+    path: /etc/apt/sources.list.d/
+    mode: 0644 # 755 is directory
+    recurse: yes
+  sudo: yes
+  when: check_path.stat.exists
+
+- name: Ensure sources.list.d is 0755
+  file:
+    path: /etc/apt/sources.list.d/
+    mode: 0755
+    recurse: yes
+  sudo: yes
+  when: check_path.stat.exists
