@@ -49,3 +49,16 @@
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
   when: emacs_present|failed
+
+- name: Emacs | Check .emacs.d
+  stat:
+    path: "{{ ansible_env.HOME }}/.emacs.d"
+  register: emacs_path
+
+- name: Emacs | Download Spacemacs 
+  git:
+    repo: https://github.com/syl20bnr/spacemacs
+    dest: "{{ ansible_env.HOME }}/.emacs.d"
+    accept_hostkey: yes
+    recursive: yes
+  when: not emacs_path.stat.exists
