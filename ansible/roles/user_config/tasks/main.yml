@@ -41,13 +41,14 @@
 
 - name: Add trim to all SSDs
   command: sed -ie 's/^exec fstrim-all*$/& --no-model-check/g' /etc/cron.weekly/fstrim
-  sudo: yes
+  become: yes
+  become_method: sudo
 
-- name: Add gsettings
-  gsetting: user="{{ansible_user_id}}"
-            key="{{item.key}}"
-            value="{{item.value}}"
-  with_items: "{{ gsettings_settings }}"
+# - name: Add gsettings
+#   gsetting: user="{{ansible_user_id}}"
+#             key="{{item.key}}"
+#             value="{{item.value}}"
+#   with_items: "{{ gsettings_settings }}"
 
 - name: Check sources.list.d exists
   stat:
@@ -59,7 +60,8 @@
     path: /etc/apt/sources.list.d/
     mode: 0644 # 755 is directory
     recurse: yes
-  sudo: yes
+  become: yes
+  become_method: sudo
   when: check_path.stat.exists
 
 - name: Ensure sources.list.d is 0755
@@ -67,5 +69,6 @@
     path: /etc/apt/sources.list.d/
     mode: 0755
     recurse: yes
-  sudo: yes
+  become: yes
+  become_method: sudo
   when: check_path.stat.exists

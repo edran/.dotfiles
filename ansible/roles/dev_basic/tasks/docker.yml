@@ -7,11 +7,13 @@
   shell: wget -qO- https://get.docker.com/gpg | sudo apt-key add -
   when: docker_present|failed
   become: yes
+  become_method: sudo
 
 - name: Docker | Install docker
   shell: wget -qO- https://get.docker.com/ | sh
   when: docker_present|failed
   become: yes
+  become_method: sudo
 
 - name: Docker | Add current user to docker group
   user:
@@ -19,3 +21,4 @@
     groups: docker
     append: yes
   become: yes
+  become_method: sudo

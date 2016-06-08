@@ -48,4 +48,6 @@
   args:
     chdir: "/opt/tmux-{{tmux_version}}"
     creates: "/usr/local/bin/tmux"
+  become: yes
+  become_method: sudo
   when: tmux_present|failed

@@ -48,6 +48,8 @@
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
+  become: yes
+  become_method: sudo
   when: emacs_present|failed
 
 - name: Emacs | Check .emacs.d

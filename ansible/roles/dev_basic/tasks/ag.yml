@@ -1,11 +1,13 @@
 - name: ag | Check current installation
   command: "ag --version"
-  sudo: yes
+  become: yes
+  become_method: sudo
   register: result
   ignore_errors: True
 
 - name: ag | Install build deps
-  sudo: yes
+  become: yes
+  become_method: sudo
   apt:
     pkg: "{{ item }}"
     state: present
@@ -34,7 +36,8 @@
 
 - name: ag | Install
   command: "make install"
-  sudo: yes
+  become: yes
+  become_method: sudo
   args:
     chdir: "/tmp/ag"
   when: result.rc !=0
