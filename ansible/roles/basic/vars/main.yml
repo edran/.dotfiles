@@ -36,3 +36,5 @@ apt_packages:
   - tlp-rdw
   - tp-smapi-dkms
   - acpi-call-dkms
+
+mendeley_url: https://www.mendeley.com/repositories/ubuntu/stable/amd64/mendeleydesktop-latest

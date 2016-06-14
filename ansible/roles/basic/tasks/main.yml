@@ -1,1 +1,20 @@
 - include: apt.yml
+
+- name: Check if Mendeley is installed
+  command: dpkg-query -W mendeleydesktop
+  register: mendeleydesktop_deb
+  failed_when: mendeleydesktop_deb.rc > 1
+  changed_when: mendeleydesktop_deb.rc == 1
+
+- name: Download Mendeley
+  get_url:
+    url: "{{ mendeley_url }}"
+    dest: "/tmp/mendeley.deb"
+  when: mendeleydesktop_deb.rc == 1
+
+- name: Install Mendeley
+  become: yes
+  become_method: sudo
+  apt:
+    deb: "/tmp/mendeley.deb"
+  when: mendeleydesktop_deb.rc == 1
