@@ -3,6 +3,8 @@
   command: "emacs-{{emacs_version}} --version"
   ignore_errors: yes
   register: emacs_present
+  failed_when: emacs_present.rc > 1
+  changed_when: emacs_present.rc == 1
 
 - name: Emacs | Install build-essential
   package:
@@ -63,4 +65,5 @@
     dest: "{{ ansible_env.HOME }}/.emacs.d"
     accept_hostkey: yes
     recursive: yes
+    version: develop
   when: not emacs_path.stat.exists

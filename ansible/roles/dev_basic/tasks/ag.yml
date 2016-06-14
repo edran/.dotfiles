@@ -3,6 +3,8 @@
   become: yes
   become_method: sudo
   register: result
+  failed_when: result.rc > 1
+  changed_when: result.rc == 1
   ignore_errors: True
 
 - name: ag | Install build deps

@@ -65,3 +65,4 @@ __pycache__/
 /dots/ssh/github_rsa.pub
 /dots/ssh/known_hosts
 /ansible/ubuntu.retry
+/dots/config/UDP Software/Dwarf Therapist.ini

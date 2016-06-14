@@ -3,6 +3,8 @@
   command: "tmux -V"
   ignore_errors: yes
   register: tmux_present
+  failed_when: tmux_present.rc > 1
+  changed_when: tmux_present.rc == 1
 
 - name: Tmux | Install build-essential 
   package:

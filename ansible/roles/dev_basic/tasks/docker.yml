@@ -2,6 +2,8 @@
   command: test -x /usr/bin/docker
   ignore_errors: yes
   register: docker_present
+  failed_when: docker_present.rc > 1
+  changed_when: docker_present.rc == 1
 
 - name: Docker | Add docker gpg keys
   shell: wget -qO- https://get.docker.com/gpg | sudo apt-key add -
