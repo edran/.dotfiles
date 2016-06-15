@@ -7,5 +7,5 @@ fi
 
 if which xcape >/dev/null; then
 	echo "Setting CTRL_L to Escape"
-	xcape
+  xcape -e 'Caps_Lock=Escape;Control_L=Escape;Control_R=Escape'
 fi
