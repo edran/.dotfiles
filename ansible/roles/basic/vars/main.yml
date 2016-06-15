@@ -2,6 +2,7 @@ apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
   - 'ppa:linrunner/tlp'
+  - "deb http://debian.sur5r.net/i3/ trusty universe"
   # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
@@ -26,7 +27,14 @@ apt_packages:
   - virtualbox-5.0
   - redshift
   - redshift-gtk
+  - sur5r-keyring
   - i3
+  - arandr
+  - nitrogen
+  - scrot
+  - imagemagick
+  - realpath
+  - wmctrl
   # media
   - vlc
   - cmus

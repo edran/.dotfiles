@@ -66,3 +66,4 @@ __pycache__/
 /dots/ssh/known_hosts
 /ansible/ubuntu.retry
 /dots/config/UDP Software/Dwarf Therapist.ini
+/dots/config/nitrogen/
