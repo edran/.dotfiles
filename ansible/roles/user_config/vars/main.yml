@@ -16,6 +16,7 @@ linking_paths:
   - {dot: "dots/tmux.conf", dest: ".conf"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
+  - {dot: "dots/dmrc", dest: ".dmrc"}
+  - {dot: "dots/i3", dest: ".i3"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
-  - {dot: "dots/xsession", dest: ".xsession"}
   - {dot: "dots/ssh/", dest: ".ssh"}
