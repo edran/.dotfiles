@@ -7,21 +7,26 @@
   changed_when: tmux_present.rc == 1
 
 - name: Tmux | Install build-essential 
+  become: yes
+  become_method: sudo
   package:
     name: build-essential
     state: present
+  when: tmux_present.rc == 1
 
 - name: Tmux | Install build deps
+  become: yes
+  become_method: sudo
   apt:
     pkg: tmux
     state: build-dep
-  when: tmux_present|failed
+  when: tmux_present.rc == 1
 
 - name: Tmux | Download source
   get_url:
     url: "https://github.com/tmux/tmux/releases/download/2.2/tmux-{{tmux_version}}.tar.gz"
     dest: "/tmp/tmux-{{tmux_version}}.tar.gz"
-  when: tmux_present|failed
+  when: tmux_present.rc == 1
 
 - name: Tmux | Untar
   unarchive:
@@ -29,21 +34,21 @@
     src: "/tmp/tmux-{{tmux_version}}.tar.gz"
     dest: "/opt"
     creates: "/opt/tmux-{{tmux_version}}"
-  when: tmux_present|failed
+  when: tmux_present.rc == 1
 
 - name: Tmux | Configure
   command: ./configure
   args:
     chdir: "/opt/tmux-{{tmux_version}}"
     creates: "/opt/tmux-{{tmux_version}}/Makefile"
-  when: tmux_present|failed
+  when: tmux_present.rc == 1
 
 - name: Tmux | Build
   command: make
   args:
     chdir: "/opt/tmux-{{tmux_version}}"
     creates: "/opt/tmux-{{tmux_version}}/src/tmux"
-  when: tmux_present|failed
+  when: tmux_present.rc == 1
 
 - name: Tmux | Install
   command: make install
@@ -52,4 +57,4 @@
     creates: "/usr/local/bin/tmux"
   become: yes
   become_method: sudo
-  when: tmux_present|failed
+  when: tmux_present.rc == 1

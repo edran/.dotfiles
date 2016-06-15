@@ -18,5 +18,6 @@ linking_paths:
   - {dot: "dots/urxvt", dest: ".urxvt"}
   - {dot: "dots/dmrc", dest: ".dmrc"}
   - {dot: "dots/i3", dest: ".i3"}
+  - {dot: "dots/i3status.conf", dest: ".i3status.conf"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/ssh/", dest: ".ssh"}
