@@ -1,5 +1,6 @@
 apt_repos:
   - 'ppa:git-core/ppa'
+  - 'ppa:keithw/mosh-dev'
 
 apt_keys:
 
@@ -10,6 +11,7 @@ apt_packages:
   - terminator
   - rxvt-unicode-256color
   - ncurses-term
+  - mosh
   # terminal utils
   - powertop
   - tree
