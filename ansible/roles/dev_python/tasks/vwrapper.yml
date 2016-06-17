@@ -7,5 +7,6 @@
   pip:
     name: virtualenvwrapper
     executable: "{{ item }}"
-  sudo: true
+  become: yes
+  become_method: sudo
   with_items: "{{ pip_executables }}"

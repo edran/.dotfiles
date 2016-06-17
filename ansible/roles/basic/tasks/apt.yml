@@ -3,6 +3,7 @@
   become_method: sudo
   apt_key: 
     url: "{{ item.url|default() }}"
+    id: "{{ item.id|default() }}"
   with_items: "{{ apt_keys_url }}"
 
 - name: Add apt keys via id

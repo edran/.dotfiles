@@ -1,7 +1,8 @@
 - include: apt.yml
 
 - name: Update pip and pip3
-  sudo: true
+  become: yes
+  become_method: sudo
   pip:
     name: pip
     executable: "{{ item }}"

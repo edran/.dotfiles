@@ -31,6 +31,7 @@ apt_packages:
   - i3
   - arandr
   - nitrogen
+  - blueman
   - scrot
   - imagemagick
   - realpath
