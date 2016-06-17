@@ -30,6 +30,7 @@ apt_packages:
   - sur5r-keyring
   - i3
   - arandr
+  - lxappearance
   - nitrogen
   - blueman
   - scrot

@@ -38,8 +38,6 @@ __pycache__/
 /dots/bin/irony-server
 /dots/bin/clion-dir/
 /dots/config/brasero
-/dots/config/gtk-2.0/
-/dots/config/gtk-3.0/
 /dots/config/ibus/
 /dots/config/libaccounts-glib/
 /dots/config/pulse/
