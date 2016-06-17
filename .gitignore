@@ -67,3 +67,4 @@ __pycache__/
 /ansible/ubuntu.retry
 /dots/config/UDP Software/Dwarf Therapist.ini
 /dots/config/nitrogen/
+/dots/config/mopidy/secret.conf

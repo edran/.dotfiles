@@ -36,7 +36,8 @@
   with_items:
     - mopidy-scrobbler
     - mopidy-spotify
-    - mopidy-spotify-tunigo
+    - pyspotify
+    - mopidy-spotify-web
     - mopidy-gmusic
     - mopidy-somafm
     - mopidy-youtube
@@ -51,10 +52,27 @@
     groups: pulse-access
     append: yes
 
-- name: Ensures mopidy daemon is enabled and started
+- name: Disable Mopidy service at boot
   become: yes
   become_method: sudo
-  service:
-    name: mopidy
-    enabled: yes
-    state: started
+  lineinfile:
+    dest: /etc/init/mopidy.override
+    regexp: '^'
+    line: 'manual'
+    state: present
+    create: true
+
+- name: Check secret.conf exists
+  stat:
+    path: "{{ ansible_env.HOME }}/.config/mopidy/secret.conf"
+  register: secret_path
+
+- name: Copy secret file to mopidy config folder
+  copy:
+    src: "files/secret.conf"
+    dest: "{{ ansible_env.HOME }}/.config/mopidy/secret.conf"
+    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_env.USER }}"
+    mode: 0644
+  when: secret_path.stat.exists == False
+
