@@ -28,11 +28,20 @@ new_window 1pixel
 new_float 1pixel
 
 bar {
-        position bottom
+        position top
         output LVDS1
         status_command i3status --config ~/.i3/i3status.conf
         strip_workspace_numbers yes
 }
+
+bar {
+        position top
+        output VGA1
+        status_command i3status --config ~/.i3/i3status.conf
+        strip_workspace_numbers yes
+        tray_output none
+}
+
 
 #################
 ## KEYBINDINGS ##
@@ -158,7 +167,7 @@ bindsym $mod+r mode "resize"
 bindsym $mod+b border toggle
 
 # Switch monitor
-bindsym $mod+Tab move workspace to output right
+bindsym $mod+Tab move workspace to output left
 
 # scratchpad
 bindsym $mod+i move scratchpad

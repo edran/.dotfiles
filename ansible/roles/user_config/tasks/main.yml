@@ -1,5 +1,4 @@
 ---
-
 - name: Remove Home directories
   file:
     path: "{{ ansible_env.HOME }}/{{ item }}"
@@ -38,22 +37,3 @@
     state: link
     force: yes
   with_items: "{{ linking_paths }}"
-
-- name:  Add trim to all SSDs
-  lineinfile:
-    dest: /etc/cron.weekly/fstrim
-    backup: True
-    backrefs: True
-    state: present
-    regexp: '^(exec\sfstrim\-all\s*(?!\-\-no\-model\-check))$'
-    line: 'exec fstrim-all --no-model-check'
-  become: yes
-  become_method: sudo
-
-- replace: dest=/etc/hosts regexp='(\s+)old\.host\.name(\s+.*)?$' replace='\1new.host.name\2' backup=yes
-
-# - name: Add gsettings
-#   gsetting: user="{{ansible_user_id}}"
-#             key="{{item.key}}"
-#             value="{{item.value}}"
-#   with_items: "{{ gsettings_settings }}"

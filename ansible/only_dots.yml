@@ -1,0 +1,6 @@
+---
+- name: Manage edran\'s dotfiles (https://github.com/edran/dotfiles)
+  hosts: localhost
+  connection: local
+  roles:
+    - user_config
