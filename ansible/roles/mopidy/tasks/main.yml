@@ -13,6 +13,12 @@
     url: "https://apt.mopidy.com/mopidy.gpg"
     state: present
 
+- name: apt update cache
+  become: yes
+  become_method: sudo
+  apt:
+    update_cache: yes
+
 - name: Install mopidy
   become: yes
   become_method: sudo
