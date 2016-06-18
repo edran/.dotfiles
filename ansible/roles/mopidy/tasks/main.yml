@@ -50,14 +50,6 @@
     - mopidy-soundcloud
     - mopidy-local-images
 
-- name: Authorize mopidy to play sound over pulse
-  become: yes
-  become_method: sudo
-  user:
-    name: mopidy
-    groups: pulse-access
-    append: yes
-
 - name: Disable Mopidy service at boot
   become: yes
   become_method: sudo
