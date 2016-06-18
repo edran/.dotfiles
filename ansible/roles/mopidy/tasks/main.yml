@@ -50,15 +50,13 @@
     - mopidy-soundcloud
     - mopidy-local-images
 
-- name: Disable Mopidy service at boot
+- name: Disable mopidy service
   become: yes
   become_method: sudo
-  lineinfile:
-    dest: /etc/init/mopidy.override
-    regexp: '^'
-    line: 'manual'
-    state: present
-    create: true
+  service:
+    name: mopidy
+    enabled: false
+    state: stopped
 
 - name: Check secret.conf exists
   stat:
