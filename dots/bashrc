@@ -84,15 +84,24 @@ if [ -f $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh ]; then
   . $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh
 fi
 
+
 # Editors
 
 export EDITOR="vim"
 export GIT_EDITOR="vim"
-ecs() { emacsclient -c -n -a emacs "/sudo::$*"; }
-ets() { emacsclient -t -a emacs "/sudo::$*"; }
 export TERM=xterm-256color
 
-# External sources
+git-ssh() {
+    eval `ssh-agent -s`
+    ssh-add ~/.ssh/github_rsa
+}
+
+
+# Ext
+
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
 
 if [ -d "$HOME/.dotfiles/vendor/z" ] ; then
     . $HOME/.dotfiles/vendor/z/z.sh
@@ -108,21 +117,10 @@ if [ -d "$HOME/torch/install/bin/" ] ; then
     . $HOME/torch/install/bin/torch-activate
 fi
 
-export TORCH_DIR="$HOME/torch"
-export PROTOBUF_DIR="$HOME/protobuf"
-
-export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
-
-export VIRTUALENV_MASTER_PATH="$HOME/.venvs"
-
-git-ssh() {
-    eval `ssh-agent -s`
-    ssh-add ~/.ssh/github_rsa
-}
-
-VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
-export PROJECT_HOME="$HOME/Dev"
-export WORKON_HOME="$HOME/.venvs"
 if [ -x "/usr/local/bin/virtualenvwrapper.sh" ] ; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
+
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
+

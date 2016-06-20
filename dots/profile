@@ -23,12 +23,18 @@ if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-# export PATH="$HOME/.pyenv/bin:$PATH"
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
+export TORCH_DIR="$HOME/torch"
+export PROTOBUF_DIR="$HOME/protobuf"
 
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
 
+export VIRTUALENV_MASTER_PATH="$HOME/.venvs"
+
+VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
+export PROJECT_HOME="$HOME/Dev"
+export WORKON_HOME="$HOME/.venvs"
+
+export PATH="/home/edran/.pyenv/bin:$PATH"
+
+#########################################
 init-keyboard
