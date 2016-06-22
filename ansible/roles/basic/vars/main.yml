@@ -27,6 +27,7 @@ apt_packages:
   - virtualbox-5.0
   - redshift
   - redshift-gtk
+  # i3
   - sur5r-keyring
   - i3
   - arandr

@@ -7,6 +7,8 @@
    (list (expand-file-name "layers/" dotspacemacs-directory))
    dotspacemacs-configuration-layers
    '(
+     graphviz
+     ansible
      ;; ---------- editing
      (auto-completion)
      (ibuffer)
@@ -65,7 +67,7 @@
    dotspacemacs-themes '(material)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
-                               :size 13
+                               :size 11
                                :weight normal
                                :width normal
                                :powerline-scale 1.1)
@@ -123,7 +125,7 @@
 
    ;; Whitespace mode
    whitespace-style '(face tabs tab-mark)
-
+   ws-butler-global-mode 1
    ;; Spell checking
    spell-checking-enable-auto-dictionary t
 
