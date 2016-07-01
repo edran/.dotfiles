@@ -9,4 +9,13 @@
     state: latest
   with_items: "{{ pip_executables }}"
 
+- name: Install python packages
+  become: yes
+  become_method: sudo
+  pip:
+    name: "{{ item }}"
+    executable: pip
+    state: latest
+  with_items: "{{ pip_packages }}"
+
 - include: vwrapper.yml

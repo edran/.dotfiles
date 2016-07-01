@@ -7,8 +7,6 @@
    (list (expand-file-name "layers/" dotspacemacs-directory))
    dotspacemacs-configuration-layers
    '(
-     graphviz
-     ansible
      ;; ---------- editing
      (auto-completion)
      (ibuffer)
@@ -20,6 +18,7 @@
      (evil-snipe) ;; better jumping (f / t)
 
      ;; ---------- tools
+     (erc)
      (semantic)
      (themes-megapack)
      (org)
@@ -46,12 +45,14 @@
      (lua)
      (c-c++)
      (shell-scripts)
+     (graphviz)
+     (ansible)
 
      ;; ---------- other
      (games)
      (theming)
      ;; ---------- personal
-     (edran)
+     ;; (edran)
      ;; (edran-torch)
      )
    dotspacemacs-additional-packages '()

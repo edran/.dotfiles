@@ -5,3 +5,7 @@ apt_packages:
 pip_executables:
   - pip
   - pip3
+
+pip_packages:
+  - yapf
+  - autoflake
