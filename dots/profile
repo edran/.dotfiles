@@ -23,6 +23,10 @@ if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
+if [ -d "$HOME/.local/bin" ]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
 export TORCH_DIR="$HOME/torch"
 export PROTOBUF_DIR="$HOME/protobuf"
 

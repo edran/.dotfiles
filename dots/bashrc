@@ -41,17 +41,12 @@ if [ -n "$force_color_prompt" ]; then
     fi
 fi
 
-# load aliases
-if [ -f "$HOME/.dotfiles/dots/bash_aliases" ]; then
-    . $HOME/.dotfiles/dots/bash_aliases
-fi
+# completion ###########################################################
 
-# bash completion
 if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-# pip bash completion start
 _pip_completion()
 {
     COMPREPLY=( $( COMP_WORDS="${COMP_WORDS[*]}" \
@@ -59,11 +54,10 @@ _pip_completion()
                    PIP_AUTO_COMPLETE=1 $1 ) )
 }
 complete -o default -F _pip_completion pip
-# pip bash completion end
 
-####################################################################
 
-# Prompt
+# Prompt ###############################################################
+
 START_PART="\[\e[1;31m\]["
 END_PART="\[\e[1;31m\]]\[\e[0;0m\] "
 PWD_PART="\[\e[0;33m\]\w"
@@ -81,40 +75,40 @@ if [ -f $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh ]; then
   GIT_PROMPT_SEPARATOR="\[\e[0;37m\]|"
   GIT_PROMPT_THEME=Single_line
   GIT_PROMPT_START="$PS1"
-  . $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh
+  source $HOME/.dotfiles/vendor/bash-git-prompt/gitprompt.sh
 fi
 
+# Enhance ##############################################################
 
-# Editors
+if [ -d ~/.dotfiles/dots/bash_functions ]; then
+    for file in ~/.dotfiles/dots/bash_functions/*; do
+        source "$file"
+    done
+fi
 
+if [ -f "$HOME/.dotfiles/dots/bash_aliases" ]; then
+    source $HOME/.dotfiles/dots/bash_aliases
+fi
+
+# Editors ##############################################################
+
+set -o vi
 export EDITOR="vim"
 export GIT_EDITOR="vim"
 export TERM=xterm-256color
 
-git-ssh() {
-    eval `ssh-agent -s`
-    ssh-add ~/.ssh/github_rsa
-}
-
-
-# Ext
-
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+# External #############################################################
 
 if [ -d "$HOME/.dotfiles/vendor/z" ] ; then
-    . $HOME/.dotfiles/vendor/z/z.sh
+    source $HOME/.dotfiles/vendor/z/z.sh
 fi
 
-# ROS activation
 if [ -d "/opt/ros/indigo" ] ; then
     source /opt/ros/indigo/setup.bash
 fi
 
-# Torch activation
 if [ -d "$HOME/torch/install/bin/" ] ; then
-    . $HOME/torch/install/bin/torch-activate
+    source $HOME/torch/install/bin/torch-activate
 fi
 
 if [ -x "/usr/local/bin/virtualenvwrapper.sh" ] ; then
@@ -123,4 +117,3 @@ fi
 
 eval "$(pyenv init -)"
 eval "$(pyenv virtualenv-init -)"
-
