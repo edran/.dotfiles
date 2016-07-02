@@ -9,3 +9,4 @@ pip_executables:
 pip_packages:
   - yapf
   - autoflake
+  - percol

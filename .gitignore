@@ -67,3 +67,5 @@ __pycache__/
 /dots/config/nitrogen/
 /dots/config/mopidy/secret.conf
 /dots/config/Franz/
+/dots/config/fish/
+/dots/config/omf/
