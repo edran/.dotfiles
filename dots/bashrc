@@ -12,9 +12,6 @@ shopt -s histappend
 HISTSIZE=10000
 HISTFILESIZE=20000
 
-# Better history format
-export HISTTIMEFORMAT="%h %d %H:%M:%S> "
-
 # Update rows/columns with windows size changes
 shopt -s checkwinsize
 
@@ -91,11 +88,6 @@ if [ -f "$HOME/.dotfiles/dots/bash_aliases" ]; then
 fi
 
 # Editors ##############################################################
-
-set -o vi
-export EDITOR="vim"
-export GIT_EDITOR="vim"
-export TERM=xterm-256color
 
 # External #############################################################
 

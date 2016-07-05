@@ -27,6 +27,13 @@ if [ -d "$HOME/.local/bin" ]; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Better history format
+export HISTTIMEFORMAT="%h %d %H:%M:%S> "
+
+export EDITOR="vim"
+export GIT_EDITOR="vim"
+export TERM=xterm-256color
+
 export TORCH_DIR="$HOME/torch"
 export PROTOBUF_DIR="$HOME/protobuf"
 
