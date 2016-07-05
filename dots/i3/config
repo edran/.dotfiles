@@ -169,6 +169,10 @@ bindsym $mod+b border toggle
 # Switch monitor
 bindsym $mod+Tab move workspace to output left
 
+# Swap monitors
+bindsym $mod+Shift+s exec /home/edran/.i3/switch.py
+
+
 # scratchpad
 bindsym $mod+i move scratchpad
 bindsym $mod+o scratchpad show
