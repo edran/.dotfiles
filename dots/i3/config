@@ -204,6 +204,13 @@ bindsym --release $mod+Print exec scrot -s -e 'mv $f /home/edran/media/images/sc
 
 for_window [window_role="pop-up"] floating enable
 for_window [class="Thunar" instance="thunar"] floating enable
+for_window [class="Skype" instance="skype"] floating enable
+for_window [class="File-roller"] floating enable
+for_window [class="Speedcrunch"] floating enable
+for_window [class="Gloobus-preview"] floating enable
+for_window [class="Pavucontrol"] floating enable
+for_window [instance="gimp"] floating enable
+
 ###############
 ## autostart ##
 ###############
@@ -214,3 +221,4 @@ exec --no-startup-id redshift-gtk
 exec_always --no-startup-id nitrogen --restore
 exec --no-startup-id autolock -time 1 -locker screenlock
 exec --no-startup-id mopidy --config=~/.config/mopidy/
+exec --no-startup-id dropbox start -i

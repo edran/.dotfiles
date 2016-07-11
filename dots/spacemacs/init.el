@@ -28,7 +28,6 @@
      (shell)
      (restclient)
      (command-log) ;; useful for teaching
-     (eyebrowse)
      (ranger)
      ;; TODO checkout elfeed
      ;; TODO install erc
@@ -47,7 +46,7 @@
      (shell-scripts)
      (graphviz)
      (ansible)
-
+     (javascript)
      ;; ---------- other
      (games)
      (theming)
