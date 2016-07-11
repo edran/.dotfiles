@@ -1,7 +1,0 @@
-#!/bin/sh
-google-chrome --disk-cache-dir=/tmp/cache --disable-hang-monitor #\
-#    --pinned-tab-count=3 \
-#    https://mail.google.com \
-#    https://www.google.com/calendar/ \
-#    https://soundcloud.com/stream
-exit 0

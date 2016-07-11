@@ -8,3 +8,5 @@ if (xrandr | grep "$EXT disconnected"); then
 else
     xrandr --output $IN --auto --primary --output $EXT --auto --right-of $IN
 fi
+
+nitrogen --restore

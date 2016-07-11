@@ -1,6 +1,7 @@
 apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian trusty contrib'
   - 'deb http://repository.spotify.com stable non-free'
+  - 'ppa:mc3man/trusty-media'
   - 'ppa:linrunner/tlp'
   - "deb http://debian.sur5r.net/i3/ trusty universe"
   # Standard ubuntu
@@ -23,6 +24,7 @@ apt_packages:
   - ubuntu-restricted-extras
   - aptitude
   - ca-certificates
+  - ppa-purge
   - thunar
   - thunar-archive-plugin
   - thunar-media-tags-plugin
@@ -30,6 +32,10 @@ apt_packages:
   - virtualbox-5.0
   - redshift
   - redshift-gtk
+  - transmission-gtk
+  - speedcrunch
+  - pavucontrol
+  - inkscape
   # i3
   - sur5r-keyring
   - i3
@@ -43,6 +49,7 @@ apt_packages:
   - wmctrl
   # media
   - vlc
+  - vlc-plugin-libde265
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support
