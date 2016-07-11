@@ -69,3 +69,9 @@ __pycache__/
 /dots/config/Franz/
 /dots/config/fish/
 /dots/config/omf/
+/dots/local/
+/dots/config/pavucontrol.ini
+/dots/config/SpeedCrunch/
+/dots/config/xfce4/
+/dots/config/transmission-daemon/
+/dots/config/opera-beta/

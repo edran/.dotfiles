@@ -198,6 +198,12 @@ bindsym $mod+Delete exec --no-startup-id screenlock
 bindsym Print exec scrot -e 'mv $f /home/edran/media/images/scrot/'
 bindsym --release $mod+Print exec scrot -s -e 'mv $f /home/edran/media/images/scrot/'
 
+####################
+## software rules ##
+####################
+
+for_window [window_role="pop-up"] floating enable
+for_window [class="Thunar" instance="thunar"] floating enable
 ###############
 ## autostart ##
 ###############

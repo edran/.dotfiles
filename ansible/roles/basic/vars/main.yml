@@ -23,6 +23,9 @@ apt_packages:
   - ubuntu-restricted-extras
   - aptitude
   - ca-certificates
+  - thunar
+  - thunar-archive-plugin
+  - thunar-media-tags-plugin
   # - skype # FIXME
   - virtualbox-5.0
   - redshift
