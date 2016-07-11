@@ -3,8 +3,7 @@
   command: "emacs-{{emacs_version}} --version"
   ignore_errors: yes
   register: emacs_present
-  failed_when: emacs_present.rc > 1
-  changed_when: emacs_present.rc == 1
+  changed_when: emacs_present.rc > 0
 
 - name: Emacs | Install build-essential
   become: yes
@@ -19,44 +18,49 @@
   apt:
     pkg: emacs24
     state: build-dep
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Download source
   get_url:
     url: "http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-{{emacs_version}}.tar.gz"
     dest: "/tmp/emacs-{{emacs_version}}.tar.gz"
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Untar source
+  become: yes
+  become_method: sudo
   unarchive:
     copy: no
     src: "/tmp/emacs-{{emacs_version}}.tar.gz"
     dest: "/opt"
     creates: "/opt/emacs-{{emacs_version}}"
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Configure source
+  become: yes
+  become_method: sudo
   command: ./configure
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
-    creates: "/opt/emacs-{{emacs_version}}/Makefile"
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Build source
+  become: yes
+  become_method: sudo
   command: make
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/opt/emacs-{{emacs_version}}/src/emacs"
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Install emacs
+  become: yes
+  become_method: sudo
   command: make install
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
-  become: yes
-  become_method: sudo
-  when: emacs_present.rc == 1
+  when: emacs_present|failed
 
 - name: Emacs | Check .emacs.d
   stat:
