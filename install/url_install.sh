@@ -35,6 +35,6 @@ echo "[i] Installing edran/.dotfiles..."
 git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive
 cd "$HOME/.dotfiles/"
 
-ansible-galaxy install -r ansible/requirements.yml
+sudo ansible-galaxy install -r ansible/requirements.yml
 ansible-playbook -i ansible/inventory \
                  ansible/ubuntu.yml --become
