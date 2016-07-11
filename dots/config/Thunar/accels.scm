@@ -30,6 +30,7 @@
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/0543450ec87f6bb43a32b1554455c34b" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/restore" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-network" "")
+; (gtk_accel_path "<Actions>/ThunarActions/Tap::create-archive" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/new-tab" "<Primary>t")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/90710019565f25fd958c22d1caec1bae" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/preferences" "")
