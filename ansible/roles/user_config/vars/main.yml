@@ -14,6 +14,7 @@ linking_paths:
   - {dot: "dots/config", dest: ".config"}
   - {dot: "dots/fonts", dest: ".fonts"}
   - {dot: "dots/tmux.conf", dest: ".conf"}
+  - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
   - {dot: "dots/dmrc", dest: ".dmrc"}
