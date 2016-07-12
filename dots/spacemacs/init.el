@@ -11,7 +11,10 @@
      (auto-completion)
      (ibuffer)
 
-     (colors)
+     (colors
+      :variables
+      colors-enable-rainbow-identifiers t)
+
      (better-defaults)
      (syntax-checking)
      (spell-checking)
@@ -29,6 +32,7 @@
      (restclient)
      (command-log) ;; useful for teaching
      (ranger)
+     (deft)
      ;; TODO checkout elfeed
      ;; TODO install erc
      ;; dash ;; requires zeal installed on OS
@@ -44,12 +48,12 @@
      (lua)
      (c-c++)
      (shell-scripts)
-     (graphviz)
      (ansible)
      (javascript)
      ;; ---------- other
      (games)
      (theming)
+     (spotify)
      ;; ---------- personal
      ;; (edran)
      ;; (edran-torch)
@@ -151,7 +155,11 @@
   )
 
 (defun dotspacemacs/user-config ()
-  (setq powerline-default-separator 'alternate))
+  (setq powerline-default-separator 'alternate)
+  (with-eval-after-load 'org (setq org-agenda-files
+                                   '("~/dropbox/org/")))
+  (setq deft-directory "~/dropbox/org/")
+  )
 
 ;; Use external custom file
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
