@@ -204,6 +204,7 @@ bindsym --release $mod+Print exec scrot -s -e 'mv $f /home/edran/media/images/sc
 for_window [window_role="pop-up"] floating enable
 for_window [class="Thunar" instance="thunar"] floating enable
 for_window [class="Skype" instance="skype"] floating enable
+for_window [class="zoom" instance="zoom"] floating enable
 for_window [class="File-roller"] floating enable
 for_window [class="Speedcrunch"] floating enable
 for_window [class="Gloobus-preview"] floating enable
