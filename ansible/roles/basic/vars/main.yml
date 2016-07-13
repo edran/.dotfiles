@@ -24,6 +24,7 @@ apt_packages:
   - ubuntu-restricted-extras
   - aptitude
   - ca-certificates
+  - gparted
   - ppa-purge
   - thunar
   - thunar-archive-plugin
