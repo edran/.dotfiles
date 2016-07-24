@@ -24,8 +24,27 @@ set $ws10 10:X
 
 font pango:DejaVu Sans Mono 9
 
-new_window 1pixel
-new_float 1pixel
+new_window pixel 2
+new_float pixel 2
+
+# Hybrid colors
+set $back               #131513
+set $black              #131513
+set $grey               #666666
+set $lightgrey          #707880
+set $white              #C5C8C6
+set $yellow             #F0C674
+set $red                #CC6666
+set $darkred            #A54242
+set $blue               #B5BD56
+
+#class                  border      backgr.     text        split
+client.focused          $blue       $blue       $black      $blue
+client.focused_inactive $grey       $grey       $lightgrey  $grey
+client.unfocused        $grey       $grey       $lightgrey  $grey
+client.urgent           $red        $red        $black      $red
+client.placeholder      $black      $white      $black      $black
+client.background       $back
 
 bar {
         position top
