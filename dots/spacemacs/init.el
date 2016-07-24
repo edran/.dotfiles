@@ -45,7 +45,9 @@
      (markdown)
      (python)
      (yaml)
-     (lua)
+     (lua
+      :variables
+      lua-indent-level 4)
      (c-c++)
      (shell-scripts)
      (ansible)
@@ -159,6 +161,7 @@
   (with-eval-after-load 'org (setq org-agenda-files
                                    '("~/dropbox/org/")))
   (setq deft-directory "~/dropbox/org/")
+  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
   )
 
 ;; Use external custom file
