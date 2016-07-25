@@ -29,6 +29,7 @@
     cache_valid_time: 3600
   with_items:
     - mopidy
+    - mpc
     - ncmpcpp
     - libspotify-dev
 
