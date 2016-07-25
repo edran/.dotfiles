@@ -18,6 +18,7 @@ linking_paths:
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
   - {dot: "dots/dmrc", dest: ".dmrc"}
+  - {dot: "dots/ncmpcpp", dest: ".ncmpcpp"}
   - {dot: "dots/i3", dest: ".i3"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/ssh/", dest: ".ssh"}
