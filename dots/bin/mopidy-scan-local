@@ -1,0 +1,8 @@
+#!/bin/bash
+
+echo "Scanning new data..."
+mopidy --config=~/.config/mopidy local scan
+echo "Sending new data to mopidy..."
+curl -d '{"jsonrpc": "2.0", "id": 1, "method": "core.library.refresh"}' http://localhost:6680/mopidy/rpc
+echo ""
+echo "All done"
