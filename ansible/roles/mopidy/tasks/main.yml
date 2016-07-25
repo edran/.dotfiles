@@ -49,6 +49,7 @@
     - mopidy-youtube
     - mopidy-soundcloud
     - mopidy-local-images
+    - mopidy-local-sqlite
 
 - name: Disable mopidy service
   become: yes
