@@ -36,3 +36,5 @@ https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)
 * `pyenv`
 * `google-chrome`
 * `dropbox`
+* Upgrade `ncmpcpp` (Done automagically in 16.04)
+* Install [CAVA](https://karlstav.github.io/cava/)
