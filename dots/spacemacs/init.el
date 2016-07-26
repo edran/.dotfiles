@@ -75,7 +75,7 @@
    dotspacemacs-default-font '("Source Code Pro"
                                :size 11
                                :weight normal
-                               :width normal
+                               :width condensed
                                :powerline-scale 1.1)
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
