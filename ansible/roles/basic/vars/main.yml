@@ -29,6 +29,7 @@ apt_packages:
   - thunar
   - thunar-archive-plugin
   - thunar-media-tags-plugin
+  - gnome-keyring
   # - skype # FIXME
   - virtualbox-5.0
   - redshift
