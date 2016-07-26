@@ -1,5 +1,11 @@
-!! Perl extensions
+!-- Xft settings -- !
+Xft.dpi:        94
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
 
+!! Perl extensions
 URxvt.perl-ext-common: default,matcher,clipboard
 URxvt.keysym.M-c:   perl:clipboard:copy
 URxvt.keysym.M-v:   perl:clipboard:paste
@@ -9,7 +15,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt*buffered: true
 URxvt*cursorBlink: true
 URxvt*underlineColor: red
-URxvt*font:  xft:Ubuntu Mono:pixelsize=14,style=regular,antialiasing=true
+URxvt*font: xft:Source Code Pro:pixelsize=11,hinting=True,antialiasing=true
 URxvt*depth: 32
 URxvt*borderless: 1
 URxvt*scrollBar: false
@@ -25,24 +31,39 @@ URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
 
-!! Colours
+! special
+*.foreground:   #e1e1e1
+*.background:   #2a2e35
+*.cursorColor:  #e1e1e1
 
-URxvt*foreground: white
-URxvt*background: black
+! black
+*.color0:       #5a5a5a
+*.color8:       #8c8c8c
 
-*color0:  #2E3436
-*color1:  #a40000
-*color2:  #4E9A06
-*color3:  #C4A000
-*color4:  #3465A4
-*color5:  #75507B
-*color6:  #ce5c00
-*color7:  #babdb9
-*color8:  #555753
-*color9:  #EF2929
-*color10: #8AE234
-*color11: #FCE94F
-*color12: #729FCF
-*color13: #AD7FA8
-*color14: #fcaf3e
-*color15: #EEEEEC
+! red
+*.color1:	#de8990
+*.color9:	#d0a8ab
+
+! green
+*.color2:	#94daa9
+*.color10:	#bae8d2
+
+! yellow
+*.color3:	#dee7aa
+*.color11:	#d7c96b
+
+! blue
+*.color4:	#9cdbdf
+*.color12:	#6cb4dd
+
+! magenta
+*.color5:	#cca8c9
+*.color13:	#db79bf
+
+! cyan
+*.color6:	#9ad4c8
+*.color14:	#59b0b2
+
+! white
+*.color7:	#e1e1e1
+*.color15:	#f0f0f0

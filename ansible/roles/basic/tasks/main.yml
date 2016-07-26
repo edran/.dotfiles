@@ -29,3 +29,10 @@
     line: 'exec fstrim-all --no-model-check'
   become: yes
   become_method: sudo
+
+- name: Set urxvt as default terminal
+  become: yes
+  become_method: sudo
+  alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/urxvt
