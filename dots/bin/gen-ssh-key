@@ -1,0 +1,11 @@
+#!/bin/bash
+
+display_usage() {
+    echo -e "Usage:\n     gen-ssh-key email_address file_name\n"
+}
+if [[ $# -le 1 ]] ; then
+    display_usage
+    exit 0
+fi
+
+ssh-keygen -t rsa -b 4096 -C "$1" -f "$HOME/.ssh/$2"

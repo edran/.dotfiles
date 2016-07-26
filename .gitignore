@@ -5,6 +5,7 @@ __pycache__/
 
 # stuff
 *~
+/dots/ssh/*
 
 # config files
 /dots/config/google-chrome/
@@ -59,9 +60,6 @@ __pycache__/
 /dots/bin/x264
 /dots/config/QtProject.conf
 /dots/config/enchant/
-/dots/ssh/github_rsa
-/dots/ssh/github_rsa.pub
-/dots/ssh/known_hosts
 /ansible/ubuntu.retry
 /dots/config/UDP Software/Dwarf Therapist.ini
 /dots/config/nitrogen/
