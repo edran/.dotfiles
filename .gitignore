@@ -79,3 +79,4 @@ __pycache__/
 /dots/config/zoomus.conf
 /dots/config/obs-studio/
 /dots/ncmpcpp/error.log
+/dots/ncmpcpp/artists/
