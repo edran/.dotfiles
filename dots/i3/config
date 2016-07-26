@@ -7,16 +7,16 @@ set $mod Mod4
 focus_follows_mouse no
 workspace_auto_back_and_forth yes
 
-set $ws1 1:I
-set $ws2 2:II
-set $ws3 3:III
+set $ws1 1:web
+set $ws2 2:emacs
+set $ws3 3:dev
 set $ws4 4:IV
 set $ws5 5:V
 set $ws6 6:VI
 set $ws7 7:VII
 set $ws8 8:VIII
-set $ws9 9:IX
-set $ws10 10:X
+set $ws9 9:media
+set $ws10 10:music
 
 ##########
 ## LOOK ##
@@ -190,7 +190,6 @@ bindsym $mod+Tab move workspace to output left
 # Swap monitors
 bindsym $mod+Shift+s exec /home/edran/.i3/switch.py
 
-
 # scratchpad
 bindsym $mod+i move scratchpad
 bindsym $mod+o scratchpad show
@@ -241,3 +240,34 @@ exec_always --no-startup-id nitrogen --restore
 exec --no-startup-id autolock -time 1 -locker screenlock
 exec --no-startup-id mopidy --config=~/.config/mopidy/
 exec --no-startup-id dropbox start -i
+
+################
+## Workspaces ##
+################
+
+exec --no-startup-id "i3-msg 'workspace $ws1; append_layout /home/edran/.i3/ws/workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/edran/.i3/ws/workspace-2.json'"
+
+exec --no-startup-id "i3-msg 'workspace $ws9; append_layout /home/edran/.i3/ws/workspace-9.json'"
+exec --no-startup-id "i3-msg 'workspace $ws10; append_layout /home/edran/.i3/ws/workspace-10.json'"
+
+#################
+## Fill layout ##
+#################
+
+# layout 1
+exec --no-startup-id "google-chrome"
+
+# layout 2
+exec --no-startup-id "emacs"
+
+# layout 9
+exec --no-startup-id "transmission-gtk"
+
+# layout 10
+exec --no-startup-id "i3-sensible-terminal -name ncmpcpp -e ncmpcpp"
+exec --no-startup-id "i3-sensible-terminal -name cava -e cava"
+
+# scatchpad
+exec --no-startup-id "i3-sensible-terminal -name scratchpad"
+for_window [instance="^scratchpad$"] move scratchpad
