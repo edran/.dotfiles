@@ -15,7 +15,7 @@ URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 URxvt*buffered: true
 URxvt*cursorBlink: true
 URxvt*underlineColor: red
-URxvt*font: xft:Droid Sans Mono:pixelsize=11,hinting=True,antialiasing=true
+URxvt*font: xft:Terminus:pixelsize=12,hinting=True,antialiasing=true
 URxvt*depth: 32
 URxvt*borderless: 1
 URxvt*scrollBar: false
@@ -30,6 +30,10 @@ URxvt.matcher.button: 1
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 
+! pseudo transparency
+URxvt*.transparent:  true
+! 0-99 darkens, 101-200 lightens
+URxvt*.shading: 20
 
 ! special
 *.foreground:   #e1e1e1

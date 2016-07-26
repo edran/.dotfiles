@@ -48,6 +48,7 @@ apt_packages:
   - imagemagick
   - realpath
   - wmctrl
+  - xfonts-terminus
   # media
   - vlc
   - vlc-plugin-libde265

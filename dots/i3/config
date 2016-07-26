@@ -22,7 +22,7 @@ set $ws10 10:music
 ## LOOK ##
 ##########
 
-font pango:DejaVu Sans Mono 9
+font pango:Terminus 9
 
 new_window pixel 2
 new_float pixel 2

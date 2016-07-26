@@ -47,11 +47,12 @@
      (yaml)
      (lua
       :variables
-      lua-indent-level 4)
+      lua-indent-level 4 t)
      (c-c++)
      (shell-scripts)
      (ansible)
      (javascript)
+     (vimscript)
      ;; ---------- other
      (games)
      (theming)
