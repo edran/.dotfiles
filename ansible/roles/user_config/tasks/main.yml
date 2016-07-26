@@ -32,7 +32,7 @@
 
 - name: Remove .config directory
   file:
-    src: "{{ ansible_env.HOME }}/.config"
+    path: "{{ ansible_env.HOME }}/.config"
     state: absent
 
 - name: Symlink dotfiles
