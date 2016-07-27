@@ -78,3 +78,12 @@ __pycache__/
 /dots/config/obs-studio/
 /dots/ncmpcpp/error.log
 /dots/ncmpcpp/artists/
+/dots/weechat/sec.conf
+/dots/weechat/weechat.log
+/dots/weechat/urlserver_list.txt
+/dots/weechat/script/
+/dots/weechat/python/
+/dots/weechat/ruby/
+/dots/weechat/lua/
+/dots/weechat/perl/
+/dots/weechat/logs/

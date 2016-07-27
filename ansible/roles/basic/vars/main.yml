@@ -4,6 +4,7 @@ apt_repos:
   - 'ppa:mc3man/trusty-media'
   - 'ppa:linrunner/tlp'
   - "deb http://debian.sur5r.net/i3/ trusty universe"
+  - "deb https://weechat.org/ubuntu trusty main"
   # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
@@ -19,6 +20,7 @@ apt_keys_url:
 
 apt_keys_id:
   - {keyserver: keyserver.ubuntu.com, id: BBEBDCB318AD50EC6865090613B00F1FD2C19886}
+  - {keyserver: keys.gnupg.net, id: 11E9DE8848F2B65222AA75B8D1820DB22A11534E}
 
 apt_packages:
   - ubuntu-restricted-extras
@@ -38,6 +40,7 @@ apt_packages:
   - speedcrunch
   - pavucontrol
   - inkscape
+  - weechat
   # i3
   - sur5r-keyring
   - i3
