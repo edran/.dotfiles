@@ -1,0 +1,16 @@
+// vim:ts=4:sw=4:et
+{
+    "border": "none",
+    "current_border_width": 0,
+    "floating": "auto_off",
+    "name": "WeeChat",
+    "percent": 1,
+    "type": "con",
+    "swallows": [
+       {
+       "class": "^URxvt$",
+       "instance": "^weechat$"
+       }
+    ]
+}
+

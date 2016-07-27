@@ -14,7 +14,7 @@ set $ws4 4:IV
 set $ws5 5:V
 set $ws6 6:VI
 set $ws7 7:VII
-set $ws8 8:VIII
+set $ws8 8:irc
 set $ws9 9:media
 set $ws10 10:music
 
@@ -248,6 +248,7 @@ exec --no-startup-id dropbox start -i
 exec --no-startup-id "i3-msg 'workspace $ws1; append_layout /home/edran/.i3/ws/workspace-1.json'"
 exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/edran/.i3/ws/workspace-2.json'"
 
+exec --no-startup-id "i3-msg 'workspace $ws8; append_layout /home/edran/.i3/ws/workspace-8.json'"
 exec --no-startup-id "i3-msg 'workspace $ws9; append_layout /home/edran/.i3/ws/workspace-9.json'"
 exec --no-startup-id "i3-msg 'workspace $ws10; append_layout /home/edran/.i3/ws/workspace-10.json'"
 
@@ -260,6 +261,9 @@ exec --no-startup-id "google-chrome"
 
 # layout 2
 exec --no-startup-id "emacs"
+
+# layout 8
+exec --no-startup-id "i3-sensible-terminal -name weechat -e weechat"
 
 # layout 9
 exec --no-startup-id "transmission-gtk"
