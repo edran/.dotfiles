@@ -12,3 +12,17 @@
 - include: docker.yml
 - include: emacs.yml
 - include: tmux.yml
+
+- name: Check urxvt-perls
+  stat:
+    path: "{{ ansible_env.HOME }}/.dotfiles/dots/urxvt/ext"
+  register: perls
+
+- name: Clone urxvt-perls
+  git:
+    repo: https://github.com/muennich/urxvt-perls
+    dest: "{{ ansible_env.HOME }}/.dotfiles/dots/urxvt/ext"
+    accept_hostkey: yes
+    recursive: yes
+    version: master
+  when: not perls.stat.exists
