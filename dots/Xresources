@@ -1,39 +1,68 @@
-!-- Xft settings -- !
+!!!!!!!!!!!!!!!!!!
+!! Xft settings !!
+!!!!!!!!!!!!!!!!!!
+
 Xft.dpi:        94
 Xft.antialias:  true
 Xft.rgba:       rgb
 Xft.hinting:    true
 Xft.hintstyle:  hintfull
+Xft.autohint:   false
+Xft.lcdfilter:  lcddefault
 
-!! Perl extensions
-URxvt.perl-ext-common: default,matcher,clipboard
-URxvt.keysym.M-c:   perl:clipboard:copy
-URxvt.keysym.M-v:   perl:clipboard:paste
-URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
 
-!! General behaviour
-URxvt*buffered: true
-URxvt*cursorBlink: true
-URxvt*underlineColor: red
+!!!!!!!!!!
+!! look !!
+!!!!!!!!!!
+
 URxvt*font: xft:Terminus:pixelsize=14,hinting=True,antialiasing=true
-URxvt*depth: 32
 URxvt*borderless: 1
 URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt*underlineColor: red
+URxvt*depth: 32
+URxvt*termName: rxvt-unicode
+URxvt*.transparent:  true
+URxvt*.shading: 20
+
+
+!!!!!!!!!!!!!!!!!!!!!!!
+!! General behaviour !!
+!!!!!!!!!!!!!!!!!!!!!!!
+
 URxvt*loginShell: true
 Urxvt*secondaryScroll:  true    !! Enable Shift-PageUp/Down in screen
 URxvt*saveLines: 10000
-URxvt*termName: rxvt-unicode
+URxvt.perl-ext-common: default,matcher,keyboard-select,url-select
 
+!! links
 URxvt.urlLauncher: google-chrome
 URxvt.matcher.button: 1
 
+!! make pagers usable
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
 
-! pseudo transparency
-URxvt*.transparent:  true
-! 0-99 darkens, 101-200 lightens
-URxvt*.shading: 20
+!! clipboard !! REMOVE EXTENSION WHEN UPGRADING TO 9.20+
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+
+!! keyboard-select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+
+!! url-select
+URxvt.keysym.M-u: perl:url-select:select_next
+
+
+!!!!!!!!!!!!!!!!!!
+!! COLOR SCHEME !!
+!!!!!!!!!!!!!!!!!!
 
 ! special
 *.foreground:   #e1e1e1
