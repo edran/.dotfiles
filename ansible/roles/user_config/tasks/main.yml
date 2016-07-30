@@ -30,6 +30,11 @@
     - "media/videos"
     - "lab"
 
+- name: Remove .config directory
+  file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: absent
+
 - name: Symlink dotfiles
   file:
     src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.dot }}"

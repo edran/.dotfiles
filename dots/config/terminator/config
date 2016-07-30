@@ -31,18 +31,18 @@
     font = Ubuntu Mono 10
     background_color = "#121212"
     scrollback_infinite = True
-  [[Atom]]
+  [[Argonaut]]
     scrollbar_position = hidden
-    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
+    palette = "#232323:#ff000f:#8ce10b:#ffb900:#008df8:#6d43a6:#00d8eb:#ffffff:#444444:#ff2740:#abe15b:#ffd242:#0092ff:#9a5feb:#67fff0:#ffffff"
     background_image = None
     cursor_shape = ibeam
     use_system_font = False
-    cursor_color = "#d0d0d0"
-    foreground_color = "#c5c8c6"
+    cursor_color = "#ff0018"
+    foreground_color = "#fffaf4"
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 10
-    background_color = "#161719"
+    background_color = "#0e1019"
     scrollback_infinite = True
   [[zenburn]]
     scrollbar_position = hidden
@@ -183,25 +183,25 @@
     font = Ubuntu Mono 10
     background_color = "#132738"
     scrollback_infinite = True
-  [[Argonaut]]
+  [[Atom]]
     scrollbar_position = hidden
-    palette = "#232323:#ff000f:#8ce10b:#ffb900:#008df8:#6d43a6:#00d8eb:#ffffff:#444444:#ff2740:#abe15b:#ffd242:#0092ff:#9a5feb:#67fff0:#ffffff"
+    palette = "#000000:#fd5ff1:#87c38a:#ffd7b1:#85befd:#b9b6fc:#85befd:#e0e0e0:#000000:#fd5ff1:#94fa36:#f5ffa8:#96cbfe:#b9b6fc:#85befd:#e0e0e0"
     background_image = None
     cursor_shape = ibeam
     use_system_font = False
-    cursor_color = "#ff0018"
-    foreground_color = "#fffaf4"
+    cursor_color = "#d0d0d0"
+    foreground_color = "#c5c8c6"
     scroll_on_output = False
     show_titlebar = False
     font = Ubuntu Mono 10
-    background_color = "#0e1019"
+    background_color = "#161719"
     scrollback_infinite = True
 [layouts]
   [[default]]
     [[[child1]]]
       type = Terminal
       parent = window0
-      profile = Espresso Libre
+      profile = Cobalt2
     [[[window0]]]
       type = Window
       parent = ""

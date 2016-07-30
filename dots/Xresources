@@ -1,48 +1,102 @@
-!! Perl extensions
+!!!!!!!!!!!!!!!!!!
+!! Xft settings !!
+!!!!!!!!!!!!!!!!!!
 
-URxvt.perl-ext-common: default,matcher,clipboard
-URxvt.keysym.M-c:   perl:clipboard:copy
-URxvt.keysym.M-v:   perl:clipboard:paste
-URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+Xft.dpi:        94
+Xft.antialias:  true
+Xft.rgba:       rgb
+Xft.hinting:    true
+Xft.hintstyle:  hintfull
+Xft.autohint:   false
+Xft.lcdfilter:  lcddefault
 
-!! General behaviour
-URxvt*buffered: true
-URxvt*cursorBlink: true
-URxvt*underlineColor: red
-URxvt*font:  xft:Ubuntu Mono:pixelsize=14,style=regular,antialiasing=true
-URxvt*depth: 32
+
+!!!!!!!!!!
+!! look !!
+!!!!!!!!!!
+
+URxvt*font: xft:Terminus:pixelsize=14,hinting=True,antialiasing=true
 URxvt*borderless: 1
 URxvt*scrollBar: false
+URxvt*cursorBlink: true
+URxvt*underlineColor: red
+URxvt*depth: 32
+URxvt*termName: rxvt-unicode
+URxvt*.transparent:  true
+URxvt*.shading: 20
+
+
+!!!!!!!!!!!!!!!!!!!!!!!
+!! General behaviour !!
+!!!!!!!!!!!!!!!!!!!!!!!
+
 URxvt*loginShell: true
 Urxvt*secondaryScroll:  true    !! Enable Shift-PageUp/Down in screen
 URxvt*saveLines: 10000
-URxvt*termName: rxvt-unicode
+URxvt.perl-ext-common: default,matcher,keyboard-select,url-select
 
+!! links
 URxvt.urlLauncher: google-chrome
 URxvt.matcher.button: 1
 
+!! make pagers usable
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
+
+!! clipboard !! REMOVE EXTENSION WHEN UPGRADING TO 9.20+
+URxvt.clipboard.autocopy: true
+URxvt.keysym.M-c:   perl:clipboard:copy
+URxvt.keysym.M-v:   perl:clipboard:paste
+URxvt.keysym.M-C-v: perl:clipboard:paste_escaped
+URxvt.clipboard.copycmd:  xclip -i -selection clipboard
+URxvt.clipboard.pastecmd: xclip -o -selection clipboard
+
+!! keyboard-select
+URxvt.keysym.M-Escape: perl:keyboard-select:activate
+URxvt.keysym.M-s: perl:keyboard-select:search
+
+!! url-select
+URxvt.keysym.M-u: perl:url-select:select_next
 
 
-!! Colours
+!!!!!!!!!!!!!!!!!!
+!! COLOR SCHEME !!
+!!!!!!!!!!!!!!!!!!
 
-URxvt*foreground: white
-URxvt*background: black
+! special
+*.foreground:   #e1e1e1
+*.background:   #2a2e35
+*.cursorColor:  #e1e1e1
 
-*color0:  #2E3436
-*color1:  #a40000
-*color2:  #4E9A06
-*color3:  #C4A000
-*color4:  #3465A4
-*color5:  #75507B
-*color6:  #ce5c00
-*color7:  #babdb9
-*color8:  #555753
-*color9:  #EF2929
-*color10: #8AE234
-*color11: #FCE94F
-*color12: #729FCF
-*color13: #AD7FA8
-*color14: #fcaf3e
-*color15: #EEEEEC
+! black
+*.color0:       #5a5a5a
+*.color8:       #8c8c8c
+
+! red
+*.color1:	#de8990
+*.color9:	#d0a8ab
+
+! green
+*.color2:	#94daa9
+*.color10:	#bae8d2
+
+! yellow
+*.color3:	#dee7aa
+*.color11:	#d7c96b
+
+! blue
+*.color4:	#9cdbdf
+*.color12:	#6cb4dd
+
+! magenta
+*.color5:	#cca8c9
+*.color13:	#db79bf
+
+! cyan
+*.color6:	#9ad4c8
+*.color14:	#59b0b2
+
+! white
+*.color7:	#e1e1e1
+*.color15:	#f0f0f0

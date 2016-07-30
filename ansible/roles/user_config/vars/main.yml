@@ -3,7 +3,6 @@ gsettings_settings:
   - { key: 'org.gnome.desktop.input-sources', value: "xkb-options \"['ctrl:nocaps']\"" }
   - { key: 'org.compiz.core:/org/compiz/profiles/unity/plugins/core/', value: 'hsize 2' }
   - { key: 'org.compiz.core:/org/compiz/profiles/unity/plugins/core/', value: 'vsize 2' }
-  - { key: 'gsettings set com.canonical.Unity.Lenses disabled-scopes', value: "\"['more_suggestions-amazon.scope', 'more_suggestions-u1ms.scope', 'more_suggestions-populartracks.scope', 'music-musicstore.scope', 'more_suggestions-ebay.scope', 'more_suggestions-ubuntushop.scope', 'more_suggestions-skimlinks.scope']\"" }
 
 linking_paths:
   - {dot: "dots/inputrc", dest: ".inputrc"}
@@ -14,9 +13,13 @@ linking_paths:
   - {dot: "dots/config", dest: ".config"}
   - {dot: "dots/fonts", dest: ".fonts"}
   - {dot: "dots/tmux.conf", dest: ".conf"}
+  - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
   - {dot: "dots/dmrc", dest: ".dmrc"}
+  - {dot: "dots/ncmpcpp", dest: ".ncmpcpp"}
   - {dot: "dots/i3", dest: ".i3"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/ssh/", dest: ".ssh"}
+  - {dot: "dots/weechat/", dest: ".weechat"}
+  - {dot: "dots/urxvt/", dest: ".urxvt"}

@@ -1,0 +1,32 @@
+// vim:ts=4:sw=4:et
+// Media split: ncmpcpp + cava
+{
+    "border": "none",
+    "name": "main",
+    "layout": "splitv",
+    "type": "con",
+    "nodes": [
+        {
+            "border": "none",
+            "percent": 0.6,
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^URxvt$",
+                    "instance": "ncmpcpp"
+                }
+            ]
+        },
+        {
+            "border": "none",
+            "percent": 0.4,
+            "type": "con",
+            "swallows": [
+                {
+                    "class": "^URxvt$",
+                    "instance": "cava"
+                }
+            ]
+        }
+    ]
+}

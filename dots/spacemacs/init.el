@@ -11,7 +11,10 @@
      (auto-completion)
      (ibuffer)
 
-     (colors)
+     (colors
+      :variables
+      colors-enable-rainbow-identifiers t)
+
      (better-defaults)
      (syntax-checking)
      (spell-checking)
@@ -29,6 +32,7 @@
      (restclient)
      (command-log) ;; useful for teaching
      (ranger)
+     (deft)
      ;; TODO checkout elfeed
      ;; TODO install erc
      ;; dash ;; requires zeal installed on OS
@@ -41,15 +45,18 @@
      (markdown)
      (python)
      (yaml)
-     (lua)
+     (lua
+      :variables
+      lua-indent-level 4 t)
      (c-c++)
      (shell-scripts)
-     (graphviz)
      (ansible)
      (javascript)
+     (vimscript)
      ;; ---------- other
      (games)
      (theming)
+     (spotify)
      ;; ---------- personal
      ;; (edran)
      ;; (edran-torch)
@@ -69,7 +76,7 @@
    dotspacemacs-default-font '("Source Code Pro"
                                :size 11
                                :weight normal
-                               :width normal
+                               :width condensed
                                :powerline-scale 1.1)
    dotspacemacs-leader-key "SPC"
    dotspacemacs-emacs-leader-key "M-m"
@@ -151,7 +158,12 @@
   )
 
 (defun dotspacemacs/user-config ()
-  (setq powerline-default-separator 'alternate))
+  (setq powerline-default-separator 'alternate)
+  (with-eval-after-load 'org (setq org-agenda-files
+                                   '("~/dropbox/org/")))
+  (setq deft-directory "~/dropbox/org/")
+  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+  )
 
 ;; Use external custom file
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))

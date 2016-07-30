@@ -1,7 +1,23 @@
-Host better-inf
-   User edran
-   HostName 139.59.166.88
+#############
+## General ##
+#############
 
-host install-test
+Host tardis
    User edran
-   HostName 178.62.81.116
+   HostName ssh.tardis.ed.ac.uk
+
+Host inf
+   User s1215573
+   HostName ssh.inf.ed.ac.uk
+
+###############
+## nardel.li ##
+###############
+
+Host nardelli-znc
+   User edran
+   HostName znc.nardel.li
+
+Host nardelli-data
+   User edran
+   HostName data.nardel.li

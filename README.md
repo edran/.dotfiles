@@ -30,3 +30,11 @@ https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)
 
 * `$ git pull origin <branch>` (likely master)
 * `$ ansible-playbook -i ansible/inventory ansible/ubuntu.yml --sudo`
+
+## Things you should install later
+
+* `pyenv`
+* `google-chrome`
+* `dropbox`
+* Upgrade `ncmpcpp` (Done automagically in 16.04)
+* Install [CAVA](https://karlstav.github.io/cava/)

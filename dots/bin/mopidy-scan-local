@@ -1,0 +1,5 @@
+#!/bin/bash
+
+echo "Scanning new data..."
+mopidy --config=~/.config/mopidy local scan
+echo "All done!"

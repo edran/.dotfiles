@@ -1,0 +1,14 @@
+#!/bin/bash
+
+pids=( $(pgrep -f mopidy) )
+
+for pid in "${pids[@]}"; do
+    if [[ $pid != $$ ]]; then
+        kill "$pid"
+    fi
+done
+
+echo "Killed mopidy."
+echo "Restarting mopidy..."
+nohup mopidy --config=~/.config/mopidy &> ~/.nohup-mopidy.out&
+echo "Done"

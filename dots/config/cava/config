@@ -1,0 +1,10 @@
+[general]
+mode = normal
+sensitivity = 150
+bar_width = 1
+
+[color]
+foreground = red
+
+[smoothing]
+integral = 0.5

@@ -7,29 +7,47 @@ set $mod Mod4
 focus_follows_mouse no
 workspace_auto_back_and_forth yes
 
-set $ws1 1:I
-set $ws2 2:II
-set $ws3 3:III
+set $ws1 1:web
+set $ws2 2:emacs
+set $ws3 3:dev
 set $ws4 4:IV
 set $ws5 5:V
 set $ws6 6:VI
 set $ws7 7:VII
-set $ws8 8:VIII
-set $ws9 9:IX
-set $ws10 10:X
+set $ws8 8:irc
+set $ws9 9:media
+set $ws10 10:music
 
 ##########
 ## LOOK ##
 ##########
 
-font pango:DejaVu Sans Mono 9
+font pango:Terminus 9
 
-new_window 1pixel
-new_float 1pixel
+new_window pixel 2
+new_float pixel 2
+
+# Hybrid colors
+set $back               #131513
+set $black              #131513
+set $grey               #666666
+set $lightgrey          #707880
+set $white              #C5C8C6
+set $yellow             #F0C674
+set $red                #CC6666
+set $darkred            #A54242
+set $blue               #B5BD56
+
+#class                  border      backgr.     text        split
+client.focused          $blue       $blue       $black      $blue
+client.focused_inactive $grey       $grey       $lightgrey  $grey
+client.unfocused        $grey       $grey       $lightgrey  $grey
+client.urgent           $red        $red        $black      $red
+client.placeholder      $black      $white      $black      $black
+client.background       $back
 
 bar {
         position top
-        output LVDS1
         status_command i3status --config ~/.i3/i3status.conf
         strip_workspace_numbers yes
 }
@@ -172,7 +190,6 @@ bindsym $mod+Tab move workspace to output left
 # Swap monitors
 bindsym $mod+Shift+s exec /home/edran/.i3/switch.py
 
-
 # scratchpad
 bindsym $mod+i move scratchpad
 bindsym $mod+o scratchpad show
@@ -205,6 +222,7 @@ bindsym --release $mod+Print exec scrot -s -e 'mv $f /home/edran/media/images/sc
 for_window [window_role="pop-up"] floating enable
 for_window [class="Thunar" instance="thunar"] floating enable
 for_window [class="Skype" instance="skype"] floating enable
+for_window [class="zoom" instance="zoom"] floating enable
 for_window [class="File-roller"] floating enable
 for_window [class="Speedcrunch"] floating enable
 for_window [class="Gloobus-preview"] floating enable
@@ -222,3 +240,38 @@ exec_always --no-startup-id nitrogen --restore
 exec --no-startup-id autolock -time 1 -locker screenlock
 exec --no-startup-id mopidy --config=~/.config/mopidy/
 exec --no-startup-id dropbox start -i
+
+################
+## Workspaces ##
+################
+
+exec --no-startup-id "i3-msg 'workspace $ws1; append_layout /home/edran/.i3/ws/workspace-1.json'"
+exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/edran/.i3/ws/workspace-2.json'"
+
+exec --no-startup-id "i3-msg 'workspace $ws8; append_layout /home/edran/.i3/ws/workspace-8.json'"
+exec --no-startup-id "i3-msg 'workspace $ws9; append_layout /home/edran/.i3/ws/workspace-9.json'"
+exec --no-startup-id "i3-msg 'workspace $ws10; append_layout /home/edran/.i3/ws/workspace-10.json'"
+
+#################
+## Fill layout ##
+#################
+
+# layout 1
+exec --no-startup-id "google-chrome"
+
+# layout 2
+exec --no-startup-id "emacs"
+
+# layout 8
+exec --no-startup-id "i3-sensible-terminal -name weechat -e weechat"
+
+# layout 9
+exec --no-startup-id "transmission-gtk"
+
+# layout 10
+exec --no-startup-id "i3-sensible-terminal -name ncmpcpp -e ncmpcpp"
+exec --no-startup-id "i3-sensible-terminal -name cava -e cava"
+
+# scatchpad
+exec --no-startup-id "i3-sensible-terminal -name scratchpad"
+for_window [instance="^scratchpad$"] move scratchpad

@@ -5,6 +5,7 @@ __pycache__/
 
 # stuff
 *~
+/dots/ssh/*
 
 # config files
 /dots/config/google-chrome/
@@ -59,9 +60,6 @@ __pycache__/
 /dots/bin/x264
 /dots/config/QtProject.conf
 /dots/config/enchant/
-/dots/ssh/github_rsa
-/dots/ssh/github_rsa.pub
-/dots/ssh/known_hosts
 /ansible/ubuntu.retry
 /dots/config/UDP Software/Dwarf Therapist.ini
 /dots/config/nitrogen/
@@ -76,3 +74,18 @@ __pycache__/
 /dots/config/transmission-daemon/
 /dots/config/opera-beta/
 /dots/config/pokemon-go-map/
+/dots/config/Unknown Organization/zoom.conf
+/dots/config/zoomus.conf
+/dots/config/obs-studio/
+/dots/ncmpcpp/error.log
+/dots/ncmpcpp/artists/
+/dots/weechat/sec.conf
+/dots/weechat/weechat.log
+/dots/weechat/urlserver_list.txt
+/dots/weechat/script/
+/dots/weechat/python/
+/dots/weechat/ruby/
+/dots/weechat/lua/
+/dots/weechat/perl/
+/dots/weechat/logs/
+/dots/urxvt/ext/
