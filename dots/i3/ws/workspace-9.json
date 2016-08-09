@@ -8,7 +8,7 @@
     "type": "con",
     "swallows": [
         {
-            "class": "^Transmission-gtk$"
+            "class": "^Deluge$"
         }
     ]
 }

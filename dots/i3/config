@@ -266,7 +266,7 @@ exec --no-startup-id "emacs"
 exec --no-startup-id "i3-sensible-terminal -name weechat -e weechat"
 
 # layout 9
-exec --no-startup-id "transmission-gtk"
+exec --no-startup-id "deluge"
 
 # layout 10
 exec --no-startup-id "i3-sensible-terminal -name ncmpcpp -e ncmpcpp"
