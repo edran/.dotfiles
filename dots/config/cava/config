@@ -1,7 +1,8 @@
 [general]
 mode = normal
-sensitivity = 150
+sensitivity = 200
 bar_width = 1
+autosens = 0
 
 [color]
 foreground = red
