@@ -51,3 +51,5 @@ export PROJECT_HOME="$HOME/Dev"
 export WORKON_HOME="$HOME/.venvs"
 
 export PATH="$HOME/.pyenv/bin:$PATH"
+
+export MALMO_XSD_PATH="/home/edran/lab/aaai17/malmo/Schemas/"

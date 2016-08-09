@@ -228,7 +228,7 @@ for_window [class="Speedcrunch"] floating enable
 for_window [class="Gloobus-preview"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [instance="gimp"] floating enable
-
+for_window [instance="Minecraft 1.8"] floating enable
 ###############
 ## autostart ##
 ###############
