@@ -13,6 +13,7 @@
 
      (colors
       :variables
+      colors-enable-nyan-cat-progress-bar t
       colors-enable-rainbow-identifiers t)
 
      (better-defaults)
