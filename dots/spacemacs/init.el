@@ -14,8 +14,8 @@
      (colors
       :variables
       colors-enable-nyan-cat-progress-bar t
-      colors-enable-rainbow-identifiers t)
-
+      colors-colorize-identifiers 'all
+      )
      (better-defaults)
      (syntax-checking)
      (spell-checking)
@@ -54,8 +54,11 @@
      (ansible)
      (javascript)
      (vimscript)
+     (clojure)
      ;; ---------- other
      (games)
+     (selectric)
+     (emoji)
      (theming)
      (spotify)
      ;; ---------- personal
@@ -72,7 +75,8 @@
    dotspacemacs-verbose-loading nil
    dotspacemacs-startup-banner nil
    dotspacemacs-startup-lists '(recents bookmarks projects)
-   dotspacemacs-themes '(material)
+   dotspacemacs-themes '(spacemacs-dark
+                         spacemacs-light)
    dotspacemacs-colorize-cursor-according-to-state t
    dotspacemacs-default-font '("Source Code Pro"
                                :size 11
@@ -159,13 +163,18 @@
   )
 
 (defun dotspacemacs/user-config ()
+  (indent-guide-global-mode)
+  (global-linum-mode)
+  (global-prettify-symbols-mode)
   (setq powerline-default-separator 'alternate)
   (with-eval-after-load 'org (setq org-agenda-files
                                    '("~/dropbox/org/")))
   (setq deft-directory "~/dropbox/org/")
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+  (setq global-rainbow-identifiers-mode 1)
   )
 
 ;; Use external custom file
 (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
 (load custom-file 'no-error 'no-message)
+
