@@ -31,6 +31,7 @@
     - libxcb-xrm-dev
     - libxcb-ewmh-dev
     - libxcb-icccm4-dev
+    - libxcb-randr0-dev
   when: result.rc !=0
 
 - name: rofi | Checkout
