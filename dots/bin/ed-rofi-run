@@ -1,0 +1,7 @@
+#!/bin/bash
+
+DISP_ARGS='-columns 4'
+SHOW_ARGS='-modi run,drun -show run'
+
+echo $DISP_ARGS $SHOW_ARGS
+rofi $SHOW_ARGS $DISP_ARGS

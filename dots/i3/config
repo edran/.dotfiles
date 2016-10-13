@@ -11,7 +11,7 @@ set $ws1 1:web
 set $ws2 2:emacs
 set $ws3 3:dev
 set $ws4 4:IV
-set $ws5 5:V
+set $ws5 5:papers
 set $ws6 6:VI
 set $ws7 7:VII
 set $ws8 8:irc
@@ -22,7 +22,7 @@ set $ws10 10:music
 ## LOOK ##
 ##########
 
-font pango:Terminus 9
+font pango:Terminus 8
 
 new_window pixel 2
 new_float pixel 2
@@ -75,8 +75,8 @@ bindsym $mod+Return exec i3-sensible-terminal
 bindsym $mod+Shift+q kill
 
 # start dmenu (a program launcher)
-bindsym $mod+p exec dmenu_run
-bindsym $mod+Shift+p exec --no-startup-id i3-dmenu-desktop
+bindsym $mod+p exec --no-startup-id ed-rofi-run
+bindsym $mod+Shift+p exec --no-startup-id ed-rofi-alt
 
 # change focus
 bindsym $mod+h focus left
@@ -191,7 +191,7 @@ bindsym $mod+Tab move workspace to output left
 bindsym $mod+Shift+s exec /home/edran/.i3/switch.py
 
 # scratchpad
-bindsym $mod+i move scratchpad
+bindsym $mod+Shift+o move scratchpad
 bindsym $mod+o scratchpad show
 
 ###############
@@ -230,6 +230,9 @@ for_window [class="Gloobus-preview"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [instance="gimp"] floating enable
 for_window [instance="Minecraft 1.8"] floating enable
+# Hack to get rofi to open shell programs always in float
+for_window [class="URxvt" instance="floating"] floating enable
+
 ###############
 ## autostart ##
 ###############
@@ -249,6 +252,7 @@ exec --no-startup-id dropbox start -i
 exec --no-startup-id "i3-msg 'workspace $ws1; append_layout /home/edran/.i3/ws/workspace-1.json'"
 exec --no-startup-id "i3-msg 'workspace $ws2; append_layout /home/edran/.i3/ws/workspace-2.json'"
 
+exec --no-startup-id "i3-msg 'workspace $ws8; append_layout /home/edran/.i3/ws/workspace-5.json'"
 exec --no-startup-id "i3-msg 'workspace $ws8; append_layout /home/edran/.i3/ws/workspace-8.json'"
 exec --no-startup-id "i3-msg 'workspace $ws9; append_layout /home/edran/.i3/ws/workspace-9.json'"
 exec --no-startup-id "i3-msg 'workspace $ws10; append_layout /home/edran/.i3/ws/workspace-10.json'"
@@ -262,6 +266,9 @@ exec --no-startup-id "google-chrome"
 
 # layout 2
 exec --no-startup-id "emacs"
+
+# layout 5
+exec --no-startup-id "mendeleydesktop"
 
 # layout 8
 exec --no-startup-id "i3-sensible-terminal -name weechat -e weechat"
