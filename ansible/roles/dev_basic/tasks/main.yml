@@ -13,6 +13,7 @@
 - include: emacs.yml
 - include: tmux.yml
 - include: rofi.yml
+- include: i3blocks.yml
 
 - name: Check urxvt-perls
   stat:
