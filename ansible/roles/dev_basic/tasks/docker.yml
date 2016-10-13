@@ -24,3 +24,4 @@
     append: yes
   become: yes
   become_method: sudo
+  when: docker_present|failed

@@ -29,6 +29,7 @@
     - "media/images"
     - "media/videos"
     - "lab"
+  ignore_errors: yes
 
 - name: Remove .config directory
   file:

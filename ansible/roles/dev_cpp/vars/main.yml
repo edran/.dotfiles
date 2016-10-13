@@ -4,6 +4,8 @@ apt_repos:
 apt_packages:
   - gcc-5
   - g++-5
+  - gcc-4.8
+  - g++-4.8
   - gdb
   - clang-3.4
   - cmake
