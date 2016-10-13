@@ -48,14 +48,16 @@ client.background       $back
 
 bar {
         position top
-        status_command i3status --config ~/.i3/i3status.conf
+        # status_command i3blocks -c ~/.i3/i3blocks.conf
+        status_command i3status -c ~/.i3/i3status.conf
         strip_workspace_numbers yes
 }
 
 bar {
         position top
         output VGA1
-        status_command i3status --config ~/.i3/i3status.conf
+        # status_command i3blocks -c ~/.i3/i3blocks.conf
+        status_command i3status -c ~/.i3/i3status.conf
         strip_workspace_numbers yes
         tray_output none
 }
