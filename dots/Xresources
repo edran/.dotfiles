@@ -109,9 +109,8 @@ URxvt.keysym.M-u: perl:url-select:select_next
 !!!!!!!! Rofi !!!!!!!!!
 !!!!!!!!!!!!!!!!!!!!!!!
 
-rofi.monitor: -4
+rofi.monitor: -5
 rofi.threads: 0
-rofi.matching: fuzzy
 rofi.sidebar-mode: True
 rofi.fixed-num-lines: True
 rofi.run-shell-command: {terminal} -name floating -e {cmd}

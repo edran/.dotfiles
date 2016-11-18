@@ -34,6 +34,7 @@ https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)
 ## Things you should install later
 
 * `pyenv`
+* `pyenv-virtualenvwrapper`
 * `google-chrome`
 * `dropbox`
 * Upgrade `ncmpcpp` (Done automagically in 16.04)
