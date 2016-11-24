@@ -37,7 +37,7 @@ fi
 
 export EDITOR="vim"
 export GIT_EDITOR="vim"
-export TERM=xterm-256color
+export TERM=rxvt-unicode-256color
 
 export TORCH_DIR="$HOME/torch"
 export PROTOBUF_DIR="$HOME/protobuf"
