@@ -231,6 +231,7 @@ for_window [class="Speedcrunch"] floating enable
 for_window [class="Gloobus-preview"] floating enable
 for_window [class="Pavucontrol"] floating enable
 for_window [instance="gimp"] floating enable
+for_window [instance="evince"] floating enable
 for_window [instance="Minecraft 1.8"] floating enable
 # Hack to get rofi to open shell programs always in float
 for_window [class="URxvt" instance="floating"] floating enable
@@ -270,7 +271,7 @@ exec --no-startup-id "google-chrome"
 exec --no-startup-id "emacs"
 
 # layout 5
-exec --no-startup-id "mendeleydesktop"
+exec --no-startup-id "zotero"
 
 # layout 8
 exec --no-startup-id "i3-sensible-terminal -name weechat -e weechat"

@@ -67,4 +67,4 @@ apt_packages:
   - tp-smapi-dkms
   - acpi-call-dkms
 
-mendeley_url: https://www.mendeley.com/repositories/ubuntu/stable/amd64/mendeleydesktop-latest
+zotero_url: https://raw.github.com/edran/zotero_installer/master/zotero_installer.sh
