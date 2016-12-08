@@ -1,23 +1,23 @@
 - include: apt.yml
 
-- name: Check if Mendeley is installed
-  command: dpkg-query -W mendeleydesktop
-  register: mendeleydesktop_deb
-  failed_when: mendeleydesktop_deb.rc > 1
-  changed_when: mendeleydesktop_deb.rc == 1
+- name: Check if Zotero is installed
+  stat:
+    path: "/opt/zotero"
+  register: zotero_dir
+  changed_when: false
 
-- name: Download Mendeley
+- name: Download Zotero
   get_url:
-    url: "{{ mendeley_url }}"
-    dest: "/tmp/mendeley.deb"
-  when: mendeleydesktop_deb.rc == 1
+    url: "{{ zotero_url }}"
+    dest: "/tmp/zotero_installer.sh"
+    mode: "u+rwx"
+  when: not zotero_dir.stat.exists
 
-- name: Install Mendeley
+- name: Install Zotero
   become: yes
   become_method: sudo
-  apt:
-    deb: "/tmp/mendeley.deb"
-  when: mendeleydesktop_deb.rc == 1
+  command: "/tmp/zotero_installer.sh"
+  when: not zotero_dir.stat.exists
 
 - name:  Add trim to all SSDs
   lineinfile:

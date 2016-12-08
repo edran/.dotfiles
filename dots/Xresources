@@ -1,3 +1,7 @@
+XTerm*locale: true
+XTerm*metaSendsEscape: true
+Xterm*saveLines: 10000
+
 !!!!!!!!!!!!!!!!!!
 !! Xft settings !!
 !!!!!!!!!!!!!!!!!!
@@ -74,29 +78,49 @@ URxvt.keysym.M-u: perl:url-select:select_next
 *.color8:       #8c8c8c
 
 ! red
-*.color1:	#de8990
-*.color9:	#d0a8ab
+*.color1: #de8990
+*.color9: #d0a8ab
 
 ! green
-*.color2:	#94daa9
-*.color10:	#bae8d2
+*.color2: #94daa9
+*.color10:  #bae8d2
 
 ! yellow
-*.color3:	#dee7aa
-*.color11:	#d7c96b
+*.color3: #dee7aa
+*.color11:  #d7c96b
 
 ! blue
-*.color4:	#9cdbdf
-*.color12:	#6cb4dd
+*.color4: #9cdbdf
+*.color12:  #6cb4dd
 
 ! magenta
-*.color5:	#cca8c9
-*.color13:	#db79bf
+*.color5: #cca8c9
+*.color13:  #db79bf
 
 ! cyan
-*.color6:	#9ad4c8
-*.color14:	#59b0b2
+*.color6: #9ad4c8
+*.color14:  #59b0b2
 
 ! white
-*.color7:	#e1e1e1
-*.color15:	#f0f0f0
+*.color7: #e1e1e1
+*.color15:  #f0f0f0
+
+!!!!!!!!!!!!!!!!!!!!!!!
+!!!!!!!! Rofi !!!!!!!!!
+!!!!!!!!!!!!!!!!!!!!!!!
+
+rofi.monitor: -5
+rofi.threads: 0
+rofi.sidebar-mode: True
+rofi.fixed-num-lines: True
+rofi.run-shell-command: {terminal} -name floating -e {cmd}
+rofi.ssh-command: {terminal} -name floating -e {ssh-client} {host}
+rofi.window-format: {w} {t} {n}
+
+rofi.font:    Ubuntu Mono 12
+rofi.line-margin: 3
+rofi.color-window: #222222, #fa6363, #fa6363
+rofi.color-normal: argb:0000000, #ffffff, argb:0000000, #fa6363, #1b2b34
+rofi.color-active: argb:0000000, #63bdfa, argb:0000000, #63bdfa, #1b2b34
+rofi.color-urgent: argb:0000000, #f9cd56, argb:0000000, #f9cd56, #1b2b34
+rofi.separator-style: solid

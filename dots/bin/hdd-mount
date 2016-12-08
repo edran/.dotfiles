@@ -1,0 +1,3 @@
+#!/bin/bash
+
+sudo mount -o rw /dev/sdc1 /media/hdd-data

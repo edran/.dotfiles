@@ -92,3 +92,4 @@ __pycache__/
 /dots/config/guitarix/
 /dots/config/jack/conf.xml
 /dots/config/rncbc.org/QjackCtl.conf
+/dots/config/deluge/

@@ -26,8 +26,8 @@ fi
 # Force colors in bash
 case "$TERM" in
     xterm-color) color_prompt=yes;;
+    rvxt-unicode-256-color) color_prompt=yes;;
 esac
-
 force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then

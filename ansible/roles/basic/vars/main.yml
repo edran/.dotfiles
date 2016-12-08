@@ -5,6 +5,7 @@ apt_repos:
   - 'ppa:linrunner/tlp'
   - "deb http://debian.sur5r.net/i3/ trusty universe"
   - "deb https://weechat.org/ubuntu trusty main"
+  - "ppa:deluge-team/ppa"
   # Standard ubuntu
   - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
@@ -37,7 +38,7 @@ apt_packages:
   - virtualbox-5.0
   - redshift
   - redshift-gtk
-  - transmission-gtk
+  - deluge
   - speedcrunch
   - pavucontrol
   - inkscape
@@ -66,4 +67,4 @@ apt_packages:
   - tp-smapi-dkms
   - acpi-call-dkms
 
-mendeley_url: https://www.mendeley.com/repositories/ubuntu/stable/amd64/mendeleydesktop-latest
+zotero_url: https://raw.github.com/edran/zotero_installer/master/zotero_installer.sh

@@ -1,4 +1,4 @@
-; thunar GtkAccelMap rc-file         -*- scheme -*-
+; Thunar GtkAccelMap rc-file         -*- scheme -*-
 ; this file is an automated accelerator map dump
 ;
 ; (gtk_accel_path "<Actions>/ThunarLauncher/sendto-desktop" "")
@@ -30,7 +30,7 @@
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/0543450ec87f6bb43a32b1554455c34b" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/restore" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/open-network" "")
-; (gtk_accel_path "<Actions>/ThunarActions/Tap::create-archive" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/01de3040f7955a329d2ee2745061d728" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/new-tab" "<Primary>t")
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/90710019565f25fd958c22d1caec1bae" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/preferences" "")
@@ -70,6 +70,7 @@
 ; (gtk_accel_path "<Actions>/ThunarBookmarks/a4ba1143c44d45781f71d9666f629db5" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/empty-trash" "")
 ; (gtk_accel_path "<Actions>/ThunarWindow/view-location-selector-menu" "")
+; (gtk_accel_path "<Actions>/ThunarBookmarks/e59badbc2fd5e374839c8f0758078d87" "")
 ; (gtk_accel_path "<Actions>/ThunarLauncher/open-in-new-window" "<Primary><Shift>o")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/arrange-items-menu" "")
 ; (gtk_accel_path "<Actions>/ThunarStandardView/cut" "<Primary>x")
