@@ -89,6 +89,9 @@ __pycache__/
 /dots/weechat/perl/
 /dots/weechat/logs/
 /dots/urxvt/ext/
+/dots/config/guitarix/
+/dots/config/jack/conf.xml
+/dots/config/rncbc.org/QjackCtl.conf
 /dots/config/deluge/
 /dots/bin/lein
 /dots/fonts/tff-monaco/MONACO.TTF
