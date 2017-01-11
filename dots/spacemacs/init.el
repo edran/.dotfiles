@@ -42,7 +42,10 @@ values."
       )
      (better-defaults)
      (syntax-checking)
-     (spell-checking)
+     (spell-checking
+      :variables
+      spell-checking-enable-by-default nil
+      )
      (evil-snipe) ;; better jumping (f / t)
 
      ;; ---------- tools
