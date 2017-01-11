@@ -90,3 +90,5 @@ __pycache__/
 /dots/weechat/logs/
 /dots/urxvt/ext/
 /dots/config/deluge/
+/dots/bin/lein
+/dots/fonts/tff-monaco/MONACO.TTF
