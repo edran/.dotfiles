@@ -19,7 +19,7 @@ Xft.lcdfilter:  lcddefault
 !! look !!
 !!!!!!!!!!
 
-URxvt*font: xft:Terminus:pixelsize=14,hinting=True,antialiasing=true
+URxvt*font: xft:Terminus:pixelsize=10,hinting=True,antialiasing=true
 URxvt*borderless: 1
 URxvt*scrollBar: false
 URxvt*cursorBlink: true

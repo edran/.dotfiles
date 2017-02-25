@@ -12,8 +12,8 @@
 - include: docker.yml
 - include: emacs.yml
 - include: tmux.yml
-- include: rofi.yml
 - include: i3blocks.yml
+# - include: rofi.yml
 
 - name: Check urxvt-perls
   stat:

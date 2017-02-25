@@ -2,7 +2,7 @@
 
 - name: Check if Zotero is installed
   stat:
-    path: "/opt/zotero"
+    path: "/opt/zotero/"
   register: zotero_dir
   changed_when: false
 

@@ -93,3 +93,5 @@ __pycache__/
 /dots/config/jack/conf.xml
 /dots/config/rncbc.org/QjackCtl.conf
 /dots/config/deluge/
+/dots/bin/lein
+/dots/fonts/tff-monaco/MONACO.TTF
