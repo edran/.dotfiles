@@ -68,42 +68,41 @@ URxvt.keysym.M-u: perl:url-select:select_next
 !! COLOR SCHEME !!
 !!!!!!!!!!!!!!!!!!
 
-! special
-*.foreground:   #e1e1e1
-*.background:   #2a2e35
-*.cursorColor:  #e1e1e1
+! X11 colors pieced together by Dmitry Medvinsky.
+! ! Based on Vim colorscheme "badwolf" pieced together by Steve Losh.
+!
+*background: #1c1b1a
+*foreground: #f8f6f2
+*cursorColor: #aeee00
+*scrollColor: #45413b
+*fadeColor: #ffffff
+*fading: 20
 
 ! black
-*.color0:       #5a5a5a
-*.color8:       #8c8c8c
-
+*color0: #141413
+*color8: #000000
 ! red
-*.color1: #de8990
-*.color9: #d0a8ab
-
+*color1: #ff2c4b
+*color9: #ff2c4b
 ! green
-*.color2: #94daa9
-*.color10:  #bae8d2
-
+*color2: #aeee00
+*color10: #aeee00
 ! yellow
-*.color3: #dee7aa
-*.color11:  #d7c96b
-
+*color3: #fade3e
+*color11: #ffa724
 ! blue
-*.color4: #9cdbdf
-*.color12:  #6cb4dd
-
+*color4: #0a9dff
+*color12: #0a9dff
 ! magenta
-*.color5: #cca8c9
-*.color13:  #db79bf
-
+*color5: #ff9eb8
+*color13: #ff9eb8
 ! cyan
-*.color6: #9ad4c8
-*.color14:  #59b0b2
-
+*color6: #8cffba
+*color14: #8cffba
 ! white
-*.color7: #e1e1e1
-*.color15:  #f0f0f0
+*color7: #d9cec3
+*color15: #ffffff
+
 
 !!!!!!!!!!!!!!!!!!!!!!!
 !!!!!!!! Rofi !!!!!!!!!
