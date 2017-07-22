@@ -6,20 +6,20 @@ Xterm*saveLines: 10000
 !! Xft settings !!
 !!!!!!!!!!!!!!!!!!
 
-Xft.dpi:        94
-Xft.antialias:  true
-Xft.rgba:       rgb
-Xft.hinting:    true
-Xft.hintstyle:  hintfull
-Xft.autohint:   false
-Xft.lcdfilter:  lcddefault
+Xft.dpi:        96
+Xft.antialias: true
+Xft.rgba: rgb
+Xft.hinting: false
+Xft.hintstyle: hintnone
 
+emacs.FontBackend: xft
 
 !!!!!!!!!!
 !! look !!
 !!!!!!!!!!
 
 URxvt*font: xft:Terminus:pixelsize=10,hinting=True,antialiasing=true
+
 URxvt*borderless: 1
 URxvt*scrollBar: false
 URxvt*cursorBlink: true
