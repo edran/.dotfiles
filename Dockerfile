@@ -1,6 +1,7 @@
-FROM ubuntu:14.04
+FROM ubuntu:16.04
 MAINTAINER Nantas Nardelli <nantas.nardelli@gmail.com>
 
+RUN apt-get update && apt-get install -y locales sudo
 RUN locale-gen en_US.UTF-8
 
 RUN useradd tester
