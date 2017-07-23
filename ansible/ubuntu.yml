@@ -7,5 +7,5 @@
     - dev_basic
     - dev_python
     - dev_cpp
-    - user_config
+    - set_dotfiles
     - mopidy

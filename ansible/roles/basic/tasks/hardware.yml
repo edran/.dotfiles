@@ -1,0 +1,10 @@
+- name:  Add trim to all SSDs
+  lineinfile:
+    dest: /etc/cron.weekly/fstrim
+    backup: True
+    backrefs: True
+    state: present
+    regexp: '^(exec\sfstrim\-all\s*(?!\-\-no\-model\-check))$'
+    line: 'exec fstrim-all --no-model-check'
+  become: yes
+  become_method: sudo
