@@ -23,23 +23,23 @@ apt_keys_id:
 
 apt_packages:
   - ubuntu-restricted-extras
-  - aptitude
+  - gnome-keyring
+  # - aptitude
   - ca-certificates
   - gparted
   - ppa-purge
   - thunar
   - thunar-archive-plugin
   - thunar-media-tags-plugin
-  - gnome-keyring
   - xclip
   # - skype # FIXME
-  - virtualbox-5.0
+  # - virtualbox-5.0
   - redshift
   - redshift-gtk
-  - deluge
+  # - deluge
   - speedcrunch
   - pavucontrol
-  - inkscape
+  # - inkscape
   - weechat
   # i3
   - sur5r-keyring
@@ -54,7 +54,7 @@ apt_packages:
   - wmctrl
   - xfonts-terminus
   # media
-  - vlc
+  # - vlc
   # - vlc-plugin-libde265
   - cmus
   - spotify-client-qt

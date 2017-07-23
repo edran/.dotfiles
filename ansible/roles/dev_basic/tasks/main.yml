@@ -10,8 +10,8 @@
 - include: xcape.yml
 - include: ag.yml
 - include: docker.yml
-- include: emacs.yml
-- include: tmux.yml
+# - include: emacs.yml
+# - include: tmux.yml
 - include: i3blocks.yml
 # - include: rofi.yml
 
