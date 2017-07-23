@@ -1,14 +1,12 @@
 apt_repos:
   - 'deb http://download.virtualbox.org/virtualbox/debian {{ansible_distribution_release}} contrib'
   - 'deb http://repository.spotify.com stable non-free'
-  - 'ppa:mc3man/xerus-media'
+  # - 'ppa:mc3man/xerus-media'
   - 'ppa:linrunner/tlp'
   - "deb http://debian.sur5r.net/i3/ {{ansible_distribution_release}} universe"
   - "deb https://weechat.org/ubuntu {{ansible_distribution_release}} main"
   - "ppa:deluge-team/ppa"
   # Standard ubuntu
-  - "deb http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
-  - "deb-src http://extras.ubuntu.com/ubuntu {{ansible_distribution_release}} main"
   - "deb http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
   - "deb-src http://archive.canonical.com/ubuntu {{ansible_distribution_release}} partner"
   - "deb http://archive.ubuntu.com/ubuntu {{ansible_distribution_release}} multiverse"
@@ -57,7 +55,7 @@ apt_packages:
   - xfonts-terminus
   # media
   - vlc
-  - vlc-plugin-libde265
+  # - vlc-plugin-libde265
   - cmus
   - spotify-client-qt
   - spotify-client-gnome-support
