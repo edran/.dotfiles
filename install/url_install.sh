@@ -38,8 +38,8 @@ cd "$HOME/.dotfiles/"
 if [ -z "$TRAVIS_OS_NAME" ]; then
     echo "Travis detected!"
     sudo ansible-galaxy install -r ansible/requirements.yml
-    sudo ansible-playbook -i ansible/inventory ansible/ubuntu.yml --become
+    sudo ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 else
     sudo ansible-galaxy install -r ansible/requirements.yml
-    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become
+    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 fi

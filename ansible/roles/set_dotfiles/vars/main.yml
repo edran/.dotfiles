@@ -12,7 +12,7 @@ linking_paths:
   - {dot: "dots/bashrc", dest: ".bashrc"}
   - {dot: "dots/bin", dest: "bin"}
   - {dot: "dots/fonts", dest: ".fonts"}
-  - {dot: "dots/tmux.conf", dest: ".conf"}
+  - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
   - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
