@@ -1,0 +1,26 @@
+---
+- name: Remove Home directories
+  file:
+    path: "{{ ansible_env.HOME }}/{{ item }}"
+    state: absent
+  with_items: "{{ home_dirs_remove }}"
+
+- name: Create development home directory
+  file:
+    path: "{{ ansible_env.HOME }}/{{item}}"
+    state: directory
+    group: "{{ ansible_env.USER }}"
+    owner: "{{ ansible_env.USER }}"
+    mode: 0755
+  with_items: "{{ home_dirs_add }}"
+  ignore_errors: yes
+
+- name: Symlink dotfiles
+  file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.dot }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    state: link
+    force: yes
+  with_items: "{{ linking_paths }}"
+
+- include: source-code-pro.yml

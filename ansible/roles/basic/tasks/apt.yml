@@ -23,6 +23,11 @@
   with_items: "{{ apt_repos }}"
   register: ansible_added
 
+- name: manually update apt-key until bus is fixed
+  shell: apt-get update
+  become: true
+  become_method: sudo
+
 - name: apt update cache
   become: yes
   become_method: sudo

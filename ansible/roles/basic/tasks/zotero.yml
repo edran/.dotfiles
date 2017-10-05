@@ -1,0 +1,18 @@
+- name: Check if Zotero is installed
+  stat:
+    path: "/opt/zotero/"
+  register: zotero_dir
+  changed_when: false
+
+- name: Download Zotero
+  get_url:
+    url: "{{ zotero_url }}"
+    dest: "/tmp/zotero_installer.sh"
+    mode: "u+rwx"
+  when: not zotero_dir.stat.exists
+
+- name: Install Zotero
+  become: yes
+  become_method: sudo
+  command: "/tmp/zotero_installer.sh"
+  when: not zotero_dir.stat.exists

@@ -27,5 +27,5 @@ apt_packages:
   - w3m-el
   - cmigemo
 
-emacs_version: 24.5
+emacs_version: 25.1
 tmux_version: 2.2

@@ -5,14 +5,14 @@ gsettings_settings:
   - { key: 'org.compiz.core:/org/compiz/profiles/unity/plugins/core/', value: 'vsize 2' }
 
 linking_paths:
+  - {dot: "dots/config", dest: ".config"}
   - {dot: "dots/inputrc", dest: ".inputrc"}
   - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
   - {dot: "dots/bashrc", dest: ".bashrc"}
   - {dot: "dots/bin", dest: "bin"}
-  - {dot: "dots/config", dest: ".config"}
   - {dot: "dots/fonts", dest: ".fonts"}
-  - {dot: "dots/tmux.conf", dest: ".conf"}
+  - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
   - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/urxvt", dest: ".urxvt"}
@@ -23,3 +23,24 @@ linking_paths:
   - {dot: "dots/ssh/", dest: ".ssh"}
   - {dot: "dots/weechat/", dest: ".weechat"}
   - {dot: "dots/urxvt/", dest: ".urxvt"}
+
+home_dirs_add:
+  - "desktop"
+  - "docs"
+  - "downloads"
+  - "media/music"
+  - "media/images"
+  - "media/videos"
+  - "lab"
+
+home_dirs_remove:
+  - "Desktop"
+  - "Documents"
+  - "Downloads"
+  - "Music"
+  - "Pictures"
+  - "Videos"
+  - "examples.desktop"
+  - "Public"
+  - "Templates"
+  - ".config"

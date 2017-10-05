@@ -1,0 +1,18 @@
+- name: Check source-code-pro directory
+  stat:
+    path: "{{ ansible_env.HOME }}/.fonts/adobe-fonts/source-code-pro/"
+  register: font_path
+  changed_when: false
+
+- name: Download source-code-pro
+  git:
+    repo: https://github.com/adobe-fonts/source-code-pro
+    version: release
+    dest: "{{ ansible_env.HOME }}/.fonts/adobe-fonts/source-code-pro"
+  when: not font_path.stat.exists
+
+- name: Update font cache
+  command: "fc-cache -f -v"
+  become: yes
+  become_method: sudo
+  when: not font_path.stat.exists

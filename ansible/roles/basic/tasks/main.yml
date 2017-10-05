@@ -1,34 +1,8 @@
 - include: apt.yml
-
-- name: Check if Zotero is installed
-  stat:
-    path: "/opt/zotero/"
-  register: zotero_dir
-  changed_when: false
-
-- name: Download Zotero
-  get_url:
-    url: "{{ zotero_url }}"
-    dest: "/tmp/zotero_installer.sh"
-    mode: "u+rwx"
-  when: not zotero_dir.stat.exists
-
-- name: Install Zotero
-  become: yes
-  become_method: sudo
-  command: "/tmp/zotero_installer.sh"
-  when: not zotero_dir.stat.exists
-
-- name:  Add trim to all SSDs
-  lineinfile:
-    dest: /etc/cron.weekly/fstrim
-    backup: True
-    backrefs: True
-    state: present
-    regexp: '^(exec\sfstrim\-all\s*(?!\-\-no\-model\-check))$'
-    line: 'exec fstrim-all --no-model-check'
-  become: yes
-  become_method: sudo
+- include: zotero.yml
+- include: hardware.yml
+- include: gnome.yml
+  when: ansible_distribution == 'Ubuntu'
 
 - name: Set urxvt as default terminal
   become: yes
@@ -36,36 +10,3 @@
   alternatives:
     name: x-terminal-emulator
     path: /usr/bin/urxvt
-
-- name: Make sure gnome-keyring start at login part 1
-  become: yes
-  become_method: sudo
-  lineinfile:
-    dest: /etc/pam.d/login
-    backup: True
-    backrefs: True
-    state: present
-    regexp: 'auth\s*optional\s*pam_gnome_keyring\.so$'
-    line: 'auth optional pam_gnome_keyring.so'
-
-- name: Make sure gnome-keyring start at login part 2
-  become: yes
-  become_method: sudo
-  lineinfile:
-    dest: /etc/pam.d/login
-    backup: True
-    backrefs: True
-    state: present
-    regexp: '^session\s*optional\s*pam_gnome_keyring\.so\s*auto_start$'
-    line: 'session  optional  pam_gnome_keyring.so auto_start'
-
-- name: Make sure gnome-keyring start at login part 3
-  become: yes
-  become_method: sudo
-  lineinfile:
-    dest: /etc/pam.d/passwd
-    backup: True
-    backrefs: True
-    state: present
-    regexp: '^password\s*optional\s*pam_gnome_keyring.so$'
-    line: "password  optional  pam_gnome_keyring.so"

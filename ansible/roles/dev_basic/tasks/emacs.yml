@@ -1,9 +1,9 @@
 ---
 - name: Emacs | Check current installation
-  command: "emacs-{{emacs_version}} --version"
-  ignore_errors: yes
-  register: emacs_present
-  changed_when: emacs_present.rc > 0
+  stat:
+    path: "/usr/local/bin/emacs-{{emacs_version}}"
+  register: emacs_dir
+  changed_when: false
 
 - name: Emacs | Install build-essential
   become: yes
@@ -11,7 +11,7 @@
   package:
     name: build-essential
     state: present
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Install build deps
   become: yes
@@ -19,13 +19,13 @@
   apt:
     pkg: emacs24
     state: build-dep
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Download source
   get_url:
     url: "http://ftp.heanet.ie/mirrors/gnu/emacs/emacs-{{emacs_version}}.tar.gz"
     dest: "/tmp/emacs-{{emacs_version}}.tar.gz"
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Untar source
   become: yes
@@ -35,15 +35,15 @@
     src: "/tmp/emacs-{{emacs_version}}.tar.gz"
     dest: "/opt"
     creates: "/opt/emacs-{{emacs_version}}"
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Configure source
   become: yes
   become_method: sudo
-  command: ./configure
+  command: ./configure --with-x-toolkit --with-xft
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Build source
   become: yes
@@ -52,7 +52,7 @@
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/opt/emacs-{{emacs_version}}/src/emacs"
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Install emacs
   become: yes
@@ -61,7 +61,7 @@
   args:
     chdir: "/opt/emacs-{{emacs_version}}"
     creates: "/usr/local/bin/emacs"
-  when: emacs_present|failed
+  when: not emacs_dir.stat.exists
 
 - name: Emacs | Check .emacs.d
   stat:

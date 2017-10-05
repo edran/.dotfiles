@@ -5,7 +5,7 @@
   roles:
     - basic
     - dev_basic
+    - set_dotfiles
     - dev_python
-    - dev_cpp
-    - user_config
+    # - dev_cpp
     - mopidy
