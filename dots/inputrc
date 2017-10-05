@@ -7,4 +7,6 @@ set show-all-if-ambiguous on
 set match-hidden-files off
 set mark-symlinked-directories on
 
+set editing-mode emacs
+
 # set show-mode-in-prompt on

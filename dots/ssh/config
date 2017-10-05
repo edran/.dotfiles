@@ -21,3 +21,20 @@ Host nardelli-znc
 Host nardelli-data
    User edran
    HostName data.nardel.li
+
+############
+## robots ##
+############
+
+Host robots
+   User nantas
+   HostName robots.ox.ac.uk
+
+Host cs-whip
+   User nantas
+   HostName whip.cs.ox.ac.uk
+
+Host cs-hercules
+   User nantas
+   HostName hercules.cs.ox.ac.uk
+
