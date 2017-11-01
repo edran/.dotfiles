@@ -107,5 +107,7 @@ if [ -x "/usr/local/bin/virtualenvwrapper.sh" ] ; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
+
+export PATH=/home/edran/miniconda3/bin:$PATH
