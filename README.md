@@ -17,8 +17,7 @@ tested.
 
 ## One liner
 
-`$ sh -c "$(curl -fsSL
-https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)"`
+`$ sh -c "$(curl -fsSL https://raw.githubusercontent.com/edran/.dotfiles/master/install/install.sh)"`
 
 ## "Manual" installation
 
