@@ -18,11 +18,13 @@ if [ ! -d "$HOME/.dotfiles" ];
 then
         p_info "Cloning dotfiles..."
         git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive
+        pushd $HOME/.dotfiles
         git remote remove origin
         git remote add origin git@github.com:edran/.dotfiles
+        popd
 fi
 
-cd "$HOME/.dotfiles/"
+pushd "$HOME/.dotfiles/"
 
 # if [ -z "$TRAVIS_OS_NAME" ]; then
 #    echo "Travis detected!"
@@ -32,5 +34,7 @@ cd "$HOME/.dotfiles/"
 #    sudo ansible-galaxy install -r ansible/requirements.yml
 #    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 # fi
+
+popd  # getting out of repo
 
 p_info "All done!"
