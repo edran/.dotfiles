@@ -3,9 +3,4 @@
   hosts: localhost
   connection: local
   roles:
-    - basic
-    - dev_basic
-    - set_dotfiles
-    - dev_python
-    # - dev_cpp
-    - mopidy
+    - essential

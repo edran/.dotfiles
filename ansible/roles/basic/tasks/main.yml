@@ -1,5 +1,4 @@
 - include: apt.yml
-- include: zotero.yml
 - include: hardware.yml
 - include: gnome.yml
   when: ansible_distribution == 'Ubuntu'

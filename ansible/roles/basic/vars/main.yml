@@ -1,5 +1,4 @@
 apt_repos:
-  - 'deb http://download.virtualbox.org/virtualbox/debian {{ansible_distribution_release}} contrib'
   - 'deb http://repository.spotify.com stable non-free'
   # - 'ppa:mc3man/xerus-media'
   - 'ppa:linrunner/tlp'
@@ -65,5 +64,3 @@ apt_packages:
   - tlp-rdw
   - tp-smapi-dkms
   - acpi-call-dkms
-
-zotero_url: https://raw.github.com/edran/zotero_installer/master/zotero_installer.sh

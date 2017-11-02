@@ -1,0 +1,44 @@
+- name: xcape | Check current version
+  command: "which xcape"
+  register: xcape_present
+  failed_when: xcape_present.rc > 1
+  changed_when: xcape_present.rc == 1
+
+- name: xcape | Install build deps
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - git
+    - gcc
+    - make
+    - pkg-config
+    - libx11-dev
+    - libxtst-dev
+    - libxi-dev
+  become: yes
+  become_method: sudo
+  when: xcape_present.changed
+
+- name: xcape | Checkout
+  git:
+    repo: "git://github.com/alols/xcape.git"
+    dest: "/tmp/xcape"
+    force: no
+    accept_hostkey: yes
+  when: xcape_present.changed
+
+- name: xcape | Make
+  command: "make"
+  args:
+    chdir: "/tmp/xcape"
+  when: xcape_present.changed
+
+- name: xcape | Install
+  command: "make install"
+  become: yes
+  become_method: sudo
+  args:
+    chdir: "/tmp/xcape"
+  when: xcape_present.changed

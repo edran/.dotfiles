@@ -1,0 +1,26 @@
+---
+- name: dropbox | Add Dropbox key
+  become: yes
+  become_method: sudo
+  apt_key:
+    keyserver: pgp.mit.edu
+    id: 5044912E
+
+- name: dropbox | Add Dropbox repository
+  become: yes
+  become_method: sudo
+  apt_repository:
+    repo: "deb http://linux.dropbox.com/ubuntu {{ansible_distribution_release}} main"
+  register: ansible_added
+
+- name: dropbox | Install Dropbox
+  become: yes
+  become_method: sudo
+  apt:
+    pkg: "{{ item }}"
+    update_cache: yes
+    allow_unauthenticated: yes
+  with_items:
+    - python-gpgme
+    - dropbox
+  when: ansible_added.changed
