@@ -20,6 +20,7 @@ command -v ansible > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
     p_info "Installing ansible..."
+    sudo apt-add-repository ppa:ansible/ansible -qq
     sudo apt-get update -qq
     sudo apt-get install -qq ansible git
 fi
@@ -39,7 +40,7 @@ pushd "$HOME/.dotfiles/" > /dev/null
 if [ -z "$TRAVIS_OS_NAME" ]; then
    p_warn "Travis detected!"
    sudo ansible-galaxy install -r ansible/requirements.yml
-   sudo ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
+   ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 else
    sudo ansible-galaxy install -r ansible/requirements.yml
    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
