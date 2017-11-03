@@ -14,10 +14,7 @@ function p_warn () {
 }
 
 
-# this has to come before set -e
 command -v ansible > /dev/null 2>&1
-
-set -e
 
 if [ $? -ne 0 ];
 then
