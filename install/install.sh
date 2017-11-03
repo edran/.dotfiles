@@ -14,9 +14,11 @@ function p_warn () {
 }
 
 
+# this has to come before set -e
+command -v ansible > /dev/null 2>&1
+
 set -e
 
-command -v ansible > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
     p_info "Installing ansible..."
@@ -37,7 +39,7 @@ fi
 
 pushd "$HOME/.dotfiles/" > /dev/null
 
-if [ -z "$TRAVIS_OS_NAME" ]; then
+if [ ! -z "$TRAVIS_OS_NAME" ]; then
    p_warn "Travis detected!"
    sudo ansible-galaxy install -r ansible/requirements.yml
    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
