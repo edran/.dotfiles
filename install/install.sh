@@ -24,10 +24,15 @@ then
     sudo apt-get install -qq ansible git
 fi
 
+# for TravisCI purposes
+if [ -z "$GIT_BRANCH"]; then
+    GIT_BRANCH="master"
+fi
+
 if [ ! -d "$HOME/.dotfiles" ];
 then
     p_info "Cloning dotfiles..."
-    git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive
+    git clone https://github.com/edran/.dotfiles.git "$HOME/.dotfiles" --recursive --branch $GIT_BRANCH
     pushd $HOME/.dotfiles > /dev/null
     git remote remove origin
     git remote add origin git@github.com:edran/.dotfiles
