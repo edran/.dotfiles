@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y \
     apt-transport-https \
     sudo \
     ubuntu-desktop \
-    locales \
+    locales
 RUN locale-gen en_US.UTF-8
 
 RUN useradd tester
