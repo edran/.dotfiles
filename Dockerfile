@@ -4,7 +4,7 @@ MAINTAINER Nantas Nardelli <nantas.nardelli@gmail.com>
 ARG git_branch=master
 
 RUN apt-get update && apt-get install -y \
-    apt-transport-https
+    apt-transport-https \
     sudo \
     ubuntu-desktop \
     locales \
