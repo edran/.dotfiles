@@ -22,4 +22,4 @@ ENV GIT_BRANCH $git_branch
 
 RUN wget https://raw.githubusercontent.com/edran/.dotfiles/$GIT_BRANCH/install/install.sh
 RUN chmod +x install.sh
-RUN bash -v install.sh
+RUN bash -v install.sh $GIT_BRANCH

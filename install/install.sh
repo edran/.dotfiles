@@ -24,9 +24,11 @@ then
     sudo apt-get install -qq ansible git
 fi
 
-# for TravisCI purposes
-if [ -z "$GIT_BRANCH"]; then
+# for TravisCI purposes, first argument specifies branch
+if [ $# -eq 0 ]; then
     GIT_BRANCH="master"
+else
+    GIT_BRANCH=$1
 fi
 
 if [ ! -d "$HOME/.dotfiles" ];
