@@ -1,7 +1,13 @@
 FROM ubuntu:16.04
 MAINTAINER Nantas Nardelli <nantas.nardelli@gmail.com>
 
-RUN apt-get update && apt-get install -y locales sudo
+ARG git_branch=master
+
+RUN apt-get update && apt-get install -y \
+    apt-transport-https
+    sudo \
+    ubuntu-desktop \
+    locales \
 RUN locale-gen en_US.UTF-8
 
 RUN useradd tester
@@ -19,4 +25,4 @@ ENV GIT_AUTHOR_EMAIL nantas.nardelli@gmail.com
 RUN sudo apt-get update && sudo apt-get install -y curl apt-transport-https
 
 WORKDIR /home/tester
-RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/edran/.dotfiles/master/install/url_install.sh)"
+RUN sh -c "$(curl -fsSL https://raw.githubusercontent.com/edran/.dotfiles/$git_branch/install/url_install.sh)"

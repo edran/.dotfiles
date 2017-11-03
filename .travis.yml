@@ -1,10 +1,10 @@
 ---
 os: linux
-dist: trusty
-sudo: required
+dist: trusty  # TravisCI doesn't support Xenial directly yet
 
 services:
   - docker
 
 script:
-  - docker build .
+  - export GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
+  - docker build . --build-arg git_branch=$GIT_BRANCH
