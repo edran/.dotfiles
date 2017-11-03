@@ -7,5 +7,6 @@
 - include: "caps2mods_{{ansible_distribution | lower}}.yml"
 
 # TODO these can only run if graphics are present
+- include: "chrome_{{ansible_distribution | lower}}.yml"
 - include: "zotero_{{ansible_distribution | lower}}.yml"
 - include: "spotify_{{ansible_distribution | lower}}.yml"
