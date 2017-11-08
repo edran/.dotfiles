@@ -27,9 +27,16 @@
   become_method: sudo
   when: docker_present.changed
 
+- name: docker | Get current local user
+  run_once: True
+  set_fact:
+    ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
+  failed_when: ansible_local_user == ''
+  when: docker_present.changed
+
 - name: docker | Add current user to docker group
   user:
-    name: "{{ ansible_env.USER }}"
+    name: "{{ ansible_local_user }}"
     groups: docker
     append: yes
   become: yes
