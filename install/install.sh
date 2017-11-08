@@ -45,10 +45,8 @@ pushd "$HOME/.dotfiles/" > /dev/null
 
 if [ ! -z "$TRAVIS_OS_NAME" ]; then
    p_warn "Travis detected!"
-   sudo ansible-galaxy install -r ansible/requirements.yml
    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 else
-   sudo ansible-galaxy install -r ansible/requirements.yml
    ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 fi
 
