@@ -9,7 +9,6 @@
   get_url:
     url: "https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh"
     dest: "/tmp/miniconda.sh"
-    mode: 654
   when: conda_present.changed
 
 - name: conda | Install miniconda
