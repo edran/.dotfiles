@@ -41,6 +41,9 @@ then
     popd > /dev/null
 fi
 
+# setting for ansible
+set -e
+
 pushd "$HOME/.dotfiles/" > /dev/null
 
 if [ ! -z "$TRAVIS_OS_NAME" ]; then
