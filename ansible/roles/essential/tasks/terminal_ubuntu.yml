@@ -1,0 +1,40 @@
+---
+- name: terminal | Install straighforward packages
+  become: yes
+  become_method: sudo
+  apt:
+    pkg: "{{ item }}"
+    state: present
+    update_cache: yes
+  with_items:
+    - xclip  # uuuh this requires Xorg...
+    - htop
+    - tree
+    - ranger
+    - ppa-purge
+    - cowsay
+    - lolcat
+    - fortune
+
+- name: terminal | Check asciinema package
+  command: which asciinema
+  register: asciinema_present
+  failed_when: asciinema_present.rc > 1
+  changed_when: asciinema_present.rc == 1
+
+- name: terminal | Add asciinema repository
+  become: yes
+  become_method: sudo
+  apt_repository:
+    repo: "ppa:ubuntu-elisp/ppa"
+  register: ansible_added
+  when: asciinema_present.changed
+
+- name: terminal | Install asciinema
+  become: yes
+  become_method: sudo
+  apt:
+    pkg: asciinema
+    state: present
+    update_cache: yes
+  when: asciinema_present.changed

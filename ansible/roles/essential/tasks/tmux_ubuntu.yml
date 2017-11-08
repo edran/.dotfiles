@@ -1,0 +1,64 @@
+---
+- name: tmux | Check current installation
+  command: "which tmux"
+  ignore_errors: yes
+  register: tmux_present
+  failed_when: tmux_present.rc > 1
+  changed_when: tmux_present.rc == 1
+
+- name: tmux | Install dependencies
+  become: yes
+  become_method: sudo
+  package:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    - build-essential
+    - libevent-dev
+    - libncurses-dev
+  when: tmux_present.changed
+
+- name: tmux | Download source
+  become: yes
+  become_method: sudo
+  get_url:
+    url: "https://github.com/tmux/tmux/releases/download/2.6/tmux-2.6.tar.gz"
+    dest: "/tmp/tmux-2.6.tar.gz"
+  when: tmux_present.changed
+
+- name: tmux | Untar
+  become: yes
+  become_method: sudo
+  unarchive:
+    copy: no
+    src: "/tmp/tmux-2.6.tar.gz"
+    dest: "/opt"
+    creates: "/opt/tmux-2.6"
+  when: tmux_present.changed
+
+- name: tmux | Configure
+  become: yes
+  become_method: sudo
+  command: ./configure
+  args:
+    chdir: "/opt/tmux-2.6"
+    creates: "/opt/tmux-2.6/Makefile"
+  when: tmux_present.changed
+
+- name: tmux | Build
+  become: yes
+  become_method: sudo
+  command: make
+  args:
+    chdir: "/opt/tmux-2.6"
+    creates: "/opt/tmux-2.6/src/tmux"
+  when: tmux_present.changed
+
+- name: tmux | Install
+  become: yes
+  become_method: sudo
+  command: make install
+  args:
+    chdir: "/opt/tmux-2.6"
+    creates: "/usr/local/bin/tmux"
+  when: tmux_present.changed
