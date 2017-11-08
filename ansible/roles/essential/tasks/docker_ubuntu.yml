@@ -1,4 +1,4 @@
-- name: docker | Check if is present
+- name: docker | Check if docker is present
   command: which docker
   ignore_errors: yes
   register: docker_present

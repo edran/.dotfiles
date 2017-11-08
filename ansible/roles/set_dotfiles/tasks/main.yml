@@ -5,12 +5,19 @@
     state: absent
   with_items: "{{ home_dirs_remove }}"
 
+- name: set_dotfiles | Get current local user
+  run_once: True
+  set_fact:
+    ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
+  failed_when: ansible_local_user == ''
+
+
 - name: set_dotfiles | Create development home directory
   file:
     path: "{{ ansible_env.HOME }}/{{item}}"
     state: directory
-    group: "{{ ansible_env.USER }}"
-    owner: "{{ ansible_env.USER }}"
+    group: "{{ ansible_local_user }}"
+    owner: "{{ ansible_local_user }}"
     mode: 0755
   with_items: "{{ home_dirs_add }}"
   ignore_errors: yes
