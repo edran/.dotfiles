@@ -19,7 +19,7 @@ command -v ansible > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
     p_info "Installing ansible..."
-    sudo apt-add-repository ppa:ansible/ansible -qq
+    sudo apt-add-repository ppa:ansible/ansible -y
     sudo apt-get update -qq
     sudo apt-get install -qq ansible git
 fi
