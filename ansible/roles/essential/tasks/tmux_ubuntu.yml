@@ -62,3 +62,10 @@
     chdir: "/opt/tmux-2.6"
     creates: "/usr/local/bin/tmux"
   when: tmux_present.changed
+
+- name: tmux | Clone TPM into homedir
+  git:
+    repo: "git://github.com/tmux-plugins/tpm.git"
+    dest: "{{ ansible_env.HOME}}/.tmux/plugins/tpm"
+    force: no
+    accept_hostkey: yes
