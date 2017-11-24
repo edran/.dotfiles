@@ -6,10 +6,6 @@ Host tardis
    User edran
    HostName ssh.tardis.ed.ac.uk
 
-Host inf
-   User s1215573
-   HostName ssh.inf.ed.ac.uk
-
 ###############
 ## nardel.li ##
 ###############
