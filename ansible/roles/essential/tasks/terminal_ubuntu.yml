@@ -7,7 +7,12 @@
     state: present
     update_cache: yes
   with_items:
-    - xclip  # uuuh this requires Xorg...
+    - rxvt-unicode-256color  # FIXME this requires Xorg
+    - xclip  # FIXME this requires Xorg
+    - vim
+    - wget
+    - curl
+    - powertop
     - htop
     - tree
     - ranger
@@ -15,6 +20,13 @@
     - cowsay
     - lolcat
     - fortune
+
+- name: terminal | Set urxvt as default terminal
+  become: yes
+  become_method: sudo
+  alternatives:
+    name: x-terminal-emulator
+    path: /usr/bin/urxvt
 
 - name: terminal | Check asciinema package
   command: which asciinema
