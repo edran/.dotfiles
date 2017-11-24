@@ -26,6 +26,13 @@ Host robots
    User nantas
    HostName robots.ox.ac.uk
 
+Host marvin
+   HostName dhcp07.robots.ox.ac.uk
+   User nantas
+   ProxyCommand ssh robots.ox.ac.uk nc %h %p 2> /dev/null
+   GSSAPITrustDNS no
+   ControlMaster auto
+
 Host cs-whip
    User nantas
    HostName whip.cs.ox.ac.uk
