@@ -1,0 +1,46 @@
+---
+
+- name: set_dotfiles | Get current local user
+  run_once: True
+  set_fact:
+    ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
+  failed_when: ansible_local_user == ''
+
+- name: set_dotfiles | Create development home directory
+  file:
+    path: "{{ ansible_env.HOME }}/{{item}}"
+    state: directory
+    group: "staff"
+    owner: "{{ ansible_local_user }}"
+    mode: 0755
+  with_items: "{{ osx_home_dirs_add }}"
+  ignore_errors: yes
+
+# ssh
+
+- name: set_dotfiles | check .ssh
+  stat:
+    path: "{{ ansible_env.HOME }}/.ssh"
+  register: ssh_st
+
+- name: set_dotfiles | remove .ssh
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: absent
+  when: ssh_st.stat.islnk is defined and not ssh_st.stat.islnk
+
+- name: set_dotfiles | link .ssh
+  file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/ssh"
+    dest: "{{ ansible_env.HOME }}/.ssh"
+    state: link
+  when: ssh_st.stat.islnk is defined and not ssh_st.stat.islnk
+
+
+- name: set_dotfiles | Symlink dotfiles
+  file:
+    src: "{{ ansible_env.HOME }}/.dotfiles/{{ item.dot }}"
+    dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+    state: link
+    force: yes
+  with_items: "{{ osx_linking_paths }}"
