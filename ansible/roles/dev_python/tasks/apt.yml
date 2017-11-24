@@ -1,8 +1,0 @@
-- name: Install apt packages
-  become: yes
-  become_method: sudo
-  apt:
-    pkg: "{{ item }}"
-    state: present
-    update_cache: yes
-  with_items: "{{ apt_packages | default([]) }}"

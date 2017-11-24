@@ -110,4 +110,4 @@ fi
 # eval "$(pyenv init -)"
 # eval "$(pyenv virtualenv-init -)"
 
-export PATH=/home/edran/miniconda3/bin:$PATH
+export PATH=~/.conda/bin:$PATH

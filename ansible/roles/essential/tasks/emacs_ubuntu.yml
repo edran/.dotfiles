@@ -1,0 +1,23 @@
+---
+- name: emacs | Check current installation
+  command: which emacs25
+  register: emacs_present
+  failed_when: emacs_present.rc > 1
+  changed_when: emacs_present.rc == 1
+
+- name: emacs | Add repository
+  become: yes
+  become_method: sudo
+  apt_repository:
+    repo: "ppa:ubuntu-elisp/ppa"
+  register: ansible_added
+  when: emacs_present.changed
+
+- name: emacs | Install Emacs
+  become: yes
+  become_method: sudo
+  apt:
+    pkg: emacs25
+    state: present
+    update_cache: yes
+  when: emacs_present.changed

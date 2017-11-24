@@ -1,0 +1,19 @@
+- include: "emacs_{{ansible_distribution | lower}}.yml"
+
+- include: "tmux_{{ansible_distribution | lower}}.yml"
+
+- include: "mosh_{{ansible_distribution | lower}}.yml"
+
+- include: "docker_{{ansible_distribution | lower}}.yml"
+
+- include: "dropbox_{{ansible_distribution | lower}}.yml"
+
+- include: "conda_{{ansible_distribution | lower}}.yml"
+
+- include: "terminal_{{ansible_distribution | lower}}.yml"
+
+# TODO these can only run if graphics are present
+- include: "caps2mods_{{ansible_distribution | lower}}.yml"
+- include: "chrome_{{ansible_distribution | lower}}.yml"
+- include: "zotero_{{ansible_distribution | lower}}.yml"
+- include: "spotify_{{ansible_distribution | lower}}.yml"

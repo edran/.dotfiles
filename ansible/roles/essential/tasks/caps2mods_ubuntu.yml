@@ -1,15 +1,10 @@
 - name: xcape | Check current version
-  command: "xcape --version"
-  become: yes
-  become_method: sudo
-  register: result
-  failed_when: result.rc > 1
-  changed_when: result.rc == 1
-  ignore_errors: True
+  command: "which xcape"
+  register: xcape_present
+  failed_when: xcape_present.rc > 1
+  changed_when: xcape_present.rc == 1
 
 - name: xcape | Install build deps
-  become: yes
-  become_method: sudo
   apt:
     pkg: "{{ item }}"
     state: present
@@ -22,7 +17,9 @@
     - libx11-dev
     - libxtst-dev
     - libxi-dev
-  when: result.rc !=0
+  become: yes
+  become_method: sudo
+  when: xcape_present.changed
 
 - name: xcape | Checkout
   git:
@@ -30,13 +27,13 @@
     dest: "/tmp/xcape"
     force: no
     accept_hostkey: yes
-  when: result.rc !=0
+  when: xcape_present.changed
 
 - name: xcape | Make
   command: "make"
   args:
     chdir: "/tmp/xcape"
-  when: result.rc !=0
+  when: xcape_present.changed
 
 - name: xcape | Install
   command: "make install"
@@ -44,4 +41,4 @@
   become_method: sudo
   args:
     chdir: "/tmp/xcape"
-  when: result.rc !=0
+  when: xcape_present.changed
