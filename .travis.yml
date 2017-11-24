@@ -1,7 +1,12 @@
 ---
-os: linux
-dist: trusty  # TravisCI doesn't support Xenial directly yet
-sudo: required  # Dockerfile requires sudo
+sudo: required
+
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+    - os: osx
+      osx_image: xcode9.1
 
 services:
   - docker
