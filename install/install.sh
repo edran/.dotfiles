@@ -19,9 +19,15 @@ command -v ansible > /dev/null 2>&1
 if [ $? -ne 0 ];
 then
     p_info "Installing ansible..."
-    sudo apt-add-repository ppa:ansible/ansible -y
-    sudo apt-get update -qq
-    sudo apt-get install -qq ansible git
+    if [ "$(uname)" == "Darwin" ]; then
+        # install brew
+        TODO
+        # install ansible
+    else
+        sudo apt-add-repository ppa:ansible/ansible -y
+        sudo apt-get update -qq
+        sudo apt-get install -qq ansible git
+    fi
 fi
 
 # for TravisCI purposes, first argument specifies branch
@@ -48,10 +54,9 @@ pushd "$HOME/.dotfiles/" > /dev/null
 
 if [ ! -z "$TRAVIS_OS_NAME" ]; then
    p_warn "Travis detected!"
-   ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
-else
-   ansible-playbook -i ansible/inventory ansible/ubuntu.yml --ask-become-pass
 fi
+
+ansible-playbook -i ansible/inventory ansible/full.yml --ask-become-pass
 
 popd > /dev/null  # getting out of repo
 
