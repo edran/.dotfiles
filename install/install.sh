@@ -21,26 +21,30 @@ then
     p_info "Installing ansible..."
     if [ "$(uname)" == "Darwin" ]; then
         p_info "Detected MacOS!"
+        xcode-select -p
+        XCODE_CLI=$?
         if [ ! -z "$TRAVIS_OS_NAME" ]; then
             p_warn "Travis detected! Not installing tools."
+        elif [ $XCODE_CLI -eq 0 ]; then
+            p_warn "Xcode CLI tools seem already installed"
         else
             p_info "Installing xcode tools..."
-            touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress;
+            touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
             OS_DIST=$(softwareupdate -l \
                           | grep "\*.*Command Line Tools (macOS High Sierra" \
                           | head -n 1 \
                           | awk -F "*" '{print $2}' \
                           | sed -e 's/^ *//' \
                           | tr -d '\n')
-            softwareupdate -i "$OS_DIST" --verbose;
-
-            p_info "Installing pip..."
-            easy_install --user pip
-            PATH=$PATH:$HOME/Library/Python/2.7/bin
-
-            p_info "Installing ansible..."
-            pip install --user --upgrade ansible
+            softwareupdate -i "$OS_DIST" --verbose
+            rm /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
         fi
+        p_info "Installing pip..."
+        easy_install --user pip
+        PATH=$PATH:$HOME/Library/Python/2.7/bin
+
+        p_info "Installing ansible..."
+        pip install --user --upgrade ansible
 
     else
         sudo apt-add-repository ppa:ansible/ansible -y
