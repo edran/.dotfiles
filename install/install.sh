@@ -1,7 +1,7 @@
 #!/bin/bash
 
 function p_err () {
-    echo "$(tput bold)$(tput setaf 1)[i] $1$(tput sgr0)"
+    echo "$(tput bold)$(tput setaf 1)[e] $1$(tput sgr0)"
 }
 
 
@@ -10,7 +10,7 @@ function p_info () {
 }
 
 function p_warn () {
-    echo "$(tput bold)$(tput setaf 3)[i] $1$(tput sgr0)"
+    echo "$(tput bold)$(tput setaf 3)[w] $1$(tput sgr0)"
 }
 
 
