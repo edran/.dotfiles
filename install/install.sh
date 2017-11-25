@@ -31,8 +31,8 @@ then
             p_info "Installing xcode tools..."
             touch /tmp/.com.apple.dt.CommandLineTools.installondemand.in-progress
             OS_DIST=$(softwareupdate -l \
-                          | grep "\*.*Command Line Tools (macOS High Sierra" \
-                          | head -n 1 \
+                          | grep "\*.*Command Line" \
+                          | tail -n 1 \
                           | awk -F "*" '{print $2}' \
                           | sed -e 's/^ *//' \
                           | tr -d '\n')
@@ -46,6 +46,10 @@ then
         p_info "Installing ansible..."
         pip install --user --upgrade ansible
 
+        if [ ! -x "/usr/local/bin/brew" ]; then
+             p_info "Installing homebrew..."
+             yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+        fi
     else
         sudo apt-add-repository ppa:ansible/ansible -y
         sudo apt-get update -qq

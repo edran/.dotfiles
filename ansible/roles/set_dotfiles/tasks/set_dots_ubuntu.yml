@@ -57,7 +57,7 @@
 
 - name: set_dotfiles | link .ssh
   file:
-    src: "{{ ansible_env.HOME }}/.dotfiles/ssh"
+    src: "{{ ansible_env.HOME }}/.dotfiles/dots/ssh"
     dest: "{{ ansible_env.HOME }}/.ssh"
     state: link
   when: ssh_st.stat.islnk is defined and not ssh_st.stat.islnk
