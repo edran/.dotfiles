@@ -1,12 +1,7 @@
 ---
+os: linux
+dist: trusty
 sudo: required
-
-matrix:
-  include:
-    - os: linux
-      dist: trusty
-    - os: osx
-      osx_image: xcode9.1
 
 services:
   - docker
