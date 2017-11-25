@@ -3,17 +3,22 @@
     name: "{{ item }}"
     state: present
   with_items:
-    # productivity
+    # general
     - firefox
     - google-chrome
-    - docker
     - caffeine
-    - skype
+    - omnigraffle
     - slack
     - dropbox
-    - omnigraffle
+    - skype
+    - licecap
+    # dev
+    - docker
+    - vagrant
     # media
     - spotify
     - vlc
     - transmission
+    - handbrake
     - steam
+    - battle-net

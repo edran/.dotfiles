@@ -23,6 +23,7 @@ osx_linking_paths:
   - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
   - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
+  - {dot: "dots/macosx/config", dest: ".config"}
 
 ubuntu_home_dirs_add:
   - "desktop"

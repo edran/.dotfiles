@@ -16,14 +16,18 @@
     - findutils
     - homebrew/dupes/grep
     - homebrew/dupes/openssh
+    - ssh-copy-id
     # utils
     - mosh
     - git
     - git-lfs
     - gnupg
+    - autoconf
     - watch
+    - readline
     - wget
     - curl
+    - iperf
     - nmap
     - htop
     - tree
@@ -31,10 +35,12 @@
     - the_silver_searcher
     - pv
     - ncdu
+    - gifsicle
     # shell
     - fish
     - zsh
     - bash
+    - bash-completion
     # silly
     - archey
     - cowsay
