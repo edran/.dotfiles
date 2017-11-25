@@ -1,0 +1,43 @@
+---
+
+- name: terminal | Ensure iterm2 is installed
+  homebrew_cask:
+    name: iterm2
+    state: present
+  
+- name: terminal | Install straighforward packages
+  homebrew:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    # essential
+    - coreutils
+    - moreutils
+    - findutils
+    - homebrew/dupes/grep
+    - homebrew/dupes/openssh
+    # utils
+    - mosh
+    - git
+    - git-lfs
+    - gnupg
+    - watch
+    - wget
+    - curl
+    - nmap
+    - htop
+    - tree
+    - ranger
+    - the_silver_searcher
+    - pv
+    - ncdu
+    # shell
+    - fish
+    - zsh
+    - bash
+    # silly
+    - archey
+    - cowsay
+    - lolcat
+    - fortune
+    - asciinema
