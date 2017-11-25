@@ -8,9 +8,10 @@
 
 ***
 
-Compatible with `Ubuntu Xenial (16.04)`. Most of the configuration can be found
-in `dots/`, but the installation (and update) procedure is almost completely
-based on [ansible](https://www.ansible.com/) and lives in `ansible/`.
+Compatible with `Ubuntu Xenial (16.04)` and `MacOS High Sierra`. Most of the
+configuration can be found in `dots/`, but the installation (and update)
+procedure is almost completely based on [ansible](https://www.ansible.com/) and
+lives in `ansible/`.
 
 See `Dockerfile` and `.travis.yml` to also check how it gets automagically
 tested.

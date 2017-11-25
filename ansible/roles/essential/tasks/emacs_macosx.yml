@@ -1,0 +1,30 @@
+---
+
+- name: emacs | Ensure emacs tap is installed
+  homebrew_tap:
+    tap: d12frosted/emacs-plus
+    state: present
+
+- name: emacs | Ensure emacs-plus is installed
+  homebrew:
+    pkg: emacs-plus
+    state: present
+
+- name: emacs | Ensure emacs-plus is linked
+  command: "brew linkapps emacs-plus"
+
+- name: emacs | Ensure fonts tap is installed
+  homebrew_tap:
+    tap: caskroom/fonts
+    state: present
+
+- name: emacs | Ensure source-code-pro is installed
+  homebrew_cask:
+    pkg: font-source-code-pro
+    state: present
+
+- name: emacs | Ensure spacemacs is cloned
+  git:
+    repo: "https://github.com/syl20bnr/spacemacs"
+    dest: "{{ ansible_env.HOME }}/.emacs.d"
+    version: develop

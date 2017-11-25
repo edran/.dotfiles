@@ -2,18 +2,28 @@
 
 - include: "tmux_{{ansible_distribution | lower}}.yml"
 
-- include: "mosh_{{ansible_distribution | lower}}.yml"
-
-- include: "docker_{{ansible_distribution | lower}}.yml"
-
-- include: "dropbox_{{ansible_distribution | lower}}.yml"
-
 - include: "conda_{{ansible_distribution | lower}}.yml"
 
 - include: "terminal_{{ansible_distribution | lower}}.yml"
 
-# TODO these can only run if graphics are present
-- include: "caps2mods_{{ansible_distribution | lower}}.yml"
-- include: "chrome_{{ansible_distribution | lower}}.yml"
-- include: "zotero_{{ansible_distribution | lower}}.yml"
-- include: "spotify_{{ansible_distribution | lower}}.yml"
+- include: productivity_macosx.yml
+  when: ansible_distribution == "MacOSX"
+
+- include: "mosh_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+
+- include: "docker_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+
+- include: "dropbox_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+
+- include: "caps2mods_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+
+- include: "chrome_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+
+- include: "spotify_ubuntu.yml"
+  when: ansible_distribution == "Ubuntu"
+

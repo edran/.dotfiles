@@ -1,0 +1,19 @@
+- name: productivity | Install various cask packages
+  homebrew_cask:
+    name: "{{ item }}"
+    state: present
+  with_items:
+    # productivity
+    - firefox
+    - google-chrome
+    - docker
+    - caffeine
+    - skype
+    - slack
+    - dropbox
+    - omnigraffle
+    # media
+    - spotify
+    - vlc
+    - transmission
+    - steam

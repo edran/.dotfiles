@@ -1,5 +1,5 @@
 ---
-linking_paths:
+ubuntu_linking_paths:
   - {dot: "dots/inputrc", dest: ".inputrc"}
   - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
@@ -16,7 +16,15 @@ linking_paths:
   - {dot: "dots/weechat/", dest: ".weechat"}
   # - {dot: "dots/urxvt/", dest: ".urxvt"}
 
-home_dirs_add:
+osx_linking_paths:
+  - {dot: "dots/gitconfig", dest: ".gitconfig"}
+  - {dot: "dots/bashrc", dest: ".bashrc"}
+  - {dot: "dots/bin", dest: "bin"}
+  - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
+  - {dot: "dots/vimrc", dest: ".vimrc"}
+  - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
+
+ubuntu_home_dirs_add:
   - "desktop"
   - "docs"
   - "downloads"
@@ -25,7 +33,10 @@ home_dirs_add:
   - "media/videos"
   - "lab"
 
-home_dirs_remove:
+osx_home_dirs_add:
+  - "lab"
+
+ubuntu_home_dirs_remove:
   - "Desktop"
   - "Documents"
   - "Downloads"

@@ -1,7 +1,7 @@
 ---
 os: linux
-dist: trusty  # TravisCI doesn't support Xenial directly yet
-sudo: required  # Dockerfile requires sudo
+dist: trusty
+sudo: required
 
 services:
   - docker
