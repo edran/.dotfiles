@@ -12,6 +12,9 @@
 - include: interface_macosx.yml
   when: ansible_distribution == "MacOSX"
 
+- include: tiling_macosx.yml
+  when: ansible_distribution == "MacOSX"
+
 - include: "mosh_ubuntu.yml"
   when: ansible_distribution == "Ubuntu"
 

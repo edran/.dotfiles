@@ -1,0 +1,121 @@
+---
+
+- name: tiling | Clone chunkwm
+  git:
+    repo: "https://github.com/koekeishiya/chunkwm"
+    dest: "{{ ansible_env.HOME }}/lab/chunkwm"
+    force: no
+
+- name: tiling | Compile chunkwm
+  command: "make install"
+  args:
+    chdir: "{{ ansible_env.HOME }}/lab/chunkwm"
+
+- name: tiling | Compile chunkwm.chunkc
+  command: "make"
+  args:
+    chdir: "{{ ansible_env.HOME }}/lab/chunkwm/src/chunkc"
+
+- name: tiling | Compile chunkwm.tiling
+  command: "make install"
+  args:
+    chdir: "{{ ansible_env.HOME }}/lab/chunkwm/src/plugins/tiling"
+
+- name: tiling | Compile chunkwm.border
+  command: "make install"
+  args:
+    chdir: "{{ ansible_env.HOME }}/lab/chunkwm/src/plugins/border"
+
+- name: tiling | Compile chunkwm.ffm
+  command: "make install"
+  args:
+    chdir: "{{ ansible_env.HOME }}/lab/chunkwm/src/plugins/ffm"
+
+- name: tiling | Get current local user
+  run_once: True
+  set_fact:
+    ansible_local_user: "{{ lookup('pipe', 'id -un') | d(lookup('pipe', 'whoami'), True) | d(lookup('env', 'USER'), True) |  d(lookup('env', 'user'), True) |  d(lookup('env', 'LOGNAME'), True) }}"
+  failed_when: ansible_local_user == ''
+
+- name: tiling | Ensure ~/.chunkwm_plugins exists
+  file:
+    path: "{{ ansible_env.HOME }}/.chunkwm_plugins"
+    state: directory
+    owner: "{{ ansible_local_user }}"
+    group: "staff"
+    mode: 0755
+  ignore_errors: yes
+
+- name: tiling | Copy chunkwm binary
+  copy:
+    src: "{{ ansible_env.HOME }}/lab/chunkwm/bin/chunkwm"
+    dest: "/usr/local/bin/chunkwm"
+    owner: "{{ ansible_local_user }}"
+    group: "staff"
+    mode: preserve
+
+- name: tiling | Copy chunkwm server agent
+  copy:
+    src: "{{ ansible_env.HOME }}/lab/chunkwm/examples/com.koekeishiya.chunkwm.plist"
+    dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.koekeishiya.chunkwm.plist"
+    owner: "{{ ansible_local_user }}"
+    group: "staff"
+    mode: preserve
+
+- name: tiling | Copy chunkwc binary
+  copy:
+    src: "{{ ansible_env.HOME }}/lab/chunkwm/src/chunkc/bin/chunkc"
+    dest: "/usr/local/bin/chunkc"
+    owner: "{{ ansible_local_user }}"
+    group: "staff"
+    mode: preserve
+
+- name: tiling | Start chunkwm agent
+  command: "launchctl load -w {{ ansible_env.HOME }}/Library/LaunchAgents/com.koekeishiya.chunkwm.plist"
+
+- name: tiling | Copy plugins
+  copy:
+    src: "{{ ansible_env.HOME }}/lab/chunkwm/plugins/{{ item }}"
+    dest: "{{ ansible_env.HOME}}/.chunkwm_plugins/{{ item }}"
+    owner: "{{ ansible_local_user }}"
+    group: "staff"
+    mode: preserve
+  with_items:
+    - "tiling.so"
+    - "border.so"
+    - "ffm.so"
+
+# - name: tiling | Clone shkd
+#   git:
+#     repo: https://github.com/koekeishiya/skhd
+#     dest: "{{ ansible_env.HOME }}/lab/skhd"
+#     force: no
+
+# - name: tiling | Build shkd
+#   command: "make install"
+#   args:
+#     chdir: "{{ ansible_env.HOME }}/lab/skhd"
+
+# - name: tiling | Copy skhd binary
+#   copy:
+#     src: "{{ ansible_env.HOME }}/lab/skhd/bin/skhd"
+#     dest: "/usr/local/bin/skhd"
+#     owner: "{{ ansible_local_user }}"
+#     group: "staff"
+#     mode: preserve
+
+# - name: tiling | Copy skhd agent
+#   copy:
+#     src: "{{ ansible_env.HOME }}/lab/skhd/examples/com.koekeishiya.skhd.plist"
+#     dest: "{{ ansible_env.HOME }}/Library/LaunchAgents/com.koekeishiya.skhd.plist"
+#     owner: "{{ ansible_local_user }}"
+#     group: "staff"
+#     mode: preserve
+
+- name: tiling | Ensure skhd is installed
+  homebrew:
+    pkg: koekeishiya/formulae/skhd
+    state: present
+
+- name: tiling | Ensure skhd service is started
+  command: "/usr/local/bin/brew services start skhd"
