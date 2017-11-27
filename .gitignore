@@ -102,3 +102,5 @@ __pycache__/
 /dots/config/skypeforlinux/
 /dots/config/vizdoom/vizdoom.ini
 /dots/config/evolution/sources/system-proxy.source
+/dots/macosx/config/fish/*
+!/dots/macosx/config/fish/config.fish

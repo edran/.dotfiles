@@ -13,6 +13,7 @@
     - skype
     - licecap
     # dev
+    - shiftit
     - docker
     - vagrant
     # media
