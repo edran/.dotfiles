@@ -1,2 +1,2 @@
-set -U fish_user_paths $HOME/.conda/bin $fish_user_paths
+set PATH $HOME/.conda/bin $PATH
 source $HOME/.conda/etc/fish/conf.d/conda.fish
