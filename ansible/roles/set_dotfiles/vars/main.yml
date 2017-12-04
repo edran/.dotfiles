@@ -19,6 +19,7 @@ ubuntu_linking_paths:
 osx_linking_paths:
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
   - {dot: "dots/bashrc", dest: ".bashrc"}
+  - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/bin", dest: "bin"}
   - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
   - {dot: "dots/vimrc", dest: ".vimrc"}

@@ -1,4 +1,4 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 # Don't run if not interactive
 [ -z "$PS1" ] && return

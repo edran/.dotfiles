@@ -6,50 +6,56 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-        . "$HOME/.bashrc"
-    fi
-fi
-
 # set PATH so it includes user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
 
+if [ -d "$HOME/.local/bin" ] ; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+
+# In case we are doing haskell
 if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-if [ -d "$HOME/.local/bin" ]; then
-    PATH="$HOME/.local/bin:$PATH"
+######## linux
+if echo "$OSTYPE" | grep -q "linux" ; then
+
+  # start keyring in login shell
+  if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
+    eval $(dbus-launch --sh-syntax --exit-with-session)
+    export $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gnupg)
+
 fi
 
+######## macos
+if echo "$OSTYPE" | grep -q "darwin" ; then
+
+  # enable ls colors for
+  export CLICOLOR=1
+
+fi
+
+######## general
+export TERM=xterm-256color
+export EDITOR="vim"
+export GIT_EDITOR="vim"
 # Better history format
 export HISTTIMEFORMAT="%h %d %H:%M:%S> "
 
-if test -z "$DBUS_SESSION_BUS_ADDRESS"; then
-  eval $(dbus-launch --sh-syntax --exit-with-session)
-  export $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gnupg)
+
+######## dev
+export PROJECT_HOME="$HOME/lab"
+export WORKON_HOME="$HOME/.conda/envs"
+
+
+# --------------------------------------------------------------------------
+
+if [ -n "$BASH_VERSION" ] ; then
+    # include .bashrc if it exists
+    if [ -f "$HOME/.bashrc" ] ; then
+        . "$HOME/.bashrc"
+    fi
 fi
-
-export EDITOR="vim"
-export GIT_EDITOR="vim"
-export TERM=xterm-256color
-
-export TORCH_DIR="$HOME/torch"
-export PROTOBUF_DIR="$HOME/protobuf"
-
-export JAVA_HOME="/usr/lib/jvm/java-1.7.0-openjdk-amd64/"
-
-export VIRTUALENV_MASTER_PATH="$HOME/.venvs"
-
-VIRTUALENVWRAPPER_PYTHON='/usr/bin/python3'
-export PROJECT_HOME="$HOME/Dev"
-export WORKON_HOME="$HOME/.venvs"
-
-export PATH="$HOME/.pyenv/bin:$PATH"
-
-export MALMO_XSD_PATH="/home/edran/lab/aaai17/malmo/Schemas/"
