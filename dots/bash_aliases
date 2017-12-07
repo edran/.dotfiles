@@ -4,23 +4,9 @@
 
 alias reload-xresources='xrdb ~/.Xresources'
 
-# ROS
-alias primessh='ssh edran@primec1.inf.ed.ac.uk'
-alias pr2dash='rosrun rqt_pr2_dashboard rqt_pr2_dashboard'
-alias rviz='rosrun rviz rviz'
-alias givenet-prime='ssh -R 3128:127.0.0.1:3128 edran@primec1.inf.ed.ac.uk'
-alias rosinfo='export | grep ROS'
-
-alias givenet-megatron='ssh -R 3128:127.0.0.1:3128 youbot@megatron.inf.ed.ac.uk'
-alias givenet-soundwave='ssh -R 3128:127.0.0.1:3128 youbot@soundwave.inf.ed.ac.uk'
-alias givenet-starscream='ssh -R 3128:127.0.0.1:3128 youbot@starscream.inf.ed.ac.uk'
-alias givenet-blackout='ssh -R 3128:127.0.0.1:3128 youbot@blackout.inf.ed.ac.uk'
-alias givenet-thundercracker='ssh -R 3128:127.0.0.1:3128 youbot@thundercracker.inf.ed.ac.uk'
-
 # Emacs
 alias ec='emacsclient -c -n -a nano'
 alias et='emacsclient -t -a nano'
-alias virtualenv3='virtualenv -p python3.4'
 
 
 # enable color support of ls and also add handy aliases

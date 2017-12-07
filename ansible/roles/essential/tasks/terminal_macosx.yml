@@ -36,6 +36,7 @@
     - pv
     - ncdu
     - gifsicle
+    - reattach-to-user-namespace
     # shell
     - fish
     - zsh
