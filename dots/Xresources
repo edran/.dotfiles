@@ -18,8 +18,9 @@ emacs.FontBackend: xft
 !! look !!
 !!!!!!!!!!
 
-URxvt*font: xft:Terminus:pixelsize=10,hinting=True,antialiasing=true
+URxvt*font: xft:mono:pixelsize=10,hinting=True,antialiasing=true
 
+URxvt.letterSpace: -1
 URxvt*borderless: 1
 URxvt*scrollBar: false
 URxvt*cursorBlink: true
