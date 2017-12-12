@@ -3,6 +3,7 @@ ubuntu_linking_paths:
   - {dot: "dots/inputrc", dest: ".inputrc"}
   - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
+  - {dot: "dots/gitignore", dest: ".gitignore_global"}
   - {dot: "dots/bashrc", dest: ".bashrc"}
   - {dot: "dots/bin", dest: "bin"}
   - {dot: "dots/fonts", dest: ".fonts"}
@@ -18,6 +19,7 @@ ubuntu_linking_paths:
 
 osx_linking_paths:
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
+  - {dot: "dots/gitignore", dest: ".gitignore_global"}
   - {dot: "dots/bashrc", dest: ".bashrc"}
   - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/bin", dest: "bin"}
