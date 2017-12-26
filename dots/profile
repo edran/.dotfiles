@@ -39,7 +39,6 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
 fi
 
 ######## general
-export TERM=rxvt-unicode
 export EDITOR="vim"
 export GIT_EDITOR="vim"
 # Better history format
