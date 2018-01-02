@@ -259,7 +259,7 @@ It should only modify the values of Spacemacs settings."
    ;; If non-nil, the paste transient-state is enabled. While enabled, pressing
    ;; `p' several times cycles through the elements in the `kill-ring'.
    ;; (default nil)
-   dotspacemacs-enable-paste-transient-state 1
+   dotspacemacs-enable-paste-transient-state t
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -382,70 +382,85 @@ It should only modify the values of Spacemacs settings."
    ))
 
 (defun dotspacemacs/user-init ()
-  (setenv "WORKON_HOME" "/home/nantas/.conda/envs")
-  (setq-default
-   ;; Magit
-   magit-repository-directories '("~/Git/")
+  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
+  ;; TODO make this work for ~user
+  (setenv "WORKON_HOME" "~/.conda/envs")
+  )
+
+(defun dotspacemacs/user-config ()
+
+  ;; Don't shift to nearest multiplier
+  (setq evil-shift-round nil)
+  ;; better f/F/t/T
+  (setq evil-snipe-enable-alternate-f-and-t-behaviors t)
+
+  ;; Better whitespace management
+  (setq whitespace-style '(face tabs tab-mark))
+  (setq ws-butler-global-mode t)
+
+  ;; uuuh, maybe pointless with layouts
+  (setq ibuffer-group-buffers-by 'projects)
+
+  ;; shell
+  (setq
+   shell-default-shell 'eshell
+   shell-default-height 30
+   shell-default-position 'bottom
+   shell-enable-smart-eshell t
+   )
+
+  ;; auto-completion
+  (setq
+   auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
+   auto-completion-enable-sort-by-usage t
+   ;; all the things complete
+   auto-completion-return-key-behavior 'complete
+   ;; FIXME cannot set to complete because ctrl-k kills popup
+   auto-completion-tab-key-behavior 'cycle
+   ;; ctrl-h to show in other buffer
+   auto-completion-enable-help-tooltip t
+   )
+  ;; auto-dictionary & completion for espell
+  ;; (setq spell-checking-enable-auto-dictionary t)
+  ;; (setq enable-flyspell-auto-completion t)
+
+  ;; latex
+  (setq latex-enable-auto-fill t)
+
+  ;; magit
+  (setq
+   ;; TODO figure this one out
+   ;; magit-repository-directories '((expand-file-name "~/lab/") . 1)
    git-magit-status-fullscreen t
    magit-save-repository-buffers 'dontask
    magit-revert-buffers 'silent
    ;; Commit counts for all branches/tags
    magit-refs-show-commit-count 'all
-
-   ;; GitHub
-   gh-profile-default-profile "edran"
-
-   ;; Shell
-   shell-default-shell 'eshell
-   shell-default-height 30
-   shell-default-position 'bottom
-   shell-enable-smart-eshell t
-
-   ;; Evil
-   evil-shift-round nil ;; Don't shift to nearest multiplier
-
-   ;; Whitespace mode
-   whitespace-style '(face tabs tab-mark)
-   ws-butler-global-mode 1
-   ;; Spell checking
-   spell-checking-enable-auto-dictionary t
-
-   ;; ibuffer
-   ibuffer-group-buffers-by 'projects
-
-   ;; auto-completion
-   auto-completion-private-snippets-directory "~/.spacemacs.d/snippets/"
-   auto-completion-return-key-behavior 'complete
-   auto-completion-tab-key-behavior 'cycle
-   auto-completion-enable-help-tooltip t
-   auto-completion-enable-sort-by-usage t
-
-   ;; html-mode
-   css-indent-offset 2
-
-   ;; latex
-   latex-enable-auto-fill t
-
-   ;; vim
-   evil-snipe-enable-alternate-f-and-t-behaviors t
+   ;; FIXME this one requires gh-profile-alist to be filled
+   ;; gh-profile-default-profile "edran"
    )
-  (setq helm-boring-file-regexp-list
-        '("\\.git$" "\\.hg$" "\\.svn$" "\\.CVS$" "\\._darcs$" "\\.la$" "\\.o$" "~$"
-          "\\.so$" "\\.a$" "\\.elc$" "\\.fas$" "\\.fasl$" "\\.pyc$" "\\.pyo$"))
-  )
 
-(defun dotspacemacs/user-config ()
+  ;; theme
+  (setq
+   powerline-default-separator 'alternate
+   global-rainbow-identifiers-mode t
+   )
+
+  ;; org
+  (setq
+   org-agenda-files '("~/dropbox/org/")
+   deft-directory "~/dropbox/org/"
+   )
+  ;; FIXME is orgtbl even defined?
+  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+
+  ;; lua
+  (setq lua-indent-level 4)
+
+  ;; global modes
   (indent-guide-global-mode)
   (global-prettify-symbols-mode)
-  (setq powerline-default-separator 'alternate)
-  (with-eval-after-load 'org (setq org-agenda-files
-                                   '("~/dropbox/org/")))
-  (setq deft-directory "~/dropbox/org/")
-  (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
-  (setq global-rainbow-identifiers-mode 1)
-  (setq-default lua-indent-level 4)
   )
 
 ;; Use external custom file
-(setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
 (load custom-file 'no-error 'no-message)
