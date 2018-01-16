@@ -460,7 +460,7 @@ It should only modify the values of Spacemacs settings."
   ;; global modes
   (indent-guide-global-mode)
   (global-prettify-symbols-mode)
-  )
 
-;; Use external custom file
-(load custom-file 'no-error 'no-message)
+  ;; finally...
+  (load-file custom-file)
+  )
