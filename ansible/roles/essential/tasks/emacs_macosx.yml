@@ -28,3 +28,9 @@
     repo: "https://github.com/syl20bnr/spacemacs"
     dest: "{{ ansible_env.HOME }}/.emacs.d"
     version: develop
+
+- name: emacs | Ensure org dir link exists
+  file:
+    src: "{{ ansible_env.HOME }}/Dropbox/org"
+    dest: "{{ ansible_env.HOME }}/org"
+    state: link

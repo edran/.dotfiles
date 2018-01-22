@@ -55,9 +55,13 @@ This function should only modify configuration layer settings."
      (erc)
      (semantic)
      (themes-megapack)
-     (org)
      (version-control)
      (git)
+     (org
+      :variables
+      org-enable-reveal-js-support t
+      )
+
      (github)
      (shell)
      (restclient)
@@ -446,12 +450,13 @@ It should only modify the values of Spacemacs settings."
    global-rainbow-identifiers-mode t
    )
 
-  ;; org
+  ;; #######################
+  ;; ## org
+  ;; #######################
   (setq
-   org-agenda-files '("~/dropbox/org/")
-   deft-directory "~/dropbox/org/"
-   )
-  ;; FIXME is orgtbl even defined?
+   org-default-notes-file "~/org/notes.org"
+   org-agenda-files '("~/org/")
+   deft-directory "~/org/")
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
 
   ;; lua
