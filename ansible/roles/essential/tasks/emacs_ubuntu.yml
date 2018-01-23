@@ -21,3 +21,9 @@
     state: present
     update_cache: yes
   when: emacs_present.changed
+
+- name: emacs | Ensure org dir link exists
+  file:
+    src: "{{ ansible_env.HOME }}/Dropbox/org"
+    dest: "{{ ansible_env.HOME }}/org"
+    state: link

@@ -12,11 +12,14 @@
     - dropbox
     - skype
     - licecap
+    - afred
+    - time-out
     # dev
     - shiftit
     - docker
     - vagrant
     - zotero
+    - dash
     # media
     - spotify
     - vlc
@@ -24,3 +27,4 @@
     - handbrake
     - steam
     - battle-net
+    - sonic-pi
