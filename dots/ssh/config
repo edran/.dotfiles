@@ -2,6 +2,9 @@
 ## General ##
 #############
 
+Host *
+  ServerAliveInterval 60
+
 Host tardis
    User edran
    HostName ssh.tardis.ed.ac.uk
@@ -29,7 +32,7 @@ Host robots
 Host marvin
    HostName dhcp07.robots.ox.ac.uk
    User nantas
-   ProxyCommand ssh robots.ox.ac.uk nc %h %p 2> /dev/null
+   ProxyCommand ssh -W %h:%p robots
    ControlMaster auto
 
 Host cs-whip
