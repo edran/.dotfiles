@@ -58,7 +58,6 @@ This function should only modify configuration layer settings."
      ;; ---------- tools
      (erc)
      (semantic)
-     (themes-megapack)
      (version-control)
      (git)
      (org
@@ -74,15 +73,14 @@ This function should only modify configuration layer settings."
      (treemacs)
      (deft)
      (dash) ;; requires zeal installed on linux
+     (ansible)
 
      ;; ---------- languages
+     ;; lisps
      (emacs-lisp)
-     (ipython-notebook)
-     (html)
-     (latex)
-     (bibtex)
-     (markdown)
+     (clojure)
      (python)
+     (ipython-notebook)
      (yaml)
      (lua)
      (c-c++
@@ -90,10 +88,11 @@ This function should only modify configuration layer settings."
       c-c++-default-mode-for-headers 'c++-mode
       c-c++-enable-clang-support t)
      (shell-scripts)
-     (ansible)
-     (javascript)
-     (vimscript)
-     (clojure)
+     (latex)
+     (bibtex)
+     (html)
+     (markdown)
+
      ;; ---------- other
      (games)
      (selectric)
@@ -101,7 +100,7 @@ This function should only modify configuration layer settings."
      (theming))
      ;; ---------- personal
      ;; (edran)
-     ;; (edran-torch)
+     ;; (edran-torch))
 
 
    ;; List of additional packages that will be installed without being
@@ -550,12 +549,12 @@ It should only modify the values of Spacemacs settings."
         nil)))
 
   (setq org-agenda-custom-commands
-        '(("d" "Daily agenda and all TODOs"
-           ((agenda "" ((org-agenda-ndays 1)))
+        '(("d" "Standard agenda (Week + unscheduled)"
+           ((agenda "" ((org-agenda-list)))
             (alltodo ""
                      ((org-agenda-skip-function '(or (edran/org-skip-subtree-if-habit)
                                                      (org-agenda-skip-if nil '(scheduled deadline))))
-                      (org-agenda-overriding-header "ALL normal priority tasks:"))))
+                      (org-agenda-overriding-header "Unscheduled tasks:"))))
            ((org-agenda-compact-blocks t)))))
 
   (setq org-capture-templates
