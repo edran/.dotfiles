@@ -20,16 +20,6 @@ if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-######## linux
-if echo "$OSTYPE" | grep -q "linux" ; then
-
-  # start keyring in login shell
-  if test -z "$DBUS_SESSION_BUS_ADDRESS" ; then
-    eval $(dbus-launch --sh-syntax --exit-with-session)
-    export $(/usr/bin/gnome-keyring-daemon --start --components=pkcs11,secrets,ssh,gnupg)
-  fi
-fi
-
 ######## macos
 if echo "$OSTYPE" | grep -q "darwin" ; then
 
@@ -39,6 +29,7 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
 fi
 
 ######## general
+export TERM="xterm-256color"
 export EDITOR="vim"
 export GIT_EDITOR="vim"
 # Better history format
