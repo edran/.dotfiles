@@ -56,15 +56,12 @@ This function should only modify configuration layer settings."
      (evil-snipe) ;; better jumping (f / t)
 
      ;; ---------- tools
-     (erc)
      (semantic)
      (version-control)
      (git)
      (org
       :variables
       org-enable-reveal-js-support t)
-
-
      (github)
      (shell)
      (restclient)
@@ -92,6 +89,9 @@ This function should only modify configuration layer settings."
      (bibtex)
      (html)
      (markdown)
+     (javascript
+      :variables
+      javascript-disable-tern-warning t)
 
      ;; ---------- other
      (games)
@@ -101,7 +101,6 @@ This function should only modify configuration layer settings."
      ;; ---------- personal
      ;; (edran)
      ;; (edran-torch))
-
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -126,6 +125,7 @@ This function should only modify configuration layer settings."
    ;; installs *all* packages supported by Spacemacs and never uninstalls them.
    ;; (default is `used-only')
    dotspacemacs-install-packages 'used-only))
+
 
 (defun dotspacemacs/init ()
   "Initialization:
@@ -476,6 +476,15 @@ It should only modify the values of Spacemacs settings."
 
 
 (defun dotspacemacs/user-config ()
+  ;; better default killing keys (since we use server)
+  (evil-leader/set-key
+    "q q" 'spacemacs/frame-killer)
+  (evil-leader/set-key
+    "q Q" 'spacemacs/prompt-kill-emacs)
+
+  ;; Always follow symlinks instead of asking
+  (setq vc-follow-symlinks t)
+
   ;; Don't shift to nearest multiplier
   (setq evil-shift-round nil)
   ;; better f/F/t/T
@@ -495,6 +504,17 @@ It should only modify the values of Spacemacs settings."
    shell-default-position 'bottom
    shell-enable-smart-eshell t)
 
+  ;; own layouts
+  (spacemacs|define-custom-layout "@dots"
+    :binding "d"
+    :body
+    (progn
+      ;; hook to add all ERC buffers to the layout
+      (find-file "~/.dotfiles/dots/spacemacs/init.el")
+      (persp-add-buffer (current-buffer)
+                        (persp-get-by-name
+                         "@dots"))
+      (treemacs-projectile)))
 
   ;; auto-completion
   (setq
@@ -537,6 +557,10 @@ It should only modify the values of Spacemacs settings."
    org-default-notes-file "~/org/notes.org"
    org-agenda-files '("~/org/")
    deft-directory "~/org/")
+
+  (setq
+   org-agenda-text-search-extra-files '(agenda-archives)
+   org-enforce-todo-dependencies t)
 
   (setq org-todo-keywords
         '((sequence "TODO" "IN-PROGRESS" "WAITING" "|" "DONE" "CANCELED")))
