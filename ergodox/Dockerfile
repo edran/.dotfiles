@@ -10,8 +10,7 @@ RUN apt-get update && \
     rm -rf /var/lib/apt/lists/*
 
 # Use latest firmware
-RUN git clone -q https://github.com/jackhumbert/qmk_firmware /firmware && \
-    cd /firmware/keyboards/ergodox/ez && make clean
+RUN git clone -q https://github.com/jackhumbert/qmk_firmware /firmware
 
 # Map this volume to some folder where a keymap.c can be found.
 # The resulting firmware.hex will also be put in this folder when finished.

@@ -104,3 +104,4 @@ __pycache__/
 /dots/config/evolution/sources/system-proxy.source
 /dots/macosx/config/fish/*
 !/dots/macosx/config/fish/config.fish
+/ergodox/ergodox_ez.hex

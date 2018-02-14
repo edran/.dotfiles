@@ -1,14 +1,14 @@
 .PHONY : all
-all : docker build
+all : docker build install
 
 docker:
-	docker build .
+	docker build -t ergodox-ez-compiler .
 
 build:
-	docker run --rm -v $(CURDIR):/keymap ergodox-ez-compiler
+	docker run -it --rm -v $(CURDIR):/keymap ergodox-ez-compiler
 
 clean:
 	rm hergodox_ez.hex
 
 install:
-	echo "All done!"
+	teensy_loader_cli -mmcu=atmega32u4 -w -v ergodox_ez.hex

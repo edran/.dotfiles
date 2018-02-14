@@ -37,6 +37,7 @@
     - ncdu
     - gifsicle
     - reattach-to-user-namespace
+    - teensy_loader_cli  # should not be here
     # shell
     - fish
     - zsh

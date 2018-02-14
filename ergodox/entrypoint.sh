@@ -1,16 +1,18 @@
 #!/bin/bash
 
-if [ ! -f "~/keymap/keymap.c" ]; then
+if [ ! -f "/keymap/keymap.c" ]; then
   echo "No keymap.c found!"
   exit 1
 fi
 
-cd /firmware/keyboards/ergodox/ez
+cd /firmware/keyboards/ergodox_ez
 
-rm -rf keymaps/__custom                # (just in case...)
-mkdir -p keymaps/__custom
-cp ~keymap/keymap.c keymaps/__custom
+rm -rf keymaps/custom                # (just in case...)
+mkdir -p keymaps/custom
+cp /keymap/keymap.c keymaps/custom/
 
-make KEYMAP=__custom
+cd /firmware
 
-cp -f /firmware/.build/ergodox_ez___custom.hex ~/keymap/ergodox_ez.hex
+make -j 4 ergodox_ez:custom
+
+cp -f /firmware/.build/ergodox_ez_custom.hex /keymap/ergodox_ez.hex
