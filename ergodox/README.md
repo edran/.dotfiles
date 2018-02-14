@@ -1,8 +1,12 @@
-# ErgodoxEZ firmware compiler
+# ErgodoxEZ configuration
 
-This is a small docker image that has a script and all the dependencies needed
-an **Ergodox EZ** firmware. It uses the latest available Quantum Mechanical
-Keyboard Firmware.
+This directory contains my own **ErgodoxEZ** configuration, plus a small docker
+image with a script and all the dependencies needed to build its firmware using
+the latest available Quantum Mechanical Keyboard Firmware.
+
+Furthermore, it automatically clones a [fork](edran/teensy_loader_cli) of
+`teensy_loader_cli` which builds on MacOS using libusb instead of HID (because
+karabiner-elements somehow interferes with HID).
 
 
 ## Usage
@@ -30,10 +34,8 @@ $ brew install libusb
 $ make
 ```
 
-Rebuild the docker image to update the firmware repository. Also, the cloned
-`teensy_loader_cli` is a fork of the original which builds on MacOS by default,
-using libusb instead of HID (because karabiner-elements somehow interferes with
-HID).
+Finally, run `make docker_rebuild` to update the firmware repository if
+necessary.
 
 
 ## Useful links
