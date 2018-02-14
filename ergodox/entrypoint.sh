@@ -13,6 +13,6 @@ cp /keymap/keymap.c keymaps/custom/
 
 cd /firmware
 
-make -j 4 ergodox_ez:custom
+make ergodox_ez:custom
 
 cp -f /firmware/.build/ergodox_ez_custom.hex /keymap/ergodox_ez.hex
