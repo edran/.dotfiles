@@ -105,3 +105,4 @@ __pycache__/
 /dots/macosx/config/fish/*
 !/dots/macosx/config/fish/config.fish
 /ergodox/ergodox_ez.hex
+/ergodox/teensy_loader_cli/
