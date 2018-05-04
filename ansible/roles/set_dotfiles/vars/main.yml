@@ -27,8 +27,6 @@ osx_linking_paths:
   - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/macosx/config", dest: ".config"}
-  # - {dot: "dots/macosx/chunkwmrc", dest: ".chunkwmrc"}
-  # - {dot: "dots/macosx/skhdrc", dest: ".skhdrc"}
 
 ubuntu_home_dirs_add:
   - "desktop"
