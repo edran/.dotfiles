@@ -13,7 +13,7 @@
     - dropbox
     - skype
     - licecap
-    - afred
+    - alfred
     - time-out
     - cheatsheet
     # dev
@@ -25,11 +25,13 @@
     - cyberduck
     - mountain-duck
     - teensy
+    - kitty
     # media
     - spotify
     - vlc
     - transmission
     - handbrake
+    - obs
     - steam
     - battle-net
     - sonic-pi

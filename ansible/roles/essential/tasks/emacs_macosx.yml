@@ -9,9 +9,7 @@
   homebrew:
     pkg: emacs-plus
     state: present
-
-- name: emacs | Ensure emacs-plus is linked
-  command: "brew linkapps emacs-plus"
+    install_options: with-natural-title-bar
 
 - name: emacs | Ensure fonts tap is installed
   homebrew_tap:
