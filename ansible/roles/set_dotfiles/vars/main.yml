@@ -21,6 +21,7 @@ osx_linking_paths:
   - {dot: "dots/gitconfig", dest: ".gitconfig"}
   - {dot: "dots/gitignore", dest: ".gitignore_global"}
   - {dot: "dots/bashrc", dest: ".bashrc"}
+  - {dot: "dots/zshrc", dest: ".zshrc"}
   - {dot: "dots/profile", dest: ".profile"}
   - {dot: "dots/bin", dest: "bin"}
   - {dot: "dots/tmux.conf", dest: ".tmux.conf"}

@@ -40,13 +40,20 @@
     - reattach-to-user-namespace
     - teensy_loader_cli  # should not be here
     # shell
-    - fish
     - zsh
+    - getantibody/tap/antibody
     - bash
     - bash-completion
+    - fish
     # silly
     - archey
     - cowsay
     - lolcat
     - fortune
     - asciinema
+
+- name: terminal | update antibody plugins script
+  command: "antibody bundle <\"{{ ansible_env.HOME }}/.dotfiles/dots/zsh_plugins\" >~/.zsh_plugins.sh"
+
+- name: terminal | generate zsh_plugins.sh
+  command: "antibody update"

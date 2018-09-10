@@ -1,0 +1,4 @@
+source ~/.zsh_plugins.sh
+
+# fuzzy finder
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

@@ -1,0 +1,19 @@
+# libs
+mafredri/zsh-async
+
+# tools
+djui/alias-tips
+caarlos0/ports kind:path
+# update forks from upstream (plugin pushes!)
+caarlos0/zsh-git-sync kind:path
+# mkdir + cd
+caarlos0/zsh-mkc
+caarlos0/zsh-open-pr kind:path
+rupa/z
+zsh-users/zsh-completions
+zsh-users/zsh-autosuggestions
+
+# Leave these at the end
+sindresorhus/pure
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-history-substring-search
