@@ -12,5 +12,5 @@ env:
   - GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
 
 script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build . --build-arg git_branch=$GIT_BRANCH
-  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install/install.sh
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build . --build-arg git_branch=$GIT_BRANCH ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install/install.sh ; fi
