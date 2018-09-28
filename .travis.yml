@@ -1,11 +1,16 @@
 ---
-os: linux
-dist: trusty
-sudo: required
-
-services:
-  - docker
+matrix:
+  include:
+    - os: linux
+      dist: trusty
+      sudo: required
+      services:
+        - docker
+    - os: osx
+      sudo: required
+env:
+  - GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
 
 script:
-  - export GIT_BRANCH=${TRAVIS_PULL_REQUEST_BRANCH:-$TRAVIS_BRANCH}
-  - docker build . --build-arg git_branch=$GIT_BRANCH
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then docker build . --build-arg git_branch=$GIT_BRANCH
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then ./install/install.sh
