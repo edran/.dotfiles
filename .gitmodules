@@ -1,6 +1,3 @@
 [submodule "z"]
 	path = vendor/z
 	url = https://github.com/rupa/z
-[submodule "vendor/bash-git-prompt"]
-	path = vendor/bash-git-prompt
-	url = https://github.com/edran/bash-git-prompt
