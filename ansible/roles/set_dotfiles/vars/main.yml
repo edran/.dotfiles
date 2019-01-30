@@ -15,6 +15,7 @@ ubuntu_linking_paths:
   - {dot: "dots/i3", dest: ".i3"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/weechat/", dest: ".weechat"}
+  - {dot: "dots/condarc", dest: ".condarc"}
   # - {dot: "dots/urxvt/", dest: ".urxvt"}
 
 osx_linking_paths:
@@ -28,6 +29,7 @@ osx_linking_paths:
   - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/macosx/config", dest: ".config"}
+  - {dot: "dots/condarc", dest: ".condarc"}
 
 ubuntu_home_dirs_add:
   - "desktop"

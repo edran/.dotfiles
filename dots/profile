@@ -40,6 +40,4 @@ fi
 # ### DEV
 
 export PROJECT_HOME="$HOME/lab"
-export WORKON_HOME="$HOME/.envs"
-
-
+export WORKON_HOME="$HOME/.conda/envs"
