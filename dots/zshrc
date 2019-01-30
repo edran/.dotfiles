@@ -81,13 +81,12 @@ bindkey "^[3;5~" delete-char
 
 # ### Dev
 
-# TODO this most likely needs to go into .profile
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
-fi
-
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
+# # TODO this most likely needs to go into .profile
+# if command -v pyenv 1>/dev/null 2>&1; then
+#   eval "$(pyenv init -)"
+#   eval "$(pyenv virtualenv-init -)"
+# fi
+# export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
 ### Aliases
 
@@ -104,8 +103,8 @@ command -v exa 1>/dev/null 2>&1 && alias ll="exa -l"
 # TODO check that we are running on mac
 test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zsh
 
-
 # ### ZSH INIT
 source ~/.zsh_plugins.sh
 
-
+export PATH="$HOME/.conda/bin:$PATH"
+export PATH="$HOME/.bin:$PATH"

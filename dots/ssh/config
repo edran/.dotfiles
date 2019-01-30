@@ -43,3 +43,18 @@ Host mulga.cs brown.cs whip.cs woma.cs hercules.cs dgx1.cs savitar.cs legolas.cs
   Hostname %h.ox.ac.uk
   ProxyCommand ssh -W %h:%p robots
   ControlMaster auto
+
+##########
+## FAIR ##
+##########
+
+Host *-fairjmp*
+  IdentityFile ~/.ssh/fair_id_rsa
+
+Host devfair*
+  IdentityFile ~/.ssh/fair_id_rsa
+  ProxyJump frc-fairjmp02  # cannot use LB
+
+Host devfair  # 0217
+   User nantas
+   HostName  100.97.69.139

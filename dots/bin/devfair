@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+# jport: jumphost port, 8080 for all machines at FB
+# t: tunnels (2222:22 for emacs tramp editing)
+# x: kills previous et sessions
+et devfair:8080 -jport=8080 -t="18000:8097,2222:22" -x -c "tmux new -A -s main"
