@@ -7,6 +7,7 @@
 #umask 022
 
 # set PATH so it includes user's private bin if it exists
+
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
 fi
@@ -20,7 +21,14 @@ if [ -d "$HOME/.cabal/bin" ] ; then
     PATH="$HOME/.cabal/bin:$PATH"
 fi
 
-######## macos
+
+# ### GENERAL
+
+# export TERM="xterm-256color"
+export HISTTIMEFORMAT="%h %d %H:%M:%S> "
+
+
+# ### MACOS
 if echo "$OSTYPE" | grep -q "darwin" ; then
 
   # enable ls colors for
@@ -28,23 +36,10 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
 
 fi
 
-######## general
-export TERM="xterm-256color"
-export EDITOR="vim"
-export GIT_EDITOR="vim"
-# Better history format
-export HISTTIMEFORMAT="%h %d %H:%M:%S> "
 
+# ### DEV
 
-######## dev
 export PROJECT_HOME="$HOME/lab"
-export WORKON_HOME="$HOME/.conda/envs"
+export WORKON_HOME="$HOME/.envs"
 
-# --------------------------------------------------------------------------
 
-if [ -n "$BASH_VERSION" ] ; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ] ; then
-        . "$HOME/.bashrc"
-    fi
-fi

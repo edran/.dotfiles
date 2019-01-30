@@ -2,9 +2,6 @@
 ## General ##
 #############
 
-Host *
-  ServerAliveInterval 60
-
 Host tardis
    User edran
    HostName ssh.tardis.ed.ac.uk
@@ -35,11 +32,14 @@ Host marvin
    ProxyCommand ssh -W %h:%p robots
    ControlMaster auto
 
-Host cs-whip
-   User nantas
-   HostName whip.cs.ox.ac.uk
+###########
+##  cs   ##
+###########
 
-Host cs-hercules
-   User nantas
-   HostName hercules.cs.ox.ac.uk
-
+# TODO figure out how to remap *.cs to cs-*
+Host mulga.cs brown.cs whip.cs woma.cs hercules.cs dgx1.cs savitar.cs legolas.cs bilbo.cs gandalf.cs sauron.cs gollum.cs gimli.cs
+	User nantas
+  ForwardAgent yes
+  Hostname %h.ox.ac.uk
+  ProxyCommand ssh -W %h:%p robots
+  ControlMaster auto

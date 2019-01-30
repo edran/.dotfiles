@@ -77,8 +77,8 @@ fi
 
 # Enhance ##############################################################
 
-if [ -d ~/.dotfiles/dots/bash_functions ]; then
-    for file in ~/.dotfiles/dots/bash_functions/*; do
+if [ -d "$HOME/.dotfiles/dots/bash_functions" ]; then
+    for file in $HOME/.dotfiles/dots/bash_functions/*; do
         source "$file"
     done
 fi
@@ -87,27 +87,22 @@ if [ -f "$HOME/.dotfiles/dots/bash_aliases" ]; then
     source $HOME/.dotfiles/dots/bash_aliases
 fi
 
-# Editors ##############################################################
-
 # External #############################################################
 
 if [ -d "$HOME/.dotfiles/vendor/z" ] ; then
     source $HOME/.dotfiles/vendor/z/z.sh
 fi
 
-if [ -d "/opt/ros/indigo" ] ; then
-    source /opt/ros/indigo/setup.bash
-fi
-
-if [ -d "$HOME/torch/install/bin/" ] ; then
-    source $HOME/torch/install/bin/torch-activate
-fi
-
 if [ -x "/usr/local/bin/virtualenvwrapper.sh" ] ; then
     source /usr/local/bin/virtualenvwrapper.sh
 fi
 
-# eval "$(pyenv init -)"
-# eval "$(pyenv virtualenv-init -)"
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
-export PATH=~/.conda/bin:$PATH
+if command -v pyenv 1>/dev/null 2>&1; then
+    eval "$(pyenv init -)"
+fi
+
+if command -v pipenv 1>/dev/null 2>&1; then
+    eval "$(pipenv --completion)"
+fi
