@@ -72,6 +72,9 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
 
 
+setopt interactivecomments    # Enable bash / sh inline comments
+
+
 # ### Keybindings
 
 # fix del key
@@ -107,4 +110,4 @@ test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zs
 source ~/.zsh_plugins.sh
 
 export PATH="$HOME/.conda/bin:$PATH"
-export PATH="$HOME/.bin:$PATH"
+export PATH="$HOME/bin:$PATH"
