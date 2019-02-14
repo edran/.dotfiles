@@ -59,3 +59,10 @@
 
 - name: terminal | generate zsh_plugins.sh
   command: "antibody update"
+
+# FIXME current these need to run after set_dotfiles
+- name: terminal | setup ical2org-agenda launchctl
+  command: "launchctl load {{ ansible_env.HOME }}/Library/LaunchAgents/org.nantas.ical2org.plist"
+
+- name: terminal | starts ical2org-agenda service
+  command: "launchctl start org.nantas.ical2org"

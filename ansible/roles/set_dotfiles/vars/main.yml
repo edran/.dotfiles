@@ -30,6 +30,7 @@ osx_linking_paths:
   - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/macosx/config", dest: ".config"}
   - {dot: "dots/condarc", dest: ".condarc"}
+  - {dot: "dots/cronjobs/org.nantas.ical2org.plist", dest: "Library/LaunchAgents/org.nantas.ical2org.plist"}
 
 ubuntu_home_dirs_add:
   - "desktop"
