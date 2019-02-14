@@ -39,6 +39,7 @@
     - gifsicle
     - reattach-to-user-namespace
     - teensy_loader_cli  # should not be here
+    - ical-buddy # needs cron job to get ical calendar to org-agenda
     # shell
     - zsh
     - getantibody/tap/antibody

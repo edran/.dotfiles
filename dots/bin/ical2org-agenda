@@ -1,0 +1,39 @@
+#!/usr/bin/env bash
+
+set -e
+
+# TODO make different calendars
+# TODO assign `CATEGORY:' to each calendar
+CALENDARNAME="Calendar"
+
+# NOTE if you change PROPERTIES, change FORMATTER as well
+PROPERTIES="title,datetime,location,notes"
+FORMATTER="| \n   SCHEDULED: |>\n   LOCATION: | \n   | \n |"
+DAYS=12
+# TODO check $ORGFILE exists
+ORGFILE=~/org/auto-ical.org
+
+ORGSETUP=$(cat <<-END
+#+STARTUP: content noident
+#+TAGS: ICAL
+* Calendar :ICAL:
+END
+)
+
+icalbuddy \
+    -npn `# no property names` \
+    -nrd `# no relative dates` \
+    -nc  `# no calendar names` \
+    -iep $PROPERTIES `# includes event properties` \
+    -po $PROPERTIES `# sets property order` \
+    -tf "%H:%M" `# sets time format` \
+    -df "<%Y-%m-%d" \
+    -b "** " `# bullet point format` \
+    -ps "$FORMATTER" `# property separator` \
+    -ic $CALENDARNAME -sed eventsToday+$DAYS \
+    | tr -d $'\r' `# remove "^M" et similia` \
+    `# format enddate to org` \
+    | sed -E -e "s/(.*SCHEDULED:.*)( - )(.*)/\1-\3/g" \
+    `# prepend headline` \
+    | (echo "$ORGSETUP" && cat) \
+    > $ORGFILE
