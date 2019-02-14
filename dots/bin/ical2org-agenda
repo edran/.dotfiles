@@ -6,9 +6,13 @@ set -e
 # TODO assign `CATEGORY:' to each calendar
 CALENDARNAME="Calendar"
 
-# NOTE if you change PROPERTIES, change FORMATTER as well
-PROPERTIES="title,datetime,location,notes"
-FORMATTER="| \n   SCHEDULED: |>\n   LOCATION: | \n   | \n |"
+# NOTE(1) If you change PROPERTIES, change FORMATTER as well.
+# NOTE(2) Title is set both so that we can always put > at the end of scheduled.
+#         if removed, and location / notes is not set, it'll generate a broken
+#         datetime string for org-mode. REMOVELINE in the formatter is there for
+#         same reason. See NOTE(3).
+PROPERTIES="title,datetime,title,location,notes"
+FORMATTER="| \n   SCHEDULED: |>\nREMOVELINE |\n   LOCATION: | \n   | \n |"
 DAYS=12
 # TODO check $ORGFILE exists
 ORGFILE=~/org/auto-ical.org
@@ -16,6 +20,7 @@ ORGFILE=~/org/auto-ical.org
 ORGSETUP=$(cat <<-END
 #+STARTUP: content noident
 #+TAGS: ICAL
+
 * Calendar :ICAL:
 END
 )
@@ -34,6 +39,9 @@ icalbuddy \
     | tr -d $'\r' `# remove "^M" et similia` \
     `# format enddate to org` \
     | sed -E -e "s/(.*SCHEDULED:.*)( - )(.*)/\1-\3/g" \
+    `# NOTE(3): see NOTE(2) above` \
+    | sed -E -e "/REMOVELINE.*/d" \
     `# prepend headline` \
     | (echo "$ORGSETUP" && cat) \
     > $ORGFILE
+
