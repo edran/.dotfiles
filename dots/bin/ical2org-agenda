@@ -15,6 +15,7 @@ PROPERTIES="title,datetime,title,location,notes"
 FORMATTER="| \n   SCHEDULED: |>\nREMOVELINE |\n   LOCATION: | \n   | \n |"
 DAYS=12
 # TODO check $ORGFILE exists
+TMPFILE=/tmp/auto-ical.tmp
 ORGFILE=~/org/auto-ical.org
 
 ORGSETUP=$(cat <<-END
@@ -43,5 +44,7 @@ icalbuddy \
     | sed -E -e "/REMOVELINE.*/d" \
     `# prepend headline` \
     | (echo "$ORGSETUP" && cat) \
-    > $ORGFILE
+    > $TMPFILE
 
+# we don't want to have half-baked $ORGFILE, so we use an intermediate step
+cp $TMPFILE $ORGFILE
