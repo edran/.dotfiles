@@ -2,11 +2,6 @@
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
-
-# set PATH so it includes user's private bin if it exists
 
 if [ -d "$HOME/bin" ] ; then
     PATH="$HOME/bin:$PATH"
@@ -39,5 +34,15 @@ fi
 
 # ### DEV
 
+export EDITOR=vim
+# export PKG_CONFIG_PATH=$PKG_CONFIG_PATH:/usr/local/lib/pkgconfig
+# export TIMEFMT=$'\nreal\t%E\nuser\t%U\nsys\t%S'
+# export LANG="en_US.UTF-8"
+# export LC_ALL=$LANG
+# export LC_CTYPE="UTF-8"
+
 export PROJECT_HOME="$HOME/lab"
 export WORKON_HOME="$HOME/.conda/envs"
+
+export MODULEPATH=/public/modulefiles
+export MANPATH="$MANPATH:/usr/share/man:/usr/local/share/man"

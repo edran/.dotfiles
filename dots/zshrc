@@ -33,6 +33,7 @@
 
 # HACK
 # NOTE: This needs to stay at the top of .zshrc
+source /etc/profile
 source ~/.profile
 
 
@@ -59,8 +60,8 @@ alias history='omz_history -i'  # yyyy-mm-dd
 
 ## History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
+export HISTSIZE=50000
+export SAVEHIST=10000
 
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
@@ -73,7 +74,12 @@ setopt share_history          # share command history data
 
 
 setopt interactivecomments    # Enable bash / sh inline comments
+setopt ignoreeof              # Disable ctrl-d
 
+# setup autocompletion
+zstyle :compinstall filename '$HOME/.zshrc'
+autoload -Uz compinit
+compinit
 
 # ### Keybindings
 
@@ -91,7 +97,7 @@ bindkey "^[3;5~" delete-char
 # fi
 # export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 
-### Aliases
+# ### Aliases
 
 command -v exa 1>/dev/null 2>&1 && alias ls="exa"
 command -v exa 1>/dev/null 2>&1 && alias l="exa -F"
@@ -111,3 +117,6 @@ source ~/.zsh_plugins.sh
 
 export PATH="$HOME/.conda/bin:$PATH"
 export PATH="$HOME/bin:$PATH"
+
+# ### End
+[ $TERM = "dumb" ] && unsetopt zle && PS1='$ '
