@@ -45,6 +45,7 @@ This function should only modify configuration layer settings."
      (colors
       :variables
       colors-enable-nyan-cat-progress-bar t
+      ;; NOTE: override `rainbow-identifiers-faces-to-override' for less rainbow
       colors-colorize-identifiers 'all)
 
      (better-defaults)
@@ -62,6 +63,8 @@ This function should only modify configuration layer settings."
      (org
       :variables
       org-enable-reveal-js-support t
+      ;; enable t, T, and M-t in org
+      org-want-todo-bindings t
       org-babel-load-languages '((emacs-lisp . t)
                                  (python . t)))
      (github)
@@ -529,6 +532,14 @@ dump.")
    shell-enable-smart-eshell t)
 
   ;; own layouts
+  (spacemacs|define-custom-layout "@spacemacs"
+    :binding "e"
+    :body
+    (spacemacs/find-dotfile)
+    (spacemacs/edit-env)
+    (find-file custom-file)
+    (spacemacs/window-split-triple-columns))
+
   (spacemacs|define-custom-layout "@dots"
     :binding "d"
     :body
@@ -539,7 +550,7 @@ dump.")
                          "@dots"))
       (treemacs)))
 
-  (spacemacs|define-custom-layout "@Org"
+  (spacemacs|define-custom-layout "@org"
     :binding "o"
     :body
     (let ((agenda-files (org-agenda-files)))
@@ -547,8 +558,7 @@ dump.")
           (find-file (first agenda-files))
         (user-error "Error: No agenda files configured, nothing to display."))
       (split-window-right-and-focus)
-      (org-agenda nil "d")))
-
+      (org-agenda nil "b")))
 
   ;; auto-completion
   (setq
@@ -590,30 +600,48 @@ dump.")
 
   (setq
    org-directory "~/Dropbox/org"
-   org-archive-location "~/Dropbox/org/archive/%s_archive::"
-   org-agenda-files '("~/Dropbox/org")
+   org-archive-location "~/Dropbox/org/archive/%s_archive::datetree"
    org-default-notes-file "~/Dropbox/org/notes.org"
-   ;; would prefer 'other-window, but messes up my layouts
-   org-agenda-window-setup 'current-window
-   org-enforce-todo-dependencies t)
+   org-agenda-files '("~/Dropbox/org/"))
 
+  (setq org-columns-default-format "%25ITEM(Task) %TODO %3PRIORITY %TAGS")
+
+  ;; nifty - as per docstring, this function is "undocumented"
+  (setq org-fast-tag-selection-include-todo t)
+
+  ;; navigation
+  (setq org-M-RET-may-split-line '((default . nil)))
+  ;; would prefer 'other-window, but messes up my layouts
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-restore-windows-after-quit nil)
+  (setq org-enforce-todo-dependencies t)
+
+  ;; Do not ask before running code in org
+  (setq org-confirm-babel-evaluate nil)
 
   ;; refile over all (most) agenda files
   (setq org-refile-targets '((nil :maxlevel . 9) ;; current files
                              (org-agenda-files :maxlevel . 9))) ;; rest of files
-  (setq org-outline-path-complete-in-steps nil ;; Refile in a single go
-        org-refile-use-outline-path 'file ;; Show file paths (and outlines)
-        org-refile-allow-creating-parent-nodes 'confirm)
+
+  (setq org-outline-path-complete-in-steps nil) ;; Refile in a single go
+  (setq org-refile-use-outline-path 'file) ;; Show file paths (and outlines)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
   (setq org-todo-keywords
-        '((sequence
-           "TODO" "NEXT" "WAITING"
-           "|" "DONE"
-           "|" "INACTIVE" "CANCELLED")))
+        '((sequence "TODO" "NEXT" "|" "DONE")
+          (sequence "MAYBE(m)" "WAITING(w@/!)" "|" "CANCELLED(c@/!)")))
+
+  ;; don't want prj children to be stuck
+  (setq org-tags-exclude-from-inheritance '("prj"))
+  (setq org-stuck-projects '("+prj/-MAYBE-DONE"
+                             ("TODO" "NEXT")))
 
   (setq org-todo-keyword-faces
-        '(("INACTIVE" . "gray")
-          ("CANCELLED" . "purple")))
+        '(("MAYBE" :inherit org-todo :foreground "yellow")
+          ;; standard orange is slightly brighter than todo's face
+          ("WAITING" :inherit org-todo :foreground "orange")
+          ("NEXT" :inherit org-todo :foreground "orange")
+          ("CANCELLED" :inherit org-todo :foreground "aqua")))
 
   (defun edran/org-skip-subtree-if-habit ()
     "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
@@ -623,7 +651,15 @@ dump.")
         nil)))
 
   (setq org-agenda-custom-commands
-        '(("d"
+        '(("b"
+           "Biweekly + unscheduled"
+           ((agenda "" ((org-agenda-list)
+                        (org-agenda-span 12)))
+            (alltodo ""
+                     ((org-agenda-skip-function '(or (edran/org-skip-subtree-if-habit)
+                                                     (org-agenda-skip-if nil '(scheduled deadline))))
+                      (org-agenda-overriding-header "Unscheduled tasks:")))))
+          ("u"
            "Monthly + unscheduled"
            ((agenda "" ((org-agenda-list)
                         (org-agenda-span 'month)))
@@ -631,6 +667,7 @@ dump.")
                      ((org-agenda-skip-function '(or (edran/org-skip-subtree-if-habit)
                                                      (org-agenda-skip-if nil '(scheduled deadline))))
                       (org-agenda-overriding-header "Unscheduled tasks:")))))))
+
 
   (setq org-capture-templates
         '(("l" "Lab-related TODO tasks" entry
