@@ -1,0 +1,32 @@
+# character
+OPTIONS=name:Nantas
+OPTIONS=gender:male
+OPTIONS=align:neutral
+OPTIONS=race:Human
+OPTIONS=role:Samurai
+
+# interface
+OPTIONS=showexp,showscore,time,!autopickup
+OPTIONS=autodig,fruit:slime mold,boulder:0
+OPTIONS=color,menucolors
+
+MENUCOLOR="blessed"=cyan&bold
+MENUCOLOR="cursed"=orange&bold
+MENUCOLOR="uncursed"=green
+
+MENUCOLOR="loadstone\|wand \(of\|called\) cancellation"=red
+MENUCOLOR="Amulet of Yendor named"=magenta
+MENUCOLOR="gold piece"=yellow
+
+# forgotten spell
+MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta
+
+# This version will work on NAO.
+# MENUCOLOR="[a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta  # forgotten spell
+
+OPTIONS=msg_window:reversed
+
+OPTIONS=lit_corridor
+
+OPTIONS=hilite_pet
+# OPTIONS=windowtype:curses
