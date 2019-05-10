@@ -553,12 +553,14 @@ dump.")
   (spacemacs|define-custom-layout "@org"
     :binding "o"
     :body
-    (let ((agenda-files (org-agenda-files)))
-      (if agenda-files
-          (find-file (first agenda-files))
-        (user-error "Error: No agenda files configured, nothing to display."))
+    (progn
+     ;; let ((agenda-files (org-agenda-files)))
+     ;;  (if agenda-files
+     ;;      (find-file (first agenda-files))
+     ;;    (user-error "Error: No agenda files configured, nothing to display."))
+      (org-agenda nil "b")
       (split-window-right-and-focus)
-      (org-agenda nil "b")))
+      (deft)))
 
   ;; auto-completion
   (setq
