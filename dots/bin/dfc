@@ -1,0 +1,55 @@
+#!/usr/bin/env bash
+
+set -e
+
+function usage
+{
+    echo "usage: dfc -l PATH -r PATH [-s || -h]"
+    echo "   ";
+    echo "  -l              : Local path";
+    echo "  -r              : Remote path";
+    echo "  -h              : This message";
+}
+
+setup=0
+function parse_args
+{
+  while getopts ':l:r:sh' o; do
+      case "${o}" in
+          l) lpath=${OPTARG};;
+          r) rpath=${OPTARG};;
+          s) setup=1;;
+          h) usage; exit 1;;
+          *) echo 'Error in command line parsing' >&2; usage; exit 1
+      esac
+  done
+  shift $(( OPTIND - 1 ))
+  [[ "${1}" == "--" ]] && shift
+
+  if [[ -z "${lpath}" || -z "${rpath}" ]]; then
+      echo "-r and -l are required arguments"
+      usage
+      exit;
+  fi
+}
+
+parse_args "$@"
+
+if [ $setup -eq 1 ]; then
+    REPEAT=""
+else
+    REPEAT="-repeat watch"
+fi
+
+set -x
+
+# NOTE: when doing the setup (i.e. SETUP=1 start_unison)
+# some/local/dir *or* /private/your_user/your_dir need to exist, but not both!
+unison $lpath ssh://$USER@localhost:9999/$rpath \
+    -ignore "Name {.git}" \
+    -ignore "Name {.DS_Store}" \
+    -ignore "Name {.#*}" \
+    -ignore "Name {flycheck_*}" \
+    $REPEAT
+
+# -ignore "Name {*/,.*/}.#{*}" \
