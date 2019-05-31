@@ -1,16 +1,14 @@
 - name: conda | Check if conda is present
-  command: which conda
-  ignore_errors: yes
-  register: conda_present
-  failed_when: conda_present.rc > 1
-  changed_when: conda_present.rc == 1
+  stat:
+    path: "{{ ansible_env.HOME }}/.conda"
+  register: conda_path
 
 - name: conda | Donwload miniconda
   get_url:
     url: "https://repo.continuum.io/miniconda/Miniconda3-latest-MacOSX-x86_64.sh"
     dest: "/tmp/miniconda.sh"
-  when: conda_present.changed
+  when: not conda_path.stat.exists
 
 - name: conda | Install miniconda
   shell: "bash /tmp/miniconda.sh -b -p {{ ansible_env.HOME }}/.conda"
-  when: conda_present.changed
+  when: not conda_path.stat.exists

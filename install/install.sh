@@ -2,73 +2,91 @@
 
 set -e
 
-function p_err () {
+function err () {
     echo "$(tput bold)$(tput setaf 1)[e] $1$(tput sgr0)"
 }
 
 
-function p_info () {
+function info () {
     echo "$(tput bold)$(tput setaf 2)[i] $1$(tput sgr0)"
 }
 
-function p_warn () {
+function warn () {
     echo "$(tput bold)$(tput setaf 3)[w] $1$(tput sgr0)"
 }
 
-# for TravisCI purposes, first argument specifies branch
-if [ $# -eq 0 ]; then
-    GIT_BRANCH="master"
+GIT_BRANCH="master"
+NO_DROPBOX=0
+
+while [[ "$1" =~ ^- && ! "$1" == "--" ]]; do case $1 in
+  -b | --branch )
+    shift; GIT_BRANCH=$1
+    ;;
+  -p | --no_dropbox )
+    NO_DROPBOX=1
+    ;;
+esac; shift; done
+if [[ "$1" == '--' ]]; then shift; fi
+
+DB_PATH="$HOME/Dropbox"
+if [[ NO_DROPBOX -eq 0 ]]; then
+  if [ ! -e "$DB_PATH" ]; then
+    err "Dropbox path $DB_PATH not detected."
+    exit 1
+  else
+    info "Detected Dropbox directory at $DB_PATH"
+  fi
 else
-    GIT_BRANCH=$1
+  warn "Skipping Dropbox check because of flag"
 fi
 
 DOTS_PATH="$HOME/.dotfiles"
 
-p_info "Installing dotfiles:$GIT_BRANCH at $DOTS_PATH"
+info "Installing dotfiles:$GIT_BRANCH at $DOTS_PATH"
 
 if [ ! $(which ansible) ]; then  # ansible not on path
-    p_warn "Ansible not found"
-    p_warn "Attempting to install ansible..."
+    warn "Ansible not found"
     if [ "$(uname)" == "Darwin" ]; then
-        p_info "Detected MacOS!"
+        info "Detected MacOS"
         if [ ! $(which brew) ]; then
-            p_warn "Homebrew not found on path"
-            p_info "Installing homebrew..."
+            warn "Homebrew not found on path"
+            info "Installing homebrew..."
             yes | /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+            info "Homebrew has been installed"
         else
-            p_info "Found homebrew on PATH"
+            info "Detected homebrew"
         fi
-        p_info "Installing ansible package..."
+        info "Installing ansible..."
         brew install ansible
         brew list git &>/dev/null || brew install git  # just in case
+        info "Homebrew has been installed"
     else
+        info "Installing ansible repo/package..."
         sudo apt-add-repository ppa:ansible/ansible -y
         sudo apt-get update -qq
         sudo apt-get install -qq ansible git
+        info "Homebrew has been installed"
     fi
 else
-    p_info "Found ansible on PATH"
+    info "Detected ansible"
 fi
 
 if [ ! -d $DOTS_PATH ]; then
-    p_warn "Dotfiles repository not found"
-    p_info "Cloning dotfiles..."
+    warn "Dotfiles not found"
+    info "Cloning dotfiles..."
     git clone https://github.com/edran/.dotfiles.git $DOTS_PATH --branch $GIT_BRANCH --recursive
     pushd $DOTS_PATH > /dev/null
-    p_info "Point dotfiles repo to "
     git remote remove origin
     git remote add origin git@github.com:edran/.dotfiles
+    info "Updated dotfiles remote to use ssh"
     popd > /dev/null
 else
-    p_info "Found dotfiles at $DOTS_PATH"
+    info "Detected dotfiles at $DOTS_PATH"
 fi
 
-# setting for ansible
-
+info "Starting ansible playbook..."
 pushd "$HOME/.dotfiles/" > /dev/null
-
-ansible-playbook -i ansible/inventory ansible/full.yml --ask-become-pass
-
+ANSIBLE_NOCOWS=1 ansible-playbook -i ansible/inventory ansible/full.yml --ask-become-pass
 popd > /dev/null  # getting out of repo
 
-p_info "All done!"
+info "All done!"

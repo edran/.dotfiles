@@ -9,7 +9,8 @@
   homebrew:
     pkg: emacs-plus
     state: present
-    install_options: with-natural-title-bar
+    install_options:
+      - with-modern-icon
 
 - name: emacs | Ensure fonts tap is installed
   homebrew_tap:

@@ -1,3 +1,8 @@
+---
+
+- include: homebrew.yml
+  when: ansible_distribution == "MacOSX"
+
 - include: "emacs_{{ansible_distribution | lower}}.yml"
 
 - include: "tmux_{{ansible_distribution | lower}}.yml"
@@ -5,9 +10,6 @@
 - include: "conda_{{ansible_distribution | lower}}.yml"
 
 - include: "terminal_{{ansible_distribution | lower}}.yml"
-
-- include: productivity_macosx.yml
-  when: ansible_distribution == "MacOSX"
 
 - include: interface_macosx.yml
   when: ansible_distribution == "MacOSX"

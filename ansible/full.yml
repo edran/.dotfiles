@@ -3,5 +3,5 @@
   hosts: localhost
   connection: local
   roles:
-    - set_dotfiles
-    - essential
+    - { role: install, tags: install }
+
