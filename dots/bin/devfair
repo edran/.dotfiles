@@ -5,4 +5,4 @@ set -x
 # jport: jumphost port, 8080 for all machines at FB
 # t: tunnels (9999:22 for unison editing)
 # x: kills previous et sessions
-et devfair:8080 -v 9 -jport=8080 -t="8891:8891,2298:2298,9999:22" -x -c="tmux new -A -s main"
+et devfair:8080 --jport=8080 -t "8892:8892,9999:22" -x # -c="tmux new -A -s main"

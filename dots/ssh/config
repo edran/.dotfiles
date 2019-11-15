@@ -53,8 +53,12 @@ Host *-fairjmp*
 
 Host devfair*
   IdentityFile ~/.ssh/fair_id_rsa
-  ProxyJump prn-fairjmp03  # cannot use LB
+  ProxyJump ash-fairjmp202 # cannot use LB
 
 Host devfair  # 0217
    User nantas
    HostName  100.97.69.139
+
+Host devfair0214
+  User nantas
+  HostName 100.97.69.136

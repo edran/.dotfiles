@@ -33,7 +33,7 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(rust
      (osx)
      csv
      ;; ---------- editing
@@ -66,7 +66,12 @@ This function should only modify configuration layer settings."
       ;; enable t, T, and M-t in org
       org-want-todo-bindings t
       org-babel-load-languages '((emacs-lisp . t)
-                                 (python . t)))
+                                 (python . t))
+      ;; Turn off all org auto indentation completely
+      org-startup-indented nil
+      ;; Turn off manual indentation completely,
+      ;; AKA when you suddenly press TAB or =
+      org-adapt-indentation nil)
      (github)
      (shell)
      ;; (restclient)
@@ -82,9 +87,9 @@ This function should only modify configuration layer settings."
      (emacs-lisp)
      (clojure)
      (python)
-     (ipython-notebook)
+     ;; (ipython-notebook)
      (yaml)
-     (lua)
+     ;; (lua)
      (c-c++
       :variables
       c-c++-default-mode-for-headers 'c++-mode
@@ -256,8 +261,9 @@ It should only modify the values of Spacemacs settings."
 
    ;; Default font, or prioritized list of fonts. `powerline-scale' allows to
    ;; quickly tweak the mode-line size to make separators look not too crappy.
-   dotspacemacs-default-font '("Source Code Pro"
-                               :size 12
+   ;; dotspacemacs-default-font '("Source Code Pro")
+   dotspacemacs-default-font '("Menlo"
+                               :size 11
                                :weight normal
                                :width normal)
 
@@ -604,7 +610,8 @@ dump.")
    org-directory "~/Dropbox/org"
    org-archive-location "~/Dropbox/org/archive/%s_archive::datetree"
    org-default-notes-file "~/Dropbox/org/notes.org"
-   org-agenda-files '("~/Dropbox/org/"))
+   org-agenda-files '("~/Dropbox/org/")
+   org-ellipsis " ↴")
 
   (setq org-columns-default-format "%25ITEM(Task) %TODO %3PRIORITY %TAGS")
 

@@ -1,0 +1,6 @@
+[ repos ]
+[ repos.review_heatmap ]
+
+name = Review Heatmap
+version = latest
+repo = https://github.com/glutanimate/review-heatmap

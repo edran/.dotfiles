@@ -6,7 +6,7 @@
 
 - name: homebrew | Check if Brewfile contains updates
   shell: brew bundle check --file="{{ role_path }}/files/Brewfile"
-  register: bundle_check_result
+  register: bundle_check_result  # TODO make idempotent
   ignore_errors: true  # TODO check why this is needed
 
 - name: homebrew | Install apps using Brewfile

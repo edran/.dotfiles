@@ -30,3 +30,4 @@ OPTIONS=lit_corridor
 
 OPTIONS=hilite_pet
 # OPTIONS=windowtype:curses
+OPTIONS=checkpoint:false
