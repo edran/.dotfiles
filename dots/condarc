@@ -1,0 +1,5 @@
+channels:
+  - pytorch
+  - defaults
+
+changeps1: false

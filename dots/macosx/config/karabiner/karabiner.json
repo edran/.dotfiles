@@ -142,7 +142,7 @@
                 }
             ],
             "name": "Default profile",
-            "selected": false,
+            "selected": true,
             "simple_modifications": [],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
@@ -301,7 +301,7 @@
                 }
             ],
             "name": "Filco",
-            "selected": true,
+            "selected": false,
             "simple_modifications": [],
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,

@@ -1,4 +1,4 @@
-;; -*- mode: emacs-lisp -*-
+;; -*- mode: emacs-lisp; lexical-binding: t -*-
 ;; This file is loaded by Spacemacs at startup.
 ;; It must be stored in your home directory.
 
@@ -34,7 +34,7 @@ This function should only modify configuration layer settings."
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
    '(
-     osx
+     (osx)
      csv
      ;; ---------- editing
      (auto-completion
@@ -45,6 +45,7 @@ This function should only modify configuration layer settings."
      (colors
       :variables
       colors-enable-nyan-cat-progress-bar t
+      ;; NOTE: override `rainbow-identifiers-faces-to-override' for less rainbow
       colors-colorize-identifiers 'all)
 
      (better-defaults)
@@ -62,6 +63,8 @@ This function should only modify configuration layer settings."
      (org
       :variables
       org-enable-reveal-js-support t
+      ;; enable t, T, and M-t in org
+      org-want-todo-bindings t
       org-babel-load-languages '((emacs-lisp . t)
                                  (python . t)))
      (github)
@@ -70,7 +73,7 @@ This function should only modify configuration layer settings."
      ;; (command-log) ;; useful for teaching
      ;; (ranger)
      ;; (treemacs)
-     ;; (deft)
+     (deft)
      (dash) ;; requires zeal installed on linux
      (ansible)
 
@@ -97,12 +100,13 @@ This function should only modify configuration layer settings."
 
      ;; ---------- other
      (games)
+     (spotify)
      (selectric)
      (emoji)
      (theming))
-   ;; ---------- personal
-   ;; (edran)
-   ;; (edran-torch))
+
+     ;; ---------- personal
+     ;; (edran-torch)
 
    ;; List of additional packages that will be installed without being
    ;; wrapped in a layer. If you need some configuration for these
@@ -186,7 +190,7 @@ It should only modify the values of Spacemacs settings."
    ;; when the current branch is not `develop'. Note that checking for
    ;; new versions works via git commands, thus it calls GitHub services
    ;; whenever you start Emacs. (default nil)
-   dotspacemacs-check-for-update nil
+   dotspacemacs-check-for-update t
 
    ;; If non-nil, a form that evaluates to a package directory. For example, to
    ;; use different package directories for different Emacs versions, set this
@@ -320,6 +324,7 @@ It should only modify the values of Spacemacs settings."
    ;; paste something, pressing `C-j' and `C-k' several times cycles through the
    ;; elements in the `kill-ring'. (default nil)
    dotspacemacs-enable-paste-transient-state t
+
    ;; Which-key delay in seconds. The which-key buffer is the popup listing
    ;; the commands bound to the current keystroke sequence. (default 0.4)
    dotspacemacs-which-key-delay 0.4
@@ -416,7 +421,7 @@ It should only modify the values of Spacemacs settings."
 
    ;; If non-nil, start an Emacs server if one is not already running.
    ;; (default nil)
-   dotspacemacs-enable-server nil
+   dotspacemacs-enable-server t
 
    ;; Set the emacs server socket location.
    ;; If nil, uses whatever the Emacs default is, otherwise a directory path
@@ -486,15 +491,16 @@ This function is called immediately after `dotspacemacs/init', before layer
 configuration.
 It is mostly for variables that should be set before packages are loaded.
 If you are unsure, try setting them in `dotspacemacs/user-config' first."
-  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory))
-  )
+  ;; TODO make this work for ~user
+  (setenv "WORKON_HOME" "~/.conda/envs")
+  (setq custom-file (expand-file-name "custom.el" dotspacemacs-directory)))
 
 (defun dotspacemacs/user-load ()
   "Library to load while dumping.
 This function is called only while dumping Spacemacs configuration. You can
 `require' or `load' the libraries of your choice that will be included in the
-dump."
-  )
+dump.")
+
 
 (defun dotspacemacs/user-config ()
   ;; better default killing keys (since we use server)
@@ -526,16 +532,35 @@ dump."
    shell-enable-smart-eshell t)
 
   ;; own layouts
+  (spacemacs|define-custom-layout "@spacemacs"
+    :binding "e"
+    :body
+    (spacemacs/find-dotfile)
+    (spacemacs/edit-env)
+    (find-file custom-file)
+    (spacemacs/window-split-triple-columns))
+
   (spacemacs|define-custom-layout "@dots"
     :binding "d"
     :body
     (progn
-      ;; hook to add all ERC buffers to the layout
-      (find-file "~/.dotfiles/dots/spacemacs/init.el")
+      (find-dired "~/.dotfiles")
       (persp-add-buffer (current-buffer)
                         (persp-get-by-name
                          "@dots"))
-      (treemacs-projectile)))
+      (treemacs)))
+
+  (spacemacs|define-custom-layout "@org"
+    :binding "o"
+    :body
+    (progn
+     ;; let ((agenda-files (org-agenda-files)))
+     ;;  (if agenda-files
+     ;;      (find-file (first agenda-files))
+     ;;    (user-error "Error: No agenda files configured, nothing to display."))
+      (org-agenda nil "b")
+      (split-window-right-and-focus)
+      (deft)))
 
   ;; auto-completion
   (setq
@@ -574,27 +599,51 @@ dump."
   ;; #######################
   ;; ## org
   ;; #######################
+
   (setq
+   org-directory "~/Dropbox/org"
+   org-archive-location "~/Dropbox/org/archive/%s_archive::datetree"
    org-default-notes-file "~/Dropbox/org/notes.org"
-   org-agenda-files '("~/Dropbox/org/")
-   deft-directory "~/Dropbox/org/")
+   org-agenda-files '("~/Dropbox/org/"))
+
+  (setq org-columns-default-format "%25ITEM(Task) %TODO %3PRIORITY %TAGS")
+
+  ;; nifty - as per docstring, this function is "undocumented"
+  (setq org-fast-tag-selection-include-todo t)
+
+  ;; navigation
+  (setq org-M-RET-may-split-line '((default . nil)))
+  ;; would prefer 'other-window, but messes up my layouts
+  (setq org-agenda-window-setup 'current-window)
+  (setq org-agenda-restore-windows-after-quit nil)
+  (setq org-enforce-todo-dependencies t)
+
+  ;; Do not ask before running code in org
+  (setq org-confirm-babel-evaluate nil)
 
   ;; refile over all (most) agenda files
-  (setq org-refile-targets (quote ((nil :maxlevel . 9)
-                                   (org-agenda-files :maxlevel . 9))))
+  (setq org-refile-targets '((nil :maxlevel . 9) ;; current files
+                             (org-agenda-files :maxlevel . 9))) ;; rest of files
 
-  (setq
-   org-agenda-text-search-extra-files '(agenda-archives)
-   org-enforce-todo-dependencies t)
+  (setq org-outline-path-complete-in-steps nil) ;; Refile in a single go
+  (setq org-refile-use-outline-path 'file) ;; Show file paths (and outlines)
+  (setq org-refile-allow-creating-parent-nodes 'confirm)
 
   (setq org-todo-keywords
-        '((sequence
-           "TODO" "NEXT" "WAITING" "|"
-           "DONE" "|" "INACTIVE" "CANCELLED")))
+        '((sequence "TODO" "NEXT" "|" "DONE")
+          (sequence "MAYBE(m)" "WAITING(w@/!)" "|" "CANCELLED(c@/!)")))
+
+  ;; don't want prj children to be stuck
+  (setq org-tags-exclude-from-inheritance '("prj"))
+  (setq org-stuck-projects '("+prj/-MAYBE-DONE"
+                             ("TODO" "NEXT")))
 
   (setq org-todo-keyword-faces
-        '(("INACTIVE" . "blue")
-          ("CANCELLED" . "blue")))
+        '(("MAYBE" :inherit org-todo :foreground "yellow")
+          ;; standard orange is slightly brighter than todo's face
+          ("WAITING" :inherit org-todo :foreground "orange")
+          ("NEXT" :inherit org-todo :foreground "orange")
+          ("CANCELLED" :inherit org-todo :foreground "aqua")))
 
   (defun edran/org-skip-subtree-if-habit ()
     "Skip an agenda entry if it has a STYLE property equal to \"habit\"."
@@ -604,13 +653,23 @@ dump."
         nil)))
 
   (setq org-agenda-custom-commands
-        '(("d" "Standard agenda (Week + unscheduled)"
-           ((agenda "" ((org-agenda-list)))
+        '(("b"
+           "Biweekly + unscheduled"
+           ((agenda "" ((org-agenda-list)
+                        (org-agenda-span 12)))
             (alltodo ""
                      ((org-agenda-skip-function '(or (edran/org-skip-subtree-if-habit)
                                                      (org-agenda-skip-if nil '(scheduled deadline))))
-                      (org-agenda-overriding-header "Unscheduled tasks:"))))
-           ((org-agenda-compact-blocks t)))))
+                      (org-agenda-overriding-header "Unscheduled tasks:")))))
+          ("u"
+           "Monthly + unscheduled"
+           ((agenda "" ((org-agenda-list)
+                        (org-agenda-span 'month)))
+            (alltodo ""
+                     ((org-agenda-skip-function '(or (edran/org-skip-subtree-if-habit)
+                                                     (org-agenda-skip-if nil '(scheduled deadline))))
+                      (org-agenda-overriding-header "Unscheduled tasks:")))))))
+
 
   (setq org-capture-templates
         '(("l" "Lab-related TODO tasks" entry
@@ -638,12 +697,13 @@ dump."
            "* %?\n%T"
            :empty-lines 1)))
 
+  ;; ################################
+
   (add-hook 'markdown-mode-hook 'turn-on-orgtbl)
+  ;; (setq writeroom-fullscreen-effect 'fullboth)
+  (setq deft-directory org-directory)
 
-  ;; lua
-  (setq lua-indent-level 4)
-
-  ;; global modes
+  ;; show indentation using vertical bars
   (indent-guide-global-mode)
   (global-prettify-symbols-mode)
 

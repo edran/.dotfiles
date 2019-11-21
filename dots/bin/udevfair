@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -x
+set -e
+
+if [ -z ${SETUP+"nope"} ]; then
+  REPEAT="-repeat watch"
+else
+  REPEAT=""
+fi
+
+unison devfair_dir5 ssh://nantas@localhost:9999//private/home/nantas/unison_test5 \
+    -ignore "Name {*/,.*/}.git" \
+    -ignore "Name {*/,.*/}.DS_Store" \
+    -ignore "Name {*/,.*/}.#{*}" \
+    $REPEAT
