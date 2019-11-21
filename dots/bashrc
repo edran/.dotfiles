@@ -9,8 +9,7 @@ HISTCONTROL=ignoreboth
 # When exiting the shell, append the history instead of overwriting it
 shopt -s histappend
 
-HISTSIZE=10000
-HISTFILESIZE=20000
+export HISTTIMEFORMAT="%h %d %H:%M:%S> "
 
 # Update rows/columns with windows size changes
 shopt -s checkwinsize

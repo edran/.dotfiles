@@ -28,15 +28,16 @@
 #
 # tl;dr - for zsh one should always put stuff into zshrc;
 #         use bash / sh directly for scripts + ssh
-# In particular, PATH gets modified by /etc/zprofile on MacOS, so zshenv should 
+# In particular, PATH gets modified by /etc/zprofile on MacOS, so zshenv should
 # not be relied upon (what a shitshow).
 
-# HACK
 # NOTE: This needs to stay at the top of .zshrc
 source ~/.profile
 
 
-# ### History (from omz)
+# ###########
+# # History #
+# ###########
 
 function omz_history {
   local clear list
@@ -55,13 +56,8 @@ function omz_history {
   fi
 }
 
-alias history='omz_history -i'  # yyyy-mm-dd
-
 ## History file configuration
 [ -z "$HISTFILE" ] && HISTFILE="$HOME/.zsh_history"
-HISTSIZE=50000
-SAVEHIST=10000
-
 ## History command configuration
 setopt extended_history       # record timestamp of command in HISTFILE
 setopt hist_expire_dups_first # delete duplicates first when HISTFILE size exceeds HISTSIZE
@@ -72,40 +68,41 @@ setopt inc_append_history     # add commands to HISTFILE in order of execution
 setopt share_history          # share command history data
 
 
-# ### Keybindings
+# ###########
+# # Plugins #
+# ###########
+
+# fuzzy finder
+if [[ -f "$HOME/.fzf.zsh" ]]; then
+    source ~/.fzf.zsh
+fi
+
+if [[ $IS_MACOS == 1 && -f "$HOME/.iterm2_shell_integration.zsh" ]]; then
+    source ~/.iterm2_shell_integration.zsh
+fi
+
+source "$HOME/.conda/etc/profile.d/conda.sh"
+source "$HOME/.zsh_plugins.sh"
+
+
+# ###############
+# # Keybindings #
+# ###############
 
 # fix del key
 bindkey "^[[3~"  delete-char
 bindkey "^[3;5~" delete-char
 
 
-# ### Dev
+# ###########
+# # Aliases #
+# ###########
 
-# TODO this most likely needs to go into .profile
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-  eval "$(pyenv virtualenv-init -)"
+alias history="omz_history -i"
+alias ppath="printf \"%s\n\" $path"
+
+if [ -x "$(command -v exa)" ]; then
+    alias ls="exa"
+    alias l="exa -F"
+    alias ll="exa -l"
 fi
-
-export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
-
-### Aliases
-
-command -v exa 1>/dev/null 2>&1 && alias ls="exa"
-command -v exa 1>/dev/null 2>&1 && alias l="exa -F"
-command -v exa 1>/dev/null 2>&1 && alias ll="exa -l"
-
-# ### Plugins
-
-# fuzzy finder
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# iterm2 integration
-# TODO check that we are running on mac
-test -e ~/.iterm2_shell_integration.zsh && source ~/.iterm2_shell_integration.zsh
-
-
-# ### ZSH INIT
-source ~/.zsh_plugins.sh
-
-

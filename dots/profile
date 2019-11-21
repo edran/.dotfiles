@@ -1,6 +1,9 @@
+# -*- mode: sh -*-
+
 # ~/.profile: executed by the command interpreter for login shells.
 # This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
 # exists.
+# zsh also doesn't use this by default, but I source it in zshrc
 
 # the default umask is set in /etc/profile; for setting the umask
 # for ssh logins, install and configure the libpam-umask package.
@@ -8,38 +11,32 @@
 
 # set PATH so it includes user's private bin if it exists
 
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
+add2path_if_exists()
+{
+    to_add=$1
+    if [ -d "$to_add" ] ; then
+        PATH="$to_add:$PATH"
+    fi
+}
 
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
+add2path_if_exists "$HOME/bin"
+add2path_if_exists "$HOME/.local/bin"
+add2path_if_exists "$HOME/.cabal/bin"
 
-# In case we are doing haskell
-if [ -d "$HOME/.cabal/bin" ] ; then
-    PATH="$HOME/.cabal/bin:$PATH"
-fi
+### GENERAL
 
-
-# ### GENERAL
-
-# export TERM="xterm-256color"
-export HISTTIMEFORMAT="%h %d %H:%M:%S> "
-
-
-# ### MACOS
-if echo "$OSTYPE" | grep -q "darwin" ; then
-
-  # enable ls colors for
-  export CLICOLOR=1
-
-fi
-
-
-# ### DEV
+HISTSIZE=50000
+SAVEHIST=10000
 
 export PROJECT_HOME="$HOME/lab"
 export WORKON_HOME="$HOME/.envs"
 
 
+# ### MACOS
+if echo "$OSTYPE" | grep -q "darwin" ; then
+    # enable ls colors for
+    export CLICOLOR=1
+    # set term
+    export TERM="xterm-256color"
+    IS_MACOS=1
+fi
