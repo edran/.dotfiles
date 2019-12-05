@@ -32,8 +32,8 @@
 # not be relied upon (what a shitshow).
 
 # NOTE: This needs to stay at the top of .zshrc
-source /etc/profile
-source ~/.profile
+. /etc/profile
+. ~/.profile
 
 
 # ###########
@@ -76,29 +76,47 @@ setopt share_history          # share command history data
 setopt interactivecomments    # Enable bash / sh inline comments
 setopt ignoreeof              # Disable ctrl-d
 
-# autocompletion
-zstyle :compinstall filename '$HOME/.zshrc'
-autoload -Uz compinit
-compinit
-
 
 # ###########
 # # Plugins #
 # ###########
 
 # fuzzy finder
-if [[ -f "$HOME/.fzf.zsh" ]]; then
-    source ~/.fzf.zsh
-fi
+if [[ -f ~/.fzf.zsh ]] . ~/.fzf.zsh
 
 if [[ $IS_MACOS == 1 && -f "$HOME/.iterm2_shell_integration.zsh" ]]; then
-    source ~/.iterm2_shell_integration.zsh
+    . ~/.iterm2_shell_integration.zsh
 fi
 
-source "$HOME/.conda/etc/profile.d/conda.sh"
-source "$HOME/.zsh_plugins.sh"
-
 eval $(thefuck --alias)
+
+# This will heavily change the path :(
+. ~/.zsh_plugins.sh
+
+if type direnv &>/dev/null; then
+    eval "$(direnv hook zsh)"
+fi
+
+if type brew &>/dev/null; then
+    . $(brew --prefix asdf)/asdf.sh
+fi
+
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$HOME/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "$HOME/.conda/etc/profile.d/conda.sh" ]; then
+        . "$HOME/.conda/etc/profile.d/conda.sh"
+    else
+        export PATH="$HOME/.conda/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
 
 # ###############
 # # Keybindings #
@@ -116,6 +134,7 @@ bindkey "^[3;5~" delete-char
 
 alias history="omz_history -i"
 alias ppath="printf \"%s\n\" $path"
+alias j="z"
 
 if [ -x "$(command -v exa)" ]; then
     alias ls="exa"
@@ -123,11 +142,30 @@ if [ -x "$(command -v exa)" ]; then
     alias ll="exa -l"
 fi
 
-export PATH="$HOME/.conda/bin:$PATH"
-export PATH="$HOME/bin:$PATH"
+if [ -x "$(command -v conda)" ]; then
+    alias ca="conda activate"
+fi
 
-# ### ZSH INIT
-source ~/.zsh_plugins.sh
+alias json="python -m json.tool"
+
+
+# ##################
+# # Autocompletion #
+# ##################
+
+autoload -Uz compaudit compinit
+zstyle :compinstall filename '$HOME/.zshrc'
+
+# homebrew autocomplete
+if type brew &>/dev/null; then
+    FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+fi
+compinit
+
+
+# #######
+# # End #
+# #######
 
 # Tramp needs a straightforward PS1, so we set it here at the end
 [[ $TERM == "dumb" ]] && unsetopt zle && PS1='$ ' && return
