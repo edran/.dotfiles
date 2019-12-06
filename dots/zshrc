@@ -35,6 +35,10 @@
 . /etc/profile
 . ~/.profile
 
+# deals with ssh agent / passphrase
+if type keychain &>/dev/null; then
+    eval `keychain --eval --agents ssh --inherit any --quiet id_rsa`
+fi
 
 # ###########
 # # History #

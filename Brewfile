@@ -43,6 +43,7 @@ brew "d12frosted/emacs-plus/emacs-plus",
             "with-dbus",
             "with-modern-icon",
             "without-spacemacs-icon"]
+brew "diff-so-fancy"
 brew "direnv"
 brew "exa"
 brew "fd"  # better find
@@ -66,6 +67,7 @@ brew "ical-buddy"
 brew "icdiff"  # coloured diff
 brew "iperf"  # measure network bandwidth
 brew "jq"  # json processor
+brew "keychain"
 brew "lnav"  # curses interface for logs
 brew "lolcat"
 brew "mkcert"  # install/uninstall dev certificates

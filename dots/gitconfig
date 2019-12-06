@@ -1,19 +1,88 @@
 [user]
 	name = Nantas Nardelli
 	email = nantas.nardelli@gmail.com
-[color]
-	ui = true
 [core]
 	autocrlf = input
 	compression = -1
 	excludesfile = ~/.gitignore_global
-[alias]
-	st = status
-	ci = commit
-	co = checkout
-	br = branch
+	# Whitespace detection (only warnings)
+	whitespace = trailing-space,space-before-tab
+[credential]
+	helper = cache --timeout=3600
+[status]
+	submodulesummary = true
+	showUntrackedFiles = all
 [branch]
 	autosetuprebase = always
+[diff]
+	algorithm = patience
+	renames = copies
+	mnemonicprefix = true
+	compactionHeuristic = true
+	tool = bc3
+[pager]
+	show-branch = true
+	status = true
+	diff = diff-so-fancy | less --tabs=2 -RFX #--pattern '^(Date|added|deleted|modified): '
+	show = diff-so-fancy | less --tabs=2 -RFX #--pattern '^(Date|added|deleted|modified): '
+[pretty]
+	log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
+	detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
+	shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
+	multiline = %C(blue)──────%Creset%n %C(auto)commit %h %C(auto) %D%Creset%n %C(cyan)%an%Creset | %Cgreen%cr%Creset%n%+B
+[fetch]
+	recurseSubmodules = true
+[merge]
+	tool = bc3
+	summary = true
+	verbosity = 1
+	stat = true
+	# This introduces the original text before each side's changes.
+	# https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+	conflictstyle = diff3
+[mergetool]
+	prompt = false
+	keepBackup = true
+	writeToTemp = true
+[submodule]
+	fetchJobs = 8
+[color]
+	ui = true
+	pager = true
+	showbranch = true
+	diff = auto
+	status = auto
+	branch = auto
+	interactive = auto
+[color "branch"]
+	plain = yellow
+	current = green bold
+	local = blue bold
+	remote = white
+	upstream = magenta bold
+[color "diff"]
+	plain = normal
+	old = red
+	new = green
+	commit = yellow
+	meta = blue
+	frag = cyan
+	func = yellow bold
+	whitespace = red reverse
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "status"]
+	header = 243
+	added = green
+	changed = red
+	untracked = blue
+	branch = green bold
+	nobranch = red
+[url "git@github.com:"]
+	insteadOf = gh:
 [github]
 	user = edran
 [magithub]
@@ -27,3 +96,48 @@
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+[alias]
+	s  = status -sb
+	st = status
+	f  = fetch --prune
+	c  = commit -v
+	cm = commit -vm
+	ci = commit
+	co = checkout
+	br = branch
+	d  = diff
+	ds = diff --staged
+	dw = diff --color-words
+	dh = diff --color-words HEAD
+	dp = !git log --pretty=oneline | fzf | cut -d ' ' -f1 | xargs -o git show
+	patch = !git --no-pager diff --no-color
+	prune = fetch --prune
+	stash-all = stash save --include-untracked
+	w  = whatchanged --decorate
+	wp = whatchanged --decorate -p
+	t  = tag --column
+	tn = tag -n
+	#===============================================
+	sm    = submodule
+	smu   = submodule foreach git pull origin master
+	lcrev = log --reverse --no-merges --stat @{1}..
+	lcp   = diff @{1}..
+	#===============================================
+	tree = log --graph --all --oneline --decorate
+	lb   = log --graph --simplify-by-decoration --pretty=shorter --all --notes --date-order --relative-date
+	log  = log --pretty=log
+	lg   = log --graph --pretty=log --all
+	lgd  = log --graph --pretty=log
+	lgw  = !sh -c '"while true; do clear; git lg -15; sleep 5; done"'
+	#===============================================
+	# bf = !git diff --name-only "$(git base-branch)..@"
+	post  = !sh -c 'git format-patch --stdout $1 | ix' -
+	sync-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+	recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+	#===============================================
+	# Take a snapshot of your current working tree without removing the changes from your tree.
+	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+	snapshots = !git stash list --grep snapshot
