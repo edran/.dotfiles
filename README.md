@@ -8,7 +8,7 @@
 
 ***
 
-Compatible with `Ubuntu Xenial (16.04)` and `MacOS High Sierra`. Most of the
+Compatible with `MacOS Mojave`. Most of the
 configuration can be found in `dots/`, but the installation (and update)
 procedure is almost completely based on [ansible](https://www.ansible.com/) and
 lives in `ansible/`.
@@ -34,4 +34,3 @@ tested.
 * `$ git pull origin <branch>` (likely master)
 * `$ ansible-playbook -i ansible/inventory ansible/full.yml --ask-become-pass`
 * You can also just run `install.sh`.
-
