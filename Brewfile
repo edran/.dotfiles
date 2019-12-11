@@ -126,6 +126,7 @@ cask "cyberduck"  # ftp client
 cask "dash"
 cask "docker"
 cask "dropbox"
+cask "eqmac"
 cask "firefox"
 cask "flux"
 cask "font-hack-nerd-font"
