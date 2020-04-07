@@ -108,3 +108,6 @@ __pycache__/
 /ergodox/teensy_loader_cli/
 dots/macosx/config/inkscape/extension-errors.log
 dots/macosx/config/karabiner/automatic_backups
+dots/macosx/config/gtk-2.0/gtkfilechooser.ini
+dots/macosx/config/configstore/update-notifier-npm.json
+dots/bin/nethack
