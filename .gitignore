@@ -107,3 +107,4 @@ __pycache__/
 /ergodox/ergodox_ez.hex
 /ergodox/teensy_loader_cli/
 dots/macosx/config/inkscape/extension-errors.log
+dots/macosx/config/karabiner/automatic_backups
