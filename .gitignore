@@ -106,3 +106,4 @@ __pycache__/
 !/dots/macosx/config/fish/config.fish
 /ergodox/ergodox_ez.hex
 /ergodox/teensy_loader_cli/
+dots/macosx/config/inkscape/extension-errors.log
