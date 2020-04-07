@@ -28,6 +28,7 @@ export EDITOR=vim  # should be emacsclient
 export PROJECT_HOME="$HOME/lab"
 export WORKON_HOME="$HOME/.envs"
 
+export PYTHONBREAKPOINT=ipdb.set_trace
 
 # ### MACOS
 if echo "$OSTYPE" | grep -q "darwin" ; then

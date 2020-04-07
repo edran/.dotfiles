@@ -2,4 +2,5 @@ channels:
   - pytorch
   - defaults
 
-changeps1: false
+changeps1: true
+auto_activate_base: false
