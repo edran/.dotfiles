@@ -32,6 +32,12 @@ Host marvin
    ProxyCommand ssh -W %h:%p robots
    ControlMaster auto
 
+Host pineapples
+   HostName 129.67.94.221
+   User nantas
+   ProxyCommand ssh -W %h:%p robots
+   ControlMaster auto
+
 ###########
 ##  cs   ##
 ###########
