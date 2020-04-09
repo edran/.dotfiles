@@ -600,11 +600,12 @@ dump.")
   ;; ## org
   ;; #######################
 
+  ;; (setq org-indent-indentation-per-level 0)
   (setq
-   org-directory "~/Dropbox/org"
-   org-archive-location "~/Dropbox/org/archive/%s_archive::datetree"
-   org-default-notes-file "~/Dropbox/org/notes.org"
-   org-agenda-files '("~/Dropbox/org/"))
+   org-directory "~/GDrive/org"
+   org-archive-location "~/GDrive/org/archive/%s_archive::datetree"
+   org-default-notes-file "~/GDrive/org/notes.org"
+   org-agenda-files '("~/GDrive/org/"))
 
   (setq org-columns-default-format "%25ITEM(Task) %TODO %3PRIORITY %TAGS")
 
