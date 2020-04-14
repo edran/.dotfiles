@@ -18,6 +18,8 @@ add2path_if_exists "/usr/local/sbin"  # homebrew
 add2path_if_exists "$HOME/bin"
 add2path_if_exists "$HOME/.local/bin"
 add2path_if_exists "$HOME/.cabal/bin"
+add2path_if_exists "$HOME/.emacs.d/bin"
+add2path_if_exists "$HOME/.cargo/bin"
 
 ### GENERAL
 
