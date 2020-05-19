@@ -79,6 +79,7 @@
        ;;grammar           ; tasing grammar mistake every you make
 
        :tools
+       (:if IS-MAC macos)
        ;;ansible
        ;;debugger          ; FIXME stepping through code, to help you add bugs
        direnv
@@ -89,7 +90,6 @@
        ;;gist              ; interacting with github gists
        (lookup +docset +dictionary)  ; navigate your code and its documentation
        lsp
-       macos             ; MacOS-specific commands
        magit             ; a git porcelain for Emacs
        ;;make              ; run make tasks from Emacs
        ;;pass              ; password manager for nerds
