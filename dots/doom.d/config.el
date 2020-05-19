@@ -44,6 +44,10 @@
       ;; Don't restore window config after quitting magit
       magit-inhibit-save-previous-winconf t)
 
+(add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+(add-to-list 'ispell-skip-region-alist '("~" "~"))
+(add-to-list 'ispell-skip-region-alist '("=" "="))
+
 ;;;; langs
 ;;;; org
 (setq org-archive-location (concat
