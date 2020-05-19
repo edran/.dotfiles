@@ -6,8 +6,18 @@
 
       org-directory "~/org"
       projectile-project-search-path '("~/lab")  ;; this is not recursive, sadly
-      magit-repository-directories '(("~/lab" . 2))
-      )
+      magit-repository-directories '(("~/lab" . 2)))
+
+;;;; env
+(doom-load-envvars-file
+ (cond ((string= (system-name) "empiricist")
+        (concat (file-name-as-directory doom-private-dir) "env_empiricist"))
+       ;; NOTE: Uncommenting the following lines, since I should probably be
+       ;; running `doom env' here instead.
+       ;; (IS-MAC (concat (file-name-as-directory doom-private-dir) "env_macos"))
+       ;; (IS-LINUX (concat (file-name-as-directory doom-private-dir) "env_linux"))
+       (t doom-env-file))) ;; default
+
 
 ;;;; UI
 (setq doom-theme 'doom-dracula
@@ -25,11 +35,14 @@
       evil-split-window-below t
       evil-vsplit-window-right t
 
+      ;; isearch
+      isearch-lazy-count t
+      isearch-allow-scroll 'unlimited
+
       ;; magit
       magit-save-repository-buffers 'dontask
       ;; Don't restore window config after quitting magit
-      magit-inhibit-save-previous-winconf t
-      )
+      magit-inhibit-save-previous-winconf t)
 
 ;;;; langs
 ;;;; org
