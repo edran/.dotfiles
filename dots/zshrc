@@ -1,3 +1,4 @@
+# -*- mode: sh; -*-
 # zsh sourcing
 # +----------------+-----------+-----------+------+
 # |                |Interactive|Interactive|Script|
@@ -146,13 +147,20 @@ if [ -x "$(command -v exa)" ]; then
     alias ll="exa -l"
 fi
 
-if [ -x "$(command -v conda)" ]; then
-    alias ca="conda activate"
-fi
+# _dev is prefixed to make it always session 0 in list
+alias t="tmux attach || tmux new -s _dev"
+alias ta="tmux attach -t"
+alias tn="tmux new -s"
+alias td="tmux new -d -s"
+alias tl="tmux list-sessions"
+
+alias ca="conda activate"
 
 alias json="python -m json.tool"
 
-
+ipdb() {
+  ipython --pdb -c "%run $*"
+}
 # ##################
 # # Autocompletion #
 # ##################
