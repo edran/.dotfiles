@@ -1,12 +1,6 @@
-# Python Byte-compiled / optimized / DLL files
-__pycache__/
-*.py[cod]
-*$py.class
-
-# stuff
-*~
+# private
+private/
 /dots/ssh/*
-*.retry
 
 # config files
 /dots/config/google-chrome/
