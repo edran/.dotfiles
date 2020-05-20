@@ -3,3 +3,6 @@
 ._.DS_Store
 **/.DS_Store
 **/._.DS_Store
+
+# ccls generates a lot of things
+**/.ccls-cache*

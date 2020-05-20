@@ -4,7 +4,6 @@
 [core]
 	autocrlf = input
 	compression = -1
-	excludesfile = ~/.gitignore_global
 	# Whitespace detection (only warnings)
 	whitespace = trailing-space,space-before-tab
 [credential]
