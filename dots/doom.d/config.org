@@ -53,35 +53,63 @@ Rather than the last sentence / lines.
 Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
 post]]), so we activate it.
 
-#+begin_src emacs-lisp
-;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+begin_src emacs-lisp :comment no
+;;; config.el -*- lexical-binding: t; -*-
 #+end_src
 
 ** Personal info
-#+begin_src emacs-lisp :tangle yes
 
-;;;; deets
+These are some basic information that are needed for e.g., ~GPG~, ~org-export~, etc.
+
+#+begin_src emacs-lisp
 (setq user-full-name "Nantas Nardelli"
       user-mail-address "nantas.nardelli@gmail.com")
 #+end_src
 
-** Basic paths
+** Telling Emacs about my lab
+
+I use =~/lab= as my root directory for pretty much all development work. This
+helps some tools tinker with my data. /All hail automatic project management
+software./
+
+#+begin_src emacs-lisp
+(defvar edran-lab-path "~/lab" "Path to the local laboratory")
+
+(setq projectile-project-search-path (list edran-lab-path)       ;; this is not recursive, sadly
+      magit-repository-directories (list (cons edran-lab-path  2)))
+#+end_src
+
+* Graphical configuration
+
+** Fonts
 
 #+begin_src emacs-lisp :tangle yes
-(setq
-      org-directory "~/org"
-      projectile-project-search-path '("~/lab")  ;; this is not recursive, sadly
-      magit-repository-directories '(("~/lab" . 2)))
+(setq doom-font (font-spec :family "Source Code Pro" :size 12)
+      doom-big-font (font-spec :family "Source Code Pro" :size 18)
+      doom-variable-pitch-font (font-spec :family "Arial" :size 24)
+      doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
 #+end_src
 
 ** Setting up theme
-#+begin_src emacs-lisp :tangle yes
 
-;;;; UI
-(setq doom-theme 'doom-dracula
-      doom-font (font-spec :family "monospace" :size 12)
-      ;; doom-variable-pitch-font
-      ;; doom-big-font
+#+begin_src emacs-lisp :tangle yes
+(setq doom-theme 'doom-dracula)
+#+end_src
+
+** Disable vertical line numbers
+This can be reactivated when I have a better dev machine :(
+
+#+begin_src emacs-lisp :tangle yes
+(setq display-line-numbers-type nil)
+#+end_src
+
+** Window title
+Sometimes I need to parse the name of Emacs windows with other scripts /
+software, and I'd rather stick to standard strings to future-proof things:
+
+#+begin_src emacs-lisp
+(setq frame-title-format "%b - Emacs")
+#+end_src
 
       ;; To be re-enabled when I get a better machine.
       display-line-numbers-type nil)
