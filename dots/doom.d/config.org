@@ -3,6 +3,51 @@
 #+LANGUAGE: en
 #+PROPERTY: header-args :tangle yes :cache yes :results silent :comments link
 
+* Preface
+I have been using Emacs as my editor for more than a decade -- well before I
+started calling myself a programmer -- and the journey has been quite the ride
+so far.
+
+My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a few that
+predate any usage (and knowledge!) of version control on my part. It's current
+form, which most certainly is not its final (but which I hope to be its
+/present/ for at least a few more years), is based on the amazing =doom emacs=
+and =org-mode=. Thanks to these frameworks, it is much, much slimmer than it
+used to be at various points of its history.
+
+Which is both good and bad. But /c'est la vie/ :)
+
+** Basic usage info
+In theory, the latest version of =doom emacs= should be able to simply run this
+configuration. The first time, it needs to be generated via:
+
+#+begin_src sh
+$ doom sync  # generates config.el from tangling config.org
+#+end_src
+
+Afterwards, this org file will be tangled upon save, hopefully. If it's not the
+case, =doom refresh= should do the job.
+
+My main dev setup is a MBP running a heavily configured =MacOS 10.14=, but most
+of this config should behave properly on modern linux distros so long as the
+environment is configured similarly to what is provided by my [[https://github.com/edran/.dotfiles][dotfiles]].
+
+** Known issues
+This config is a /Forever Work In Progress™/, and thus there are things that I
+wish were fixed / implemented that either I haven't had the time to tackle
+and/or have the capabilities to properly do so.
+*** org headers are indented
+This sucks. I want as much horizontal space as possible without having to
+soft-wrap everything.
+*** conda environments interact weirdly with lsp
+Calling =conda-env-activate= doesn't restart the lsp server. Worse,
+=lsp-restart-workspace= seems to successfully kill the server, but a further
+=lsp= call is required for the server to be up again.
+**** TODO Make =conda-env-activate= automatically call =lsp-restart-workspace=
+**** TODO Fix =lsp-restart-workspace= so that it actually restarts the lsp server
+*** I would like hard wrap to work its magic on the paragraph automatically
+Rather than the last sentence / lines.
+
 * Essential configuration
 
 Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
