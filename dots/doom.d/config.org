@@ -111,10 +111,27 @@ software, and I'd rather stick to standard strings to future-proof things:
 (setq frame-title-format "%b - Emacs")
 #+end_src
 
-      ;; To be re-enabled when I get a better machine.
-      display-line-numbers-type nil)
+* Buffers
 
+Oh yeah, now we get to the fun configuration!
+
+** Better default names when in conflict
+Whenever I'm coding some nasty framework, I tend to have to open multiple
+=__init__.py= at the same time. I'd like them to be prefixed with the least
+amount of information needed to disentangle them:
+
+#+begin_src emacs-lisp
+(setq uniquify-buffer-name-style 'forward)
 #+end_src
+
+** Rename default buffer back to *scratch*
+=*doom*= is nice, but my muscle memory complains a lot.
+
+#+begin_src emacs-lisp
+(setq doom-fallback-buffer-name "*scratch*")
+#+end_src
+
+* Misc
 **  UX changes
 
 #+begin_src emacs-lisp :tangle yes
@@ -171,11 +188,23 @@ software, and I'd rather stick to standard strings to future-proof things:
       )
 #+end_src
 
-
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 ;;;; python
 (setq conda-anaconda-home "~/.conda")
 #+end_src
+
+* Editing setup
+Most of =evil= is already well configured with =doom=, however I like to do some
+additional tweaking:
+
+#+BEGIN_SRC emacs-lisp
+(setq
+ ;; All changes are considere one block in insert mode by default. This is not
+ ;; great most of the time, so we make evil use Emacs' heuristics to group
+ ;; changes.
+ evil-want-fine-undo t)
+#+END_SRC
+
 * Packages
 :PROPERTIES:
 :header-args: emacs-lisp: :tangle "packages.el" :comments link
