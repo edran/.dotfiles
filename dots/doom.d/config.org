@@ -166,10 +166,12 @@ amount of information needed to disentangle them:
         "M-n" #'org-next-visible-heading
         "M-p" #'org-previous-visible-heading))
 #+end_src
+
 #+begin_src emacs-lisp :tangle yes
 
 ;;;; langs
 ;;;; org
+(setq org-directory "~/org")
 (setq org-archive-location (concat
                             (file-name-as-directory org-directory)
                             ".archive/%s::")
