@@ -176,3 +176,51 @@ software, and I'd rather stick to standard strings to future-proof things:
 ;;;; python
 (setq conda-anaconda-home "~/.conda")
 #+end_src
+* Packages
+:PROPERTIES:
+:header-args: emacs-lisp: :tangle "packages.el" :comments link
+:END:
+
+=doom= uses =packages.el= to contain user-provided packages. Any packaging code
+present in the following headings will be tangled to that file. After editing
+these section, a ~doom refresh~ is required.
+
+** General docs
+The packaging system is based on [[github:raxod502/straight.el][straight.el]], which has quite a nice [[https://github.com/raxod502/straight.el#the-recipe-format][recipe
+format]]. On top of this, =doom= provides some useful macros:
+
+#+begin_src emacs-lisp :tangle no
+;; if the  package is on MELPA / ELPA / Emacsmirror
+(package! package-name)
+;; if the package is on github and contains a PACKAGENAME.el
+(package! package-name
+  :recipe (:host github :repo "user/repo"))
+;; otherwise...
+(package! package-name
+  :recipe (:host github :repo "user/repo"
+           :files ("package-name.el" "lisp/*.el")))  ;; and so on...
+#+end_src
+
+Disabling a package that comes with doom is also fairly straightforward (however
+it +will+ could have unintended consequences):
+
+#+begin_src emacs-lisp :tangle no
+(package! package-name :disable t)
+#+end_src
+
+Packages can also be overridden with a fork quite easily (unspecified properties
+will be inherited):
+
+#+begin_src emacs-lisp :tangle no
+(package! package-name
+  :recipe (:repo "user/package"
+           :branch "develop"
+           :nonrecursive t))
+#+end_src
+
+** Disable byte compilation
+Do not byte compile the tangled =.el= file.
+
+#+begin_src emacs-lisp
+;; -*- no-byte-compile: t; -*-
+#+end_src
