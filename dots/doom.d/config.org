@@ -1,0 +1,105 @@
+#+TITLE: Doom Emacs Configuration
+#+AUTHOR: Nantas Nardelli
+#+LANGUAGE: en
+#+PROPERTY: header-args :tangle yes :cache yes :results silent :comments link
+
+* Essential configuration
+
+Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
+post]]), so we activate it.
+
+#+begin_src emacs-lisp
+;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
+#+end_src
+
+** Personal info
+#+begin_src emacs-lisp :tangle yes
+
+;;;; deets
+(setq user-full-name "Nantas Nardelli"
+      user-mail-address "nantas.nardelli@gmail.com")
+#+end_src
+
+** Basic paths
+
+#+begin_src emacs-lisp :tangle yes
+(setq
+      org-directory "~/org"
+      projectile-project-search-path '("~/lab")  ;; this is not recursive, sadly
+      magit-repository-directories '(("~/lab" . 2)))
+#+end_src
+
+** Setting up theme
+#+begin_src emacs-lisp :tangle yes
+
+;;;; UI
+(setq doom-theme 'doom-dracula
+      doom-font (font-spec :family "monospace" :size 12)
+      ;; doom-variable-pitch-font
+      ;; doom-big-font
+
+      ;; To be re-enabled when I get a better machine.
+      display-line-numbers-type nil)
+
+#+end_src
+**  UX changes
+
+#+begin_src emacs-lisp :tangle yes
+;;;; UX
+(setq doom-scratch-initial-major-mode 'lisp-interaction-mode)
+
+;; Switch to new window when splitting
+(setq evil-split-window-below t
+      evil-vsplit-window-right t
+
+      ;; isearch
+      isearch-lazy-count t
+      isearch-allow-scroll 'unlimited
+
+      ;; magit
+      magit-save-repository-buffers 'dontask
+      ;; Don't restore window config after quitting magit
+      magit-inhibit-save-previous-winconf t)
+
+(add-to-list 'ispell-skip-region-alist '(org-property-drawer-re))
+(add-to-list 'ispell-skip-region-alist '("~" "~"))
+(add-to-list 'ispell-skip-region-alist '("=" "="))
+
+#+end_src
+
+** org stuff
+
+#+begin_src emacs-lisp :tangle yes
+(after! org
+  (map! :localleader
+        :map org-mode-map
+        "M-n" #'org-next-visible-heading
+        "M-p" #'org-previous-visible-heading))
+#+end_src
+#+begin_src emacs-lisp :tangle yes
+
+;;;; langs
+;;;; org
+(setq org-archive-location (concat
+                            (file-name-as-directory org-directory)
+                            ".archive/%s::")
+      org-roam-directory (concat
+                          (file-name-as-directory org-directory)
+                          "notes/")
+      org-ellipsis " ▼ "
+      org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+
+      org-babel-load-languages '((dot . t)
+                                 (emacs-lisp . t)
+                                 (python . t)
+                                 (R . t))
+      ;; org-src-window-setup 'current-window
+      org-return-follows-link t
+      )
+#+end_src
+
+
+#+begin_src emacs-lisp :tangle yes
+;;;; python
+(setq conda-anaconda-home "~/.conda")
+#+end_src
