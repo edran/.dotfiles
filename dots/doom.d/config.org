@@ -47,6 +47,12 @@ Calling =conda-env-activate= doesn't restart the lsp server. Worse,
 **** TODO Fix =lsp-restart-workspace= so that it actually restarts the lsp server
 *** I would like hard wrap to work its magic on the paragraph automatically
 Rather than the last sentence / lines.
+** Things to check out
+*** [[github:itai33/evil-tex][evil-tex]] :package:
+I should check this out eventually, as it could likely improve my commands/text
+ratio.
+*** ~org-pretty-mode~, a minor mode that hides org syntax
+Seems to behave a little bit weirdly with links + newlines.
 
 * Essential configuration
 
@@ -87,7 +93,7 @@ All of this stuff relates to visual behaviour.
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Source Code Pro" :size 12)
       doom-big-font (font-spec :family "Source Code Pro" :size 18)
-      doom-variable-pitch-font (font-spec :family "Arial" :size 24)
+      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 14)
       doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
 #+end_src
 
@@ -210,7 +216,7 @@ additional tweaking:
 
 * Packages
 :PROPERTIES:
-:header-args: emacs-lisp: :tangle "packages.el" :comments link
+:header-args:emacs-lisp: :tangle "packages.el" :comments link
 :END:
 
 =doom= uses =packages.el= to contain user-provided packages. Any packaging code
@@ -218,6 +224,9 @@ present in the following headings will be tangled to that file. After editing
 these section, a ~doom refresh~ is required.
 
 ** General docs
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no
+:END:
 The packaging system is based on [[github:raxod502/straight.el][straight.el]], which has quite a nice [[https://github.com/raxod502/straight.el#the-recipe-format][recipe
 format]]. On top of this, =doom= provides some useful macros:
 
@@ -236,14 +245,14 @@ format]]. On top of this, =doom= provides some useful macros:
 Disabling a package that comes with doom is also fairly straightforward (however
 it +will+ could have unintended consequences):
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (package! package-name :disable t)
 #+end_src
 
 Packages can also be overridden with a fork quite easily (unspecified properties
 will be inherited):
 
-#+begin_src emacs-lisp :tangle no
+#+begin_src emacs-lisp
 (package! package-name
   :recipe (:repo "user/package"
            :branch "develop"
@@ -255,4 +264,19 @@ Do not byte compile the tangled =.el= file.
 
 #+begin_src emacs-lisp
 ;; -*- no-byte-compile: t; -*-
+#+end_src
+
+** Add colour to Emacs' manual pages
+
+#+begin_src emacs-lisp
+(package! info-colors :pin "47ee73c...")
+#+end_src
+
+** Misc
+
+=selectric-mode= is great for impressing people or for extremely angry coding.
+Either way, worth it :)
+
+#+begin_src emacs-lisp
+(package! selectric-mode :pin "bb9e666...")
 #+end_src
