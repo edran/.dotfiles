@@ -2,6 +2,7 @@
 ## General ##
 #############
 
+
 Host tardis
    User edran
    HostName ssh.tardis.ed.ac.uk
@@ -38,29 +39,38 @@ Host pineapples
    ProxyCommand ssh -W %h:%p robots
    ControlMaster auto
 
+#########
+## arc ##
+#########
+
+# Need to be under oxford VPN
+
+Host arc-*
+   User engs1632
+   AddKeysToAgent yes
+   UseKeychain yes
+   IdentityFile ~/.ssh/arc_rsa
+   ControlMaster auto
+
+Host arc-myaccount
+   HostName myaccount.arc.ox.ac.uk
+
+Host arc-oscgate
+   HostName oscgate.arc.ox.ac.uk
+
+Host arc-htc
+   HostName arcus-htc.arcus-htc.arc.local
+   ProxyCommand ssh -W %h:%p arc-oscgate
+
 ###########
 ##  cs   ##
 ###########
 
 # TODO figure out how to remap *.cs to cs-*
 Host mulga.cs brown.cs whip.cs woma.cs hercules.cs dgx1.cs savitar.cs legolas.cs bilbo.cs gandalf.cs sauron.cs gollum.cs gimli.cs
-	User nantas
+  User nantas
   ForwardAgent yes
   Hostname %h.ox.ac.uk
   ProxyCommand ssh -W %h:%p robots
   ControlMaster auto
 
-##########
-## FAIR ##
-##########
-
-Host *-fairjmp*
-  IdentityFile ~/.ssh/fair_id_rsa
-
-Host devfair*
-  IdentityFile ~/.ssh/fair_id_rsa
-  ProxyJump prn-fairjmp03  # cannot use LB
-
-Host devfair  # 0217
-   User nantas
-   HostName  100.97.69.139

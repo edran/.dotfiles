@@ -41,5 +41,8 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
     IS_MACOS=1
 fi
 
+# NOTE: can't quite use XDG_CONFIG_HOME because
+export ASPELL_CONF="home-dir $HOME/.config/aspell/"
+
 # Next-gen building backend for docker
 export DOCKER_BUILDKIT=1
