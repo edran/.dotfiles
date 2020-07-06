@@ -2,8 +2,29 @@
 
 ***
 
-Compatible with `MacOS Mojave`. Most of the configuration can be found in
-`dots/`. The installation process used to be based on ansible, but `master` is
-currently in the process of being updated, so this is probably not true anymore.
+These dotfiles are compatible with `MacOS Mojave` and `Ubuntu 20.04` (and
+possibly `18.04` too). Most of the configuration files can be found in `dots/`.
 
-Feel free to check things out, and copy whatever is needed :)
+Feel free to check things out, and copy whatever is needed, but please don't run
+it as-is, as it might mess up your system.
+
+## Installation
+
+There are two install levels, `basic` and `full`. The former is for systems
+where I require a quick installation and setup of basic tooling (like shell +
+editor), and where I most likely do not have root access. The latter for my own
+machines.
+
+The automatic installation requires the following:
+
+1. ssh authentication setup for github
+2. `python3` + `ansible`
+
+
+If these are done, then it's just a matter of running:
+
+``` sh
+$ git clone git@github.com:edran/.dotfiles ~/.dotfiles
+$ cd .dotfiles/
+$ ansible-playbook --ask-become-pass -i ansible/inventory ansible/<basic|full>.yml 
+```
