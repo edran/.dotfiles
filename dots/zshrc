@@ -32,10 +32,6 @@
 # In particular, PATH gets modified by /etc/zprofile on MacOS, so zshenv should
 # not be relied upon (what a shitshow).
 
-# NOTE: This needs to stay at the top of .zshrc
-. /etc/profile
-. ~/.profile
-
 # deals with ssh agent / passphrase
 if type keychain &>/dev/null; then
     eval `keychain --eval --agents ssh --inherit any --quiet id_rsa`

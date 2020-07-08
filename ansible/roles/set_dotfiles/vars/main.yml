@@ -1,36 +1,30 @@
 ---
+
+backup_dir: "{{ ansible_env.HOME }}/.dotfiles_ansible_backup"
+
+dots_map:
+  - {src: "dots/bin", dest: "bin"}
+  # shell config
+  - {src: "dots/profile", dest: ".profile"}
+  - {src: "dots/zprofile", dest: ".zprofile"}
+  - {src: "dots/zshrc", dest: ".zshrc"}
+  - {src: "dots/bash_profile", dest: ".bash_profile"}
+  - {src: "dots/bashrc", dest: ".bashrc"}
+  - {src: "dots/inputrc", dest: ".inputrc"}
+  # tooling
+  - {src: "dots/ssh/config", dest: ".ssh/config"}
+  - {src: "dots/git", dest: ".config/git"}
+  - {src: "dots/tmux", dest: ".tmux"}
+  - {src: "dots/vimrc", dest: ".vimrc"}
+  - {src: "dots/condarc", dest: ".condarc"}
+
 ubuntu_linking_paths:
-  - {dot: "dots/inputrc", dest: ".inputrc"}
-  - {dot: "dots/profile", dest: ".profile"}
-  - {dot: "dots/gitconfig", dest: ".gitconfig"}
-  - {dot: "dots/gitignore", dest: ".gitignore_global"}
-  - {dot: "dots/bashrc", dest: ".bashrc"}
-  - {dot: "dots/bin", dest: "bin"}
   - {dot: "dots/fonts", dest: ".fonts"}
-  - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
-  - {dot: "dots/vimrc", dest: ".vimrc"}
   - {dot: "dots/Xresources", dest: ".Xresources"}
   - {dot: "dots/dmrc", dest: ".dmrc"}
   - {dot: "dots/ncmpcpp", dest: ".ncmpcpp"}
   - {dot: "dots/i3", dest: ".i3"}
-  - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
   - {dot: "dots/weechat/", dest: ".weechat"}
-  - {dot: "dots/condarc", dest: ".condarc"}
-  # - {dot: "dots/urxvt/", dest: ".urxvt"}
-
-osx_linking_paths:
-  - {dot: "dots/gitconfig", dest: ".gitconfig"}
-  - {dot: "dots/gitignore", dest: ".gitignore_global"}
-  - {dot: "dots/bashrc", dest: ".bashrc"}
-  - {dot: "dots/zshrc", dest: ".zshrc"}
-  - {dot: "dots/profile", dest: ".profile"}
-  - {dot: "dots/bin", dest: "bin"}
-  - {dot: "dots/tmux.conf", dest: ".tmux.conf"}
-  - {dot: "dots/vimrc", dest: ".vimrc"}
-  - {dot: "dots/spacemacs", dest: ".spacemacs.d"}
-  - {dot: "dots/macosx/config", dest: ".config"}
-  - {dot: "dots/condarc", dest: ".condarc"}
-  - {dot: "dots/cronjobs/org.nantas.ical2org.plist", dest: "Library/LaunchAgents/org.nantas.ical2org.plist"}
 
 ubuntu_home_dirs_add:
   - "desktop"

@@ -1,0 +1,5 @@
+# -*- mode: sh; -*-
+
+. ~/.profile
+# ~/.bashrc is not loaded in interactive login sessions, so we source it here.
+case $- in *i*) . ~/.bashrc;; esac

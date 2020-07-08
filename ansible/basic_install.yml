@@ -1,3 +1,11 @@
 ---
-- hosts: localhost
+- name: Setting dotfiles + basic shell env
+  hosts: localhost
+  connection: local
+  vars:
+    dotfiles_dir: "{{ ansible_env.HOME }}/.dotfiles"
+  roles:
+    - set_dotfiles
+    # - shell
+    # - conda
 ...

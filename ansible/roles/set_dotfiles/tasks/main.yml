@@ -1,2 +1,27 @@
+# -*- mode: yaml; eval: (+ansible-yaml-mode);  -*-
 ---
-- include: "set_dots_{{ansible_distribution | lower}}.yml"
+- name: Gather existing dotfiles in $HOME
+  with_items: "{{ dots_map }}"
+  stat:
+    path: "{{ ansible_user_dir }}/{{ item.dest }}"
+  register: dots_in_home
+
+- name: Create backup directory
+  file:
+    path: "{{ backup_dir }}"
+    state: directory
+  with_items: "{{ dots_in_home.results }}"
+  when: item.stat.exists and not item.stat.islnk
+
+- name: Backup existing dotfiles
+  command: mv {{ item.stat.path }} {{ backup_dir }}/
+  with_items: "{{ dots_in_home.results }}"
+  when: item.stat.exists and not item.stat.islnk
+
+- name: Symlink dotfiles
+  file:
+    src: "{{ dotfiles_dir }}/{{ item.src }}"
+    dest: "{{ ansible_user_dir }}/{{ item.dest }}"
+    state: link
+  with_items: "{{ dots_map }}"
+...
