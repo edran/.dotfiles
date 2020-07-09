@@ -1,22 +1,23 @@
 ---
 
-backup_dir: "{{ ansible_env.HOME }}/.dotfiles_ansible_backup"
+backup_dir: "{{ ansible_user_dir }}/.dotfiles_ansible_backup"
 
 dots_map:
   - {src: "dots/bin", dest: "bin"}
   # shell config
   - {src: "dots/profile", dest: ".profile"}
   - {src: "dots/zprofile", dest: ".zprofile"}
-  - {src: "dots/zshrc", dest: ".zshrc"}
+  - {src: "dots/zsh/.zshrc", dest: ".zshrc"}
+  - {src: "dots/zsh", dest: ".zsh"}
   - {src: "dots/bash_profile", dest: ".bash_profile"}
   - {src: "dots/bashrc", dest: ".bashrc"}
   - {src: "dots/inputrc", dest: ".inputrc"}
   # tooling
   - {src: "dots/ssh/config", dest: ".ssh/config"}
   - {src: "dots/git", dest: ".config/git"}
-  - {src: "dots/tmux", dest: ".tmux"}
   - {src: "dots/vimrc", dest: ".vimrc"}
   - {src: "dots/condarc", dest: ".condarc"}
+  - {src: "dots/tmux/tmux.conf", dest: ".tmux.conf"}
 
 ubuntu_linking_paths:
   - {dot: "dots/fonts", dest: ".fonts"}

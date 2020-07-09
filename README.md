@@ -28,3 +28,13 @@ $ git clone git@github.com:edran/.dotfiles ~/.dotfiles
 $ cd .dotfiles/
 $ ansible-playbook --ask-become-pass -i ansible/inventory ansible/<basic|full>.yml 
 ```
+
+
+### After installation
+
+There are a couple of things that need to be done, after the first installation
+(but not necessarily subsequent playbook runs).
+
+1. Reload the shell to make sure everything is sourced.
+2. Run `zinit self-update` to finish configuring `zsh`.
+3. Run `fast-theme clean` to set zsh highlighting.

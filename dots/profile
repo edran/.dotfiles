@@ -23,12 +23,19 @@ add2path_if_exists "$HOME/.cargo/bin"
 
 ### GENERAL
 
+CACHEDIR=$HOME/.cache
+CONFIGDIR=$HOME/.config
+LOCALDIR=$HOME/.local
+
 HISTSIZE=50000
 SAVEHIST=10000
 
 export EDITOR=vim  # should be emacsclient
-export PROJECT_HOME="$HOME/lab"
-export WORKON_HOME="$HOME/.envs"
+export PAGER=less
+
+export ZDOTDIR="$HOME/.zsh"
+export LABDIR="$HOME/lab"
+export DOTSREPO="$HOME/.dotfiles"
 
 export PYTHONBREAKPOINT=ipdb.set_trace
 
