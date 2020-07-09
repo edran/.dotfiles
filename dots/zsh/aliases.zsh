@@ -24,7 +24,9 @@ alias y='xclip -selection clipboard -in'
 alias p='xclip -selection clipboard -out'
 
 alias ppath="printf \"%s\n\" $path"
+
 alias j="z"
+alias v='f -e vim' # quick opening files with vim
 
 take() {
   mkdir "$1" && cd "$1";

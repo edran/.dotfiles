@@ -2,7 +2,7 @@
 
 export ZGEN_DIR="$HOME/.zgen"
 export ZGEN_SOURCE="$ZGEN_DIR/zgen.zsh"
-export ZGEN_RESET_ON_CHANGE=(`ls $ZDOTDIR`)
+export ZGEN_RESET_ON_CHANGE=(`ls -a $ZDOTDIR`)
 
 [ -d "$ZGEN_DIR" ] || git clone https://github.com/tarjoilija/zgen "$ZGEN_DIR"
 source $ZGEN_SOURCE
@@ -14,7 +14,6 @@ if ! zgen saved; then
     zgen load zdharma/history-search-multi-word
     zgen load zsh-users/zsh-completions src
     zgen load junegunn/fzf shell
-    zgen prezto prompt theme 'sorin'
     zgen prezto git
     [ -z "$SSH_CONNECTION" ] && zgen load zdharma/fast-syntax-highlighting
     zgen save
@@ -31,6 +30,28 @@ if [[ $TERM != dumb  ]]; then
     # if type keychain &>/dev/null; then
     #     eval `keychain --eval --agents ssh --inherit any --quiet id_rsa`
     # fi
+
+    ##
+    function _cache {
+        command -v "$1" >/dev/null || return 1
+        local cache_dir="$CACHEDIR/${SHELL##*/}"
+        local cache="$cache_dir/$1"
+        if [[ ! -f $cache || ! -s $cache ]]; then
+        echo "Caching $1"
+        mkdir -p $cache_dir
+        "$@" >$cache
+        fi
+        source $cache || rm -f $cache
+    }
+
+    # fd > find
+    if command -v fd >/dev/null; then
+        export FZF_DEFAULT_OPTS="--reverse --ansi"
+        export FZF_DEFAULT_COMMAND="fd ."
+        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+        export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+    fi
+    _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
 
     test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
 

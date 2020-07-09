@@ -23,12 +23,9 @@ add2path_if_exists "$HOME/.cargo/bin"
 
 ### GENERAL
 
-CACHEDIR=$HOME/.cache
-CONFIGDIR=$HOME/.config
-LOCALDIR=$HOME/.local
-
-HISTSIZE=50000
-SAVEHIST=10000
+export CACHEDIR=$HOME/.cache
+export CONFIGDIR=$HOME/.config
+export LOCALDIR=$HOME/.local
 
 export EDITOR=vim  # should be emacsclient
 export PAGER=less
