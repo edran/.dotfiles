@@ -1,6 +1,0 @@
-#!/usr/bin/env bash
-
-git-ssh () {
-    eval `ssh-agent -s`
-    ssh-add ~/.ssh/github_rsa
-}

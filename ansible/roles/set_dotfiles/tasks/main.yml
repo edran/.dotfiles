@@ -1,4 +1,10 @@
 ---
+
+- name: Ensure ~/.config exists
+  file:
+    path: "{{ ansible_user_dir }}/.config"
+    state: directory
+
 - name: Gather existing dotfiles in $HOME
   with_items: "{{ dots_map }}"
   stat:

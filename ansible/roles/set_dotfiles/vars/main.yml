@@ -6,11 +6,9 @@ dots_map:
   - {src: "dots/bin", dest: "bin"}
   # shell config
   - {src: "dots/profile", dest: ".profile"}
-  - {src: "dots/zprofile", dest: ".zprofile"}
-  - {src: "dots/zsh/.zshrc", dest: ".zshrc"}
   - {src: "dots/zsh", dest: ".zsh"}
-  - {src: "dots/bash_profile", dest: ".bash_profile"}
-  - {src: "dots/bashrc", dest: ".bashrc"}
+  - {src: "dots/bash/bashrc", dest: ".bashrc"}
+  - {src: "dots/bash/bash_profile", dest: ".bash_profile"}
   - {src: "dots/inputrc", dest: ".inputrc"}
   # tooling
   - {src: "dots/ssh/config", dest: ".ssh/config"}

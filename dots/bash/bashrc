@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+export BASHDIR="$HOME/.bash"
+export BASH_IT="$HOME/.bash_it"
+export BASH_IT_SOURCE="$BASH_IT/bash_it.sh"
+
+[ -d "$BASH_IT" ] || git clone https://github.com/Bash-it/bash-it "$BASH_IT"
+source $BASH_IT_SOURCE
