@@ -1,4 +1,3 @@
-# -*- mode: yaml; eval: (+ansible-yaml-mode);  -*-
 ---
 - name: Ensure dotfiles repository is cloned locally.
   git:

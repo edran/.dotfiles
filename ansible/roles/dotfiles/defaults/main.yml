@@ -1,4 +1,3 @@
-# -*- mode: yaml; eval: (+ansible-yaml-mode);  -*-
 ---
 dotfiles_repo: "https://github.com/edran/dotfiles"
 dotfiles_repo_version: master
