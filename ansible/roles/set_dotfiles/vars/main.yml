@@ -7,8 +7,10 @@ dots_map:
   # shell config
   - {src: "dots/profile", dest: ".profile"}
   - {src: "dots/zsh", dest: ".zsh"}
+  - {src: "dots/zsh/zshenv-home", dest: ".zshenv"}
   - {src: "dots/bash/bashrc", dest: ".bashrc"}
   - {src: "dots/bash/bash_profile", dest: ".bash_profile"}
+  - {src: "dots/bash", dest: ".bash"}
   - {src: "dots/inputrc", dest: ".inputrc"}
   # tooling
   - {src: "dots/ssh/config", dest: ".ssh/config"}

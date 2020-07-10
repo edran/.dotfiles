@@ -7,17 +7,22 @@ export BASH_IT_SOURCE="$BASH_IT/bash_it.sh"
 [ -d "$BASH_IT" ] || git clone https://github.com/Bash-it/bash-it "$BASH_IT"
 source $BASH_IT_SOURCE
 
-# >>> conda initialize >>>
-# !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('$HOME/.conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "$HOME/.conda/etc/profile.d/conda.sh" ]; then
-        . "$HOME/.conda/etc/profile.d/conda.sh"
+source $BASHDIR/config.bash
+if [[ $TERM != dumb ]]; then
+    source $BASHDIR/aliases.bash
+    # >>> conda initialize >>>
+    # !! Contents within this block are managed by 'conda init' !!
+    __conda_setup="$('$HOME/.conda/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="$HOME/.conda/bin:$PATH"
+        if [ -f "$HOME/.conda/etc/profile.d/conda.sh" ]; then
+            . "$HOME/.conda/etc/profile.d/conda.sh"
+        else
+            export PATH="$HOME/.conda/bin:$PATH"
+        fi
     fi
+    unset __conda_setup
+    # <<< conda initialize <<<
+    #
 fi
-unset __conda_setup
-# <<< conda initialize <<<

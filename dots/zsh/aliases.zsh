@@ -68,3 +68,5 @@ wo() {
 }
 
 palette() { local colors; for n in {000..255}; do colors+=("%F{$n}$n%f"); done; print -cP $colors; }
+
+alias ssh-arc="mosh arc-oscgate ssh arcus-htc"
