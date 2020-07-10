@@ -114,3 +114,9 @@ dots/macosx/config/gtk-2.0/gtkfilechooser.ini
 dots/macosx/config/configstore/update-notifier-npm.json
 dots/bin/nethack
 *.pyc
+
+/dots/zsh/local.zsh
+/dots/bash/local.bash
+
+# I can't seem to disable this :(
+/dots/zsh/.zcompdump

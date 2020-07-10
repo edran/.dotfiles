@@ -85,4 +85,6 @@ if [[ $TERM != dumb  ]]; then
     ##
     autoload -Uz compinit && compinit -u -d $CACHEDIR/zcompdump
     autopair-init
+
+    [ -f "$BASHDIR/local.zsh" ] && source "$BASHDIR/local.zsh"
 fi

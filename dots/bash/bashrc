@@ -24,5 +24,6 @@ if [[ $TERM != dumb ]]; then
     fi
     unset __conda_setup
     # <<< conda initialize <<<
-    #
+
+    [ -f "$BASHDIR/local.bash" ] && source "$BASHDIR/local.bash"
 fi
