@@ -53,7 +53,96 @@ I should check this out eventually, as it could likely improve my commands/text
 ratio.
 *** ~org-pretty-mode~, a minor mode that hides org syntax
 Seems to behave a little bit weirdly with links + newlines.
+*** ~org-noter~, a pdf annotation tool
+*** ~pdf-tools~, better pdf tooling
+*** ~org-download~
+*** ~mathpix.el~ to go from images to latex code
+*** ~anki-editor~
+*** ~org-roam-bibtex~
+*** ~bibtex-completion~
+*** ~org-noter~
 
+** Interesting other configurations
+Here's an extremely partial list of the configurations I have been stealing ideas
+from, and/or that I found particularly interesting and noteworthy.
+
+*** [[https://github.com/bastibe/.emacs.d/blob/master/init.el][bastibe/.emacs.d]]
+Bastian is the author of =org-journal=.
+*** [[https://tecosaur.github.io/emacs-config/config.html][tecosaur's config]]
+Literate config based on doom emacs.
+*** [[https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el][jethrokuan's config]]
+Author of =org-roam=.
+
+* Packages
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle "packages.el" :comments link
+:END:
+
+=doom= uses =packages.el= to contain user-provided packages. Any packaging code
+present in the following headings will be tangled to that file. After editing
+these section, a ~doom refresh~ is required.
+
+** General docs
+:PROPERTIES:
+:header-args:emacs-lisp: :tangle no
+:END:
+The packaging system is based on [[github:raxod502/straight.el][straight.el]], which has quite a nice [[https://github.com/raxod502/straight.el#the-recipe-format][recipe
+format]]. On top of this, =doom= provides some useful macros:
+
+#+begin_src emacs-lisp
+;; if the  package is on MELPA / ELPA / Emacsmirror
+(package! package-name)
+;; if the package is on github and contains a PACKAGENAME.el
+(package! package-name
+  :recipe (:host github :repo "user/repo"))
+;; otherwise...
+(package! package-name
+  :recipe (:host github :repo "user/repo"
+           :files ("package-name.el" "lisp/*.el")))  ;; and so on...
+#+end_src
+
+Disabling a package that comes with doom is also fairly straightforward (however
+it +will+ could have unintended consequences):
+
+#+begin_src emacs-lisp
+(package! package-name :disable t)
+#+end_src
+
+Packages can also be overridden with a fork quite easily (unspecified properties
+will be inherited):
+
+#+begin_src emacs-lisp
+(package! package-name
+  :recipe (:repo "user/package"
+           :branch "develop"
+           :nonrecursive t))
+#+end_src
+
+** Disable byte compilation
+Do not byte compile the tangled =.el= file.
+
+#+begin_src emacs-lisp
+;; -*- no-byte-compile: t; -*-
+#+end_src
+
+** Add colour to Emacs' manual pages
+
+#+begin_src emacs-lisp
+(package! info-colors :pin "47ee73c...")
+#+end_src
+** org-anki
+#+begin_src emacs-lisp
+;; (package! org-anki
+;;   :recipe (:local-repo "~/.doom.d/packages/org-anki"))
+#+end_src
+** Misc
+
+=selectric-mode= is great for impressing people or for extremely angry coding.
+Either way, worth it :)
+
+#+begin_src emacs-lisp
+(package! selectric-mode :pin "bb9e666...")
+#+end_src
 * Essential configuration
 
 Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
@@ -65,7 +154,7 @@ post]]), so we activate it.
 
 ** Personal info
 
-These are some basic information that are needed for e.g., ~GPG~, ~org-export~, etc.
+These are some basic information that are needed for e.g., =GPG=, =org-export=, etc.
 
 #+begin_src emacs-lisp
 (setq user-full-name "Nantas Nardelli"
@@ -89,7 +178,6 @@ software./
 All of this stuff relates to visual behaviour.
 
 ** Fonts
-
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "Source Code Pro" :size 12)
       doom-big-font (font-spec :family "Source Code Pro" :size 18)
@@ -135,11 +223,99 @@ amount of information needed to disentangle them:
 =*doom*= is nice, but my muscle memory complains a lot.
 
 #+begin_src emacs-lisp
+;; TODO It seems like a *doom-scratch* buffer is still created. Should be disabled.
 (setq doom-fallback-buffer-name "*scratch*")
 #+end_src
+* org-mode
+** Files
+#+begin_src emacs-lisp
+(setq org-directory "~/org"
+      org-archive-location (concat
+                            (file-name-as-directory org-directory)
+                            ".archive/%s::")
+)
+#+end_src
 
+** Global config
+#+begin_src emacs-lisp
+(setq ;; org-src-window-setup 'current-window
+      org-return-follows-link t
+
+      org-list-allow-alphabetical t
+
+      ;; Do not indent anything
+      org-startup-indented nil
+
+      org-babel-load-languages '((dot . t)
+                                 (emacs-lisp . t)
+                                 (python . t)
+                                 (R . t))
+      )
+#+end_src
+
+** UI
+#+begin_src emacs-lisp
+(setq
+      org-ellipsis " ▼ "
+      org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+
+
+      )
+#+end_src
+
+** Journal
+#+begin_src emacs-lisp
+(setq org-journal-file-type 'weekly
+      org-journal-file-format "%Y-%m-%d.org"
+      org-journal-enable-agenda-integration t)
+#+end_src
+
+** Roam
+#+begin_src emacs-lisp
+(setq org-roam-directory (concat
+                          (file-name-as-directory org-directory)
+                          "notes/"))
+
+(setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+SETUPFILE:setup.org
+,#+TITLE: ${title}\n"
+           :unnarrowed t)
+          ("w" "wiki" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "wiki/${slug}"
+           :head "#+SETUPFILE:setup.org
+,#+TITLE: ${title}\n"
+           :unnarrowed t)
+          ("r" "reviews" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "reviews/${slug}"
+           :head "#+SETUPFILE:setup.org
+,#+TITLE: ${title}"
+           :unnarrowed t)))
+#+end_src
+
+** Other stuff
+
+#+begin_src emacs-lisp
+(after! org
+  (map! :localleader
+        :map org-mode-map
+        "M-n" #'org-next-visible-heading
+        "M-p" #'org-previous-visible-heading))
+
+(add-hook 'org-mode-hook 'writeroom-mode)
+#+end_src
+
+** org-anki
+#+begin_src emacs-lisp :tangle yes
+;; (use-package! org-anki
+;;   :hook org-mode)
+#+end_src
 * Misc
-**  UX changes
+** UX changes
 
 #+begin_src emacs-lisp
 ;;;; UX
@@ -164,43 +340,12 @@ amount of information needed to disentangle them:
 
 #+end_src
 
-** org stuff
+** Python
 
 #+begin_src emacs-lisp
-(after! org
-  (map! :localleader
-        :map org-mode-map
-        "M-n" #'org-next-visible-heading
-        "M-p" #'org-previous-visible-heading))
-#+end_src
-
-#+begin_src emacs-lisp
-
-;;;; langs
-;;;; org
-(setq org-directory "~/org")
-(setq org-archive-location (concat
-                            (file-name-as-directory org-directory)
-                            ".archive/%s::")
-      org-roam-directory (concat
-                          (file-name-as-directory org-directory)
-                          "notes/")
-      org-ellipsis " ▼ "
-      org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
-
-      org-babel-load-languages '((dot . t)
-                                 (emacs-lisp . t)
-                                 (python . t)
-                                 (R . t))
-      ;; org-src-window-setup 'current-window
-      org-return-follows-link t
-      )
-#+end_src
-
-#+begin_src emacs-lisp
-;;;; python
 (setq conda-anaconda-home "~/.conda")
 #+end_src
+** TeX
 
 * Editing setup
 Most of =evil= is already well configured with =doom=, however I like to do some
@@ -214,69 +359,3 @@ additional tweaking:
  evil-want-fine-undo t)
 #+END_SRC
 
-* Packages
-:PROPERTIES:
-:header-args:emacs-lisp: :tangle "packages.el" :comments link
-:END:
-
-=doom= uses =packages.el= to contain user-provided packages. Any packaging code
-present in the following headings will be tangled to that file. After editing
-these section, a ~doom refresh~ is required.
-
-** General docs
-:PROPERTIES:
-:header-args:emacs-lisp: :tangle no
-:END:
-The packaging system is based on [[github:raxod502/straight.el][straight.el]], which has quite a nice [[https://github.com/raxod502/straight.el#the-recipe-format][recipe
-format]]. On top of this, =doom= provides some useful macros:
-
-#+begin_src emacs-lisp :tangle no
-;; if the  package is on MELPA / ELPA / Emacsmirror
-(package! package-name)
-;; if the package is on github and contains a PACKAGENAME.el
-(package! package-name
-  :recipe (:host github :repo "user/repo"))
-;; otherwise...
-(package! package-name
-  :recipe (:host github :repo "user/repo"
-           :files ("package-name.el" "lisp/*.el")))  ;; and so on...
-#+end_src
-
-Disabling a package that comes with doom is also fairly straightforward (however
-it +will+ could have unintended consequences):
-
-#+begin_src emacs-lisp
-(package! package-name :disable t)
-#+end_src
-
-Packages can also be overridden with a fork quite easily (unspecified properties
-will be inherited):
-
-#+begin_src emacs-lisp
-(package! package-name
-  :recipe (:repo "user/package"
-           :branch "develop"
-           :nonrecursive t))
-#+end_src
-
-** Disable byte compilation
-Do not byte compile the tangled =.el= file.
-
-#+begin_src emacs-lisp
-;; -*- no-byte-compile: t; -*-
-#+end_src
-
-** Add colour to Emacs' manual pages
-
-#+begin_src emacs-lisp
-(package! info-colors :pin "47ee73c...")
-#+end_src
-
-** Misc
-
-=selectric-mode= is great for impressing people or for extremely angry coding.
-Either way, worth it :)
-
-#+begin_src emacs-lisp
-(package! selectric-mode :pin "bb9e666...")
-#+end_src
