@@ -1,7 +1,7 @@
-#+TITLE: Doom Emacs Configuration
-#+AUTHOR: Nantas Nardelli
-#+LANGUAGE: en
-#+PROPERTY: header-args :tangle yes :cache yes :results silent :comments link
+#+title: Doom Emacs Configuration
+#+author: Nantas Nardelli
+#+language: en
+#+property: header-args :tangle yes :cache yes :results silent :comments link
 
 * Preface
 I have been using Emacs as my editor for more than a decade -- well before I
@@ -130,11 +130,29 @@ Do not byte compile the tangled =.el= file.
 #+begin_src emacs-lisp
 (package! info-colors :pin "47ee73c...")
 #+end_src
-** org-anki
+** Org-mode extensions
+*** org-anki
 #+begin_src emacs-lisp
-;; (package! org-anki
-;;   :recipe (:local-repo "~/.doom.d/packages/org-anki"))
+(package! org-anki
+  :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
 #+end_src
+*** org-ref
+#+begin_src emacs-lisp
+(package! org-ref :pin "b05d6b4434...")
+#+end_src
+*** Prettier org-mode
+
+~org-fragtog~ allows to toggle LaTeX previews.
+
+#+begin_src emacs-lisp
+(package! org-fragtog :pin "3eea7f1708...")
+#+end_src
+
+~org-pretty-tags~ makes it possible to replace boring tags with fun ones!
+#+begin_src emacs-lisp
+(package! org-pretty-tags :pin "40fd72f3e7...")
+#+end_src
+
 ** Misc
 
 =selectric-mode= is great for impressing people or for extremely angry coding.
@@ -143,6 +161,7 @@ Either way, worth it :)
 #+begin_src emacs-lisp
 (package! selectric-mode :pin "bb9e666...")
 #+end_src
+
 * Essential configuration
 
 Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
@@ -191,6 +210,18 @@ All of this stuff relates to visual behaviour.
 (setq doom-theme 'doom-dracula)
 #+end_src
 
+I don't want to display =LF UTF-8= in the modeline, since that is the default.
+
+#+begin_src emacs-lisp
+(defun nn/doom-modeline-conditional-buffer-encoding ()
+  "Don't show file encoding if it's utf-8"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
+#+end_src
+
 ** Disable vertical line numbers
 This can be reactivated when I have a better dev machine :(
 
@@ -232,35 +263,77 @@ amount of information needed to disentangle them:
 (setq org-directory (getenv "ORGDIR")
       org-archive-location (concat
                             (file-name-as-directory org-directory)
-                            ".archive/%s::")
-)
+                            ".archive/%s::"))
+#+end_src
+** Deft
+
+I use ~deft~ for searching my org files (though I should explore more what org-roam gives me...), so I set it up here:
+
+#+begin_src emacs-lisp
+(setq deft-directory org-directory
+      deft-extensions '("org")
+      deft-recursive t)
 #+end_src
 
 ** Global config
 #+begin_src emacs-lisp
 (setq ;; org-src-window-setup 'current-window
-      org-return-follows-link t
+      org-return-follows-link t                    ;; follow links on RET
+      org-use-property-inheritance t               ;; inherit properties in subheadings
+      org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
+      org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
 
-      org-list-allow-alphabetical t
+      ;; Self-explanatory. NOTE: it just needs to be defined
+      org-export-in-background t
 
-      ;; Do not indent anything
-      org-startup-indented nil
+      ;; make bullets w/ different depth use different chars
+      org-list-demote-modify-bullet '(("+" . "-")
+                                      ("-" . "+"))
 
       org-babel-load-languages '((dot . t)
                                  (emacs-lisp . t)
                                  (python . t)
-                                 (R . t))
-      )
+                                 (R . t)))
+
+(after! org
+  (setq org-startup-indented nil  ;; I don't like indents
+        ;;
+   ))
 #+end_src
 
 ** UI
+  
 #+begin_src emacs-lisp
-(setq
-      org-ellipsis " ▼ "
-      org-bullets-bullet-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
+(after! org (setq org-ellipsis " ▾ "))
 
-      )
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+        org-superstar-prettify-item-bullets t
+      ))
+
+(custom-set-faces!
+  '(outline-1 :weight extra-bold :height 1.25)
+  '(outline-2 :weight bold :height 1.15)
+  '(outline-3 :weight bold :height 1.12)
+  '(outline-4 :weight semi-bold :height 1.09)
+  '(outline-5 :weight semi-bold :height 1.06)
+  '(outline-6 :weight semi-bold :height 1.03)
+  '(outline-8 :weight semi-bold)
+  '(outline-9 :weight semi-bold))
+
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.3)))
+#+end_src
+
+** Spellcheck
+
+Enabling flyspell when visiting org files.
+
+#+begin_src emacs-lisp
+(after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 #+end_src
 
 ** Journal
@@ -269,32 +342,97 @@ amount of information needed to disentangle them:
       org-journal-file-format "%Y-%m-%d.org"
       org-journal-enable-agenda-integration t)
 #+end_src
+** TeX / bibtex support
+
+First, we make sure that reftex and bibtex know where my bibliography is.
+
+#+begin_src emacs-lisp
+(setq reftex-default-bibliography (list (concat
+                                         (file-name-as-directory org-directory)
+                                         "library.bib"))
+      bibtex-completion-bibliography (concat (file-name-as-directory org-directory) "library.bib"))
+#+end_src
+
+Then let's activate ~org-ref~:
+
+#+begin_src emacs-lisp
+(use-package! org-ref
+   :after org
+   :config
+    (setq
+     org-ref-completion-library 'org-ref-ivy-cite  ;; use ivy for completion
+     org-ref-default-bibliography reftex-default-bibliography
+     ))
+#+end_src
+
+Let's also add ~org-fragtog~, since we wish to be able to modify LaTeX snippets simply by moving the cursor on them.
+
+#+begin_src emacs-lisp
+(add-hook 'org-mode-hook 'org-fragtog-mode)
+#+end_src
+
+We then want them to look alright, so let's make org use a sans font, as well as highlighting them:
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-highlight-latex-and-related '(native script entities)
+        org-format-latex-header "\\documentclass{article}
+\\usepackage[usenames]{color}
+
+\\usepackage[T1]{fontenc}
+\\usepackage{mathtools}
+\\usepackage{textcomp,amssymb}
+\\usepackage[makeroom]{cancel}
+
+\\usepackage{booktabs}
+
+\\pagestyle{empty}             % do not remove
+% The settings below are copied from fullpage.sty
+\\setlength{\\textwidth}{\\paperwidth}
+\\addtolength{\\textwidth}{-3cm}
+\\setlength{\\oddsidemargin}{1.5cm}
+\\addtolength{\\oddsidemargin}{-2.54cm}
+\\setlength{\\evensidemargin}{\\oddsidemargin}
+\\setlength{\\textheight}{\\paperheight}
+\\addtolength{\\textheight}{-\\headheight}
+\\addtolength{\\textheight}{-\\headsep}
+\\addtolength{\\textheight}{-\\footskip}
+\\addtolength{\\textheight}{-3cm}
+\\setlength{\\topmargin}{1.5cm}
+\\addtolength{\\topmargin}{-2.54cm}
+% my custom stuff
+\\usepackage{arev}
+\\usepackage{arevmath}"))
+#+end_src
 
 ** Roam
 #+begin_src emacs-lisp
 (setq org-roam-directory (concat
                           (file-name-as-directory org-directory)
-                          "notes/"))
+                          "kb/"))
 
 (setq org-roam-capture-templates
         '(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "${slug}"
-           :head "#+SETUPFILE:setup.org
-,#+TITLE: ${title}\n"
+           :head "#+title: ${title}\n#+date: %t"
            :unnarrowed t)
-          ("w" "wiki" plain (function org-roam-capture--get-point)
+          ("c" "compendium" plain (function org-roam-capture--get-point)
            "%?"
-           :file-name "wiki/${slug}"
-           :head "#+SETUPFILE:setup.org
-,#+TITLE: ${title}\n"
+           :file-name "compendium/${slug}"
+           :head "#+title: compendium/${title}\n#+date: %t"
            :unnarrowed t)
           ("r" "reviews" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "reviews/${slug}"
-           :head "#+SETUPFILE:setup.org
-,#+TITLE: ${title}"
-           :unnarrowed t)))
+           :head "#+title: review/${title}\n#+date: %t"
+           :unnarrowed t)
+          ("R" "Professional reviews" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "reviews/professional/${slug}"
+           :head "#+title: review/${title}\n#+date: %t"
+           :unnarrowed t)
+          ))
 #+end_src
 
 ** Other stuff
@@ -305,14 +443,12 @@ amount of information needed to disentangle them:
         :map org-mode-map
         "M-n" #'org-next-visible-heading
         "M-p" #'org-previous-visible-heading))
-
-(add-hook 'org-mode-hook 'writeroom-mode)
 #+end_src
 
 ** org-anki
 #+begin_src emacs-lisp :tangle yes
-;; (use-package! org-anki
-;;   :hook org-mode)
+(use-package! org-anki
+  :hook (org-mode . org-anki-mode))
 #+end_src
 * Misc
 ** UX changes
