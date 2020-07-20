@@ -31,6 +31,8 @@ export EDITOR=vim  # should be emacsclient
 export PAGER=less
 
 export ZDOTDIR="$HOME/.zsh"
+
+export ORGDIR="$HOME/org"
 export LABDIR="$HOME/lab"
 export DOTSREPO="$HOME/.dotfiles"
 
