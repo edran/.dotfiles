@@ -4,6 +4,7 @@
 #+property: header-args :tangle yes :cache yes :results silent :comments link
 
 * Preface
+
 I have been using Emacs as my editor for more than a decade -- well before I
 started calling myself a programmer -- and the journey has been quite the ride
 so far.
@@ -18,6 +19,7 @@ used to be at various points of its history.
 Which is both good and bad. But /c'est la vie/ :)
 
 ** Basic usage info
+
 In theory, the latest version of =doom emacs= should be able to simply run this
 configuration. The first time, it needs to be generated via:
 
@@ -33,26 +35,40 @@ of this config should behave properly on modern linux distros so long as the
 environment is configured similarly to what is provided by my [[https://github.com/edran/.dotfiles][dotfiles]].
 
 ** Known issues
+
 This config is a /Forever Work In Progress™/, and thus there are things that I
 wish were fixed / implemented that either I haven't had the time to tackle
 and/or have the capabilities to properly do so.
+
 *** org headers are indented
+
 This sucks. I want as much horizontal space as possible without having to
 soft-wrap everything.
+
 *** conda environments interact weirdly with lsp
+
 Calling =conda-env-activate= doesn't restart the lsp server. Worse,
 =lsp-restart-workspace= seems to successfully kill the server, but a further
 =lsp= call is required for the server to be up again.
+
 **** TODO Make =conda-env-activate= automatically call =lsp-restart-workspace=
 **** TODO Fix =lsp-restart-workspace= so that it actually restarts the lsp server
+
 *** I would like hard wrap to work its magic on the paragraph automatically
+
 Rather than the last sentence / lines.
+
 ** Things to check out
+
 *** [[github:itai33/evil-tex][evil-tex]] :package:
+
 I should check this out eventually, as it could likely improve my commands/text
 ratio.
+
 *** ~org-pretty-mode~, a minor mode that hides org syntax
+
 Seems to behave a little bit weirdly with links + newlines.
+
 *** ~org-noter~, a pdf annotation tool
 *** ~pdf-tools~, better pdf tooling
 *** ~org-download~
@@ -63,14 +79,19 @@ Seems to behave a little bit weirdly with links + newlines.
 *** ~org-noter~
 
 ** Interesting other configurations
+
 Here's an extremely partial list of the configurations I have been stealing ideas
 from, and/or that I found particularly interesting and noteworthy.
 
 *** [[https://github.com/bastibe/.emacs.d/blob/master/init.el][bastibe/.emacs.d]]
+
 Bastian is the author of =org-journal=.
 *** [[https://tecosaur.github.io/emacs-config/config.html][tecosaur's config]]
+
 Literate config based on doom emacs.
+
 *** [[https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el][jethrokuan's config]]
+
 Author of =org-roam=.
 
 * Packages
@@ -119,6 +140,7 @@ will be inherited):
 #+end_src
 
 ** Disable byte compilation
+
 Do not byte compile the tangled =.el= file.
 
 #+begin_src emacs-lisp
@@ -131,7 +153,13 @@ Do not byte compile the tangled =.el= file.
 (package! info-colors :pin "47ee73c...")
 #+end_src
 ** Org-mode extensions
+
+The following packages make ~org-mode~ even more awesome than usual.
+
 *** org-anki
+
+~org-anki~ is a package I'm developing. Will be released Soon™.
+
 #+begin_src emacs-lisp
 (package! org-anki
   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
@@ -149,6 +177,7 @@ Do not byte compile the tangled =.el= file.
 #+end_src
 
 ~org-pretty-tags~ makes it possible to replace boring tags with fun ones!
+
 #+begin_src emacs-lisp
 (package! org-pretty-tags :pin "40fd72f3e7...")
 #+end_src
@@ -164,8 +193,8 @@ Either way, worth it :)
 
 * Essential configuration
 
-Lexical binding can result into faster execution of this file (see [[https://nullprogram.com/blog/2016/12/22/][this blog
-post]]), so we activate it.
+Lexical binding can result into faster execution of this file (see
+[[https://nullprogram.com/blog/2016/12/22/][this blog post]]), so we activate it.
 
 #+begin_src emacs-lisp :comment no
 ;;; config.el -*- lexical-binding: t; -*-
@@ -198,10 +227,18 @@ All of this stuff relates to visual behaviour.
 
 ** Fonts
 #+begin_src emacs-lisp
-(setq doom-font (font-spec :family "Source Code Pro" :size 12)
-      doom-big-font (font-spec :family "Source Code Pro" :size 18)
-      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 14)
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
+      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
+      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
       doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
+#+end_src
+
+Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
+particular case, I wish for the variable pitch font to be bigger (since in
+general I'm using it for stuff like org buffers).
+
+#+begin_src emacs-lisp :tangle yes
+(setq mixed-pitch-set-height 18)
 #+end_src
 
 ** Setting up theme
@@ -267,7 +304,8 @@ amount of information needed to disentangle them:
 #+end_src
 ** Deft
 
-I use ~deft~ for searching my org files (though I should explore more what org-roam gives me...), so I set it up here:
+I use ~deft~ for searching my org files (though I should explore more what
+org-roam gives me...), so I set it up here:
 
 #+begin_src emacs-lisp
 (setq deft-directory org-directory
@@ -276,6 +314,7 @@ I use ~deft~ for searching my org files (though I should explore more what org-r
 #+end_src
 
 ** Global config
+
 #+begin_src emacs-lisp
 (setq ;; org-src-window-setup 'current-window
       org-return-follows-link t                    ;; follow links on RET
@@ -283,14 +322,16 @@ I use ~deft~ for searching my org files (though I should explore more what org-r
       org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
       org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
 
-      ;; Self-explanatory. NOTE: it just needs to be defined
-      org-export-in-background t
+      org-adapt-indentation nil                    ;; I want everything left-justified
+      org-superstar-remove-leading-stars t
+
+      org-export-in-background t                   ;; NOTE: it just needs to be defined
 
       ;; make bullets w/ different depth use different chars
-      org-list-demote-modify-bullet '(("+" . "-")
+      org-list-demote-modify-bullet '(("+" . "-")  ;; different depth => different bullets
                                       ("-" . "+"))
 
-      org-babel-load-languages '((dot . t)
+      org-babel-load-languages '((dot . t)         ;; languages allowed to be evaluated
                                  (emacs-lisp . t)
                                  (python . t)
                                  (R . t)))
@@ -314,14 +355,24 @@ I use ~deft~ for searching my org files (though I should explore more what org-r
       ))
 
 (custom-set-faces!
-  '(outline-1 :weight extra-bold :height 1.25)
-  '(outline-2 :weight bold :height 1.15)
-  '(outline-3 :weight bold :height 1.12)
-  '(outline-4 :weight semi-bold :height 1.09)
-  '(outline-5 :weight semi-bold :height 1.06)
-  '(outline-6 :weight semi-bold :height 1.03)
-  '(outline-8 :weight semi-bold)
-  '(outline-9 :weight semi-bold))
+  '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
+  '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
+  '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
+  '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
+  '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
+  '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
+  '(org-level-7 :inherit outline-7 :weight semi-bold)
+  '(org-level-8 :inherit outline-8 :weight semi-bold)
+)
+;; (custom-set-faces!
+;;   '(outline-1 :weight extra-bold :height 1.2)
+;;   '(outline-2 :weight bold :height 1.15)
+;;   '(outline-3 :weight bold :height 1.12)
+;;   '(outline-4 :weight semi-bold :height 1.09)
+;;   '(outline-5 :weight semi-bold :height 1.06)
+;;   '(outline-6 :weight semi-bold :height 1.03)
+;;   '(outline-8 :weight semi-bold)
+;;   '(outline-9 :weight semi-bold))
 
 (after! org
   (custom-set-faces!
@@ -365,13 +416,15 @@ Then let's activate ~org-ref~:
      ))
 #+end_src
 
-Let's also add ~org-fragtog~, since we wish to be able to modify LaTeX snippets simply by moving the cursor on them.
+Let's also add ~org-fragtog~, since we wish to be able to modify LaTeX snippets
+simply by moving the cursor on them.
 
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'org-fragtog-mode)
 #+end_src
 
-We then want them to look alright, so let's make org use a sans font, as well as highlighting them:
+We then want them to look alright, so let's make org use a sans font, as well as
+highlighting them:
 
 #+begin_src emacs-lisp
 (after! org
