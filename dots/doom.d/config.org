@@ -243,7 +243,7 @@ Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
 particular case, I wish for the variable pitch font to be bigger (since in
 general I'm using it for stuff like org buffers).
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (setq mixed-pitch-set-height 18)
 #+end_src
 
@@ -505,7 +505,7 @@ highlighting them:
 #+end_src
 
 ** org-anki
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
 (use-package! org-anki
   :hook (org-mode . org-anki-mode))
 #+end_src
