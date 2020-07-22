@@ -103,7 +103,7 @@ Author of =org-roam=.
 present in the following headings will be tangled to that file. After editing
 these section, a ~doom refresh~ is required.
 
-** General docs
+** How-to
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle no
 :END:
@@ -183,6 +183,12 @@ The following packages make ~org-mode~ even more awesome than usual.
 #+end_src
 
 ** Misc
+
+=atomic-chrome= is used to enable editing text boxes with emacs.
+
+#+begin_src emacs-lisp
+(package! atomic-chrome)
+#+end_src
 
 =selectric-mode= is great for impressing people or for extremely angry coding.
 Either way, worth it :)
@@ -535,6 +541,20 @@ highlighting them:
 (setq conda-anaconda-home "~/.conda")
 #+end_src
 ** TeX
+** Atomic Chrome
+
+=atomic-chrome= is a package that enables to use emacs for text boxes in Chrome. I
+set it up here to use =markdown-mode= whenever editing text (though =org-mode= is
+also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/godiecgffnchndlihlpaajjcplehddca][GhostText add-on]] is required for this to work.
+
+#+begin_src emacs-lisp
+(use-package! atomic-chrome
+  :after-call focus-out-hook
+  :config
+  (setq atomic-chrome-default-major-mode 'markdown-mode
+        atomic-chrome-buffer-open-style 'frame)
+  (atomic-chrome-start-server))
+#+end_src
 
 * Editing setup
 Most of =evil= is already well configured with =doom=, however I like to do some
