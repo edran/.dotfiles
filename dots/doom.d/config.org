@@ -308,17 +308,6 @@ amount of information needed to disentangle them:
                             (file-name-as-directory org-directory)
                             ".archive/%s::"))
 #+end_src
-** Deft
-
-I use ~deft~ for searching my org files (though I should explore more what
-org-roam gives me...), so I set it up here:
-
-#+begin_src emacs-lisp
-(setq deft-directory org-directory
-      deft-extensions '("org")
-      deft-recursive t)
-#+end_src
-
 ** Global config
 
 #+begin_src emacs-lisp
@@ -370,15 +359,6 @@ org-roam gives me...), so I set it up here:
   '(org-level-7 :inherit outline-7 :weight semi-bold)
   '(org-level-8 :inherit outline-8 :weight semi-bold)
 )
-;; (custom-set-faces!
-;;   '(outline-1 :weight extra-bold :height 1.2)
-;;   '(outline-2 :weight bold :height 1.15)
-;;   '(outline-3 :weight bold :height 1.12)
-;;   '(outline-4 :weight semi-bold :height 1.09)
-;;   '(outline-5 :weight semi-bold :height 1.06)
-;;   '(outline-6 :weight semi-bold :height 1.03)
-;;   '(outline-8 :weight semi-bold)
-;;   '(outline-9 :weight semi-bold))
 
 (after! org
   (custom-set-faces!
@@ -392,13 +372,96 @@ Enabling flyspell when visiting org files.
 #+begin_src emacs-lisp
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 #+end_src
+** Capturing
+
+I follow a relatively standard GTD process, and the relevant files exist in
+~org-directory~, so there's no need for anything too complicated.
+
+#+begin_src emacs-lisp
+(setq org-capture-templates
+      `(("i" "inbox" entry (file "inbox.org")
+         "* TODO %?"))
+#+end_src
+
 
 ** Journal
+
+I want a weekly journal, with sensible ISO-approved™ date format for the file.
+
 #+begin_src emacs-lisp
 (setq org-journal-file-type 'weekly
-      org-journal-file-format "%Y-%m-%d.org"
-      org-journal-enable-agenda-integration t)
+      org-journal-file-format "%Y-%m-%d.org")
 #+end_src
+
+Occasionally I put =TODO= items in the journal, so I want these to be part of the
+agenda files.
+
+#+begin_src emacs-lisp
+(setq org-journal-enable-agenda-integration t)
+#+end_src
+
+Finally, I like to start the week by listing overall goals, and I don't want that to have a proper journal entry. Thus, I need some functions and nice bindings.
+
+#+begin_src emacs-lisp
+(defun org-journal-today ()
+  (interactive)
+  (org-journal-new-entry t))
+
+(map! :leader
+      "n j t" #'org-journal-today)
+#+end_src
+
+** Roam
+
+First, I set a couple of paths. I want my knowledge base to be part of my org
+base, so I assign it to ~org-dir/kb~. I also don't want org-roam to pollute my
+directory, so I put the database (and hopefully any other future file) into the
+emacs cache dir.
+
+#+begin_src emacs-lisp
+(setq org-roam-directory (concat
+                          (file-name-as-directory org-directory)
+                          "kb/")
+      org-roam-db-location (concat (file-name-as-directory doom-cache-dir) "org-roam.db"))
+#+end_src
+
+Next, I set roam to use directories as tags, since it's useful (at least) for my
+compendium files.
+
+#+begin_src emacs-lisp
+(setq org-roam-tag-sources '(prop all-directories))
+#+end_src
+
+Finally, I set the capture templates that are exclusive to =org-roam=.
+
+#+begin_src emacs-lisp
+(setq org-roam-capture-templates
+        '(("d" "default" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "${slug}"
+           :head "#+title: ${title}\n#+date: %t"
+           :unnarrowed t)
+          ;; These are more curated notes than others.
+          ("c" "compendium" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "compendium/${slug}"
+           :head "#+title: compendium/${title}\n#+date: %t"
+           :unnarrowed t)
+          ("r" "review" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "reviews/${slug}"
+           :head "#+title: Review: ${title}\n#+date: %t"
+           :unnarrowed t)
+          ;; TODO I would like this to force me to specify the conference and/or
+          ;; journal name, eventually.
+          ("R" "Professional review" plain (function org-roam-capture--get-point)
+           "%?"
+           :file-name "reviews/professional/${slug}"
+           :head "#+title: review/${title}\n#+date: %t"
+           :unnarrowed t)
+          ))
+#+end_src
+
 ** TeX / bibtex support
 
 First, we make sure that reftex and bibtex know where my bibliography is.
@@ -407,7 +470,8 @@ First, we make sure that reftex and bibtex know where my bibliography is.
 (setq reftex-default-bibliography (list (concat
                                          (file-name-as-directory org-directory)
                                          "library.bib"))
-      bibtex-completion-bibliography (concat (file-name-as-directory org-directory) "library.bib"))
+      bibtex-completion-bibliography (concat (file-name-as-directory org-directory) "library.bib")
+      bibtex-completion-notes-path (concat (file-name-as-directory org-directory) "kb/reviews"))
 #+end_src
 
 Then let's activate ~org-ref~:
@@ -419,8 +483,31 @@ Then let's activate ~org-ref~:
     (setq
      org-ref-completion-library 'org-ref-ivy-cite  ;; use ivy for completion
      org-ref-default-bibliography reftex-default-bibliography
+     org-ref-notes-directory (concat (file-name-as-directory org-directory) "kb/reviews")
+     org-ref-notes-function 'org-ref-notes-function-many-files
      ))
 #+end_src
+
+When creating notes using bibtex-completion and org-ref, I want them to have well-set titles and, =roam_key=, and properties:
+
+#+begin_src emacs-lisp :tangle yes
+(setq
+ bibtex-completion-notes-template-multiple-files
+ (concat "#+title: ${title}\n"
+         "#+roam_key: cite:${=key=}\n"
+         "* TODO Notes\n"
+         ":PROPERTIES:\n"
+         ":Custom_ID: ${=key=}\n"
+         ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
+         ":AUTHOR: ${author-abbrev}\n"
+         ":JOURNAL: ${journaltitle}\n"
+         ":DATE: ${date}\n"
+         ":YEAR: ${year}\n"
+         ":DOI: ${doi}\n"
+         ":URL: ${url}\n"
+         ":END:\n\n"))
+#+end_src
+
 
 Let's also add ~org-fragtog~, since we wish to be able to modify LaTeX snippets
 simply by moving the cursor on them.
@@ -464,34 +551,15 @@ highlighting them:
 \\usepackage{arevmath}"))
 #+end_src
 
-** Roam
-#+begin_src emacs-lisp
-(setq org-roam-directory (concat
-                          (file-name-as-directory org-directory)
-                          "kb/"))
+** Deft
 
-(setq org-roam-capture-templates
-        '(("d" "default" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "${slug}"
-           :head "#+title: ${title}\n#+date: %t"
-           :unnarrowed t)
-          ("c" "compendium" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "compendium/${slug}"
-           :head "#+title: compendium/${title}\n#+date: %t"
-           :unnarrowed t)
-          ("r" "reviews" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "reviews/${slug}"
-           :head "#+title: review/${title}\n#+date: %t"
-           :unnarrowed t)
-          ("R" "Professional reviews" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "reviews/professional/${slug}"
-           :head "#+title: review/${title}\n#+date: %t"
-           :unnarrowed t)
-          ))
+I use ~deft~ for searching my org files (though I should explore more what
+org-roam gives me...), so I set it up here:
+
+#+begin_src emacs-lisp
+(setq deft-directory org-directory
+      deft-extensions '("org")
+      deft-recursive t)
 #+end_src
 
 ** Other stuff
