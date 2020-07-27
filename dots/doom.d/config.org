@@ -9,12 +9,12 @@ I have been using Emacs as my editor for more than a decade -- well before I
 started calling myself a programmer -- and the journey has been quite the ride
 so far.
 
-My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a few that
+My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a couple that
 predate any usage (and knowledge!) of version control on my part. It's current
-form, which most certainly is not its final (but which I hope to be its
-/present/ for at least a few more years), is based on the amazing =doom emacs=
-and =org-mode=. Thanks to these frameworks, it is much, much slimmer than it
-used to be at various points of its history.
+form, which most certainly is not its final (but which I hope to be its /present/
+for at least a few more years), is based on the amazing =doom emacs= and =org-mode=.
+Thanks to these frameworks, it is much, much slimmer than it used to be at
+various points of its history.
 
 Which is both good and bad. But /c'est la vie/ :)
 
@@ -244,7 +244,7 @@ particular case, I wish for the variable pitch font to be bigger (since in
 general I'm using it for stuff like org buffers).
 
 #+begin_src emacs-lisp
-(setq mixed-pitch-set-height 18)
+(setq mixed-pitch-set-height 14)
 #+end_src
 
 ** Setting up theme
@@ -317,8 +317,11 @@ amount of information needed to disentangle them:
       org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
       org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
 
+      org-log-done 'time                           ;; log time on done
+      org-log-into-drawer t                        ;; Put logs into LOGBOOK drawer
+
       org-adapt-indentation nil                    ;; I want everything left-justified
-      org-superstar-remove-leading-stars t
+      org-superstar-remove-leading-stars nil
 
       org-export-in-background t                   ;; NOTE: it just needs to be defined
 
@@ -380,7 +383,7 @@ I follow a relatively standard GTD process, and the relevant files exist in
 #+begin_src emacs-lisp
 (setq org-capture-templates
       `(("i" "inbox" entry (file "inbox.org")
-         "* TODO %?"))
+         "* TODO %?")))
 #+end_src
 
 
@@ -488,9 +491,18 @@ Then let's activate ~org-ref~:
      ))
 #+end_src
 
-When creating notes using bibtex-completion and org-ref, I want them to have well-set titles and, =roam_key=, and properties:
+I want =ivy-bibtex='s default action to be inserting the citation (e.g. =cite:blah=
+in org buffers) rather than opening the pdf (since I use Zotero for that
+anyway).
 
-#+begin_src emacs-lisp :tangle yes
+#+begin_src emacs-lisp
+(setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+#+end_src
+
+When creating notes using =bibtex-completion=, I want them to have well-set
+titles, =roam_key=, and other such properties:
+
+#+begin_src emacs-lisp
 (setq
  bibtex-completion-notes-template-multiple-files
  (concat "#+title: ${title}\n"
@@ -500,11 +512,9 @@ When creating notes using bibtex-completion and org-ref, I want them to have wel
          ":Custom_ID: ${=key=}\n"
          ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
          ":AUTHOR: ${author-abbrev}\n"
-         ":JOURNAL: ${journaltitle}\n"
-         ":DATE: ${date}\n"
+         ;; Using booktitle here since it's more likely to be present everywhere
+         ":JOURNAL: ${booktitle}\n"
          ":YEAR: ${year}\n"
-         ":DOI: ${doi}\n"
-         ":URL: ${url}\n"
          ":END:\n\n"))
 #+end_src
 
