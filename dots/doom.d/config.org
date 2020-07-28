@@ -303,10 +303,14 @@ amount of information needed to disentangle them:
 * org-mode
 ** Basic files and folders
 #+begin_src emacs-lisp
-(setq org-directory (getenv "ORGDIR")
+(setq org-directory (file-name-as-directory (getenv "ORGDIR"))
       org-archive-location (concat
-                            (file-name-as-directory org-directory)
-                            ".archive/%s::"))
+                            org-directory
+                            ".archive/%s::")
+      org-default-notes-file (concat org-directory "tasks.org"))
+
+(defvar nn/org-inbox-file (concat org-directory "inbox.org")
+  "Path to the inbox file.")
 #+end_src
 ** Global config
 
@@ -338,6 +342,51 @@ amount of information needed to disentangle them:
   (setq org-startup-indented nil  ;; I don't like indents
         ;;
    ))
+#+end_src
+
+** Capture
+#+begin_src emacs-lisp
+(after! org-capture
+  (setq org-capture-templates
+        `(("i" "Quick inbox" entry (file nn/org-inbox-file)
+           "* TODO %^{Task description}"
+           :immediate-finish t)
+          ("I" "Inbox" entry (file+headline nn/org-inbox-file "Tasks")
+           "* TODO %?")
+          ;; Dates
+          ("." "Today" entry (file+headline nn/org-inbox-file "Tasks")
+           ,(concat "* TODO %?\n"
+                    "SCHEDULED: %t"))
+          ("d" "Date")
+          ("ds" "Scheduled" entry (file+headline nn/org-inbox-file "Tasks")
+           ,(concat "* TODO %?\n"
+                    "SCHEDULED: %^{Scheduled date}t"))
+          ("dd" "Deadline" entry (file+headline nn/org-inbox-file "Tasks")
+           ,(concat "* TODO %?\n"
+                    "DEADLINE: %^{Deadline date}t"))
+          ("w" "Web" entry (file+headline nn/org-inbox-file "Web")
+               "* TODO \[\[%:link][%:description]]\n\n %i"
+               :immediate-finish t)
+          )))
+#+end_src
+
+** Agenda
+
+First, let's make sure that the agenda pulls all the files in the org directory
+as well as the project directory. The former are used for standard task
+management, while the latter are used both as knowledge bases for the project
+and task tracking.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-agenda-files (list org-directory
+                             (concat org-directory "kb/projects")))
+#+end_src
+
+Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
+extra "o a a" is way too many strokes.
+
+#+begin_src emacs-lisp
+(map! :leader "a" #'org-agenda)
 #+end_src
 
 ** UI
@@ -439,28 +488,43 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
-        '(("d" "default" plain (function org-roam--capture-get-point)
+        `(("d" "default" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "${slug}"
-           :head "#+title: ${title}\n#+date: %t"
+           :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n")
+           :unnarrowed t)
+          ("p" "project" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "projects/${slug}"
+           :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n")
            :unnarrowed t)
           ;; These are more curated notes than others.
           ("c" "compendium" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "compendium/${slug}"
-           :head "#+title: compendium/${title}\n#+date: %t"
+           :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n")
            :unnarrowed t)
           ("r" "review" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "reviews/${slug}"
-           :head "#+title: Review: ${title}\n#+date: %t"
+           :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n")
            :unnarrowed t)
           ;; TODO I would like this to force me to specify the conference and/or
           ;; journal name, eventually.
-          ("R" "Professional review" plain (function org-roam-capture--get-point)
+          ("C" "Conference" plain (function org-roam-capture--get-point)
            "%?"
-           :file-name "reviews/professional/${slug}"
-           :head "#+title: review/${title}\n#+date: %t"
+           :file-name "${slug}"
+           :head ,(concat"#+title: ${title}\n"
+                         "#+date: %t\n"
+                         "#+roam_tags: conference")
            :unnarrowed t)
           ))
 #+end_src
