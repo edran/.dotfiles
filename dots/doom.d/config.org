@@ -40,12 +40,7 @@ This config is a /Forever Work In Progress™/, and thus there are things that I
 wish were fixed / implemented that either I haven't had the time to tackle
 and/or have the capabilities to properly do so.
 
-*** org headers are indented
-
-This sucks. I want as much horizontal space as possible without having to
-soft-wrap everything.
-
-*** conda environments interact weirdly with lsp
+*** TODO conda environments interact weirdly with lsp
 
 Calling =conda-env-activate= doesn't restart the lsp server. Worse,
 =lsp-restart-workspace= seems to successfully kill the server, but a further
@@ -54,46 +49,25 @@ Calling =conda-env-activate= doesn't restart the lsp server. Worse,
 **** TODO Make =conda-env-activate= automatically call =lsp-restart-workspace=
 **** TODO Fix =lsp-restart-workspace= so that it actually restarts the lsp server
 
-*** I would like hard wrap to work its magic on the paragraph automatically
+*** TODO I would like hard wrap to work its magic on the paragraph automatically
 
 Rather than the last sentence / lines.
 
-** Things to check out
+*** TODO I should set bigger height for org headings only in the knowledge base
 
+Since this makes some of the organisational files a little painful to manage.
+
+** Things to check out
 *** [[github:itai33/evil-tex][evil-tex]] :package:
 
 I should check this out eventually, as it could likely improve my commands/text
 ratio.
 
-*** ~org-pretty-mode~, a minor mode that hides org syntax
-
-Seems to behave a little bit weirdly with links + newlines.
-
 *** ~org-noter~, a pdf annotation tool
 *** ~pdf-tools~, better pdf tooling
 *** ~org-download~
 *** ~mathpix.el~ to go from images to latex code
-*** ~anki-editor~
 *** ~org-roam-bibtex~
-*** ~bibtex-completion~
-*** ~org-noter~
-
-** Interesting other configurations
-
-Here's an extremely partial list of the configurations I have been stealing ideas
-from, and/or that I found particularly interesting and noteworthy.
-
-*** [[https://github.com/bastibe/.emacs.d/blob/master/init.el][bastibe/.emacs.d]]
-
-Bastian is the author of =org-journal=.
-*** [[https://tecosaur.github.io/emacs-config/config.html][tecosaur's config]]
-
-Literate config based on doom emacs.
-
-*** [[https://github.com/jethrokuan/dots/blob/master/.doom.d/config.el][jethrokuan's config]]
-
-Author of =org-roam=.
-
 * Packages
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el" :comments link
