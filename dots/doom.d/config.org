@@ -295,24 +295,74 @@ amount of information needed to disentangle them:
       org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
       org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
 
-      org-adapt-indentation nil                    ;; I want everything left-justified
-      org-superstar-remove-leading-stars nil
-
-      org-export-in-background t                   ;; NOTE: it just needs to be defined
-
-      ;; make bullets w/ different depth use different chars
-      org-list-demote-modify-bullet '(("+" . "-")  ;; different depth => different bullets
-                                      ("-" . "+"))
-
       org-babel-load-languages '((dot . t)         ;; languages allowed to be evaluated
                                  (emacs-lisp . t)
                                  (python . t)
                                  (R . t)))
+#+end_src
 
+*** Indentation
+
+I want everything left-justified.
+
+#+begin_src emacs-lisp
 (after! org
   (setq org-startup-indented nil  ;; I don't like indents
-        ;;
+        org-adapt-indentation nil
    ))
+#+end_src
+
+** UI
+
+I want org files to use =mixed-pitch-mode=, since it is nicer to read prose in
+variable pitch fonts.
+
+#+begin_src emacs-lisp
+(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
+#+end_src
+
+The title and the headings need to standout more.
+
+#+begin_src emacs-lisp
+(after! org
+  (custom-set-faces!
+    '(org-document-title :height 1.3)
+    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
+    '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
+    '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
+    '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
+    '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
+    '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
+    '(org-level-7 :inherit outline-7 :weight semi-bold)
+    '(org-level-8 :inherit outline-8 :weight semi-bold)))
+#+end_src
+
+I also like to use the small black down-pointing triangle as the ellipsis, as I
+would normally not type it myself (and thus it is easier to differentiate it
+from actual usage of ellipsis).
+
+#+begin_src emacs-lisp :tangle yes
+(after! org (setq org-ellipsis " ▾ "))
+#+end_src
+
+When using simple list, I want different levels to have different bullets.
+
+#+begin_src emacs-lisp :tangle yes
+(setq org-list-demote-modify-bullet '(("+" . "-")  ;; different depth => different bullets
+                                      ("-" . "+")))
+#+end_src
+
+*** Superstar
+
+I want the headings to be indented, as well as being represented using some
+[[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
+
+#+begin_src emacs-lisp
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+        org-superstar-prettify-item-bullets t
+        org-superstar-remove-leading-stars nil
+      ))
 #+end_src
 
 ** Logging and clocking
@@ -329,6 +379,14 @@ really need it.
       org-log-done 'time
       org-log-reschedule 'time
       org-log-redeadline 'time)
+#+end_src
+** Exporting
+
+I hate it that exporting big files locks emacs -- so, let's make it happen in
+the background.
+
+#+begin_src emacs-lisp
+(setq org-export-in-background t)
 #+end_src
 
 ** Capture
@@ -376,32 +434,8 @@ extra "o a a" is way too many strokes.
 (map! :leader "a" #'org-agenda)
 #+end_src
 
-** UI
-  
 #+begin_src emacs-lisp
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 
-(after! org (setq org-ellipsis " ▾ "))
-
-(after! org-superstar
-  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
-        org-superstar-prettify-item-bullets t
-      ))
-
-(custom-set-faces!
-  '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
-  '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
-  '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
-  '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
-  '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
-  '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
-  '(org-level-7 :inherit outline-7 :weight semi-bold)
-  '(org-level-8 :inherit outline-8 :weight semi-bold)
-)
-
-(after! org
-  (custom-set-faces!
-    '(org-document-title :height 1.3)))
 #+end_src
 
 ** Spellcheck
@@ -411,6 +445,7 @@ Enabling flyspell when visiting org files.
 #+begin_src emacs-lisp
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 #+end_src
+
 ** Capturing
 
 I follow a relatively standard GTD process, and the relevant files exist in
@@ -422,13 +457,12 @@ I follow a relatively standard GTD process, and the relevant files exist in
          "* TODO %?")))
 #+end_src
 
-
 ** Journal
 
-I want a weekly journal, with sensible ISO-approved™ date format for the file.
+I want a daily journal, with sensible ISO-approved™ date format for the file.
 
 #+begin_src emacs-lisp
-(setq org-journal-file-type 'weekly
+(setq org-journal-file-type 'daily
       org-journal-file-format "%Y-%m-%d.org")
 #+end_src
 
