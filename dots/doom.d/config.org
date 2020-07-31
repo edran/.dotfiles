@@ -312,7 +312,7 @@ amount of information needed to disentangle them:
 (defvar nn/org-inbox-file (concat org-directory "inbox.org")
   "Path to the inbox file.")
 #+end_src
-** Global config
+** General behaviour
 
 #+begin_src emacs-lisp
 (setq ;; org-src-window-setup 'current-window
@@ -320,9 +320,6 @@ amount of information needed to disentangle them:
       org-use-property-inheritance t               ;; inherit properties in subheadings
       org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
       org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
-
-      org-log-done 'time                           ;; log time on done
-      org-log-into-drawer t                        ;; Put logs into LOGBOOK drawer
 
       org-adapt-indentation nil                    ;; I want everything left-justified
       org-superstar-remove-leading-stars nil
@@ -342,6 +339,22 @@ amount of information needed to disentangle them:
   (setq org-startup-indented nil  ;; I don't like indents
         ;;
    ))
+#+end_src
+
+** Logging and clocking
+
+I generally want a timestamp when:
+ - setting a task to a done state
+ - rescheduling a task (including moving a deadline)
+
+I also want all this information into a drawer, so that I don't see it unless I
+really need it.
+
+#+begin_src emacs-lisp
+(setq org-log-into-drawer t     ;; defaults to LOGBOOK
+      org-log-done 'time
+      org-log-reschedule 'time
+      org-log-redeadline 'time)
 #+end_src
 
 ** Capture
