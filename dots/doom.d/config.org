@@ -393,15 +393,16 @@ the background.
 #+begin_src emacs-lisp
 (after! org-capture
   (setq org-capture-templates
-        `(("i" "Quick inbox" entry (file nn/org-inbox-file)
+        `(("i" "Quick inbox" entry (file+headline nn/org-inbox-file "Tasks")
            "* TODO %^{Task description}"
            :immediate-finish t)
           ("I" "Inbox" entry (file+headline nn/org-inbox-file "Tasks")
            "* TODO %?")
           ;; Dates
           ("." "Today" entry (file+headline nn/org-inbox-file "Tasks")
-           ,(concat "* TODO %?\n"
-                    "SCHEDULED: %t"))
+           ,(concat "* TODO %^{Task description (scheduled today)}\n"
+                    "SCHEDULED: %t")
+           :immediate-finish t)
           ("d" "Date")
           ("ds" "Scheduled" entry (file+headline nn/org-inbox-file "Tasks")
            ,(concat "* TODO %?\n"
@@ -410,8 +411,8 @@ the background.
            ,(concat "* TODO %?\n"
                     "DEADLINE: %^{Deadline date}t"))
           ("w" "Web" entry (file+headline nn/org-inbox-file "Web")
-               "* TODO \[\[%:link][%:description]]\n\n %i"
-               :immediate-finish t)
+           "* TODO \[\[%:link][%:description]]\n\n %i"
+           :immediate-finish t)
           )))
 #+end_src
 
@@ -444,17 +445,6 @@ Enabling flyspell when visiting org files.
 
 #+begin_src emacs-lisp
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
-#+end_src
-
-** Capturing
-
-I follow a relatively standard GTD process, and the relevant files exist in
-~org-directory~, so there's no need for anything too complicated.
-
-#+begin_src emacs-lisp
-(setq org-capture-templates
-      `(("i" "inbox" entry (file "inbox.org")
-         "* TODO %?")))
 #+end_src
 
 ** Journal
@@ -513,6 +503,13 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
            "%?"
            :file-name "${slug}"
            :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n")
+           :unnarrowed t)
+          ("m" "meeting" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
+           :head ,(concat "#+title: ${title}, %<%Y-%m-%d>\n"
                           "#+created: %u\n"
                           "#+last_modified: %U\n")
            :unnarrowed t)
