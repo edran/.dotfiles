@@ -466,14 +466,16 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
          (agenda ""
                  ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("HABIT")))
                   (org-agenda-span 'week)
-                  (org-agenda-start-day nil)
+                  (org-agenda-start-day "-1d")
                   (org-agenda-overriding-header "Weekly schedule:")))
          (alltodo ""
                   ((org-agenda-skip-function '(or (air-org-skip-subtree-if-habit)
                                                   (air-org-skip-subtree-if-priority ?A)
                                                   (org-agenda-skip-if nil '(scheduled deadline))))
                    (org-agenda-overriding-header "ALL normal priority tasks:"))))
-        ((org-agenda-compact-blocks t)))))
+        (
+         (org-agenda-compact-blocks nil)))))
+
 (setq org-agenda-include-diary t)
 (setq org-habit-show-habits-only-for-today nil)
 (setq org-habit-show-all-today t)

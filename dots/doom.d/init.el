@@ -1,11 +1,9 @@
 ;;; init.el -*- lexical-binding: t; -*-
 
-
 (doom!
        :completion
        company
        (ivy
-        +fuzzy
         +prescient)
 
        :ui
