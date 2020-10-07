@@ -40,15 +40,6 @@ This config is a /Forever Work In Progress™/, and thus there are things that I
 wish were fixed / implemented that either I haven't had the time to tackle
 and/or have the capabilities to properly do so.
 
-*** TODO conda environments interact weirdly with lsp
-
-Calling =conda-env-activate= doesn't restart the lsp server. Worse,
-=lsp-restart-workspace= seems to successfully kill the server, but a further
-=lsp= call is required for the server to be up again.
-
-**** TODO Make =conda-env-activate= automatically call =lsp-restart-workspace=
-**** TODO Fix =lsp-restart-workspace= so that it actually restarts the lsp server
-
 *** TODO I would like hard wrap to work its magic on the paragraph automatically
 
 Rather than the last sentence / lines.
@@ -56,6 +47,7 @@ Rather than the last sentence / lines.
 *** TODO I should set bigger height for org headings only in the knowledge base
 
 Since this makes some of the organisational files a little painful to manage.
+*** TODO In org files, enter (in normal mode) should open links.
 
 ** Things to check out
 *** [[github:itai33/evil-tex][evil-tex]] :package:
@@ -129,6 +121,23 @@ Do not byte compile the tangled =.el= file.
 ** Org-mode extensions
 
 The following packages make ~org-mode~ even more awesome than usual.
+
+*** org-roam
+
+Doom includes Roam, but it's usually fairly outdated (since =org-roam= is moving
+pretty fast now.) This is why it's best for now to manually pin it to more
+recent versions.
+
+#+begin_src emacs-lisp
+(package! org-roam
+    :recipe (:host github :repo "org-roam/org-roam")
+    :pin "0cce9d1...")
+(package! org-roam-bibtex
+    :recipe (:host github :repo "org-roam/org-roam-bibtex")
+    :pin "1ad1f47...")
+(package! org-roam-server :pin "8d1d143f5d...")
+
+#+end_src
 
 *** org-anki
 
