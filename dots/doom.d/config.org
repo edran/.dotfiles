@@ -1,7 +1,8 @@
 #+title: Doom Emacs Configuration
 #+author: Nantas Nardelli
 #+language: en
-#+property: header-args :tangle yes :cache yes :results silent :comments link
+#+property: header-args :tangle "config.el" :cache yes :results silent :comments link
+
 
 * Preface
 
@@ -9,7 +10,7 @@ I have been using Emacs as my editor for more than a decade -- well before I
 started calling myself a programmer -- and the journey has been quite the ride
 so far.
 
-My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a couple that
+My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a bunch that
 predate any usage (and knowledge!) of version control on my part. It's current
 form, which most certainly is not its final (but which I hope to be its /present/
 for at least a few more years), is based on the amazing =doom emacs= and =org-mode=.
@@ -412,7 +413,9 @@ I want the headings to be indented, as well as being represented using some
           )))
 #+end_src
 
-To setup capture on MacOS, I had to save the following script as =org-capture.app=
+*** MacOS setup
+
+To setup capture on MacOS, save the following script as =org-capture.app=
 using =Script Editor= into =/Applications=:
 
 #+begin_src sh :tangle no
@@ -421,7 +424,7 @@ on open location this_URL
 end open location
 #+end_src
 
-Then I had to add this to =Info.plist= inside =org-capture.app=:
+Then add this to =Info.plist= inside =org-capture.app=:
 
 #+begin_src xml :tangle no
 <key>CFBundleURLTypes</key>
@@ -444,13 +447,21 @@ Testing with the following:
   "org-protocol://capture?template=w&url=testurl&title=testtitle&body=testbody"
 #+end_src
 
-Afterwards one can for instance use some javascript to make a bookmark as follows:
+Afterwards one can for instance use some javascript to make a bookmark as
+follows:
 
 #+begin_src js :tangle no
 javascript:location.href='org-protocol://capture?template=w'
     + '&url=' + encodeURIComponent(window.location.href)
     + '&title='+encodeURIComponent(document.title)
     + '&body='+encodeURIComponent(window.getSelection());
+#+end_src
+
+Chrome annoying also disabled the ability to easily whitelist protocols. To
+disable the confirmation window, run:
+
+#+begin_src sh :tangle no
+$ defaults write $HOME/Library/Preferences/com.google.Chrome.plist URLWhitelist -array-add "org-protocol://*"
 #+end_src
 
 ** Agenda
@@ -843,6 +854,18 @@ org-roam gives me...), so I set it up here:
   :hook (org-mode . org-anki-mode))
 #+end_src
 * Misc
+** File Templates
+
+The =file-templates= module introduces a templating system that is used to
+kickstart the content of certain buffers, depending on their name.
+
+I don't want to use the ones pre-made by doom, so I point the module to my own
+directory;
+
+#+begin_src emacs-lisp
+(setq +file-templates-dir (concat doom-private-dir "templates/files/"))
+#+end_src
+
 ** UX changes
 
 #+begin_src emacs-lisp
