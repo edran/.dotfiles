@@ -1,7 +1,7 @@
 #+title: Doom Emacs Configuration
 #+author: Nantas Nardelli
 #+language: en
-#+property: header-args :tangle "config.el" :cache yes :results silent :comments link
+#+property: header-args:emacs-lisp :tangle "config.el" :cache yes :results silent :comments link
 
 * Preface
 
@@ -60,6 +60,7 @@ ratio.
 *** ~org-download~
 *** ~mathpix.el~ to go from images to latex code
 *** ~org-roam-bibtex~
+
 * Packages
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el" :comments link
@@ -147,10 +148,13 @@ recent versions.
 (package! org-anki
   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
 #+end_src
+
 *** org-ref
+
 #+begin_src emacs-lisp
 (package! org-ref :pin "b05d6b4434...")
 #+end_src
+
 *** Prettier org-mode
 
 ~org-fragtog~ allows to toggle LaTeX previews.
@@ -212,6 +216,7 @@ software./
 #+end_src
 
 * Graphical configuration
+
 All of this stuff relates to visual behaviour.
 
 ** Fonts
@@ -604,7 +609,8 @@ the background.
 
 ** Refile
 
-I want to be able to create headings when I refile (but with confirmation to partially deal with typos).
+I want to be able to create headings when I refile (but with confirmation to
+partially deal with typos).
 
 #+begin_src emacs-lisp
 (setq org-refile-allow-creating-parent-nodes 'confirm)
@@ -852,20 +858,9 @@ org-roam gives me...), so I set it up here:
 (use-package! org-anki
   :hook (org-mode . org-anki-mode))
 #+end_src
-* Misc
-** File Templates
 
-The =file-templates= module introduces a templating system that is used to
-kickstart the content of certain buffers, depending on their name.
-
-I don't want to use the ones pre-made by doom, so I point the module to my own
-directory;
-
-#+begin_src emacs-lisp
-(setq +file-templates-dir (concat doom-private-dir "templates/files/"))
-#+end_src
-
-** UX changes
+* Tools
+** Generic UX changes
 
 #+begin_src emacs-lisp
 ;;;; UX
@@ -890,13 +885,30 @@ directory;
 
 #+end_src
 
-** Python
+** Editing setup
+
+Most of =evil= is already well configured with =doom=, however I like to do some
+additional tweaking:
+
+#+BEGIN_SRC emacs-lisp
+(setq
+ ;; All changes are considere one block in insert mode by default. This is not
+ ;; great most of the time, so we make evil use Emacs' heuristics to group
+ ;; changes.
+ evil-want-fine-undo t)
+#+END_SRC
+** File Templates
+
+The =file-templates= module introduces a templating system that is used to
+kickstart the content of certain buffers, depending on their name.
+
+I don't want to use the ones pre-made by doom, so I point the module to my own
+directory;
 
 #+begin_src emacs-lisp
-(setq conda-anaconda-home "~/.conda")
+(setq +file-templates-dir (concat doom-private-dir "templates/files/"))
 #+end_src
 
-** TeX
 ** Atomic Chrome
 
 =atomic-chrome= is a package that enables to use emacs for text boxes in Chrome. I
@@ -912,15 +924,11 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
   (atomic-chrome-start-server))
 #+end_src
 
-* Editing setup
-Most of =evil= is already well configured with =doom=, however I like to do some
-additional tweaking:
+* Languages
+** Python
 
-#+BEGIN_SRC emacs-lisp
-(setq
- ;; All changes are considere one block in insert mode by default. This is not
- ;; great most of the time, so we make evil use Emacs' heuristics to group
- ;; changes.
- evil-want-fine-undo t)
-#+END_SRC
+#+begin_src emacs-lisp
+(setq conda-anaconda-home "~/.conda")
+#+end_src
 
+** TeX
