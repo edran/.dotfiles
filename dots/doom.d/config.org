@@ -3,7 +3,6 @@
 #+language: en
 #+property: header-args :tangle "config.el" :cache yes :results silent :comments link
 
-
 * Preface
 
 I have been using Emacs as my editor for more than a decade -- well before I
@@ -24,7 +23,7 @@ Which is both good and bad. But /c'est la vie/ :)
 In theory, the latest version of =doom emacs= should be able to simply run this
 configuration. The first time, it needs to be generated via:
 
-#+begin_src sh
+#+begin_src sh :tangle no
 $ doom sync  # generates config.el from tangling config.org
 #+end_src
 
@@ -896,6 +895,7 @@ directory;
 #+begin_src emacs-lisp
 (setq conda-anaconda-home "~/.conda")
 #+end_src
+
 ** TeX
 ** Atomic Chrome
 
