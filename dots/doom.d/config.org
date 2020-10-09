@@ -48,6 +48,8 @@ Rather than the last sentence / lines.
 
 Since this makes some of the organisational files a little painful to manage.
 *** TODO In org files, enter (in normal mode) should open links.
+*** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
+*** TODO When using ivy-bibtex, parentheses become red...
 
 ** Things to check out
 *** [[github:itai33/evil-tex][evil-tex]] :package:
@@ -59,7 +61,6 @@ ratio.
 *** ~pdf-tools~, better pdf tooling
 *** ~org-download~
 *** ~mathpix.el~ to go from images to latex code
-*** ~org-roam-bibtex~
 
 * Packages
 :PROPERTIES:
@@ -133,11 +134,19 @@ recent versions.
 (package! org-roam
     :recipe (:host github :repo "org-roam/org-roam")
     :pin "0cce9d1...")
-(package! org-roam-bibtex
-    :recipe (:host github :repo "org-roam/org-roam-bibtex")
-    :pin "1ad1f47...")
 (package! org-roam-server :pin "8d1d143f5d...")
+#+end_src
 
+*** org-ref / org-roam-bibtex
+
+This is basically all the packages needed to make bibliography management in
+org-mode happen smoothly.
+
+#+begin_src emacs-lisp
+(package! bibtex-completion :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
+(package! ivy-bibtex :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
+(package! org-ref :pin "f582e9c53e8e4c5dcc1d3889f1b5c536c9a9b524")
+(package! org-roam-bibtex :pin "1ad1f479139a97c2d473fe4e0d406390d6159113")
 #+end_src
 
 *** org-anki
@@ -147,12 +156,6 @@ recent versions.
 #+begin_src emacs-lisp
 (package! org-anki
   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
-#+end_src
-
-*** org-ref
-
-#+begin_src emacs-lisp
-(package! org-ref :pin "b05d6b4434...")
 #+end_src
 
 *** Prettier org-mode
@@ -736,62 +739,99 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
           ))
 #+end_src
 
-** TeX / bibtex support
+** bibtex setup
 
-First, we make sure that reftex and bibtex know where my bibliography is.
+We use all sort of packages to manage our bibliography. Here's where we configure them.
+
+First, we make sure that =reftex, =bibtex-completion=, and the rest of packages
+know where my bibliography is.
 
 #+begin_src emacs-lisp
-(setq reftex-default-bibliography (list (concat
-                                         (file-name-as-directory org-directory)
-                                         "library.bib"))
-      bibtex-completion-bibliography (concat (file-name-as-directory org-directory) "library.bib")
-      bibtex-completion-notes-path (concat (file-name-as-directory org-directory) "kb/reviews"))
+(defvar nn-bibliography-path (concat (file-name-as-directory org-directory) "library.bib")
+  "Path to centralised biblio file.")
+  ;; :type 'string)
+
+(defvar nn-bibliography-notes-path (concat (file-name-as-directory org-directory) "kb/reviews/")
+  "Path to notes directory")
+  ;; :type 'string)
 #+end_src
 
-Then let's activate ~org-ref~:
+Next, we setup =bibtex-completion=.
+
+#+begin_src emacs-lisp
+(use-package! bibtex-completion
+  :defer t
+  :config
+
+  ;; configure ivy
+  (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-plus))
+
+  ;; configure bibliography path
+  (setq bibtex-completion-bibliography nn-bibliography-path
+        bibtex-completion-notes-path nn-bibliography-notes-path)
+
+  ;; Lookup file in bib entry
+  (setq bibtex-completion-additional-search-fields '(keywords)
+        bibtex-completion-pdf-field "file")
+
+  ;; The default action otherwise is opening the pdf
+  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+
+  (setq bibtex-completion-notes-template-multiple-files
+          "${title} : (${=key=})
+- tags ::
+- keywords :: ${keywords}
+\n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: /${file}\n  :NOTER_PAGE: \n  :END:\n\n"))
+#+end_src
+
+Then, it's time for =org-ref=.
 
 #+begin_src emacs-lisp
 (use-package! org-ref
-   :after org
-   :config
-    (setq
-     org-ref-completion-library 'org-ref-ivy-cite  ;; use ivy for completion
-     org-ref-default-bibliography reftex-default-bibliography
-     org-ref-notes-directory (concat (file-name-as-directory org-directory) "kb/reviews")
-     org-ref-notes-function 'org-ref-notes-function-many-files
-     ))
+  :after org
+  :preface
+   ;; org-ref needs this to be setup before require
+  (setq org-ref-completion-library #'org-ref-ivy-cite)
+  :config
+  ;; configures various paths
+  (setq org-ref-default-bibliography nn-bibliography-path
+        reftex-default-bibliography (list nn-bibliography-path)
+        org-ref-notes-directory (concat (file-name-as-directory org-directory) "kb/reviews"))
+
+  ;; 'org-ref-get-pdf-filename-helm-bibtex doesn't actually use helm
+  (setq org-ref-open-pdf-function 'org-ref-get-pdf-filename-helm-bibtex)
+
+  ;; Enables multiple note files (one per bib entry)
+  (setq org-ref-notes-function 'org-ref-notes-function-many-files))
 #+end_src
 
-I want =ivy-bibtex='s default action to be inserting the citation (e.g. =cite:blah=
-in org buffers) rather than opening the pdf (since I use Zotero for that
-anyway).
+Finally, =org-roam-bibtex=!
 
 #+begin_src emacs-lisp
-(setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
+(use-package! org-roam-bibtex
+  ;; HACK otherwise bibtex-completion-find-notes-function isn't declared
+  :after bibtex-completion
+  :hook (org-roam-mode . org-roam-bibtex-mode)
+  :preface
+  ;; keywords for orb-templates
+  (defvar orb-preformat-keywords
+    '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
+  :config
+  (setq orb-templates
+        '(("r" "ref" plain (function org-roam-capture--get-point)
+            ""
+            :file-name "${slug}"
+            :head "#+TITLE: ${=key=}: ${title}\n#+ROAM_KEY: ${ref}
+ - tags ::
+ - keywords :: ${keywords}
+ \n* ${title}\n  :PROPERTIES:\n  :Custom_ID: ${=key=}\n  :URL: ${url}\n  :AUTHOR: ${author-or-editor}\n  :NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n  :NOTER_PAGE: \n  :END:\n\n"
+            :unnarrowed t))))
 #+end_src
 
-When creating notes using =bibtex-completion=, I want them to have well-set
-titles, =roam_key=, and other such properties:
+** LaTeX in org buffers
 
-#+begin_src emacs-lisp
-(setq
- bibtex-completion-notes-template-multiple-files
- (concat "#+title: ${title}\n"
-         "#+roam_key: cite:${=key=}\n"
-         "* TODO Notes\n"
-         ":PROPERTIES:\n"
-         ":Custom_ID: ${=key=}\n"
-         ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
-         ":AUTHOR: ${author-abbrev}\n"
-         ;; Using booktitle here since it's more likely to be present everywhere
-         ":JOURNAL: ${booktitle}\n"
-         ":YEAR: ${year}\n"
-         ":END:\n\n"))
-#+end_src
-
-
-Let's also add ~org-fragtog~, since we wish to be able to modify LaTeX snippets
-simply by moving the cursor on them.
+We use ~org-fragtog~ to be able to modify LaTeX snippets simply by moving the
+cursor on them.
 
 #+begin_src emacs-lisp
 (add-hook 'org-mode-hook 'org-fragtog-mode)

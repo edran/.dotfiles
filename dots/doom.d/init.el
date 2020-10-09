@@ -11,7 +11,7 @@
        doom
        doom-dashboard
        hl-todo
-       indent-guides     ; this is quite costly...
+       ;; indent-guides     ; this is quite costly...
        modeline
        ;; nav-flash
        ophints
@@ -48,7 +48,7 @@
 
        :tools
        ansible
-       biblio
+       ;; biblio      ; This is manually configured in config.org
        debugger
        direnv
        docker
