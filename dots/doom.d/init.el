@@ -81,6 +81,7 @@
         +dragndrop
         +journal
         +jupyter
+        +noter
         +present
         +pretty
         +roam)
