@@ -839,32 +839,39 @@ Finally, =org-roam-bibtex=!
   :config
   (setq orb-templates
         `(("r" "ref" plain (function org-roam-capture--get-point)
-            ""
-            :file-name "${slug}"
-            :head ,(concat "#+title: ${=key=}: ${title}\n"
-                           "#+created: %U\n"
-                           "#+last_modified: %U\n"
-                           "#+roam_key: ${ref}\n\n"
-                           " - related ::\n\n"
-                           "* ${title}\n"
-                           ":PROPERTIES:\n"
-                           ":Custom_ID: ${=key=}\n"
-                           ":URL: ${url}\n"
-                           ":AUTHOR: ${author-or-editor}\n"
-                           ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
-                           ":NOTER_PAGE:\n"
-                           ":END:\n\n")
-            :unnarrowed t))))
-#+end_src
+           ""
+           :file-name "${slug}"
+           :head ,(concat "#+title: ${=key=}: ${title}\n"
+                          "#+created: %U\n"
+                          "#+last_modified: %U\n"
+                          "#+roam_key: ${ref}\n\n"
+                          " - related ::\n\n"
+                          "* ${title}\n"
+                          ":PROPERTIES:\n"
+                          ":Custom_ID: ${=key=}\n"
+                          ":URL: ${url}\n"
+                          ":AUTHOR: ${author-or-editor}\n"
+                          ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
+                          ":NOTER_PAGE:\n"
+                          ":END:\n\n")
+           :unnarrowed t))))
+                           #+end_src
 
 ** org-noter
 
-Thanks to =pdf-tools=, we have a nice way of viewing pdfs in Emacs.
+Thanks to =pdf-tools=, we have a nice way of viewing pdfs in Emacs. The package is
+included in doom emacs, but here we set a bunch of decent keybindings:
 
 #+begin_src emacs-lisp
 (after! org-noter
   (setq org-noter-search-path nn-bibliography-notes-path
-        org-noter-doc-split-fraction '(0.57 0.43)))
+        org-noter-doc-split-fraction '(0.57 0.43))
+  (map! :mode pdf-view-mode
+        :map pdf-view-mode-map
+        :nv "i" #'org-noter-insert-note
+        :nv "J" #'org-noter-sync-next-note
+        :nv "K" #'org-noter-sync-prev-note
+        :nv "q" #'org-noter-kill-session))
 #+end_src
 
 ** LaTeX in org buffers
