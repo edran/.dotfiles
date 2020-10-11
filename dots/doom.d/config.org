@@ -290,7 +290,14 @@ amount of information needed to disentangle them:
 (setq doom-fallback-buffer-name "*scratch*")
 #+end_src
 * org-mode
+
+What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
+org packages cover pretty much almost anything I want, and there's minimal setup
+-- compared to the past -- that one needs to do to have a decent workflow. I
+love this community.
+
 ** Basic files and folders
+
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
       org-archive-location (concat
@@ -301,6 +308,7 @@ amount of information needed to disentangle them:
 (defvar nn/org-inbox-file (concat org-directory "inbox.org")
   "Path to the inbox file.")
 #+end_src
+
 ** General behaviour
 
 #+begin_src emacs-lisp
@@ -326,6 +334,20 @@ redefining them here.
          (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
          (sequence "HABIT(z)" "|" "TICKED(Z)"))))
 #+end_src
+
+*** Timestamps
+
+In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
+
+To implement this, I can use =time-stamp= which will search the first 8 lines for the pattern below before saving, and insert a org-mode readable time-stamp if it finds ~last_modified: []~.
+
+#+begin_src emacs-lisp
+(setq time-stamp-pattern "last_modified: %%$"
+      time-stamp-format "[%Y-%02m-%02d %3a %02H:%02M]")
+(add-hook 'before-save-hook 'time-stamp)
+#+end_src
+
+/*chef kiss*/
 
 *** Indentation
 
