@@ -58,7 +58,6 @@ Since this makes some of the organisational files a little painful to manage.
 I should check this out eventually, as it could likely improve my commands/text
 ratio.
 
-*** ~org-download~
 *** ~mathpix.el~ to go from images to latex code
 
 * Packages
@@ -303,6 +302,8 @@ amount of information needed to disentangle them:
 #+end_src
 
 * org-mode
+
+This one deserves a whole level-1 heading :)
 
 What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
 org packages cover pretty much almost anything I want, and there's minimal setup
@@ -787,21 +788,32 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
            :file-name "${slug}"
            :head ,(concat "#+title: ${title}\n"
                           "#+created: %u\n"
-                          "#+last_modified: %U\n")
+                          "#+last_modified: %U\n\n"
+                          " - related :: \n")
            :unnarrowed t)
           ("m" "meeting" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
            :head ,(concat "#+title: ${title}, %<%Y-%m-%d>\n"
                           "#+created: %u\n"
-                          "#+last_modified: %U\n")
+                          "#+last_modified: %U\n"
+                          " - related :: \n")
            :unnarrowed t)
           ("p" "project" plain (function org-roam--capture-get-point)
            "%?"
            :file-name "projects/${slug}"
            :head ,(concat "#+title: ${title}\n"
                           "#+created: %u\n"
-                          "#+last_modified: %U\n")
+                          "#+last_modified: %U\n"
+                          " - related :: \n")
+           :unnarrowed t)
+          ("h" "human" plain (function org-roam--capture-get-point)
+           "%?"
+           :file-name "humans/${slug}"
+           :head ,(concat "#+title: ${title}\n"
+                          "#+created: %u\n"
+                          "#+last_modified: %U\n"
+                          " - related :: \n")
            :unnarrowed t)
           ;; These are more curated notes than others.
           ("c" "compendium" plain (function org-roam-capture--get-point)
@@ -809,14 +821,16 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
            :file-name "compendium/${slug}"
            :head ,(concat "#+title: ${title}\n"
                           "#+created: %u\n"
-                          "#+last_modified: %U\n")
+                          "#+last_modified: %U\n"
+                          " - related :: \n")
            :unnarrowed t)
           ("r" "review" plain (function org-roam-capture--get-point)
            "%?"
            :file-name "reviews/${slug}"
            :head ,(concat "#+title: ${title}\n"
                           "#+created: %u\n"
-                          "#+last_modified: %U\n")
+                          "#+last_modified: %U\n"
+                          " - related :: \n")
            :unnarrowed t)
           ;; TODO I would like this to force me to specify the conference and/or
           ;; journal name, eventually.
@@ -876,7 +890,7 @@ Next, we setup =bibtex-completion=.
           "#+title: ${title} : (${=key=})\n"
           "#+created: %u\n"
           "#+last_modified: %u\n"
-          "- related ::\n"
+          " - related ::\n"
           "\n* ${title}\n"
           ":PROPERTIES:\n"
           ":Custom_ID: ${=key=}\n"
@@ -934,7 +948,7 @@ Finally, =org-roam-bibtex=!
   (setq orb-templates
         `(("r" "ref" plain (function org-roam-capture--get-point)
            ""
-           :file-name "${slug}"
+           :file-name "reviews/${slug}"
            :head ,(concat "#+title: ${=key=}: ${title}\n"
                           "#+created: %U\n"
                           "#+last_modified: %U\n"
@@ -949,7 +963,7 @@ Finally, =org-roam-bibtex=!
                           ":NOTER_PAGE:\n"
                           ":END:\n\n")
            :unnarrowed t))))
-                           #+end_src
+#+end_src
 
 ** org-noter
 
