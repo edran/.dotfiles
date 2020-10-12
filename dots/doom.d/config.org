@@ -352,7 +352,9 @@ redefining them here.
 
 In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
 
-To implement this, I can use =time-stamp= which will search the first 8 lines for the pattern below before saving, and insert a org-mode readable time-stamp if it finds ~last_modified: []~.
+To implement this, I can use =time-stamp= which will search the first 8 lines for
+the pattern below before saving, and insert a org-mode readable time-stamp if it
+finds ~last_modified: []~.
 
 #+begin_src emacs-lisp
 (setq time-stamp-pattern "last_modified: %%$"
@@ -830,7 +832,8 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
 
 ** bibtex setup
 
-We use all sort of packages to manage our bibliography. Here's where we configure them.
+We use all sort of packages to manage our bibliography. Here's where we
+configure them.
 
 First, we make sure that =reftex, =bibtex-completion=, and the rest of packages
 know where my bibliography is.
@@ -872,8 +875,8 @@ Next, we setup =bibtex-completion=.
         (concat
           "#+title: ${title} : (${=key=})\n"
           "#+created: %u\n"
+          "#+last_modified: %u\n"
           "- related ::\n"
-          "- keywords :: ${keywords}\n"
           "\n* ${title}\n"
           ":PROPERTIES:\n"
           ":Custom_ID: ${=key=}\n"
@@ -1113,7 +1116,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 ** TeX
 ** Emacs lisp
 
-** Better eval-sexp
+*** Better eval-sexp
 
 I hate to manually having to do forward-list all the time I'm writing elisp and
 want to evaluate the sexp. But this is emacs, so in most cases we can automatise
@@ -1145,12 +1148,12 @@ So we rebind everything to =<leader> e=.
 #+begin_src emacs-lisp
 (map! :leader
       :prefix-map ("e" . "eval")
-      :desc "Eval current form" "e" #'nn/eval-current-form
+      :desc "Eval current form"       "e" #'nn/eval-current-form
       :desc "Eval+print current form" "E" #'nn/eval-print-current-form
-      :desc "Eval last s-exp" "s" #'eval-last-sexp
-      :desc "Eval+print last s-exp" "S" #'eval-print-last-sexp
-      :desc "Eval function" "f" #'eval-defun
-      :desc "Eval buffer" "b" #'+eval/buffer
-      :desc "Eval region" "r" #'+eval:region
-      :desc "Open REPL" "R" #'+eval/open-repl-other-window)
+      :desc "Eval last s-exp"         "s" #'eval-last-sexp
+      :desc "Eval+print last s-exp"   "S" #'eval-print-last-sexp
+      :desc "Eval function"           "f" #'eval-defun
+      :desc "Eval buffer"             "b" #'+eval/buffer
+      :desc "Eval region"             "r" #'+eval:region
+      :desc "Open REPL"               "R" #'+eval/open-repl-other-window)
 #+end_src
