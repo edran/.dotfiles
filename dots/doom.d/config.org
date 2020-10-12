@@ -1040,3 +1040,46 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 #+end_src
 
 ** TeX
+** Emacs lisp
+
+** Better eval-sexp
+
+I hate to manually having to do forward-list all the time I'm writing elisp and
+want to evaluate the sexp. But this is emacs, so in most cases we can automatise
+this away.
+
+#+begin_src emacs-lisp
+(defun nn/eval-current-form ()
+  "Looks for the current [def|set|map|use]* command and evaluates it."
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "(def\\|(set\\|(map\\|(use")
+    (forward-list)
+    (call-interactively 'eval-last-sexp)))
+
+(defun nn/eval-print-current-form ()
+  "Looks for the current [def|set|map|use]* command and evaluates it."
+  (interactive)
+  (save-excursion
+    (search-backward-regexp "(def\\|(set\\|(map\\|(use")
+    (forward-list)
+    (call-interactively 'eval-print-last-sexp)))
+#+end_src
+
+*** Keybindings
+
+Using emacs keybindings for evaluating elisp expressions is... not that great.
+So we rebind everything to =<leader> e=.
+
+#+begin_src emacs-lisp
+(map! :leader
+      :prefix-map ("e" . "eval")
+      :desc "Eval current form" "e" #'nn/eval-current-form
+      :desc "Eval+print current form" "E" #'nn/eval-print-current-form
+      :desc "Eval last s-exp" "s" #'eval-last-sexp
+      :desc "Eval+print last s-exp" "S" #'eval-print-last-sexp
+      :desc "Eval function" "f" #'eval-defun
+      :desc "Eval buffer" "b" #'+eval/buffer
+      :desc "Eval region" "r" #'+eval:region
+      :desc "Open REPL" "R" #'+eval/open-repl-other-window)
+#+end_src
