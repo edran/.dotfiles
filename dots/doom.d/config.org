@@ -47,6 +47,7 @@ Rather than the last sentence / lines.
 *** TODO I should set bigger height for org headings only in the knowledge base
 
 Since this makes some of the organisational files a little painful to manage.
+
 *** TODO In org files, enter (in normal mode) should open links.
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
 *** TODO When using ivy-bibtex, parentheses become red...
@@ -73,6 +74,7 @@ these section, a ~doom refresh~ is required.
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle no
 :END:
+
 The packaging system is based on [[github:raxod502/straight.el][straight.el]], which has quite a nice [[https://github.com/raxod502/straight.el#the-recipe-format][recipe
 format]]. On top of this, =doom= provides some useful macros:
 
@@ -118,6 +120,7 @@ Do not byte compile the tangled =.el= file.
 #+begin_src emacs-lisp
 (package! info-colors :pin "47ee73c...")
 #+end_src
+
 ** Org-mode extensions
 
 The following packages make ~org-mode~ even more awesome than usual.
@@ -221,6 +224,7 @@ software./
 All of this stuff relates to visual behaviour.
 
 ** Fonts
+
 #+begin_src emacs-lisp
 (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
       doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
@@ -238,9 +242,13 @@ general I'm using it for stuff like org buffers).
 
 ** Setting up theme
 
+🧛 🧛 🧛 🧛
+
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-dracula)
 #+end_src
+
+** Modeline
 
 I don't want to display =LF UTF-8= in the modeline, since that is the default.
 
@@ -255,6 +263,7 @@ I don't want to display =LF UTF-8= in the modeline, since that is the default.
 #+end_src
 
 ** Disable vertical line numbers
+
 This can be reactivated when I have a better dev machine :(
 
 #+begin_src emacs-lisp
@@ -262,6 +271,7 @@ This can be reactivated when I have a better dev machine :(
 #+end_src
 
 ** Window title
+
 Sometimes I need to parse the name of Emacs windows with other scripts /
 software, and I'd rather stick to standard strings to future-proof things:
 
@@ -274,6 +284,7 @@ software, and I'd rather stick to standard strings to future-proof things:
 Oh yeah, now we get to the fun configuration!
 
 ** Better default names when in conflict
+
 Whenever I'm coding some nasty framework, I tend to have to open multiple
 =__init__.py= at the same time. I'd like them to be prefixed with the least
 amount of information needed to disentangle them:
@@ -283,12 +294,14 @@ amount of information needed to disentangle them:
 #+end_src
 
 ** Rename default buffer back to *scratch*
+
 =*doom*= is nice, but my muscle memory complains a lot.
 
 #+begin_src emacs-lisp
 ;; TODO It seems like a *doom-scratch* buffer is still created. Should be disabled.
 (setq doom-fallback-buffer-name "*scratch*")
 #+end_src
+
 * org-mode
 
 What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
@@ -362,7 +375,6 @@ I want everything left-justified.
 
 ** Formatting
 
-
 #+begin_src emacs-lisp
 (defun nn/org-format-heading ()
   (org-with-wide-buffer
@@ -402,11 +414,17 @@ I want everything left-justified.
 (defun nn/orgfmt (&optional SCOPE)
   "Formats org buffers.
 
-It makes sure that headings containing content have newlines around them.
+It makes sure that:
+- headings containing content have newlines around them;
+- there aren't big newline blocks left around.
 
 SCOPE determines the scope of the command; see `org-map-entries' for a list."
   (interactive)
-  (org-map-entries 'nn/org-format-heading t SCOPE))
+  (org-map-entries 'nn/org-format-heading t SCOPE)
+  (save-excursion
+    (goto-char (point-min))
+    (while (re-search-forward "\n\n\n+" nil t)
+      (replace-match "\n\n"))))
 #+end_src
 
 ** UI
@@ -463,6 +481,7 @@ I want the headings to be indented, as well as being represented using some
 #+end_src
 
 ** Capture
+
 #+begin_src emacs-lisp
 (after! org-capture
   (setq org-capture-templates
@@ -619,6 +638,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 #+end_src
 
 *** Keybindings
+
 Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
 extra "o a a" is way too many strokes.
 
@@ -1011,6 +1031,7 @@ org-roam gives me...), so I set it up here:
 #+end_src
 
 ** org-anki
+
 #+begin_src emacs-lisp
 (use-package! org-anki
   :hook (org-mode . org-anki-mode))
@@ -1054,6 +1075,7 @@ additional tweaking:
  ;; changes.
  evil-want-fine-undo t)
 #+END_SRC
+
 ** File Templates
 
 The =file-templates= module introduces a templating system that is used to
