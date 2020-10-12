@@ -368,7 +368,15 @@ I want everything left-justified.
   (org-with-wide-buffer
    ;; `org-map-entries' narrows the buffer, which prevents us from seeing
    ;; newlines before the current heading, so we do this part widened.
-   (while (not (looking-back "\n\n" nil))
+   (while (not (or (looking-back "\n\n" nil)
+                   (save-excursion
+                     (condition-case nil
+                         ;; So that we don't need to deal with the fact that the
+                         ;; first heading might be on line 0.
+                         (progn
+                           (previous-line)
+                           (org-at-heading-p))
+                       (error t)))))
      ;; Insert blank lines before heading.
      (insert "\n")))
   (let ((end (org-entry-end-position)))
@@ -394,7 +402,10 @@ I want everything left-justified.
 (defun nn/orgfmt (&optional SCOPE)
   "Formats org buffers.
 
+It makes sure that headings containing content have newlines around them.
+
 SCOPE determines the scope of the command; see `org-map-entries' for a list."
+  (interactive)
   (org-map-entries 'nn/org-format-heading t SCOPE))
 #+end_src
 
