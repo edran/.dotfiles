@@ -146,7 +146,7 @@ org-mode happen smoothly.
 (package! bibtex-completion :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
 (package! ivy-bibtex :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
 (package! org-ref :pin "f582e9c53e8e4c5dcc1d3889f1b5c536c9a9b524")
-(package! org-roam-bibtex :pin "1ad1f479139a97c2d473fe4e0d406390d6159113")
+(package! org-roam-bibtex :pin "280e7a89a2d16f56aa87477db22ba98588c2e115")
 #+end_src
 
 *** org-anki
