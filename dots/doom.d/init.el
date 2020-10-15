@@ -11,7 +11,7 @@
        doom
        doom-dashboard
        hl-todo
-       ;; indent-guides     ; this is quite costly...
+       ;; indent-guides      ; quite costly...
        modeline
        ;; nav-flash
        ophints
@@ -30,7 +30,7 @@
        ;;format              ; disabled until rewrite
        multiple-cursors
        ;;parinfer
-       rotate-text       ; this is cooler than it sounds
+       rotate-text           ; cooler than it sounds
        snippets
 
        :emacs
@@ -48,7 +48,7 @@
 
        :tools
        ansible
-       ;; biblio      ; This is manually configured in config.org
+       ;; biblio             ; Manually configured in config.org
        debugger
        direnv
        docker
@@ -79,7 +79,6 @@
        nix
        (org
         +dragndrop
-        +journal
         +jupyter
         +noter
         +present

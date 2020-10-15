@@ -507,8 +507,7 @@ I want the headings to be indented, as well as being represented using some
                     "DEADLINE: %^{Deadline date}t"))
           ("w" "Web" entry (file+headline nn/org-inbox-file "Web")
            "* TODO %:annotation \n%:i\n %i"
-           :immediate-finish t)
-          )))
+           :immediate-finish t))))
 #+end_src
 
 *** MacOS setup
@@ -729,35 +728,6 @@ Enabling flyspell when visiting org files.
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 #+end_src
 
-** Journal
-
-I want a daily journal, with sensible ISO-approved™ date format for the file.
-
-#+begin_src emacs-lisp
-(setq org-journal-file-type 'daily
-      org-journal-file-format "%Y-%m-%d.org")
-#+end_src
-
-Occasionally I put =TODO= items in the journal, so I want these to be part of the
-agenda files.
-
-#+begin_src emacs-lisp
-(setq org-journal-enable-agenda-integration t)
-#+end_src
-
-Finally, I like to start the week by listing overall goals, and I don't want
-that to have a proper journal entry. Thus, I need some functions and nice
-bindings.
-
-#+begin_src emacs-lisp
-(defun org-journal-today ()
-  (interactive)
-  (org-journal-new-entry t))
-
-(map! :leader
-      "n j t" #'org-journal-today)
-#+end_src
-
 ** Roam
 
 First, I set a couple of paths. I want my knowledge base to be part of my org
@@ -789,14 +759,6 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
            :head ,(concat "#+title: ${title}\n"
                           "#+created: %u\n"
                           "#+last_modified: %U\n\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ("m" "meeting" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "meetings/%<%Y%m%d%H%M%S>-${slug}"
-           :head ,(concat "#+title: ${title}, %<%Y-%m-%d>\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n"
                           " - related :: \n")
            :unnarrowed t)
           ("p" "project" plain (function org-roam--capture-get-point)
@@ -838,13 +800,80 @@ Finally, I set the capture templates that are exclusive to =org-roam=.
            "%?"
            :file-name "${slug}"
            :head ,(concat"#+title: ${title}\n"
-                         "#+date: %t\n"
-                         "#+roam_tags: conference")
+                         "#+created: %t\n"
+                         "#+last_modified: %U\n"
+                         "#+roam_tags: conference\n"
+                         " - related :: ")
            :unnarrowed t)
           ))
 #+end_src
 
-** bibtex setup
+** Journal
+
+I want a daily journal, with sensible ISO-approved™ date format for the file.
+Originally I was using =org-journal= for this, but truthfully it never really
+provided any particular value for me, beyond serving as an easy-to-use daily
+template for creating the journal file.
+
+Thus, I now make use of =org-roam= "dailies" facilities.
+
+#+begin_src emacs-lisp
+(setq org-roam-dailies-capture-templates
+      `(("d" "daily" plain (function org-roam-capture--get-point)
+         ""
+         :immediate-finish t
+         :file-name "journal/%<%Y-%m-%d>"
+         :head ,(string-join '("#+title: %<%Y-%m-%d>"
+                               "#+created: %u"
+                               "#+last_modified: %U") "\n")
+         :unnarrowed t)))
+#+end_src
+
+Finally, I like to start the week by listing overall goals, and I don't want
+that to have a proper journal entry. Thus, I need some functions and nice
+bindings.
+
+=<leader n j>= by default is used for =org-journal=, but now we can remap it.
+
+#+begin_src emacs-lisp
+(after! org-roam
+  (map! :leader
+        :prefix-map ("n" . "notes")
+        (:prefix ("j" . "journal")
+         :desc "Open daily journal" "j" #'org-roam-dailies-today
+         :desc "Open tomorrow's journal" "t" #'org-roam-dailies-tomorrow
+         :desc "Open yesterday's journal" "y" #'org-roam-dailies-yesterday
+         :desc "Open journal at date" "d" #'org-roam-dailies-date)))
+#+end_src
+
+*** Logging meetings
+
+I also want the ability to add meetings to daily entries, but the templating
+system built with =org-roam= doesn't allow to easily disable the search system. I
+don't want to mess with its functions. Directly using =org-capture= is also
+painful, since I would need to maybe-create the dailies file, which invokes
+capture, which in turn cannot be easily done inside another capture process...
+So, let's just custom make our own "capture" function.
+
+#+begin_src emacs-lisp
+(after! org-roam
+  (defun nn/org-roam-dailies-today-meeting ()
+    (interactive)
+    (org-roam-dailies-today)
+    (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org") org-roam-directory)))
+      (progn (set-buffer (org-capture-target-buffer file-name))
+             (goto-char (point-max))
+             (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :MEETING:"))
+             (search-backward-regexp "%")
+             (delete-char 1))))
+ 
+  (map! :leader
+        :prefix-map ("n" . "notes")
+        (:prefix ("j" . "journal")
+         :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
+#+end_src
+
+** Bibtex setup
 
 We use all sort of packages to manage our bibliography. Here's where we
 configure them.
