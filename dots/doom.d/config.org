@@ -56,8 +56,123 @@ I should check this out eventually, as it could likely improve my commands/text
 ratio.
 
 *** ~mathpix.el~ to go from images to latex code
+* Doom / Emacs configuration
 
-* Packages
+** Essential configuration
+
+Lexical binding can result into faster execution of this file (see
+[[https://nullprogram.com/blog/2016/12/22/][this blog post]]), so we activate it.
+
+#+begin_src emacs-lisp :comment no
+;;; config.el -*- lexical-binding: t; -*-
+#+end_src
+
+*** Personal info
+
+These are some basic information that are needed for e.g., =GPG=, =org-export=, etc.
+
+#+begin_src emacs-lisp
+(setq user-full-name "Nantas Nardelli"
+      user-mail-address "nantas.nardelli@gmail.com")
+#+end_src
+
+*** Telling Emacs about my lab
+
+I use =~/lab= as my root directory for pretty much all development work. This
+helps some tools tinker with my data. /All hail automatic project management
+software./
+
+#+begin_src emacs-lisp
+(defvar edran-lab-path "~/lab" "Path to the local laboratory")
+
+(setq projectile-project-search-path (list edran-lab-path)       ;; this is not recursive, sadly
+      magit-repository-directories (list (cons edran-lab-path  2)))
+#+end_src
+
+** Graphical configuration
+
+All of this stuff relates to visual behaviour.
+
+*** Fonts
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
+      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
+      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
+      doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
+#+end_src
+
+Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
+particular case, I wish for the variable pitch font to be bigger (since in
+general I'm using it for stuff like org buffers).
+
+#+begin_src emacs-lisp
+(setq mixed-pitch-set-height 14)
+#+end_src
+
+*** Setting up theme
+
+🧛 🧛 🧛 🧛
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-dracula)
+#+end_src
+
+*** Modeline
+
+I don't want to display =LF UTF-8= in the modeline, since that is the default.
+
+#+begin_src emacs-lisp
+(defun nn/doom-modeline-conditional-buffer-encoding ()
+  "Don't show file encoding if it's utf-8"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
+#+end_src
+
+*** Disable vertical line numbers
+
+This can be reactivated when I have a better dev machine :(
+
+#+begin_src emacs-lisp
+(setq display-line-numbers-type nil)
+#+end_src
+
+*** Window title
+
+Sometimes I need to parse the name of Emacs windows with other scripts /
+software, and I'd rather stick to standard strings to future-proof things:
+
+#+begin_src emacs-lisp
+(setq frame-title-format "%b - Emacs")
+#+end_src
+
+** Buffers
+
+Oh yeah, now we get to the fun configuration!
+
+*** Better default names when in conflict
+
+Whenever I'm coding some nasty framework, I tend to have to open multiple
+=__init__.py= at the same time. I'd like them to be prefixed with the least
+amount of information needed to disentangle them:
+
+#+begin_src emacs-lisp
+(setq uniquify-buffer-name-style 'forward)
+#+end_src
+
+*** Rename default buffer back to *scratch*
+
+=*doom*= is nice, but my muscle memory complains a lot.
+
+#+begin_src emacs-lisp
+;; TODO It seems like a *doom-scratch* buffer is still created. Should be disabled.
+(setq doom-fallback-buffer-name "*scratch*")
+#+end_src
+
+* Additional packages
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el" :comments link
 :END:
@@ -183,131 +298,18 @@ Either way, worth it :)
 #+begin_src emacs-lisp
 (package! selectric-mode :pin "bb9e666...")
 #+end_src
+* Tools configuration
 
-* Essential configuration
+** org-mode
 
-Lexical binding can result into faster execution of this file (see
-[[https://nullprogram.com/blog/2016/12/22/][this blog post]]), so we activate it.
-
-#+begin_src emacs-lisp :comment no
-;;; config.el -*- lexical-binding: t; -*-
-#+end_src
-
-** Personal info
-
-These are some basic information that are needed for e.g., =GPG=, =org-export=, etc.
-
-#+begin_src emacs-lisp
-(setq user-full-name "Nantas Nardelli"
-      user-mail-address "nantas.nardelli@gmail.com")
-#+end_src
-
-** Telling Emacs about my lab
-
-I use =~/lab= as my root directory for pretty much all development work. This
-helps some tools tinker with my data. /All hail automatic project management
-software./
-
-#+begin_src emacs-lisp
-(defvar edran-lab-path "~/lab" "Path to the local laboratory")
-
-(setq projectile-project-search-path (list edran-lab-path)       ;; this is not recursive, sadly
-      magit-repository-directories (list (cons edran-lab-path  2)))
-#+end_src
-
-* Graphical configuration
-
-All of this stuff relates to visual behaviour.
-
-** Fonts
-
-#+begin_src emacs-lisp
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
-      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
-      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
-      doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
-#+end_src
-
-Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
-particular case, I wish for the variable pitch font to be bigger (since in
-general I'm using it for stuff like org buffers).
-
-#+begin_src emacs-lisp
-(setq mixed-pitch-set-height 14)
-#+end_src
-
-** Setting up theme
-
-🧛 🧛 🧛 🧛
-
-#+begin_src emacs-lisp
-(setq doom-theme 'doom-dracula)
-#+end_src
-
-** Modeline
-
-I don't want to display =LF UTF-8= in the modeline, since that is the default.
-
-#+begin_src emacs-lisp
-(defun nn/doom-modeline-conditional-buffer-encoding ()
-  "Don't show file encoding if it's utf-8"
-  (setq-local doom-modeline-buffer-encoding
-              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
-                          (eq buffer-file-coding-system 'utf-8)))))
-
-(add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
-#+end_src
-
-** Disable vertical line numbers
-
-This can be reactivated when I have a better dev machine :(
-
-#+begin_src emacs-lisp
-(setq display-line-numbers-type nil)
-#+end_src
-
-** Window title
-
-Sometimes I need to parse the name of Emacs windows with other scripts /
-software, and I'd rather stick to standard strings to future-proof things:
-
-#+begin_src emacs-lisp
-(setq frame-title-format "%b - Emacs")
-#+end_src
-
-* Buffers
-
-Oh yeah, now we get to the fun configuration!
-
-** Better default names when in conflict
-
-Whenever I'm coding some nasty framework, I tend to have to open multiple
-=__init__.py= at the same time. I'd like them to be prefixed with the least
-amount of information needed to disentangle them:
-
-#+begin_src emacs-lisp
-(setq uniquify-buffer-name-style 'forward)
-#+end_src
-
-** Rename default buffer back to *scratch*
-
-=*doom*= is nice, but my muscle memory complains a lot.
-
-#+begin_src emacs-lisp
-;; TODO It seems like a *doom-scratch* buffer is still created. Should be disabled.
-(setq doom-fallback-buffer-name "*scratch*")
-#+end_src
-
-* org-mode
-
-This one deserves a whole level-1 heading :)
+This one maybe should deserve a whole level-1 heading :)
 
 What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
 org packages cover pretty much almost anything I want, and there's minimal setup
 -- compared to the past -- that one needs to do to have a decent workflow. I
 love this community.
 
-** Basic files and folders
+*** Basic files and folders
 
 =org-mode= tends to want to reason around a few files and directories, so we set
 them most of them here.
@@ -352,7 +354,7 @@ let's setup a couple of keybindings.
       :desc "Open life file" "I" #'nn/org-open-life-file)
 #+end_src
 
-** General behaviour
+*** General behaviour
 
 #+begin_src emacs-lisp
 (setq ;; org-src-window-setup 'current-window
@@ -378,7 +380,7 @@ redefining them here.
          (sequence "HABIT(z)" "|" "TICKED(Z)"))))
 #+end_src
 
-*** Timestamps
+**** Timestamps
 
 In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
 
@@ -394,7 +396,7 @@ finds ~last_modified: []~.
 
 /*chef kiss*/
 
-*** Indentation
+**** Indentation
 
 I want everything left-justified.
 
@@ -405,10 +407,14 @@ I want everything left-justified.
    ))
 #+end_src
 
-** Formatting
+*** Formatting
 
 #+begin_src emacs-lisp
 (defun nn/org-format-heading ()
+  "Formats an org heading.
+
+The heading will be surrounded by newlines, unless other headings or drawers are
+next to it."
   (org-with-wide-buffer
    ;; `org-map-entries' narrows the buffer, which prevents us from seeing
    ;; newlines before the current heading, so we do this part widened.
@@ -459,7 +465,7 @@ SCOPE determines the scope of the command; see `org-map-entries' for a list."
       (replace-match "\n\n"))))
 #+end_src
 
-** UI
+*** UI
 
 I want org files to use =mixed-pitch-mode=, since it is nicer to read prose in
 variable pitch fonts.
@@ -499,7 +505,7 @@ When using simple list, I want different levels to have different bullets.
                                       ("-" . "+")))
 #+end_src
 
-*** Superstar
+**** Superstar
 
 I want the headings to be indented, as well as being represented using some
 [[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
@@ -512,7 +518,7 @@ I want the headings to be indented, as well as being represented using some
       ))
 #+end_src
 
-** Capture
+*** Capture
 
 #+begin_src emacs-lisp
 (after! org-capture
@@ -539,7 +545,7 @@ I want the headings to be indented, as well as being represented using some
            :immediate-finish t))))
 #+end_src
 
-*** MacOS setup
+**** MacOS setup
 
 To setup capture on MacOS, save the following script as =org-capture.app=
 using =Script Editor= into =/Applications=:
@@ -590,7 +596,7 @@ disable the confirmation window, run:
 $ defaults write $HOME/Library/Preferences/com.google.Chrome.plist URLWhitelist -array-add "org-protocol://*"
 #+end_src
 
-** Agenda
+*** Agenda
 
 First, let's make sure that the agenda pulls all the files in the org directory
 as well as the project directory. The former are used for standard task
@@ -602,7 +608,7 @@ and task tracking.
                              (concat org-directory "kb/projects")))
 #+end_src
 
-*** Behaviour
+**** Behaviour
 
 When opening an item from the agenda, I want the context (parent heading and
 siblings) to be visible.
@@ -620,7 +626,7 @@ are scheduled.
   (setq org-agenda-dim-blocked-tasks nil))
 #+end_src
 
-*** Agenda commands
+**** Agenda commands
 
 I make a good amount of use of habits, and I like to keep them separate from the
 standard today view.
@@ -668,7 +674,7 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 (setq org-habit-show-all-today t)
 #+end_src
 
-*** Keybindings
+**** Keybindings
 
 Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
 extra "o a a" is way too many strokes.
@@ -699,7 +705,7 @@ etc. ).
         [remap org-agenda-previous-line] #'org-agenda-previous-item))
 #+end_src
 
-** Logging and clocking
+*** Logging and clocking
 
 I generally want a timestamp when:
  - setting a task to a done state
@@ -715,7 +721,7 @@ really need it.
       org-log-redeadline 'time)
 #+end_src
 
-** Exporting
+*** Exporting
 
 I hate it that exporting big files locks emacs -- so, let's make it happen in
 the background.
@@ -724,13 +730,13 @@ the background.
 (setq org-export-in-background t)
 #+end_src
 
-** Habits
+*** Habits
 
 #+begin_src emacs-lisp
 (add-to-list 'org-modules 'org-habit)
 #+end_src
 
-** Refile
+*** Refile
 
 I want to be able to create headings when I refile (but with confirmation to
 partially deal with typos).
@@ -749,7 +755,7 @@ I also want to refile only on non-done states.
 (setq org-refile-target-verify-function 'nn/verify-refile-target)
 #+end_src
 
-** Spellcheck
+*** Spellcheck
 
 Enabling flyspell when visiting org files.
 
@@ -757,7 +763,7 @@ Enabling flyspell when visiting org files.
 (after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
 #+end_src
 
-** Roam
+*** Roam
 
 First, let's make it so that the database doesn't pollute any useful
 directories:
@@ -834,7 +840,7 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
         ))
 #+end_src
 
-** Journal
+*** Journal
 
 I want a daily journal, with sensible ISO-approved™ date format for the file.
 Originally I was using =org-journal= for this, but truthfully it never really
@@ -872,7 +878,7 @@ bindings.
          :desc "Open journal at date" "d" #'org-roam-dailies-date)))
 #+end_src
 
-*** Logging meetings
+**** Logging meetings
 
 I also want the ability to add meetings to daily entries, but the templating
 system built with =org-roam= doesn't allow to easily disable the search system. I
@@ -892,14 +898,14 @@ So, let's just custom make our own "capture" function.
              (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :MEETING:"))
              (search-backward-regexp "%")
              (delete-char 1))))
- 
+
   (map! :leader
         :prefix-map ("n" . "notes")
         (:prefix ("j" . "journal")
          :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
 #+end_src
 
-** Bibtex setup
+*** Bibtex setup
 
 We use all sort of packages to manage our bibliography. Here's where we
 configure them.
@@ -1020,7 +1026,7 @@ Finally, =org-roam-bibtex=!
            :unnarrowed t))))
 #+end_src
 
-** org-noter
+*** org-noter
 
 Thanks to =pdf-tools=, we have a nice way of viewing pdfs in Emacs. The package is
 included in doom emacs, but here we set a bunch of decent keybindings:
@@ -1037,7 +1043,7 @@ included in doom emacs, but here we set a bunch of decent keybindings:
         :nv "q" #'org-noter-kill-session))
 #+end_src
 
-** LaTeX in org buffers
+*** LaTeX in org buffers
 
 We use ~org-fragtog~ to be able to modify LaTeX snippets simply by moving the
 cursor on them.
@@ -1081,7 +1087,7 @@ highlighting them:
 \\usepackage{arevmath}"))
 #+end_src
 
-** Deft
+*** Deft
 
 I use ~deft~ for searching my org files (though I should explore more what
 org-roam gives me...), so I set it up here:
@@ -1092,7 +1098,7 @@ org-roam gives me...), so I set it up here:
       deft-recursive t)
 #+end_src
 
-** Other stuff
+*** Other stuff
 
 #+begin_src emacs-lisp
 (after! org
@@ -1102,14 +1108,13 @@ org-roam gives me...), so I set it up here:
         "M-p" #'org-previous-visible-heading))
 #+end_src
 
-** org-anki
+*** org-anki
 
 #+begin_src emacs-lisp
 (use-package! org-anki
   :hook (org-mode . org-anki-mode))
 #+end_src
 
-* Tools
 ** Generic UX changes
 
 #+begin_src emacs-lisp
@@ -1175,7 +1180,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
   (atomic-chrome-start-server))
 #+end_src
 
-* Languages
+* Language configuration
 ** Python
 
 #+begin_src emacs-lisp
