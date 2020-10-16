@@ -55,7 +55,6 @@ Since this makes some of the organisational files a little painful to manage.
 I should check this out eventually, as it could likely improve my commands/text
 ratio.
 
-*** ~mathpix.el~ to go from images to latex code
 * Doom / Emacs configuration
 
 ** Essential configuration
@@ -226,12 +225,6 @@ Do not byte compile the tangled =.el= file.
 ;; -*- no-byte-compile: t; -*-
 #+end_src
 
-** Add colour to Emacs' manual pages
-
-#+begin_src emacs-lisp
-(package! info-colors :pin "47ee73c...")
-#+end_src
-
 ** Org-mode extensions
 
 The following packages make ~org-mode~ even more awesome than usual.
@@ -284,6 +277,15 @@ org-mode happen smoothly.
 (package! org-pretty-tags :pin "40fd72f3e7...")
 #+end_src
 
+** mathpix integration
+
+[[https://mathpix.com/][Mathpix]] is a nifty tool that enables to transform pictures of math formulas into
+LaTeX. Luckily, there's an emacs package that wraps its API.
+
+#+begin_src emacs-lisp
+(package! mathpix.el :pin "02016ca" :recipe (:host github :repo "jethrokuan/mathpix.el"))
+#+end_src
+
 ** Misc
 
 =atomic-chrome= is used to enable editing text boxes with emacs.
@@ -298,6 +300,13 @@ Either way, worth it :)
 #+begin_src emacs-lisp
 (package! selectric-mode :pin "bb9e666...")
 #+end_src
+
+=info-colors= adds some colour to manual pages.
+
+#+begin_src emacs-lisp
+(package! info-colors :pin "47ee73c...")
+#+end_src
+
 * Tools configuration
 
 ** org-mode
@@ -1178,6 +1187,18 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
   (setq atomic-chrome-default-major-mode 'markdown-mode
         atomic-chrome-buffer-open-style 'frame)
   (atomic-chrome-start-server))
+#+end_src
+** Mathpix
+
+#+begin_src emacs-lisp
+(use-package! mathpix
+  :config
+  (setq mathpix-app-id (getenv "MATHPIX_API_ID")
+        mathpix-app-key (getenv "MATHPIX_API_KEY")
+        mathpix-screenshot-method "screencapture -i %s")
+  (map! :leader
+        :prefix-map ("j" . "useful")
+        :desc "Take Mathpix screenshot" "s" #'mathpix-screenshot))
 #+end_src
 
 * Language configuration

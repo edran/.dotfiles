@@ -52,3 +52,5 @@ export ASPELL_CONF="home-dir $HOME/.config/aspell/"
 
 # Next-gen building backend for docker
 export DOCKER_BUILDKIT=1
+
+[[ -f "$HOME/.profile_private" ]] && source "$HOME/.profile_private"
