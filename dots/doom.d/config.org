@@ -309,15 +309,47 @@ love this community.
 
 ** Basic files and folders
 
+=org-mode= tends to want to reason around a few files and directories, so we set
+them most of them here.
+
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
-      org-archive-location (concat
-                            org-directory
-                            ".archive/%s::")
-      org-default-notes-file (concat org-directory "tasks.org"))
+      org-archive-location (concat org-directory ".archive/%s::")
+      org-default-notes-file (concat org-directory "inbox.org"))
 
-(defvar nn/org-inbox-file (concat org-directory "inbox.org")
+(defvar nn-org-inbox-file (concat org-directory "inbox.org")
   "Path to the inbox file.")
+
+(defvar nn-org-life-file (concat org-directory "life.org")
+  "Path to the inbox file.")
+#+end_src
+
+I also employ =org-roam= to manage my knowledge base, so let's setup its directory
+as ~$org-directory/kb~.
+
+#+begin_src emacs-lisp
+(setq org-roam-directory (concat
+                          (file-name-as-directory org-directory)
+                          "kb/"))
+#+end_src
+
+=org-roam= already enables to reach its files easily, and on top of this we also
+[[*Deft][use deft]], but I'm lazy and I like to be able to reach these files easily, so
+let's setup a couple of keybindings.
+
+#+begin_src emacs-lisp
+(defun nn/org-open-inbox-file ()
+  (interactive)
+  (find-file nn-org-inbox-file))
+
+(defun nn/org-open-life-file ()
+  (interactive)
+  (find-file nn-org-life-file))
+
+(map! :leader
+      :prefix-map ("n" . "notes")
+      :desc "Open inbox file" "i" #'nn/org-open-inbox-file
+      :desc "Open life file" "I" #'nn/org-open-life-file)
 #+end_src
 
 ** General behaviour
@@ -485,24 +517,24 @@ I want the headings to be indented, as well as being represented using some
 #+begin_src emacs-lisp
 (after! org-capture
   (setq org-capture-templates
-        `(("i" "Quick inbox" entry (file+headline nn/org-inbox-file "Tasks")
+        `(("i" "Quick inbox" entry (file+headline nn-org-inbox-file "Tasks")
            "* TODO %^{Task description}"
            :immediate-finish t)
-          ("I" "Inbox" entry (file+headline nn/org-inbox-file "Tasks")
+          ("I" "Inbox" entry (file+headline nn-org-inbox-file "Tasks")
            "* TODO %?")
           ;; Dates
-          ("." "Today" entry (file+headline nn/org-inbox-file "Tasks")
+          ("." "Today" entry (file+headline nn-org-inbox-file "Tasks")
            ,(concat "* TODO %^{Task description (scheduled today)}\n"
                     "SCHEDULED: %t")
            :immediate-finish t)
           ("d" "Date")
-          ("ds" "Scheduled" entry (file+headline nn/org-inbox-file "Tasks")
+          ("ds" "Scheduled" entry (file+headline nn-org-inbox-file "Tasks")
            ,(concat "* TODO %?\n"
                     "SCHEDULED: %^{Scheduled date}t"))
-          ("dd" "Deadline" entry (file+headline nn/org-inbox-file "Tasks")
+          ("dd" "Deadline" entry (file+headline nn-org-inbox-file "Tasks")
            ,(concat "* TODO %?\n"
                     "DEADLINE: %^{Deadline date}t"))
-          ("w" "Web" entry (file+headline nn/org-inbox-file "Web")
+          ("w" "Web" entry (file+headline nn-org-inbox-file "Web")
            "* TODO %:annotation \n%:i\n %i"
            :immediate-finish t))))
 #+end_src
@@ -727,82 +759,79 @@ Enabling flyspell when visiting org files.
 
 ** Roam
 
-First, I set a couple of paths. I want my knowledge base to be part of my org
-base, so I assign it to ~org-dir/kb~. I also don't want org-roam to pollute my
-directory, so I put the database (and hopefully any other future file) into the
-emacs cache dir.
+First, let's make it so that the database doesn't pollute any useful
+directories:
 
 #+begin_src emacs-lisp
-(setq org-roam-directory (concat
-                          (file-name-as-directory org-directory)
-                          "kb/")
-      org-roam-db-location (concat (file-name-as-directory doom-cache-dir) "org-roam.db"))
+(setq org-roam-db-location (concat
+                            (file-name-as-directory doom-cache-dir)
+                            "org-roam.db"))
 #+end_src
 
-Next, I set roam to use directories as tags, since it's useful (at least) for my
+Next, let's use directories as roam tags, since it's useful (at least) for my
 compendium files.
 
 #+begin_src emacs-lisp
 (setq org-roam-tag-sources '(prop all-directories))
 #+end_src
 
-Finally, I set the capture templates that are exclusive to =org-roam=.
+Finally, it's time to set the capture templates that are exclusive to =org-roam=.
 
 #+begin_src emacs-lisp
 (setq org-roam-capture-templates
-        `(("d" "default" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "${slug}"
-           :head ,(concat "#+title: ${title}\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ("p" "project" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "projects/${slug}"
-           :head ,(concat "#+title: ${title}\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ("h" "human" plain (function org-roam--capture-get-point)
-           "%?"
-           :file-name "humans/${slug}"
-           :head ,(concat "#+title: ${title}\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ;; These are more curated notes than others.
-          ("c" "compendium" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "compendium/${slug}"
-           :head ,(concat "#+title: ${title}\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ("r" "review" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "reviews/${slug}"
-           :head ,(concat "#+title: ${title}\n"
-                          "#+created: %u\n"
-                          "#+last_modified: %U\n"
-                          " - related :: \n")
-           :unnarrowed t)
-          ;; TODO I would like this to force me to specify the conference and/or
-          ;; journal name, eventually.
-          ("C" "Conference" plain (function org-roam-capture--get-point)
-           "%?"
-           :file-name "${slug}"
-           :head ,(concat"#+title: ${title}\n"
-                         "#+created: %t\n"
-                         "#+last_modified: %U\n"
-                         "#+roam_tags: conference\n"
-                         " - related :: ")
-           :unnarrowed t)
-          ))
+      `(("d" "default" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "${slug}"
+         :head ,(concat "#+title: ${title}\n"
+                        "#+created: %u\n"
+                        "#+last_modified: %U\n\n"
+                        " - related :: \n")
+         :unnarrowed t)
+        ("p" "project" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "projects/${slug}"
+         :head ,(concat "#+title: ${title}\n"
+                        "#+created: %u\n"
+                        "#+last_modified: %U\n"
+                        " - related :: \n")
+         :unnarrowed t)
+        ("h" "human" plain (function org-roam--capture-get-point)
+         "%?"
+         :file-name "humans/${slug}"
+         :head ,(concat "#+title: ${title}\n"
+                        "#+created: %u\n"
+                        "#+last_modified: %U\n"
+                        " - related :: \n")
+         :unnarrowed t)
+        ;; These are more curated notes than others.
+        ("c" "compendium" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "compendium/${slug}"
+         :head ,(concat "#+title: ${title}\n"
+                        "#+created: %u\n"
+                        "#+last_modified: %U\n"
+                        " - related :: \n")
+         :unnarrowed t)
+        ("r" "review" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "reviews/${slug}"
+         :head ,(concat "#+title: ${title}\n"
+                        "#+created: %u\n"
+                        "#+last_modified: %U\n"
+                        " - related :: \n")
+         :unnarrowed t)
+        ;; TODO I would like this to force me to specify the conference and/or
+        ;; journal name, eventually.
+        ("C" "Conference" plain (function org-roam-capture--get-point)
+         "%?"
+         :file-name "${slug}"
+         :head ,(concat"#+title: ${title}\n"
+                       "#+created: %t\n"
+                       "#+last_modified: %U\n"
+                       "#+roam_tags: conference\n"
+                       " - related :: ")
+         :unnarrowed t)
+        ))
 #+end_src
 
 ** Journal
