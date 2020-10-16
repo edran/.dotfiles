@@ -83,6 +83,7 @@ brew "openssl"
 brew "overmind"  # process manager w/ tmux
 brew "pidof"  # get PID of proc name
 brew "pkg-config"
+brew "pngpaste"
 brew "protobuf"
 brew "pstree"
 brew "pv"  # stream completion
@@ -138,7 +139,9 @@ cask "inkscape"
 cask "iterm2"
 cask "karabiner-elements"
 cask "keybase"
+cask "launchcontrol"  # lanuchd GUI
 cask "licecap"  # screen -> gif
+cask "mathpix-snipping-tool"
 cask "moom"
 cask "obs"
 cask "omnigraffle"
