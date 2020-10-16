@@ -24,7 +24,8 @@
        zen
 
        :editor
-       (evil +everywhere)
+       (evil
+        +everywhere)
        file-templates
        fold
        ;;format              ; disabled until rewrite

@@ -52,9 +52,6 @@ Since this makes some of the organisational files a little painful to manage.
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
 *** TODO When using ivy-bibtex, parentheses become red...
 
-** Things to check out
-*** [[github:itai33/evil-tex][evil-tex]] :package:
-
 I should check this out eventually, as it could likely improve my commands/text
 ratio.
 
@@ -1157,6 +1154,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 #+end_src
 
 ** TeX
+
 ** Emacs lisp
 
 *** Better eval-sexp
