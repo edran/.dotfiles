@@ -238,7 +238,7 @@ recent versions.
 #+begin_src emacs-lisp
 (package! org-roam
     :recipe (:host github :repo "org-roam/org-roam")
-    :pin "0cce9d1...")
+    :pin "a0c4abf579af77543648708d45e5d3e16f3e83ef")
 #+end_src
 
 *** org-ref / org-roam-bibtex
@@ -258,7 +258,7 @@ org-mode happen smoothly.
 ~org-roam-server~ allows to serve a graph of the knowledge base.
 
 #+begin_src emacs-lisp
-(package! org-roam-server :pin "8d1d143f5d...")
+(package! org-roam-server :pin "1dc94e102d60e53bb9929b1cdc55d4d8c2b0d64f")
 #+end_src
 
 *** org-anki
@@ -870,13 +870,16 @@ not painful to do so.
 
   (defun nn/org-roam-server-open-in-browser ()
     (interactive)
+    (unless org-roam-server-mode
+      ;; Currently ignoring all errors, since there seems to be something weird
+      ;; going on with smartparens.
+      (ignore-errors (org-roam-server-mode)))
     (browse-url (format "http://localhost:%d" org-roam-server-port)))
+
   (map! :leader
         :prefix-map ("n" . "notes")
         (:prefix ("r" . "roam")
-         :desc "Open roam graph in browser" "w" #'nn/org-roam-server-open-in-browser))
-  (unless (server-running-p)
-    (org-roam-server-mode)))
+         :desc "Open roam graph in browser" "w" #'nn/org-roam-server-open-in-browser)))
 #+end_src
 
 *** Journal
@@ -931,7 +934,8 @@ So, let's just custom make our own "capture" function.
   (defun nn/org-roam-dailies-today-meeting ()
     (interactive)
     (org-roam-dailies-today)
-    (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org") org-roam-directory)))
+    (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org")
+                                       org-roam-directory)))
       (progn (set-buffer (org-capture-target-buffer file-name))
              (goto-char (point-max))
              (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :MEETING:"))
