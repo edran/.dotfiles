@@ -239,7 +239,6 @@ recent versions.
 (package! org-roam
     :recipe (:host github :repo "org-roam/org-roam")
     :pin "0cce9d1...")
-(package! org-roam-server :pin "8d1d143f5d...")
 #+end_src
 
 *** org-ref / org-roam-bibtex
@@ -252,6 +251,14 @@ org-mode happen smoothly.
 (package! ivy-bibtex :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
 (package! org-ref :pin "f582e9c53e8e4c5dcc1d3889f1b5c536c9a9b524")
 (package! org-roam-bibtex :pin "280e7a89a2d16f56aa87477db22ba98588c2e115")
+#+end_src
+
+*** org-roam-server
+
+~org-roam-server~ allows to serve a graph of the knowledge base.
+
+#+begin_src emacs-lisp
+(package! org-roam-server :pin "8d1d143f5d...")
 #+end_src
 
 *** org-anki
@@ -845,8 +852,31 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
                        "#+last_modified: %U\n"
                        "#+roam_tags: conference\n"
                        " - related :: ")
-         :unnarrowed t)
-        ))
+         :unnarrowed t)))
+#+end_src
+
+*** org-roam-server
+
+Visualising the graph is a great way to figure out whether there's anything
+wrong with the knowledge base. Thus let's setup =org-roam-server= such that it is
+not painful to do so.
+
+#+begin_src emacs-lisp
+(use-package! org-roam-server
+  :after org-roam
+  :config
+  (setq org-roam-server-port 4242
+        org-roam-server-serve-files t)
+
+  (defun nn/org-roam-server-open-in-browser ()
+    (interactive)
+    (browse-url (format "http://localhost:%d" org-roam-server-port)))
+  (map! :leader
+        :prefix-map ("n" . "notes")
+        (:prefix ("r" . "roam")
+         :desc "Open roam graph in browser" "w" #'nn/org-roam-server-open-in-browser))
+  (unless (server-running-p)
+    (org-roam-server-mode)))
 #+end_src
 
 *** Journal
@@ -1188,6 +1218,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
         atomic-chrome-buffer-open-style 'frame)
   (atomic-chrome-start-server))
 #+end_src
+
 ** Mathpix
 
 #+begin_src emacs-lisp
