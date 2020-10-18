@@ -1081,9 +1081,9 @@ included in doom emacs, but here we set a bunch of decent keybindings:
   (map! :mode pdf-view-mode
         :map pdf-view-mode-map
         :nv "i" #'org-noter-insert-note
-        :nv "J" #'org-noter-sync-next-note
-        :nv "K" #'org-noter-sync-prev-note
-        :nv "q" #'org-noter-kill-session))
+        :n "J" #'org-noter-sync-next-note
+        :n "K" #'org-noter-sync-prev-note
+        :n "q" #'org-noter-kill-session))
 #+end_src
 
 *** LaTeX in org buffers
