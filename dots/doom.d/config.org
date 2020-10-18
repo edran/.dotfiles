@@ -315,6 +315,19 @@ Either way, worth it :)
 #+end_src
 
 * Tools configuration
+** Ivy
+
+Sometimes the search system is dumber than it should be /*cough* org-roam/. What's
+even sillier is that ~ivy-immediate-done~ is relegated the default keybinding
+=C-M-j=, rather than something easy to type.
+
+So, let's fix that:
+
+#+begin_src emacs-lisp
+(after! ivy
+  (map! :map ivy-minibuffer-map
+        [C-return] #'ivy-immediate-done))
+#+end_src
 
 ** org-mode
 
@@ -693,10 +706,15 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 **** Keybindings
 
 Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
-extra "o a a" is way too many strokes.
+extra "n a d" is way too many strokes.
 
 #+begin_src emacs-lisp
-(map! :leader "a" #'org-agenda)
+(after! org
+  (defun nn/open-default-agenda ()
+    (interactive)
+    (org-agenda nil "d"))
+
+  (map! :leader "a" #'nn/open-default-agenda))
 #+end_src
 
 Furthermore, I want to quickly be able to save all buffers, and to have a view
