@@ -50,10 +50,6 @@ Since this makes some of the organisational files a little painful to manage.
 
 *** TODO In org files, enter (in normal mode) should open links.
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
-*** TODO When using ivy-bibtex, parentheses become red...
-
-I should check this out eventually, as it could likely improve my commands/text
-ratio.
 
 * Doom / Emacs configuration
 
@@ -438,6 +434,10 @@ I want everything left-justified.
 
 *** Formatting
 
+I write messily, leaving destruction and despair in all my org files (in the
+form of random newlines, mostly). But I dislike mess! Thus, automation to the
+rescue:
+
 #+begin_src emacs-lisp
 (defun nn/org-format-heading ()
   "Formats an org heading.
@@ -475,9 +475,7 @@ next to it."
                 (org-at-heading-p)
                 (looking-at-p "\n"))
       (insert "\n"))))
-#+end_src
 
-#+begin_src emacs-lisp
 (defun nn/orgfmt (&optional SCOPE)
   "Formats org buffers.
 
@@ -559,16 +557,16 @@ I want the headings to be indented, as well as being represented using some
            "* TODO %?")
           ;; Dates
           ("." "Today" entry (file+headline nn-org-inbox-file "Tasks")
-           ,(concat "* TODO %^{Task description (scheduled today)}\n"
-                    "SCHEDULED: %t")
+           ,(string-join '("* TODO %^{Task description (scheduled today)}"
+                           "SCHEDULED: %t") "\n")
            :immediate-finish t)
           ("d" "Date")
           ("ds" "Scheduled" entry (file+headline nn-org-inbox-file "Tasks")
-           ,(concat "* TODO %?\n"
-                    "SCHEDULED: %^{Scheduled date}t"))
+           ,(string-join '("* TODO %?"
+                           "SCHEDULED: %^{Scheduled date}t") "\n"))
           ("dd" "Deadline" entry (file+headline nn-org-inbox-file "Tasks")
-           ,(concat "* TODO %?\n"
-                    "DEADLINE: %^{Deadline date}t"))
+           ,(string-join '("* TODO %?"
+                           "DEADLINE: %^{Deadline date}t") "\n"))
           ("w" "Web" entry (file+headline nn-org-inbox-file "Web")
            "* TODO %:annotation \n%:i\n %i"
            :immediate-finish t))))
@@ -827,58 +825,31 @@ compendium files.
 Finally, it's time to set the capture templates that are exclusive to =org-roam=.
 
 #+begin_src emacs-lisp
+
+(defvar nn-roam-header (string-join '("#+title: ${title}"
+                                      "#+created: %u"
+                                      "#+last_modified: %U"
+                                      ""
+                                      " - related :: "
+                                      "") "\n")
+  "Boilerplate header used in knowledge base files.")
+
 (setq org-roam-capture-templates
-      `(("d" "default" plain (function org-roam--capture-get-point)
-         "%?"
+      `(("d" "default" plain (function org-roam--capture-get-point) "%?"
          :file-name "${slug}"
-         :head ,(concat "#+title: ${title}\n"
-                        "#+created: %u\n"
-                        "#+last_modified: %U\n\n"
-                        " - related :: \n")
+         :head ,nn-roam-header
          :unnarrowed t)
-        ("p" "project" plain (function org-roam--capture-get-point)
-         "%?"
+        ("p" "project" plain (function org-roam--capture-get-point) "%?"
          :file-name "projects/${slug}"
-         :head ,(concat "#+title: ${title}\n"
-                        "#+created: %u\n"
-                        "#+last_modified: %U\n"
-                        " - related :: \n")
+         :head ,nn-roam-header
          :unnarrowed t)
-        ("h" "human" plain (function org-roam--capture-get-point)
-         "%?"
+        ("h" "human" plain (function org-roam--capture-get-point) "%?"
          :file-name "humans/${slug}"
-         :head ,(concat "#+title: ${title}\n"
-                        "#+created: %u\n"
-                        "#+last_modified: %U\n"
-                        " - related :: \n")
+         :head ,nn-roam-header
          :unnarrowed t)
-        ;; These are more curated notes than others.
-        ("c" "compendium" plain (function org-roam-capture--get-point)
-         "%?"
-         :file-name "compendium/${slug}"
-         :head ,(concat "#+title: ${title}\n"
-                        "#+created: %u\n"
-                        "#+last_modified: %U\n"
-                        " - related :: \n")
-         :unnarrowed t)
-        ("r" "review" plain (function org-roam-capture--get-point)
-         "%?"
+        ("r" "review" plain (function org-roam-capture--get-point) "%?"
          :file-name "reviews/${slug}"
-         :head ,(concat "#+title: ${title}\n"
-                        "#+created: %u\n"
-                        "#+last_modified: %U\n"
-                        " - related :: \n")
-         :unnarrowed t)
-        ;; TODO I would like this to force me to specify the conference and/or
-        ;; journal name, eventually.
-        ("C" "Conference" plain (function org-roam-capture--get-point)
-         "%?"
-         :file-name "${slug}"
-         :head ,(concat"#+title: ${title}\n"
-                       "#+created: %t\n"
-                       "#+last_modified: %U\n"
-                       "#+roam_tags: conference\n"
-                       " - related :: ")
+         :head ,nn-roam-header
          :unnarrowed t)))
 #+end_src
 
@@ -934,7 +905,7 @@ Finally, I like to start the week by listing overall goals, and I don't want
 that to have a proper journal entry. Thus, I need some functions and nice
 bindings.
 
-=<leader n j>= by default is used for =org-journal=, but now we can remap it.
+=SPC n j= by default is used for =org-journal=, but we can remap it.
 
 #+begin_src emacs-lisp
 (after! org-roam
@@ -965,7 +936,7 @@ So, let's just custom make our own "capture" function.
                                        org-roam-directory)))
       (progn (set-buffer (org-capture-target-buffer file-name))
              (goto-char (point-max))
-             (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :MEETING:"))
+             (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :meeting:"))
              (search-backward-regexp "%")
              (delete-char 1))))
 
@@ -1017,19 +988,20 @@ Next, we setup =bibtex-completion=.
   ;; this shouldn't be needed, because it'll be shadowed by org-roam-bibtex
   ;; but we still set it as fallback.
   (setq bibtex-completion-notes-template-multiple-files
-        (concat
-          "#+title: ${title} : (${=key=})\n"
-          "#+created: %u\n"
-          "#+last_modified: %u\n"
-          " - related ::\n"
-          "\n* ${title}\n"
-          ":PROPERTIES:\n"
-          ":Custom_ID: ${=key=}\n"
-          ":URL: ${url}\n"
-          ":AUTHOR: ${author-or-editor}\n"
-          ":NOTER_DOCUMENT: /${file}\n"
-          ":NOTER_PAGE:\n"
-          ":END:\n"))
+        (concat "#+title: ${title} : (${=key=})\n"
+                "#+created: %u\n"
+                "#+last_modified: %u\n"
+                " - related ::\n\n"
+                "* tldr\n"
+                "* What I like\n"
+                "* What I don't like\n"
+                "* Related work\n"
+                "* Manuscript notes\n"
+                ":PROPERTIES:\n"
+                ":Custom_ID: ${=key=}\n"
+                ":NOTER_DOCUMENT: /${file}\n"
+                ":NOTER_PAGE:\n"
+                ":END:\n"))
 
   (defun ivy-bibtex-edit-note ()
     (interactive)
@@ -1080,19 +1052,23 @@ Finally, =org-roam-bibtex=!
         `(("r" "ref" plain (function org-roam-capture--get-point)
            ""
            :file-name "reviews/${slug}"
-           :head ,(concat "#+title: ${=key=}: ${title}\n"
-                          "#+created: %U\n"
-                          "#+last_modified: %U\n"
-                          "#+roam_key: ${ref}\n\n"
-                          " - related ::\n\n"
-                          "* ${title}\n"
-                          ":PROPERTIES:\n"
-                          ":Custom_ID: ${=key=}\n"
-                          ":URL: ${url}\n"
-                          ":AUTHOR: ${author-or-editor}\n"
-                          ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")\n"
-                          ":NOTER_PAGE:\n"
-                          ":END:\n\n")
+           :head ,(string-join '("#+title: ${=key=}: ${title}"
+                                 "#+created: %U"
+                                 "#+last_modified: %U"
+                                 "#+roam_key: ${ref}"
+                                 ""
+                                 " - related :: "
+                                 ""
+                                 "* tldr"
+                                 "* What I like"
+                                 "* What I don't like"
+                                 "* Related work"
+                                 "* Manuscript notes"
+                                 ":PROPERTIES:"
+                                 ":Custom_ID: ${=key=}"
+                                 ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")"
+                                 ":NOTER_PAGE:"
+                                 ":END:") "\n")
            :unnarrowed t))))
 #+end_src
 
