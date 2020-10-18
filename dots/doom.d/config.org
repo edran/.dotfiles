@@ -574,6 +574,15 @@ I want the headings to be indented, as well as being represented using some
            :immediate-finish t))))
 #+end_src
 
+~org-capture~ by default is mapped to =SPC-X= but we want it accessible via =SPC-x=,
+which normally is mapped to ~doom/open-scratch-buffer~. However this last function
+is also available at =SPC b x=), so it's not a major loss.
+
+#+begin_src emacs-lisp :tangle yes
+(after! org-capture
+  (map! :leader "x" #'org-capture))
+#+end_src
+
 **** MacOS setup
 
 To setup capture on MacOS, save the following script as =org-capture.app=
