@@ -1159,7 +1159,18 @@ org-roam gives me...), so I set it up here:
 
 #+begin_src emacs-lisp
 (use-package! org-anki
-  :hook (org-mode . org-anki-mode))
+  :after org
+  :commands (org-anki-push-notes
+             org-anki-insert-note
+             org-anki-retry-failure-notes)
+  :hook (org-mode . org-anki-mode)
+  :config
+  (map! :map org-mode-map
+        :localleader
+        (:prefix ("z" . "anki")
+         :desc "Push to Anki" "p" #'org-anki-push-notes
+         :desc "Push failed to Anki" "P" #'org-anki-retry-failure-notes
+         :desc "Insert Anki card" "i" #'org-anki-insert-note)))
 #+end_src
 
 ** Generic UX changes
