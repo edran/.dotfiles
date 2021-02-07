@@ -1,32 +1,172 @@
-# character
+####################
+# NAO ##############
+####################
+
+OPTIONS=bones
+OPTIONS=checkpoint
+
+
+####################
+# Character ########
+####################
+
 OPTIONS=name:Nantas
 OPTIONS=gender:male
 OPTIONS=align:neutral
 OPTIONS=race:Human
 OPTIONS=role:Samurai
 
-# interface
-OPTIONS=showexp,showscore,time,!autopickup
-OPTIONS=autodig,fruit:slime mold,boulder:0
-OPTIONS=color,menucolors
 
-MENUCOLOR="blessed"=cyan&bold
-MENUCOLOR="cursed"=orange&bold
-MENUCOLOR="uncursed"=green
+####################
+# UX ###############
+####################
 
-MENUCOLOR="loadstone\|wand \(of\|called\) cancellation"=red
-MENUCOLOR="Amulet of Yendor named"=magenta
-MENUCOLOR="gold piece"=yellow
+## Game mechanics
+OPTIONS=number_pad:0
 
-# forgotten spell
-MENUCOLOR="[a-zA-Z] - [a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta
+OPTIONS=autoopen
+OPTIONS=autopickup
+OPTIONS=pickup_types:$
+OPTIONS=autodig
 
-# This version will work on NAO.
-# MENUCOLOR="[a-zA-Z ]+[ ]+[0-9]+\*[ ]+[a-z]+[ ]+[0-9]+%"=magenta  # forgotten spell
+OPTIONS=safe_pet
+OPTIONS=dark_room
 
-OPTIONS=msg_window:reversed
+OPTIONS=popup_dialog
+OPTIONS=disclose:+i +a +v +g +c no
 
+## Conducts
+# OPTIONS=nudist
+# OPTIONS=blind
+
+
+####################
+# UI ###############
+####################
+
+## Interface
+# OPTIONS=windowtype:curses
+OPTIONS=color
+OPTIONS=symset:IBMgraphics
+OPTIONS=fullscreen
+
+OPTIONS=time
+OPTIONS=showexp
+OPTIONS=showrace
+OPTIONS=showscore
+
+OPTIONS=use_darkgray
 OPTIONS=lit_corridor
 
+## Windows & pagers
+OPTIONS=msg_window:reversed
+OPTIONS=sortloot:full
+OPTIONS=sortpack
+# OPTIONS=paranoid_confirmation:Confirm quit attack pray wand Remove
+
+### Hilites
 OPTIONS=hilite_pet
-# OPTIONS=windowtype:curses
+OPTIONS=hilite_pile
+OPTIONS=statushilites
+
+## HP
+OPTIONS=hitpointbar
+OPTIONS=hilite_status:hitpoints/100%/green&bold
+OPTIONS=hilite_status:hitpoints/<100%/green&normal
+OPTIONS=hilite_status:hitpoints/<66%/yellow&normal
+OPTIONS=hilite_status:hitpoints/<50%/orange&normal
+OPTIONS=hilite_status:hitpoints/<33%/red&bold
+OPTIONS=hilite_status:hitpoints/<15%/red&inverse
+
+## Pw
+OPTIONS=hilite_status:power/100%/green&bold
+OPTIONS=hilite_status:power/<100%/green&normal
+OPTIONS=hilite_status:power/<66%/yellow&normal
+OPTIONS=hilite_status:power/<50%/orange&normal
+OPTIONS=hilite_status:power/<33%/red&bold
+
+## Carry
+OPTIONS=hilite_status:cap/burdened/yellow
+OPTIONS=hilite_status:cap/stressed/orange
+OPTIONS=hilite_status:cap/strained/red&bold
+OPTIONS=hilite_status:cap/overtaxed/red&inverse
+OPTIONS=hilite_status:cap/overloaded/red&inverse&blink
+
+## Hunger
+OPTIONS=hilite_status:hunger/satiated/yellow
+OPTIONS=hilite_status:hunger/hungry/orange
+OPTIONS=hilite_status:hunger/weak/red&bold
+OPTIONS=hilite_status:hunger/fainting/red&inverse
+OPTIONS=hilite_status:hunger/fainted/red&inverse&blink
+
+## Mental
+OPTIONS=hilite_status:condition/hallu/yellow
+OPTIONS=hilite_status:condition/conf/orange
+OPTIONS=hilite_status:condition/stun/orange
+OPTIONS=hilite_status:condition/Ride/green
+OPTIONS=hilite_status:condition/Fly/lightblue
+OPTIONS=hilite_status:condition/Lev/lightblue
+OPTIONS=hilite_status:condition/Blind/red
+OPTIONS=hilite_status:condition/Strngl/red&inverse
+
+# Alignment
+OPTIONS=hilite_status:alignment/Lawful/green
+OPTIONS=hilite_status:alignment/Neutral/white
+OPTIONS=hilite_status:alignment/Chaotic/orange
+
+## Health
+OPTIONS=hilite_status:condition/termill/red&inverse
+OPTIONS=hilite_status:condition/foodpois/red&inverse
+OPTIONS=hilite_status:condition/slime/red&inverse
+
+# Str, Con, Dex, Int, Wis, Cha
+OPTIONS=hilite_status:HP/up/green/down/red
+OPTIONS=hilite_status:St/up/green/down/red
+OPTIONS=hilite_status:Dx/up/green/down/red
+OPTIONS=hilite_status:Co/up/green/down/red
+OPTIONS=hilite_status:In/up/green/down/red
+OPTIONS=hilite_status:Wi/up/green/down/red
+OPTIONS=hilite_status:Ch/up/green/down/red
+OPTIONS=hilite_status:AC/down/green/up/red
+OPTIONS=hilite_status:Xp/down/red/up/green
+
+## gold
+OPTIONS=hilite_status: gold/up/yellow/down/red
+
+
+### Menu
+OPTIONS=menucolors
+
+## common
+MENUCOLOR=" uncursed "=white
+MENUCOLOR=" corroded "=brown
+
+MENUCOLOR=" blessed "=lightgreen
+MENUCOLOR=" holy "=lightgreen&inverse
+# TODO check this in black background
+MENUCOLOR=" unholy "=black&inverse
+
+MENUCOLOR=" cursed "=red&inverse
+MENUCOLOR=" cursed .* \(being worn\)"=red&underline
+
+MENUCOLOR=" gold pieces"=yellow
+MENUCOLOR="^Coins$"=yellow&inverse
+
+MENUCOLOR="^Amulets$"=cyan&inverse
+MENUCOLOR="^Weapons$"=lightblue&inverse
+MENUCOLOR="^Armor$"=cyan&inverse
+
+MENUCOLOR="^Comestibles$"=brown&inverse
+MENUCOLOR="^Tools$"=brown&inverse
+MENUCOLOR="^Potions$"=green&inverse
+MENUCOLOR="^Rings$"=red&inverse
+
+MENUCOLOR="^Scrolls$"=white&inverse
+MENUCOLOR="^Spellbooks$"=lightmagenta&inverse
+MENUCOLOR="^Wands$"=yellow&inverse
+
+# TODO check this in black background...
+MENUCOLOR="blindfold"=black
+
+MENUCOLOR="^Gems/Stones$"=gray&inverse
+MENUCOLOR="^Statues$"=white&inverse
