@@ -1,6 +1,6 @@
 [user]
 	name = Nantas Nardelli
-	email = nantas.nardelli@gmail.com
+	email = nantas@carbonre.tech
 [core]
 	autocrlf = input
 	compression = -1

@@ -2,7 +2,7 @@
 
 export ZGEN_DIR="$HOME/.zgen"
 export ZGEN_SOURCE="$ZGEN_DIR/zgen.zsh"
-export ZGEN_RESET_ON_CHANGE=(`ls -a $ZDOTDIR`)
+export ZGEN_RESET_ON_CHANGE=(`ls -d $ZDOTDIR/*`)
 
 [ -d "$ZGEN_DIR" ] || git clone https://github.com/tarjoilija/zgen "$ZGEN_DIR"
 source $ZGEN_SOURCE
