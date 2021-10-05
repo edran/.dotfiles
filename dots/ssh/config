@@ -2,6 +2,9 @@
 ## General ##
 #############
 
+Host *.github.com
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/github
 
 Host tardis
    User edran
@@ -48,7 +51,7 @@ Host pineapples
 Host arc-*
    User engs1632
    AddKeysToAgent yes
-   UseKeychain yes
+   # UseKeychain yes
    IdentityFile ~/.ssh/arc_rsa
    ControlMaster auto
 
