@@ -96,6 +96,7 @@
 	process = git-lfs filter-process
 	required = true
 [alias]
+	aliases = config --get-regexp alias
 	s  = status -sb
 	st = status
 	f  = fetch --prune
@@ -140,3 +141,5 @@
 	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 	snapshots = !git stash list --grep snapshot
+[pull]
+	ff = only

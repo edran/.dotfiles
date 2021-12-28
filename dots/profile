@@ -5,7 +5,6 @@
 # exists.
 # zsh also doesn't use this by default, but I source it in zshrc
 
-
 add2path_if_exists()
 {
     to_add=$1
@@ -14,21 +13,30 @@ add2path_if_exists()
     fi
 }
 
+source_if_exists()
+{
+    to_source=$1
+    if [ -f "$to_source" ] ; then
+	echo "$to_source"
+        source "$to_source"
+    fi
+}
+
+# PATH
 add2path_if_exists "/usr/local/sbin"  # homebrew
 add2path_if_exists "$HOME/bin"
 add2path_if_exists "$HOME/.local/bin"
 add2path_if_exists "$HOME/.cabal/bin"
 add2path_if_exists "$HOME/.emacs.d/bin"
 add2path_if_exists "$HOME/.cargo/bin"
+add2path_if_exists "$HOME/.poetry/bin"
 
-### GENERAL
+export EDITOR=vim  # should be emacsclient
+export PAGER=less
 
 export CACHEDIR=$HOME/.cache
 export CONFIGDIR=$HOME/.config
 export LOCALDIR=$HOME/.local
-
-export EDITOR=vim  # should be emacsclient
-export PAGER=less
 
 export ZDOTDIR="$HOME/.zsh"
 
@@ -38,21 +46,28 @@ export DOTSREPO="$HOME/.dotfiles"
 
 export PYTHONBREAKPOINT=ipdb.set_trace
 
-# ### MACOS
-if echo "$OSTYPE" | grep -q "darwin" ; then
-    # enable ls colors for
-    export CLICOLOR=1
-    # set term
-    export TERM="xterm-256color"
-    IS_MACOS=1
-fi
-
 # NOTE: can't quite use XDG_CONFIG_HOME because
 export ASPELL_CONF="home-dir $HOME/.config/aspell/"
 
 # Next-gen building backend for docker
 export DOCKER_BUILDKIT=1
 
-[[ -f "$HOME/.profile_private" ]] && source "$HOME/.profile_private"
+# ### MACOS
+if echo "$OSTYPE" | grep -q "darwin" ; then
+    export IS_MACOS=1
+    eval $(/opt/homebrew/bin/brew shellenv)
 
-eval $(/opt/homebrew/bin/brew shellenv)
+    # enable ls colors for
+    export CLICOLOR=1
+
+    # set term
+    export TERM="xterm-256color"
+
+    export LDFLAGS="-L/usr/local/opt/openblas/lib"
+    export CPPFLAGS="-I/usr/local/opt/openblas/include"
+    export OPENBLAS="$(brew --prefix openblas)"
+fi
+
+source_if_exists "$HOME/.profile_private"
+
+
