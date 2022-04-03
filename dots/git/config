@@ -143,3 +143,5 @@
 	snapshots = !git stash list --grep snapshot
 [pull]
 	ff = only
+[push]
+	default = current
