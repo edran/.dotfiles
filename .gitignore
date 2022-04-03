@@ -3,9 +3,10 @@ private/
 /dots/ssh/*
 
 # Tangled output from literate config
-dots/doom.d/config.el
-dots/doom.d/config.sh
-dots/doom.d/packages.el
+/dots/doom.d/init.el
+/dots/doom.d/config.el
+/dots/doom.d/config.sh
+/dots/doom.d/packages.el
 
 # temp files
 *.swp
@@ -120,3 +121,4 @@ dots/bin/nethack
 
 # I can't seem to disable this :(
 /dots/zsh/.zcompdump
+/dots/zsh/.zsh_sessions/

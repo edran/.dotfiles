@@ -53,8 +53,8 @@ Since this makes some of the organisational files a little painful to manage.
 *** TODO In org files, enter (in normal mode) should open links.
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
 
-* Doom / Emacs configuration
-** Doom-specific configuration
+* Modules and Packages
+** Doom modules
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle no
 :END:
@@ -220,7 +220,7 @@ pdf                          ; pdf enhancements
 ;; prodigy                   ; FIXME managing external services & code builders
 rgb                          ; creating color strings
 ;; taskrunner                ; taskrunner for all your projects
-;; terraform                 ; infrastructure as code
+terraform                    ; infrastructure as code
 tmux                         ; an API for interacting with tmux
 upload                       ; map local to remote projects via ssh/ftp
 #+end_src
@@ -319,121 +319,7 @@ everywhere                    ; *leave* Emacs!? You must be joking.
 ;; twitter                    ; twitter client
 #+end_src
 
-** Essential configuration
-
-Lexical binding can result into faster execution of this file (see
-[[https://nullprogram.com/blog/2016/12/22/][this blog post]]), so we activate it.
-
-#+begin_src emacs-lisp :comments no
-;;; config.el -*- lexical-binding: t; -*-
-#+end_src
-
-*** Personal info
-
-These are some basic information that are needed for e.g., =GPG=, =org-export=, etc.
-
-#+begin_src emacs-lisp
-(setq user-full-name "Nantas Nardelli"
-      user-mail-address "nantas.nardelli@gmail.com")
-#+end_src
-
-*** Telling Emacs about my lab
-
-I use =~/lab= as my root directory for pretty much all development work. This
-helps some tools tinker with my data. /All hail automatic project management
-software./
-
-#+begin_src emacs-lisp
-(defvar nn-lab-path "~/lab" "Path to the local laboratory")
-
-(setq projectile-project-search-path (list nn-lab-path)       ;; this is not recursive, sadly
-      magit-repository-directories (list (cons nn-lab-path  2)))
-#+end_src
-
-** Graphical configuration
-
-All of this stuff relates to visual behaviour.
-
-*** Fonts
-
-#+begin_src emacs-lisp
-(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
-      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
-      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
-      doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
-#+end_src
-
-Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
-particular case, I wish for the variable pitch font to be bigger (since in
-general I'm using it for stuff like org buffers).
-
-#+begin_src emacs-lisp
-(setq mixed-pitch-set-height 14)
-#+end_src
-
-*** Setting up theme
-
-🧛 🧛 🧛 🧛
-
-#+begin_src emacs-lisp
-(setq doom-theme 'doom-dracula)
-#+end_src
-
-*** Modeline
-
-I don't want to display =LF UTF-8= in the modeline, since that is the default.
-
-#+begin_src emacs-lisp
-(defun nn/doom-modeline-conditional-buffer-encoding ()
-  "Don't show file encoding if it's utf-8"
-  (setq-local doom-modeline-buffer-encoding
-              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
-                          (eq buffer-file-coding-system 'utf-8)))))
-
-(add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
-#+end_src
-
-*** Disable vertical line numbers
-
-This can be reactivated when I have a better dev machine :(
-
-#+begin_src emacs-lisp
-(setq display-line-numbers-type nil)
-#+end_src
-
-*** Window title
-
-Sometimes I need to parse the name of Emacs windows with other scripts /
-software, and I'd rather stick to standard strings to future-proof things:
-
-#+begin_src emacs-lisp
-(setq frame-title-format "%b - Emacs")
-#+end_src
-
-** Buffers
-
-Oh yeah, now we get to the fun configuration!
-
-*** Better default names when in conflict
-
-Whenever I'm coding some nasty framework, I tend to have to open multiple
-=__init__.py= at the same time. I'd like them to be prefixed with the least
-amount of information needed to disentangle them:
-
-#+begin_src emacs-lisp
-(setq uniquify-buffer-name-style 'forward)
-#+end_src
-
-*** Rename default buffer back to *scratch*
-
-=*doom*= is nice, but my muscle memory complains a lot.
-
-#+begin_src emacs-lisp
-;; TODO It seems like a *doom-scratch* buffer is still created. Should be disabled.
-(setq doom-fallback-buffer-name "*scratch*")
-#+end_src
-
-* Additional packages
+** External packages
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle "packages.el" :comments link
 :END:
@@ -442,7 +328,7 @@ amount of information needed to disentangle them:
 present in the following headings will be tangled to that file. After editing
 these section, a ~doom refresh~ is required.
 
-** How-to
+*** How-to
 :PROPERTIES:
 :header-args:emacs-lisp: :tangle no
 :END:
@@ -479,7 +365,7 @@ will be inherited):
            :nonrecursive t))
 #+end_src
 
-** Disable byte compilation
+*** Disable byte compilation
 
 Do not byte compile the tangled =.el= file.
 
@@ -487,11 +373,11 @@ Do not byte compile the tangled =.el= file.
 ;; -*- no-byte-compile: t; -*-
 #+end_src
 
-** Org-mode extensions
+*** Org-mode extensions
 
 The following packages make ~org-mode~ even more awesome than usual.
 
-*** org-roam
+**** org-roam
 
 Doom includes Roam, but it's usually fairly outdated (since =org-roam= is moving
 pretty fast now.) This is why it's best for now to manually pin it to more
@@ -503,7 +389,7 @@ recent versions.
     :pin "a0c4abf579af77543648708d45e5d3e16f3e83ef")
 #+end_src
 
-*** org-ref / org-roam-bibtex
+**** org-ref / org-roam-bibtex
 
 This is basically all the packages needed to make bibliography management in
 org-mode happen smoothly.
@@ -515,7 +401,7 @@ org-mode happen smoothly.
 (package! org-roam-bibtex :pin "280e7a89a2d16f56aa87477db22ba98588c2e115")
 #+end_src
 
-*** org-roam-server
+**** org-roam-server
 
 ~org-roam-server~ allows to serve a graph of the knowledge base.
 
@@ -523,7 +409,7 @@ org-mode happen smoothly.
 (package! org-roam-server :pin "1dc94e102d60e53bb9929b1cdc55d4d8c2b0d64f")
 #+end_src
 
-*** org-anki
+**** org-anki
 
 ~org-anki~ is a package I'm developing. Will be released Soon™.
 
@@ -532,7 +418,7 @@ org-mode happen smoothly.
 ;;   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
 #+end_src
 
-*** Prettier org-mode
+**** Prettier org-mode
 
 ~org-fragtog~ allows to toggle LaTeX previews.
 
@@ -546,7 +432,7 @@ org-mode happen smoothly.
 (package! org-pretty-tags :pin "40fd72f3e7...")
 #+end_src
 
-** mathpix integration
+*** mathpix integration
 
 [[https://mathpix.com/][Mathpix]] is a nifty tool that enables to transform pictures of math formulas into
 LaTeX. Luckily, there's an emacs package that wraps its API.
@@ -555,7 +441,7 @@ LaTeX. Luckily, there's an emacs package that wraps its API.
 (package! mathpix.el :pin "02016ca" :recipe (:host github :repo "jethrokuan/mathpix.el"))
 #+end_src
 
-** Misc
+*** Misc
 
 =atomic-chrome= is used to enable editing text boxes with emacs.
 
@@ -576,11 +462,143 @@ Either way, worth it :)
 (package! info-colors :pin "47ee73c...")
 #+end_src
 
+* Essentials
+
+Lexical binding can result into faster execution of this file (see
+[[https://nullprogram.com/blog/2016/12/22/][this blog post]]), so we activate it. This is also the first line that gets
+eventually pushed onto =config.el=.
+
+#+begin_src emacs-lisp :comments no
+;;; config.el -*- lexical-binding: t; -*-
+#+end_src
+
+** Personal info
+
+These are some basic information that are necessary for e.g., =GPG=, =org-export=, etc.
+
+#+begin_src emacs-lisp
+(setq user-full-name "Nantas Nardelli"
+      user-mail-address "nantas.nardelli@gmail.com")
+#+end_src
+
+** Setting the lab
+
+I use =~/lab= as my root directory for pretty much all development work. This
+helps some tools tinker with my data. /All hail automatic project management
+software./
+
+#+begin_src emacs-lisp
+(defvar nn-lab-path "~/lab" "Path to the local laboratory")
+
+(setq projectile-project-search-path (list nn-lab-path)       ;; this is not recursive, sadly
+      magit-repository-directories (list (cons nn-lab-path  2)))
+#+end_src
+
+** Graphical configuration
+
+All of this stuff relates to visual behaviour.
+
+*** Fonts
+
+#+begin_src emacs-lisp
+(setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
+      doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
+      doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
+      doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
+#+end_src
+
+Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this
+particular case, I wish for the variable pitch font to be bigger (since in
+general I'm using it for stuff like org buffers).
+
+#+begin_src emacs-lisp
+(setq mixed-pitch-set-height 14)
+#+end_src
+
+*** Setting up theme
+
+The theme of choice is Dracula (🧛), since it gives a pleasant and colourful
+dark -- and \tilde{}cool\tilde{} -- experience.
+
+#+begin_src emacs-lisp
+(setq doom-theme 'doom-dracula)
+#+end_src
+
+We all need more colour in our lives.
+
+*** Window title
+
+Sometimes I need to parse the name of Emacs windows with other scripts /
+software, and I'd rather stick to standard strings to future-proof things:
+
+#+begin_src emacs-lisp
+(setq frame-title-format "%b - Emacs")
+#+end_src
+
+*** Modeline
+**** Disabling showing default file encoding
+
+I don't want to display =LF UTF-8= in the modeline, since that is the default.
+
+#+begin_src emacs-lisp
+(defun nn/doom-modeline-conditional-buffer-encoding ()
+  "Don't show file encoding if it's utf-8"
+  (setq-local doom-modeline-buffer-encoding
+              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
+                          (eq buffer-file-coding-system 'utf-8)))))
+
+(add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
+#+end_src
+***** TODO Consider using nondefault const for =doom-modeline-buffer-encoding= instead
+
+Since it seems like it's the more reasonable thing to do.
+*** Vertical line numbers
+
+**** Disable vertical line numbers in org
+
+By default, we display line numbers inline for most text buffers. However not
+only am I not particularly interested in having them when I'm using org-mode
+(due to it coming with an already powerful navigation system), but they also
+don't behave well in buffers with variable-size fonts.
+
+So we disable them accordingly. Voilà.
+
+#+begin_src emacs-lisp
+(defun nn/no-line-numbers ()
+  (setq-local display-line-numbers nil))
+(add-hook 'org-mode-hook 'nn/no-line-numbers)
+#+end_src
+
+** Buffers
+
+Oh yeah, now we get to the fun configuration!
+
+*** Better default names when in conflict
+
+Whenever I'm coding some nasty framework, I tend to have to open multiple
+=__init__.py= at the same time. I'd like them to be prefixed with the least
+amount of information needed to disentangle them. In principle we could do this as follows:
+
+#+begin_src emacs-lisp :tangle no
+(setq uniquify-buffer-name-style 'forward)
+#+end_src
+
+Sadly we can't do this as that would break =persp-mode=. There's an [[github:Bad-ptr/persp-mode.el/issues/104][issue]] that
+tracks this problem.
+
+*** Rename default buffer back to *scratch*
+
+=*doom*= is nice, but my muscle memory complains a lot.
+
+#+begin_src emacs-lisp
+(setq doom-fallback-buffer-name "*scratch*")
+#+end_src
+
 * Tools configuration
 ** Ivy
 
 Sometimes the search system is dumber than it should be /*cough* org-roam/. What's
-even sillier is that ~ivy-immediate-done~ is relegated the default keybinding
+even sillier is that ~ivy-immediate-done~ is relegated to the default keybinding
 =C-M-j=, rather than something easy to type.
 
 So, let's fix that:
@@ -1529,10 +1547,37 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 *** Better eval-sexp
 
 I hate to manually having to do forward-list all the time I'm writing elisp and
-want to evaluate the sexp. But this is emacs, so in most cases we can automatise
-this away.
+want to evaluate the sexp. The great thing is that automating these stuff is just a function definition away.
 
 #+begin_src emacs-lisp
+(defun nn/eval-surrounding-sexp (levels)
+  "Evaluates surrounding sexp."
+  (interactive "p")
+  (save-excursion
+    (up-list (abs levels))
+    (eval-last-sexp nil)))
+
+(defun nn/eval-print-surrounding-sexp (levels)
+  "Grabs surrounding sexp and eval-prints it."
+  (interactive "p")
+  (save-excursion
+    (up-list (abs levels))
+    (eval-print-last-sexp nil)))
+
+(defun nn/eval-next-sexp ()
+  "See eval-last-sexp."
+  (interactive)
+  (save-excursion
+    (forward-sexp)
+    (call-interactively 'eval-last-sexp)))
+
+(defun nn/eval-print-next-sexp ()
+  "See eval-print-last-sexp."
+  (interactive)
+  (save-excursion
+    (forward-sexp)
+    (call-interactively 'eval-print-last-sexp)))
+
 (defun nn/eval-current-form ()
   "Looks for the current [def|set|map|use]* command and evaluates it."
   (interactive)
@@ -1542,7 +1587,7 @@ this away.
     (call-interactively 'eval-last-sexp)))
 
 (defun nn/eval-print-current-form ()
-  "Looks for the current [def|set|map|use]* command and evaluates it."
+  "Looks for the current [def|set|map|use]* command and eval-prints it."
   (interactive)
   (save-excursion
     (search-backward-regexp "(def\\|(set\\|(map\\|(use")
@@ -1556,14 +1601,19 @@ Using emacs keybindings for evaluating elisp expressions is... not that great.
 So we rebind everything to =<leader> e=.
 
 #+begin_src emacs-lisp
-(map! :leader
+(map!
+ :leader
       :prefix-map ("e" . "eval")
-      :desc "Eval current form"       "e" #'nn/eval-current-form
-      :desc "Eval+print current form" "E" #'nn/eval-print-current-form
-      :desc "Eval last s-exp"         "s" #'eval-last-sexp
-      :desc "Eval+print last s-exp"   "S" #'eval-print-last-sexp
-      :desc "Eval function"           "f" #'eval-defun
-      :desc "Eval buffer"             "b" #'+eval/buffer
-      :desc "Eval region"             "r" #'+eval:region
-      :desc "Open REPL"               "R" #'+eval/open-repl-other-window)
+      :desc "Eval current form"            "e" #'nn/eval-current-form
+      :desc "Eval+print current form"      "E" #'nn/eval-print-current-form
+      :desc "Eval last s-exp"              "l" #'eval-last-sexp
+      :desc "Eval+print last s-exp"        "L" #'eval-print-last-sexp
+      :desc "Eval next s-exp"              "n" #'nn/eval-next-sexp
+      :desc "Eval next s-exp"              "N" #'nn/eval-print-next-sexp
+      :desc "Eval surrounding s-exp"       "s" #'nn/eval-surrounding-sexp
+      :desc "Eval+print surrounding s-exp" "S" #'nn/eval-print-surrounding-sexp
+      :desc "Eval function"                "f" #'eval-defun
+      :desc "Eval buffer"                  "b" #'+eval/buffer
+      :desc "Eval region"                  "r" #'+eval:region
+      :desc "Open REPL"                    "R" #'+eval/open-repl-other-window)
 #+end_src
