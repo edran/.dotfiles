@@ -573,9 +573,7 @@ buffers with variable-size fonts.
 So we disable them accordingly.
 
 #+begin_src emacs-lisp
-(defun nn/no-line-numbers ()
-  (setq-local display-line-numbers nil))
-(add-hook 'text-mode-hook 'nn/no-line-numbers)
+(remove-hook! '(text-mode-hook) #'display-line-numbers-mode)
 #+end_src
 
 Voilà.
