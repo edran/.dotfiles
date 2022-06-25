@@ -284,7 +284,7 @@ markdown                      ; writing docs for people to ignore
  ;; +pomodoro                 ; be fruitful with the tomato technique
  +present                     ; using org-mode for presentations
  +pretty                      ; yessss my pretties! (nice unicode symbols)
- ;;+roam2                       ; wander around notes
+ ;; +roam2                       ; wander around notes
  )
 ;; php                        ; perl's insecure younger brother
 ;; plantuml                   ; diagrams for confusing people more
@@ -376,38 +376,6 @@ Do not byte compile the tangled =.el= file.
 *** Org-mode extensions
 
 The following packages make ~org-mode~ even more awesome than usual.
-
-**** org-roam
-
-Doom includes Roam, but it's usually fairly outdated (since =org-roam= is moving
-pretty fast now.) This is why it's best for now to manually pin it to more
-recent versions.
-
-#+begin_src emacs-lisp
-(package! org-roam
-    :recipe (:host github :repo "org-roam/org-roam")
-    :pin "a0c4abf579af77543648708d45e5d3e16f3e83ef")
-#+end_src
-
-**** org-ref / org-roam-bibtex
-
-This is basically all the packages needed to make bibliography management in
-org-mode happen smoothly.
-
-#+begin_src emacs-lisp
-(package! bibtex-completion :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
-(package! ivy-bibtex :pin "12f8809aac3a13dd11a1c664a13f789005f7a199")
-(package! org-ref :pin "f582e9c53e8e4c5dcc1d3889f1b5c536c9a9b524")
-(package! org-roam-bibtex :pin "280e7a89a2d16f56aa87477db22ba98588c2e115")
-#+end_src
-
-**** org-roam-server
-
-~org-roam-server~ allows to serve a graph of the knowledge base.
-
-#+begin_src emacs-lisp
-(package! org-roam-server :pin "1dc94e102d60e53bb9929b1cdc55d4d8c2b0d64f")
-#+end_src
 
 **** org-anki
 
@@ -595,7 +563,7 @@ snippet is not tangled). There's an [[github:Bad-ptr/persp-mode.el/issues/104][i
 
 *** Rename default buffer back to *scratch*
 
-=*doom*= is nice, but my muscle memory complains a lot.
+=*doom*= is nice, but I've got 15 years of muscle memory to deal with.
 
 #+begin_src emacs-lisp
 (setq doom-fallback-buffer-name "*scratch*")
@@ -632,9 +600,9 @@ I also employ =org-roam= to manage my knowledge base, so let's setup its directo
 as ~$org-directory/kb~.
 
 #+begin_src emacs-lisp
-;; (setq org-roam-directory (concat
-;;                           (file-name-as-directory org-directory)
-;;                           "kb/"))
+(setq org-roam-directory (concat
+                          (file-name-as-directory org-directory)
+                          "kb/"))
 #+end_src
 
 =org-roam= already enables to reach its files easily, and on top of this we also
@@ -1248,114 +1216,6 @@ know where my bibliography is.
 (defvar nn-bibliography-notes-path (concat (file-name-as-directory org-directory) "kb/reviews/")
   "Path to notes directory")
   ;; :type 'string)
-#+end_src
-
-Next, we setup =bibtex-completion=.
-
-#+begin_src emacs-lisp
-(use-package! bibtex-completion
-  :defer t
-  :config
-
-  ;; configure ivy
-  (add-to-list 'ivy-re-builders-alist '(ivy-bibtex . ivy--regex-plus))
-
-  ;; configure bibliography path
-  (setq bibtex-completion-bibliography nn-bibliography-path
-        bibtex-completion-notes-path nn-bibliography-notes-path)
-
-  ;; Lookup file in bib entry
-  (setq bibtex-completion-additional-search-fields '(keywords)
-        bibtex-completion-pdf-field "file")
-
-  ;; The default action otherwise is opening the pdf
-  (setq ivy-bibtex-default-action 'ivy-bibtex-insert-citation)
-
-  ;; this shouldn't be needed, because it'll be shadowed by org-roam-bibtex
-  ;; but we still set it as fallback.
-  (setq bibtex-completion-notes-template-multiple-files
-        (concat "#+title: ${title} : (${=key=})\n"
-                "#+created: %u\n"
-                "#+last_modified: %u\n"
-                " - related ::\n\n"
-                "* tldr\n"
-                "* What I like\n"
-                "* What I don't like\n"
-                "* Related work\n"
-                "* Manuscript notes\n"
-                ":PROPERTIES:\n"
-                ":Custom_ID: ${=key=}\n"
-                ":NOTER_DOCUMENT: /${file}\n"
-                ":NOTER_PAGE:\n"
-                ":END:\n"))
-
-  (defun ivy-bibtex-edit-note ()
-    (interactive)
-    (let ((ivy-bibtex-default-action 'ivy-bibtex-edit-notes))
-      (ivy-bibtex)))
-
-  (map! (:leader
-         :prefix-map ("n". "notes")
-         :desc "Bibliographic entries" "b" #'ivy-bibtex
-         :desc "Bibliographic entries" "B" #'ivy-bibtex-edit-note
-         (:prefix ("r" . "roam")
-          :desc "Open bib note" "b" #'ivy-bibtex-edit-note))))
-#+end_src
-
-Then, it's time for =org-ref=.
-
-#+begin_src emacs-lisp
-(use-package! org-ref
-  :after org
-  :preface
-   ;; org-ref needs this to be setup before require
-  (setq org-ref-completion-library #'org-ref-ivy-cite)
-  :config
-  ;; configures various paths
-  (setq org-ref-default-bibliography (list nn-bibliography-path)
-        reftex-default-bibliography (list nn-bibliography-path)
-        org-ref-notes-directory (concat (file-name-as-directory org-directory) "kb/reviews"))
-
-  ;; 'org-ref-get-pdf-filename-helm-bibtex doesn't actually use helm
-  (setq org-ref-open-pdf-function 'org-ref-get-pdf-filename-helm-bibtex)
-
-  ;; Enables multiple note files (one per bib entry)
-  (setq org-ref-notes-function 'org-ref-notes-function-many-files))
-#+end_src
-
-Finally, =org-roam-bibtex=!
-
-#+begin_src emacs-lisp
-(use-package! org-roam-bibtex
-  ;; HACK otherwise bibtex-completion-find-notes-function isn't declared
-  :hook (org-roam-mode . org-roam-bibtex-mode)
-  :preface
-  ;; keywords for orb-templates
-  (defvar orb-preformat-keywords
-    '("=key=" "title" "url" "file" "author-or-editor" "keywords"))
-  :config
-  (setq orb-templates
-        `(("r" "ref" plain (function org-roam-capture--get-point)
-           ""
-           :file-name "reviews/${slug}"
-           :head ,(string-join '("#+title: ${=key=}: ${title}"
-                                 "#+created: %U"
-                                 "#+last_modified: %U"
-                                 "#+roam_key: ${ref}"
-                                 ""
-                                 " - related :: "
-                                 ""
-                                 "* tldr"
-                                 "* What I like"
-                                 "* What I don't like"
-                                 "* Related work"
-                                 "* Manuscript notes"
-                                 ":PROPERTIES:"
-                                 ":Custom_ID: ${=key=}"
-                                 ":NOTER_DOCUMENT: %(orb-process-file-field \"${=key=}\")"
-                                 ":NOTER_PAGE:"
-                                 ":END:") "\n")
-           :unnarrowed t))))
 #+end_src
 
 *** org-noter
