@@ -762,8 +762,6 @@ next to it."
                 (looking-at-p "\n"))
       (insert "\n"))))
 
-
-
 (defun nn/orgfmt (&optional SCOPE)
   "Formats org buffers.
 

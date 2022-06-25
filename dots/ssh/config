@@ -3,6 +3,7 @@
 #############
 
 Host *.github.com
+  UseKeychain yes
   AddKeysToAgent yes
   IdentityFile ~/.ssh/github
 
@@ -41,39 +42,5 @@ Host pineapples
    User nantas
    ProxyCommand ssh -W %h:%p robots
    ControlMaster auto
-
-#########
-## arc ##
-#########
-
-# Need to be under oxford VPN
-
-Host arc-*
-   User engs1632
-   AddKeysToAgent yes
-   # UseKeychain yes
-   IdentityFile ~/.ssh/arc_rsa
-   ControlMaster auto
-
-Host arc-myaccount
-   HostName myaccount.arc.ox.ac.uk
-
-Host arc-oscgate
-   HostName oscgate.arc.ox.ac.uk
-
-Host arc-htc
    HostName arcus-htc.arcus-htc.arc.local
    ProxyCommand ssh -W %h:%p arc-oscgate
-
-###########
-##  cs   ##
-###########
-
-# TODO figure out how to remap *.cs to cs-*
-Host mulga.cs brown.cs whip.cs woma.cs hercules.cs dgx1.cs savitar.cs legolas.cs bilbo.cs gandalf.cs sauron.cs gollum.cs gimli.cs
-  User nantas
-  ForwardAgent yes
-  Hostname %h.ox.ac.uk
-  ProxyCommand ssh -W %h:%p robots
-  ControlMaster auto
-

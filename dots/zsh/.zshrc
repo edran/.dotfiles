@@ -62,26 +62,11 @@ if [[ $TERM != dumb  ]]; then
         eval "$(direnv hook zsh)"
     fi
 
-    # >>> conda initialize >>>
-    # !! Contents within this block are managed by 'conda init' !!
-    __conda_setup="$('$HOME/.conda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
-    if [ $? -eq 0 ]; then
-        eval "$__conda_setup"
-    else
-        if [ -f "$HOME/.conda/etc/profile.d/conda.sh" ]; then
-            . "$HOME/.conda/etc/profile.d/conda.sh"
-        else
-            export PATH="$HOME/.conda/bin:$PATH"
-        fi
-    fi
-    unset __conda_setup
-    # <<< conda initialize <<<
-
     # The next line updates PATH for the Google Cloud SDK.
-    if [ -f '/Users/nantas/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/nantas/google-cloud-sdk/path.zsh.inc'; fi
+    if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
 
     # The next line enables shell command completion for gcloud.
-    if [ -f '/Users/nantas/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/nantas/google-cloud-sdk/completion.zsh.inc'; fi
+    if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
 
     ##
     autoload -Uz compinit && compinit -u -d $CACHEDIR/zcompdump
