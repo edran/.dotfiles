@@ -489,9 +489,13 @@ software./
 
 #+begin_src emacs-lisp
 (defvar nn-lab-path "~/lab" "Path to the local laboratory")
+#+end_src
 
-(setq projectile-project-search-path (list nn-lab-path)       ;; this is not recursive, sadly
-      magit-repository-directories (list (cons nn-lab-path  2)))
+At the moment, the only two lab-aware libraries are projectile and magit.
+
+#+begin_src emacs-lisp
+(setq projectile-project-search-path (list (cons nn-lab-path 2))
+      magit-repository-directories (list (cons nn-lab-path 2)))
 #+end_src
 
 ** Graphical configuration
@@ -515,10 +519,12 @@ general I'm using it for stuff like org buffers).
 (setq mixed-pitch-set-height 14)
 #+end_src
 
+**** TODO Check that fonts exist, and if not, download them
+
 *** Setting up theme
 
 The theme of choice is Dracula (🧛), since it gives a pleasant and colourful
-dark -- and \tilde{}cool\tilde{} -- experience.
+dark / \tilde{}cool\tilde{}  experience.
 
 #+begin_src emacs-lisp
 (setq doom-theme 'doom-dracula)
@@ -538,40 +544,43 @@ software, and I'd rather stick to standard strings to future-proof things:
 *** Modeline
 **** Disabling showing default file encoding
 
-I don't want to display =LF UTF-8= in the modeline, since that is the default.
+I don't want to display =LF UTF-8= in the modeline, since that is the default. Snippet taken from [[https://tecosaur.github.io/emacs-config/config.html#theme-modeline][Tecosaur's config]].
 
 #+begin_src emacs-lisp
 (defun nn/doom-modeline-conditional-buffer-encoding ()
   "Don't show file encoding if it's utf-8"
   (setq-local doom-modeline-buffer-encoding
-              (unless (or (eq buffer-file-coding-system 'utf-8-unix)
-                          (eq buffer-file-coding-system 'utf-8)))))
+              (unless (and (memq (plist-get (coding-system-plist buffer-file-coding-system) :category)
+                                 '(coding-category-undecided coding-category-utf-8))
+                           (not (memq (coding-system-eol-type buffer-file-coding-system) '(1 2))))
+                t)))
 
 (add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
 #+end_src
 ***** TODO Consider using nondefault const for =doom-modeline-buffer-encoding= instead
 
 Since it seems like it's the more reasonable thing to do.
+
 *** Vertical line numbers
 
 **** Disable vertical line numbers in org
 
-By default, we display line numbers inline for most text buffers. However not
-only am I not particularly interested in having them when I'm using org-mode
-(due to it coming with an already powerful navigation system), but they also
-don't behave well in buffers with variable-size fonts.
+By default, we display line numbers inline for most text buffers. However I not
+particularly interested in having them when I'm using org-mode (due to it coming
+with an already powerful navigation system), and they also don't behave well in
+buffers with variable-size fonts.
 
-So we disable them accordingly. Voilà.
+So we disable them accordingly.
 
 #+begin_src emacs-lisp
 (defun nn/no-line-numbers ()
   (setq-local display-line-numbers nil))
-(add-hook 'org-mode-hook 'nn/no-line-numbers)
+(add-hook 'text-mode-hook 'nn/no-line-numbers)
 #+end_src
 
-** Buffers
+Voilà.
 
-Oh yeah, now we get to the fun configuration!
+** Buffers
 
 *** Better default names when in conflict
 
@@ -583,8 +592,8 @@ amount of information needed to disentangle them. In principle we could do this 
 (setq uniquify-buffer-name-style 'forward)
 #+end_src
 
-Sadly we can't do this as that would break =persp-mode=. There's an [[github:Bad-ptr/persp-mode.el/issues/104][issue]] that
-tracks this problem.
+Sadly we can't do this as that would break =persp-mode= (hence why the above
+snippet is not tangled). There's an [[github:Bad-ptr/persp-mode.el/issues/104][issue]] that tracks this problem.
 
 *** Rename default buffer back to *scratch*
 
@@ -595,28 +604,14 @@ tracks this problem.
 #+end_src
 
 * Tools configuration
-** Ivy
-
-Sometimes the search system is dumber than it should be /*cough* org-roam/. What's
-even sillier is that ~ivy-immediate-done~ is relegated to the default keybinding
-=C-M-j=, rather than something easy to type.
-
-So, let's fix that:
-
-#+begin_src emacs-lisp
-(after! ivy
-  (map! :map ivy-minibuffer-map
-        [C-return] #'ivy-immediate-done))
-#+end_src
-
 ** org-mode
 
 This one maybe should deserve a whole level-1 heading :)
 
 What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
-org packages cover pretty much almost anything I want, and there's minimal setup
--- compared to the past -- that one needs to do to have a decent workflow. I
-love this community.
+org packages cover pretty much almost anything I want; compared to the past,
+there's minimal setup that one needs to do to have a decent workflow. I love
+this community!
 
 *** Basic files and folders
 
@@ -666,27 +661,37 @@ let's setup a couple of keybindings.
 *** General behaviour
 
 #+begin_src emacs-lisp
-;; (setq ;; org-src-window-setup 'current-window
-;;       org-return-follows-link t                    ;; follow links on RET
-;;       org-use-property-inheritance t               ;; inherit properties in subheadings
-;;       org-list-allow-alphabetical t                ;; Allow to use alphabetical bullets
-;;       org-catch-invisible-edits 'smart             ;; Be more mindful of what I delete
-
-;;       org-babel-load-languages '((dot . t)         ;; languages allowed to be evaluated
-;;                                  (emacs-lisp . t)
-;;                                  (python . t)
-;;                                  (R . t)))
+(setq org-return-follows-link t             ;; follow links on RET
+      org-use-property-inheritance t        ;; inherit properties in subheadings
+      org-list-allow-alphabetical t         ;; Allow to use alphabetical bullets
+      org-catch-invisible-edits 'smart      ;; Be more mindful of what I delete
+      org-export-in-background t            ;; Run export queries in emacs subprocess
+      org-export-with-sub-superscripts '{}  ;;require _{} / ^{} for subscripts / superscripts
+      org-babel-load-languages '((dot . t)
+                                 (emacs-lisp . t)
+                                 (python . t)
+                                 (R . t)))
 #+end_src
 
-Doom's default todo keywords are OK, however I also want a few more, so I'm
-redefining them here.
+=TODO -> DONE= is just not enough.
 
 #+begin_src emacs-lisp
-;; (after! org
-;;   (setq org-todo-keywords
-;;        '((sequence "TODO(t)" "PROJ(p)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)")
-;;          (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-;;          (sequence "HABIT(z)" "|" "TICKED(Z)"))))
+(after! org
+  (setq org-todo-keywords
+       '((sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)")
+         (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
+         (sequence "HABIT(z)" "|" "TICKED(Z)")
+         (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))))
+#+end_src
+
+**** Indentation
+
+I want everything left-justified.
+
+#+begin_src emacs-lisp
+(after! org
+  (setq org-startup-indented nil  ;; I don't like indents
+        org-adapt-indentation nil))
 #+end_src
 
 **** Timestamps
@@ -705,17 +710,15 @@ finds ~last_modified: []~.
 
 /*chef kiss*/
 
-**** Indentation
+*** Formatting
 
-I want everything left-justified.
+I like to keep text hard-wrapped, but by default =auto-filled-mode= is not
+activated, so we enable it (on text buffers).
 
 #+begin_src emacs-lisp
-(after! org
-  (setq org-startup-indented nil  ;; I don't like indents
-        org-adapt-indentation nil))
+(add-hook 'text-mode-hook #'auto-fill-mode)
+(remove-hook 'text-mode-hook #'visual-line-mode)
 #+end_src
-
-*** Formatting
 
 I write messily, leaving destruction and despair in all my org files (in the
 form of random newlines, mostly). But I dislike mess! Thus, automation to the
@@ -759,12 +762,15 @@ next to it."
                 (looking-at-p "\n"))
       (insert "\n"))))
 
+
+
 (defun nn/orgfmt (&optional SCOPE)
   "Formats org buffers.
 
 It makes sure that:
-- headings containing content have newlines around them;
-- there aren't big newline blocks left around.
+
+ 1. Headings containing content have newlines around them;
+ 2. there aren't big newline blocks left around.
 
 SCOPE determines the scope of the command; see `org-map-entries' for a list."
   (interactive)
@@ -1536,6 +1542,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 
 * Language configuration
 ** Python
+
 #+begin_src emacs-lisp
 (setq conda-anaconda-home "~/.conda")
 #+end_src

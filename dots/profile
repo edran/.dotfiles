@@ -17,7 +17,6 @@ source_if_exists()
 {
     to_source=$1
     if [ -f "$to_source" ] ; then
-	echo "$to_source"
         source "$to_source"
     fi
 }
@@ -41,11 +40,13 @@ export LOCALDIR=$HOME/.local
 
 export ZDOTDIR="$HOME/.zsh"
 
-export ORGDIR="$HOME/org"
+export ORGDIR="$HOME/kb"
 export LABDIR="$HOME/lab"
 export DOTSREPO="$HOME/.dotfiles"
 
 export PYTHONBREAKPOINT=ipdb.set_trace
+export MPLBACKEND="module://itermplot"
+export ITERMPLOT=rv  # dark mode
 
 # NOTE: can't quite use XDG_CONFIG_HOME because
 export ASPELL_CONF="home-dir $HOME/.config/aspell/"
@@ -70,5 +71,4 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
 fi
 
 source_if_exists "$HOME/.profile_private"
-
 
