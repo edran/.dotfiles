@@ -104,6 +104,7 @@ Since this makes some of the organisational files a little painful to manage.
        <<doom-config>>
        )
 #+end_src
+
 *** Basics
 
 #+name: doom-config
@@ -391,13 +392,13 @@ The following packages make ~org-mode~ even more awesome than usual.
 ~org-fragtog~ allows to toggle LaTeX previews.
 
 #+begin_src emacs-lisp
-(package! org-fragtog :pin "3eea7f1708...")
+(package! org-fragtog :pin "6806061...")
 #+end_src
 
 ~org-pretty-tags~ makes it possible to replace boring tags with fun ones!
 
 #+begin_src emacs-lisp
-(package! org-pretty-tags :pin "40fd72f3e7...")
+(package! org-pretty-tags :pin "e127a1e0...")
 #+end_src
 
 *** mathpix integration
@@ -406,7 +407,7 @@ The following packages make ~org-mode~ even more awesome than usual.
 LaTeX. Luckily, there's an emacs package that wraps its API.
 
 #+begin_src emacs-lisp
-(package! mathpix.el :pin "02016ca" :recipe (:host github :repo "jethrokuan/mathpix.el"))
+(package! mathpix.el :pin "1ce2d4a..." :recipe (:host github :repo "jethrokuan/mathpix.el"))
 #+end_src
 
 *** Misc
@@ -525,6 +526,7 @@ I don't want to display =LF UTF-8= in the modeline, since that is the default. S
 
 (add-hook 'after-change-major-mode-hook #'nn/doom-modeline-conditional-buffer-encoding)
 #+end_src
+
 ***** TODO Consider using nondefault const for =doom-modeline-buffer-encoding= instead
 
 Since it seems like it's the more reasonable thing to do.
@@ -1403,10 +1405,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 (setq conda-anaconda-home "~/.conda")
 #+end_src
 
-** TeX
-
 ** Emacs lisp
-
 *** Better eval-sexp
 
 I hate to manually having to do forward-list all the time I'm writing elisp and
