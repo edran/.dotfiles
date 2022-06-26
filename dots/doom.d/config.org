@@ -1,4 +1,4 @@
-#+title: Doom Emacs Configuration
+#+TITle: Doom Emacs Configuration
 #+author: Nantas Nardelli
 #+language: en
 #+startup: fold
@@ -285,7 +285,7 @@ markdown                      ; writing docs for people to ignore
  ;; +pomodoro                 ; be fruitful with the tomato technique
  +present                     ; using org-mode for presentations
  +pretty                      ; yessss my pretties! (nice unicode symbols)
- ;; +roam2                       ; wander around notes
+ +roam2                       ; wander around notes
  )
 ;; php                        ; perl's insecure younger brother
 ;; plantuml                   ; diagrams for confusing people more
@@ -386,6 +386,8 @@ The following packages make ~org-mode~ even more awesome than usual.
 ;; (package! org-anki
 ;;   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
 #+end_src
+
+***** TODO Reenable org-anki
 
 **** Prettier org-mode
 
@@ -513,7 +515,8 @@ software, and I'd rather stick to standard strings to future-proof things:
 *** Modeline
 **** Disabling showing default file encoding
 
-I don't want to display =LF UTF-8= in the modeline, since that is the default. Snippet taken from [[https://tecosaur.github.io/emacs-config/config.html#theme-modeline][Tecosaur's config]].
+I don't want to display =LF UTF-8= in the modeline, since that is the default.
+Snippet taken from [[https://tecosaur.github.io/emacs-config/config.html#theme-modeline][Tecosaur's config]].
 
 #+begin_src emacs-lisp
 (defun nn/doom-modeline-conditional-buffer-encoding ()
@@ -552,9 +555,10 @@ Voilà.
 
 *** Better default names when in conflict
 
-Whenever I'm coding some nasty framework, I tend to have to open multiple
-=__init__.py= at the same time. I'd like them to be prefixed with the least
-amount of information needed to disentangle them. In principle we could do this as follows:
+Whenever I'm working on some (nasty) framework, I tend to have to open multiple
+=__init__.py= at the same time. I'd like to prefix them with the least amount of
+information needed to disentangle them. In principle we could do this as
+follows:
 
 #+begin_src emacs-lisp :tangle no
 (setq uniquify-buffer-name-style 'forward)
@@ -612,18 +616,18 @@ as ~$org-directory/kb~.
 let's setup a couple of keybindings.
 
 #+begin_src emacs-lisp
-;; (defun nn/org-open-inbox-file ()
-;;   (interactive)
-;;   (find-file nn-org-inbox-file))
+(defun nn/org-open-inbox-file ()
+  (interactive)
+  (find-file nn-org-inbox-file))
 
-;; (defun nn/org-open-life-file ()
-;;   (interactive)
-;;   (find-file nn-org-life-file))
+(defun nn/org-open-life-file ()
+  (interactive)
+  (find-file nn-org-life-file))
 
-;; (map! :leader
-;;       :prefix-map ("n" . "notes")
-;;       :desc "Open inbox file" "i" #'nn/org-open-inbox-file
-;;       :desc "Open life file" "I" #'nn/org-open-life-file)
+(map! :leader
+      :prefix-map ("n" . "notes")
+      :desc "Open inbox file" "i" #'nn/org-open-inbox-file
+      :desc "Open life file" "I" #'nn/org-open-life-file)
 #+end_src
 
 *** General behaviour
@@ -633,6 +637,7 @@ let's setup a couple of keybindings.
       org-use-property-inheritance t        ;; inherit properties in subheadings
       org-list-allow-alphabetical t         ;; Allow to use alphabetical bullets
       org-catch-invisible-edits 'smart      ;; Be more mindful of what I delete
+      ;; TODO: fix these org-export vars
       org-export-in-background t            ;; Run export queries in emacs subprocess
       org-export-with-sub-superscripts '{}  ;;require _{} / ^{} for subscripts / superscripts
       org-babel-load-languages '((dot . t)
@@ -1109,33 +1114,6 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
          :unnarrowed t)))
 #+end_src
 
-*** org-roam-server
-
-Visualising the graph is a great way to figure out whether there's anything
-wrong with the knowledge base. Thus let's setup =org-roam-server= such that it is
-not painful to do so.
-
-#+begin_src emacs-lisp
-(use-package! org-roam-server
-  :after org-roam
-  :config
-  (setq org-roam-server-port 4242
-        org-roam-server-serve-files t)
-
-  (defun nn/org-roam-server-open-in-browser ()
-    (interactive)
-    (unless org-roam-server-mode
-      ;; Currently ignoring all errors, since there seems to be something weird
-      ;; going on with smartparens.
-      (ignore-errors (org-roam-server-mode)))
-    (browse-url (format "http://localhost:%d" org-roam-server-port)))
-
-  (map! :leader
-        :prefix-map ("n" . "notes")
-        (:prefix ("r" . "roam")
-         :desc "Open roam graph in browser" "w" #'nn/org-roam-server-open-in-browser)))
-#+end_src
-
 *** Journal
 
 I want a daily journal, with sensible ISO-approved™ date format for the file.
@@ -1218,23 +1196,6 @@ know where my bibliography is.
 (defvar nn-bibliography-notes-path (concat (file-name-as-directory org-directory) "kb/reviews/")
   "Path to notes directory")
   ;; :type 'string)
-#+end_src
-
-*** org-noter
-
-Thanks to =pdf-tools=, we have a nice way of viewing pdfs in Emacs. The package is
-included in doom emacs, but here we set a bunch of decent keybindings:
-
-#+begin_src emacs-lisp
-(after! org-noter
-  (setq org-noter-search-path nn-bibliography-notes-path
-        org-noter-doc-split-fraction '(0.57 0.43))
-  (map! :mode pdf-view-mode
-        :map pdf-view-mode-map
-        :nv "i" #'org-noter-insert-note
-        :n "J" #'org-noter-sync-next-note
-        :n "K" #'org-noter-sync-prev-note
-        :n "q" #'org-noter-kill-session))
 #+end_src
 
 *** LaTeX in org buffers
@@ -1323,17 +1284,14 @@ org-roam gives me...), so I set it up here:
 ** Generic UX changes
 
 #+begin_src emacs-lisp
-;;;; UX
 (setq doom-scratch-initial-major-mode 'lisp-interaction-mode)
 
 ;; Switch to new window when splitting
 (setq evil-split-window-below t
       evil-vsplit-window-right t
-
       ;; isearch
       isearch-lazy-count t
       isearch-allow-scroll 'unlimited
-
       ;; magit
       magit-save-repository-buffers 'dontask
       ;; Don't restore window config after quitting magit
@@ -1389,6 +1347,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 
 #+begin_src emacs-lisp
 (use-package! mathpix
+  :after org
   :config
   (setq mathpix-app-id (getenv "MATHPIX_API_ID")
         mathpix-app-key (getenv "MATHPIX_API_KEY")
