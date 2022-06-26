@@ -23,8 +23,10 @@ clickable_history () {
 }
 
 if [ -z "$ORGDIR" ]; then
-   echo "ORGDIR is not set (or empty)"
-   exit 1
+    echo ":rocket::warning:"
+    echo "---"
+    echo "ORGDIR is not set (or empty)"
+    exit
 fi
 
 pushd $ORGDIR > /dev/null
@@ -35,9 +37,8 @@ if [[ -z $(git status -s) ]]; then
     echo "No changes detected in $ORGDIR at $(date)."
     echo "---"
     clickable_history
-    exit 0
 else
-    echo ":rocket::green_circle:"
+    echo ":rocket::full_moon:"
     echo "---"
     git add -A
     echo "---"
