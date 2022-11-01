@@ -29,7 +29,6 @@ add2path_if_exists "$HOME/.cabal/bin"
 add2path_if_exists "$HOME/.emacs.d/bin"
 add2path_if_exists "$HOME/.cargo/bin"
 add2path_if_exists "$HOME/.poetry/bin"
-add2path_if_exists "$HOME/Library/Python/3.9/bin"
 
 export EDITOR=vim  # should be emacsclient
 export PAGER=less
@@ -68,7 +67,12 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
     export LDFLAGS="-L/usr/local/opt/openblas/lib"
     export CPPFLAGS="-I/usr/local/opt/openblas/include"
     export OPENBLAS="$(brew --prefix openblas)"
+
+    add2path_if_exists "$HOME/Library/Python/3.10/bin"
+    add2path_if_exists "/opt/homebrew/opt/python@3.10/libexec/bin"
 fi
 
 source_if_exists "$HOME/.profile_private"
 
+export NVM_DIR="$HOME/.nvm"
+. "$HOME/.cargo/env"

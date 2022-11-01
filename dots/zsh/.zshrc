@@ -73,4 +73,9 @@ if [[ $TERM != dumb  ]]; then
     autopair-init
 
     [ -f "$BASHDIR/local.zsh" ] && source "$BASHDIR/local.zsh"
+
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 fi
+
+# Created by `pipx` on 2022-09-08 10:14:24
+export PATH="$PATH:/Users/nantas/.local/bin"
