@@ -122,3 +122,4 @@ dots/bin/nethack
 # I can't seem to disable this :(
 /dots/zsh/.zcompdump
 /dots/zsh/.zsh_sessions/
+/ansible/roles/elliotweiser.osx-command-line-tools/
