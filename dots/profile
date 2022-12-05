@@ -38,7 +38,6 @@ export CONFIGDIR=$HOME/.config
 export LOCALDIR=$HOME/.local
 
 export ZDOTDIR="$HOME/.zsh"
-
 export ORGDIR="$HOME/mcc"
 export LABDIR="$HOME/lab"
 export DOTSREPO="$HOME/.dotfiles"

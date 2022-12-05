@@ -1,5 +1,6 @@
 # -*- mode: sh; -*-
 
+# NOTE: ZDOTDIR needs to be defined before here!
 export ZGEN_DIR="$HOME/.zgen"
 export ZGEN_SOURCE="$ZGEN_DIR/zgen.zsh"
 export ZGEN_RESET_ON_CHANGE=(`ls -d $ZDOTDIR/*`)
@@ -32,7 +33,6 @@ if [[ $TERM != dumb  ]]; then
     #     eval `keychain --eval --agents ssh --inherit any --quiet id_rsa`
     # fi
 
-    ##
     function _cache {
         command -v "$1" >/dev/null || return 1
         local cache_dir="$CACHEDIR/${SHELL##*/}"
@@ -56,8 +56,6 @@ if [[ $TERM != dumb  ]]; then
 
     test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
 
-    eval $(thefuck --alias)
-
     if type direnv &>/dev/null; then
         eval "$(direnv hook zsh)"
     fi
@@ -74,7 +72,9 @@ if [[ $TERM != dumb  ]]; then
 
     [ -f "$BASHDIR/local.zsh" ] && source "$BASHDIR/local.zsh"
 
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+    export NVM_DIR="$HOME/.nvm"
+    # TODO: make it lazy!
+    # [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
 fi
 
 # Created by `pipx` on 2022-09-08 10:14:24

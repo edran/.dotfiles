@@ -123,3 +123,4 @@ dots/bin/nethack
 /dots/zsh/.zcompdump
 /dots/zsh/.zsh_sessions/
 /ansible/roles/elliotweiser.osx-command-line-tools/
+/dots/zsh/.zsh_history
