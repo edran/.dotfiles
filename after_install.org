@@ -17,8 +17,30 @@ Then install Doom.
 3. In ~General tab~, point  ~Load preferences from a custom folder or URL:~ to ~~/.dotfiles/dots/macos//com.googlecode.iterm2.plist~.
 4. Restart iTerm2.
 
+** Moom
+*** Importing
+
+To import the config, *quit Moom* and run:
+
+#+begin_src shell
+$ defaults import com.manytricks.Moom dots/macos/Moom.plist
+#+end_src
+
+Then open Moom and you should see the config correctly loaded.
+
+*** Exporting
+
+To export the config, run:
+
+#+begin_src shell
+$ defaults export com.manytricks.Moom dots/macos/Moom.plist
+#+end_src
+
+
 * Poetry
+
 Emacs (and a bunch of other tools require ~poetry config virtualenvs.in-project true~.
+
 * Logitech Options
 
 Install it from webiste.
