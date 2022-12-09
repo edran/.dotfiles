@@ -1,0 +1,24 @@
+* MacOS
+** Emacs
+
+Run after installing =emacs-mac=:
+
+#+begin_src sh
+$ osascript -e \
+    'tell application "Finder" to make alias file to POSIX file "/opt/homebrew/opt/emacs-mac/Emacs.app" at POSIX file "/Applications"'
+#+end_src
+
+Then install Doom.
+
+** iTerm2
+
+1. Open iTerm2.
+2. Select ~iTerm2 > Preferences~.
+3. In ~General tab~, point  ~Load preferences from a custom folder or URL:~ to ~~/.dotfiles/dots/macos//com.googlecode.iterm2.plist~.
+4. Restart iTerm2.
+
+* Poetry
+Emacs (and a bunch of other tools require ~poetry config virtualenvs.in-project true~.
+* Logitech Options
+
+Install it from webiste.

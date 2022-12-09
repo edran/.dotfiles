@@ -1,7 +1,0 @@
----
-- name: Full edran\'s dotfiles install (https://github.com/edran/dotfiles)
-  hosts: localhost
-  connection: local
-  roles:
-    - set_dotfiles
-    - essential

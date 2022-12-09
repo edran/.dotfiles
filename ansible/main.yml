@@ -1,0 +1,19 @@
+---
+- hosts: all
+
+  vars_files: ['config.yml']
+
+  roles:
+    - role: elliotweiser.osx-command-line-tools
+    - role: geerlingguy.mac.homebrew
+      tags: ['homebrew']
+    - role: geerlingguy.mac.mas
+      tags: ['mas']
+
+  tasks:
+    - name: Include Dock role.
+      include_role:
+        name: geerlingguy.mac.dock
+        apply:
+          tags: ['dock']
+      tags: ['always']
