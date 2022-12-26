@@ -1,19 +1,133 @@
 ---
 - hosts: all
+  vars:
+    - downloads: ~/.ansible-downloads/
 
-  vars_files: ['config.yml']
+    - dockitems_remove:
+        - Launchpad
+        - Safari
+        - Messages
+        - Mail
+        - Maps
+        - Photos
+        - FaceTime
+        - Calendar
+        - Contacts
+        - Reminders
+        - Notes
+        - TV
+        - Music
+        - Podcasts
+        - News
+        - Keynote
+        - Numbers
+        - Pages
+        - App Store
+        - System Preferences
+
+    - dockitems_persist:
+        - name: Google Chrome
+          path: "/Applications/Google\ Chrome.app"
+          pos: 1
+        # Pos 2 is Emacs, but homebrew doesn't link emacs from emacsmacport correctly,
+        # and simlinks don't seem to be correctly supported by the dock.
+        - name: iTerm
+          path: "/Applications/iTerm.app"
+          pos: 3
+        - name: Slack
+          path: "/Applications/Slack.app"
+          pos: 4
+        - name: Notion
+          path: "/Applications/Notion.app"
+          pos: 5
+        - name: Linear
+          path: "/Applications/Linear.app"
+          pos: 6
+        - name: Spotify
+          path: "/Applications/Spotify.app"
+          pos: 7
+        - name: Whatsapp
+          path: "/Applications/Whatsapp.app"
+          pos: 8
+        - name: Signal
+          path: "/Applications/Signal.app"
+          pos: 9
+
+    - homebrew_taps:
+        - homebrew/core
+        - homebrew/cask
+        - railwaycat/emacsmacport
+
+    - homebrew_installed_packages:
+        # - ansible # Installed via Pip.
+        # - autoconf
+        # - bash-completion
+        # - doxygen
+        # - gettext
+        # - gifsicle
+        - git
+        - github/gh/gh
+        # - go
+        # - gpg
+        # - httpie
+        # - iperf
+        # - libevent
+        # - sqlite
+        # - mcrypt
+        # - nmap
+        # - node
+        - nvm
+        - ssh-copy-id
+        - cowsay
+        # - readline
+        # - openssl
+        # - pv
+        - wget
+        # - wrk
+        - pyenv
+        - diff-so-fancy
+        - ripgrep
+        - coreutils
+        - fd
+        - { name: emacs-mac, install_options: "with-modules" }
+
+    - homebrew_cask_appdir: /Applications
+    - homebrew_cask_apps:
+        - iterm2
+        - docker
+        - dropbox
+        - firefox
+        - google-chrome
+        - handbrake
+        - slack
+        - transmit
+        - notion
+        - linear-linear
+        - signal
+        - whatsapp
+        - spotify
+        - karabiner-elements
+
+    - mas_installed_apps:
+        - { id: 682658836, name: "GarageBand" }
+        - { id: 408981434, name: "iMovie" }
+        - { id: 409201541, name: "Pages" }
+        - { id: 409203825, name: "Numbers" }
+        - { id: 409183694, name: "Keynote" }
+        - { id: 419330170, name: "Moom" }
+        - { id: 1475387142, name: "Tailscale" }
 
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
-      tags: ['homebrew']
+      tags: ["homebrew"]
     - role: geerlingguy.mac.mas
-      tags: ['mas']
+      tags: ["mas"]
 
   tasks:
     - name: Include Dock role.
       include_role:
         name: geerlingguy.mac.dock
         apply:
-          tags: ['dock']
-      tags: ['always']
+          tags: ["dock"]
+      tags: ["always"]
