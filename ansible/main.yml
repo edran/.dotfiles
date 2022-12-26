@@ -60,16 +60,58 @@
 
     - homebrew_installed_packages:
         # - ansible # Installed via Pip.
-        # - autoconf
-        # - bash-completion
-        # - doxygen
-        # - gettext
-        # - gifsicle
+        # GNU tools
+        - autoconf
+        - automake
+        - bash # Because MacOS ships with an old version.
+        - gpg
+        # CLI essentials
+        # TODO: replace with delta
+        - diff-so-fancy # Necessary for git diff to work.
+        - fzf
         - git
         - github/gh/gh
-        # - go
-        # - gpg
-        # - httpie
+        - nnn
+        # Modern CLI tooling
+        - angle-grinder # a.k.a. *agrinder*, log analysis.
+        - bat # Replaces cat.
+        - bottom # a.k.a. *btm*, replaces htop.
+        - broot # a.k.a. *br*, replaces tree (?).
+        - choose # cut
+        - croc # Send files across devices.
+        - ctop # Top for containers.
+        - difftastic # a.k.a. *difft*, replaces diff.
+        - glances # htop, again.
+        - glow # Markdown on the terminal.
+        - dust # du
+        - entr # Run arbitrary commands on file changes.
+        - exa # ls
+        - duf # df
+        - fd # find
+        - fq # Explore binary files (like jq, ish).
+        - fx # Interactive json tool.
+        - gdu # ncdu
+        - hexyl # hexdump
+        - htmlq # jq for html.
+        - httpie # A friendly curl replacement.
+        - hyperfine # Benchmarking tool.
+        - jc # Convert various tools' output to json.
+        - jless # JSON pager.
+        - jo # Easily create json objects.
+        - jq
+        - lazydocker # TUI for docker.
+        - lnav # Curses-based log viewing.
+        - mtr # traceroute
+        - pgcli # psql
+        - sd # sed
+        - tldr
+        - xsv # CSV manipulator.
+        - yq # jq for YAML.
+        - zoxide # z, fast, autojump
+        # Languages
+        - go
+        # Image manipulation
+        - gifsicle
         # - iperf
         # - libevent
         # - sqlite
@@ -87,8 +129,6 @@
         - pyenv
         - diff-so-fancy
         - ripgrep
-        - coreutils
-        - fd
         - { name: emacs-mac, install_options: with-modules }
 
     - homebrew_cask_appdir: /Applications
