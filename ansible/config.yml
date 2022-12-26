@@ -11,11 +11,48 @@ dockitems_remove:
   - Maps
   - Photos
   - FaceTime
+  - Calendar
+  - Contacts
+  - Reminders
+  - Notes
+  - TV
+  - Music
+  - Podcasts
+  - News
+  - Keynote
+  - Numbers
+  - Pages
+  - App Store
+  - System Preferences
 
-dockitems_persist: []
-# - name: "Emacs"
-#   path: "/Applications/Emacs.app/"
-#   pos: 5
+dockitems_persist:
+  - name: Google Chrome
+    path: "/Applications/Google\ Chrome.app"
+    pos: 1
+  # Pos 2 is Emacs, but homebrew doesn't link emacs from emacsmacport correctly,
+  # and simlinks don't seem to be correctly supported by the dock.
+  - name: iTerm
+    path: "/Applications/iTerm.app"
+    pos: 3
+  - name: Slack
+    path: "/Applications/Slack.app"
+    pos: 4
+  - name: Notion
+    path: "/Applications/Notion.app"
+    pos: 5
+  - name: Linear
+    path: "/Applications/Linear.app"
+    pos: 6
+  - name: Spotify
+    path: "/Applications/Spotify.app"
+    pos: 7
+  - name: Whatsapp
+    path: "/Applications/Whatsapp.app"
+    pos: 8
+  - name: Signal
+    path: "/Applications/Signal.app"
+    pos: 9
+
 
 homebrew_taps:
   - homebrew/core
