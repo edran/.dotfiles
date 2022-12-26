@@ -1,81 +1,82 @@
-# -*- mode: sh; -*-
+#!/usr/bin/env zsh
 
-# NOTE: ZDOTDIR needs to be defined before here!
-export ZGEN_DIR="$HOME/.zgen"
-export ZGEN_SOURCE="$ZGEN_DIR/zgen.zsh"
-export ZGEN_RESET_ON_CHANGE=(`ls -d $ZDOTDIR/*`)
-
-[ -d "$ZGEN_DIR" ] || git clone https://github.com/tarjoilija/zgen "$ZGEN_DIR"
-source $ZGEN_SOURCE
-
-if ! zgen saved; then
-    echo "Initializing zgen"
-    zgen load hlissner/zsh-autopair autopair.zsh
-    zgen load zsh-users/zsh-history-substring-search
-    zgen load zdharma/history-search-multi-word
-    zgen load zsh-users/zsh-completions src
-    zgen load junegunn/fzf shell
-    zgen prezto git
-    [ -z "$SSH_CONNECTION" ] && zgen load zdharma/fast-syntax-highlighting
-    zgen save
+## Enables instant prompt.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
 source $ZDOTDIR/config.zsh
 
-if [[ $TERM != dumb  ]]; then
-    source $ZDOTDIR/keybindings.zsh
-    source $ZDOTDIR/completion.zsh
-    source $ZDOTDIR/aliases.zsh
-    source $ZDOTDIR/prompt2.zsh
+# NOTE: ZDOTDIR needs to be defined before here!
+export ZGENOM_DIR="$HOME/.zgenom"
 
-    # # deals with ssh agent / passphrase
-    # if type keychain &>/dev/null; then
-    #     eval `keychain --eval --agents ssh --inherit any --quiet id_rsa`
-    # fi
+if [ ! -d "$ZGENOM_DIR" ]; then
+  echo "Installing jandamm/zgenom"
+  git clone https://github.com/jandamm/zgenom "$ZGENOM_DIR"
+fi
+source $ZGENOM_DIR/zgenom.zsh
 
-    function _cache {
-        command -v "$1" >/dev/null || return 1
-        local cache_dir="$CACHEDIR/${SHELL##*/}"
-        local cache="$cache_dir/$1"
-        if [[ ! -f $cache || ! -s $cache ]]; then
-        echo "Caching $1"
-        mkdir -p $cache_dir
-        "$@" >$cache
-        fi
-        source $cache || rm -f $cache
-    }
+# Check for plugin and zgenom updates every 7 days
+# This does not increase the startup time.
+zgenom autoupdate
 
-    # fd > find
-    if command -v fd >/dev/null; then
-        export FZF_DEFAULT_OPTS="--reverse --ansi"
-        export FZF_DEFAULT_COMMAND="fd ."
-        export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-        export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-    fi
-    _cache fasd --init posix-alias zsh-{hook,{c,w}comp{,-install}}
+if ! zgenom saved; then
+  echo "Initializing zgenom"
+  rm -f $ZDOTDIR/*.zwc(N) \
+        $XDG_CACHE_HOME/zsh/*(N) \
+        $ZGEN_INIT.zwc
 
-    test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
+  zgenom load junegunn/fzf shell
+  zgenom load jeffreytse/zsh-vi-mode
+  zgenom load zdharma-continuum/fast-syntax-highlighting
+  zgenom load zsh-users/zsh-completions src
+  zgenom load zsh-users/zsh-autosuggestions
+  zgenom load zsh-users/zsh-history-substring-search
+  zgenom load romkatv/powerlevel10k powerlevel10k
+  zgenom load hlissner/zsh-autopair autopair.zsh
 
-    if type direnv &>/dev/null; then
-        eval "$(direnv hook zsh)"
-    fi
-
-    # The next line updates PATH for the Google Cloud SDK.
-    if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
-
-    # The next line enables shell command completion for gcloud.
-    if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
-
-    ##
-    autoload -Uz compinit && compinit -u -d $CACHEDIR/zcompdump
-    autopair-init
-
-    [ -f "$BASHDIR/local.zsh" ] && source "$BASHDIR/local.zsh"
-
-    export NVM_DIR="$HOME/.nvm"
-    # TODO: make it lazy!
-    # [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+  zgenom save
+  zgenom compile $ZDOTDIR
 fi
 
-# Created by `pipx` on 2022-09-08 10:14:24
-export PATH="$PATH:/Users/nantas/.local/bin"
+## Bootstrap interactive sessions
+if [[ $TERM != dumb ]]; then
+  source $ZDOTDIR/keybindings.zsh
+  source $ZDOTDIR/completion.zsh
+  source $ZDOTDIR/aliases.zsh
+  source $ZDOTDIR/prompt2.zsh
+
+  # fd > find
+  if type fd &>/dev/null; then
+      export FZF_DEFAULT_OPTS="--reverse --ansi"
+      export FZF_DEFAULT_COMMAND="fd ."
+      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+      export FZF_ALT_C_COMMAND="fd -t d . $HOME"
+  fi
+
+  if type zoxide &>/dev/null; then
+      eval "$(zoxide init zsh)"
+  fi
+
+  if type direnv &>/dev/null; then
+      eval "$(direnv hook zsh)"
+  fi
+
+  test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
+
+  # The next line updates PATH for the Google Cloud SDK.
+  if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
+
+  # The next line enables shell command completion for gcloud.
+  if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
+
+  ##
+  autoload -Uz compinit && compinit -u -d $CACHEDIR/zcompdump
+  autopair-init
+
+  # TODO: make it lazy!
+  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
+
+  # To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
+  [[ ! -f $ZDOTDIR/prompt.zsh ]] || source $ZDOTDIR/prompt.zsh
+fi

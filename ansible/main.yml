@@ -92,6 +92,7 @@
         - difftastic # a.k.a. *difft*, replaces diff.
         - glances # htop, again.
         - glow # Markdown on the terminal.
+        - dive # Analyse docker images.
         - dust # du
         - entr # Run arbitrary commands on file changes.
         - exa # ls
@@ -100,6 +101,7 @@
         - fq # Explore binary files (like jq, ish).
         - fx # Interactive json tool.
         - gdu # ncdu
+        - gping # Graphical ping.
         - hexyl # hexdump
         - htmlq # jq for html.
         - httpie # A friendly curl replacement.
@@ -112,8 +114,9 @@
         - lnav # Curses-based log viewing.
         - mtr # traceroute
         - pgcli # psql
+        - procs # ps
         - sd # sed
-        - tldr
+        - tealdeer # A fast tldr client.
         - xsv # CSV manipulator.
         - yq # jq for YAML.
         - zoxide # z, fast, autojump

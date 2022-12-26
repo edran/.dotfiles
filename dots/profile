@@ -72,6 +72,7 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
 fi
 
 source_if_exists "$HOME/.profile_private"
+source_if_exists "$HOME/.config/broot/launcher/bash/br"
 
 export NVM_DIR="$HOME/.nvm"
 . "$HOME/.cargo/env"
