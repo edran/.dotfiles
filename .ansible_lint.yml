@@ -1,0 +1,5 @@
+---
+# Dealing with https://github.com/ansible/ansible-lint/issues/2076, which
+# doesn't seem to be fixed for me.
+skip_list:
+  - yaml[braces]
