@@ -66,12 +66,21 @@
         - bash # Because MacOS ships with an old version.
         - gpg
         # CLI essentials
+        - curl
         # TODO: replace with delta
         - diff-so-fancy # Necessary for git diff to work.
+        - { name: emacs-mac, install_options: with-modules }
         - fzf
         - git
         - github/gh/gh
+        - iperf3
+        - nmap
         - nnn
+        - ssh-copy-id
+        - pv # Progress bar for pipes.
+        - ripgrep
+        - wget
+        - wrk # HTTP benchmarking.
         # Modern CLI tooling
         - angle-grinder # a.k.a. *agrinder*, log analysis.
         - bat # Replaces cat.
@@ -110,43 +119,27 @@
         - zoxide # z, fast, autojump
         # Languages
         - go
+        - nvm
+        - pyenv
         # Image manipulation
         - gifsicle
-        # - iperf
-        # - libevent
-        # - sqlite
-        # - mcrypt
-        # - nmap
-        # - node
-        - nvm
-        - ssh-copy-id
-        - cowsay
-        # - readline
-        # - openssl
-        # - pv
-        - wget
-        # - wrk
-        - pyenv
-        - diff-so-fancy
-        - ripgrep
-        - { name: emacs-mac, install_options: with-modules }
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
-        - iterm2
         - docker
         - dropbox
         - firefox
         - google-chrome
         - handbrake
-        - slack
-        - transmit
-        - notion
-        - linear-linear
-        - signal
-        - whatsapp
-        - spotify
+        - iterm2
         - karabiner-elements
+        - linear-linear
+        - notion
+        - signal
+        - slack
+        - spotify
+        - transmit
+        - whatsapp
 
     - mas_installed_apps:
         - { id: 682658836, name: GarageBand }
