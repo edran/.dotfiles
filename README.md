@@ -1,40 +1,34 @@
-# edran's dotfiles
+These dotfiles are compatible with `MacOS Monterey`, and with a good amount
+massaging they can probably work across a bunch of recent linux distributions.
 
-***
+Feel free to check things out, and copy whatever may be necessary (since I've
+done the same), but please don't run it as-is, as it might mess up your system.
 
-These dotfiles are compatible with `MacOS Mojave` and `Ubuntu 20.04` (and
-possibly `18.04` too). Most of the configuration files can be found in `dots/`.
+You have been warned. Hopefully.
 
-Feel free to check things out, and copy whatever is needed, but please don't run
-it as-is, as it might mess up your system.
+```
+                        <>=======()
+                       (/\___   /|\\          ()==========<>_
+                             \_/ | \\        //|\   ______/ \)
+                               \_|  \\      // | \_/
+                                 \|\/|\_   //  /\/
+                                  (oo)\ \_//  /
+                                 //_/\_\/ /  |
+                                @@/  |=\  \  |
+                                     \_=\_ \ |
+                                       \==\ \|\_
+                                    __(\===\(  )\
+                                   (((~) __(_/   |
+                                        (((~) \  /
+                                        ______/ /
+                                        '------'
+```
 
-## Installation
-
-There are two install levels, `basic` and `full`. The former is for systems
-where I require a quick installation and setup of basic tooling (like shell +
-editor), and where I most likely do not have root access. The latter for my own
-machines.
-
-The automatic installation requires the following:
-
-1. ssh authentication setup for github
-2. `python3` + `ansible`
-
-
-If these are done, then it's just a matter of running:
+## Quick start
 
 ``` sh
 $ git clone git@github.com:edran/.dotfiles ~/.dotfiles
-$ cd .dotfiles/
-$ ansible-playbook --ask-become-pass -i ansible/inventory ansible/<basic|full>.yml 
+$ cd .dotfiles/ansible
+$ ansible-playbook main.yml --ask-become-pass
 ```
 
-
-### After installation
-
-There are a couple of things that need to be done, after the first installation
-(but not necessarily subsequent playbook runs).
-
-1. Reload the shell to make sure everything is sourced.
-2. Run `zinit self-update` to finish configuring `zsh`.
-3. Run `fast-theme clean` to set zsh highlighting.
