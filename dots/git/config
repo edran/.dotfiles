@@ -1,36 +1,52 @@
 [user]
 	name = Nantas Nardelli
 	email = nantas@carbonre.com
+
 [core]
 	autocrlf = input
 	compression = -1
 	# Whitespace detection (only warnings)
 	whitespace = trailing-space,space-before-tab
+	pager = delta
+
+[interactive]
+    diffFilter = delta --color-only --features=interactive
+
+[delta]
+    features = navigate
+    dark = true
+    line-numbers = true
+    keep-plus-minus-markers = false
+    hyperlinks = true
+    commit-decoration-style = blue ol
+
 [credential]
 	helper = cache --timeout=3600
+
 [status]
 	submodulesummary = true
 	showUntrackedFiles = all
+
 [branch]
 	autosetuprebase = always
+
 [diff]
 	algorithm = patience
 	renames = copies
 	mnemonicprefix = true
 	compactionHeuristic = true
 	tool = bc3
-[pager]
-	show-branch = true
-	status = true
-	diff = diff-so-fancy | less --tabs=2 -RFX #--pattern '^(Date|added|deleted|modified): '
-	show = diff-so-fancy | less --tabs=2 -RFX #--pattern '^(Date|added|deleted|modified): '
+    colorMoved = default
+
 [pretty]
 	log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
 	detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
 	shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
 	multiline = %C(blue)──────%Creset%n %C(auto)commit %h %C(auto) %D%Creset%n %C(cyan)%an%Creset | %Cgreen%cr%Creset%n%+B
+
 [fetch]
 	recurseSubmodules = true
+
 [merge]
 	tool = bc3
 	summary = true
@@ -39,12 +55,15 @@
 	# This introduces the original text before each side's changes.
 	# https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
 	conflictstyle = diff3
+
 [mergetool]
 	prompt = false
 	keepBackup = true
 	writeToTemp = true
+
 [submodule]
 	fetchJobs = 8
+
 [color]
 	ui = true
 	pager = true
@@ -53,12 +72,14 @@
 	status = auto
 	branch = auto
 	interactive = auto
+
 [color "branch"]
 	plain = yellow
 	current = green bold
 	local = blue bold
 	remote = white
 	upstream = magenta bold
+
 [color "diff"]
 	plain = normal
 	old = red
@@ -68,11 +89,13 @@
 	frag = cyan
 	func = yellow bold
 	whitespace = red reverse
+
 [color "diff-highlight"]
 	oldNormal = red bold
 	oldHighlight = red bold 52
 	newNormal = green bold
 	newHighlight = green bold 22
+
 [color "status"]
 	header = 243
 	added = green
@@ -80,21 +103,27 @@
 	untracked = blue
 	branch = green bold
 	nobranch = red
+
 [url "git@github.com:"]
 	insteadOf = gh:
+
 [github]
 	user = edran
+
 [magithub]
 	online = false
+
 [magithub "status"]
 	includeStatusHeader = false
 	includePullRequestsSection = false
 	includeIssuesSection = false
+
 [filter "lfs"]
 	clean = git-lfs clean -- %f
 	smudge = git-lfs smudge -- %f
 	process = git-lfs filter-process
 	required = true
+
 [alias]
 	aliases = config --get-regexp alias
 	s  = status -sb
@@ -141,7 +170,9 @@
 	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
 	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
 	snapshots = !git stash list --grep snapshot
+
 [pull]
 	ff = only
+
 [push]
 	default = current

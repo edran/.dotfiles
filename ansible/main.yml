@@ -67,11 +67,10 @@
         - gpg
         # CLI essentials
         - curl
-        # TODO: replace with delta
-        - diff-so-fancy # Necessary for git diff to work.
         - { name: emacs-mac, install_options: with-modules }
         - fzf
         - git
+        - git-delta
         - github/gh/gh
         - iperf3
         - nmap
