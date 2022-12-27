@@ -1,4 +1,6 @@
-alias q=exit
+alias q="exit"
+
+g() { [[ $# = 0 ]] && git status --short . || git $*; }
 
 alias -- -='cd -' # actually means "-"
 alias ..='cd ..'
@@ -27,7 +29,6 @@ alias ppath="printf \"%s\n\" $path"
 alias pfpath="printf \"%s\n\" $fpath"
 
 alias j="z"
-alias v='f -e vim' # quick opening files with vim
 
 take() {
   mkdir "$1" && cd "$1";
@@ -36,11 +37,6 @@ take() {
 zman() {
   PAGER="less -g -s '+/^       "$1"'" man zshall;
 }
-
-r() {
-  local time=$1; shift
-  sched "$time" "notify-send --urgency=critical 'Reminder' '$@'; ding";
-}; compdef r=sched
 
 if [ -x "$(command -v exa)" ]; then
     alias ls="exa -s type"
@@ -63,11 +59,4 @@ ipdb() {
   ipython --pdb -c "%run $*"
 }
 
-wo() {
-  CDPATH=.:$LABDIR cd $*
-  # cd $(find $LABDIR -type d -maxdepth 3 | grep -i $* | grep -Ev Pods --max-count=1)
-}
-
 palette() { local colors; for n in {000..255}; do colors+=("%F{$n}$n%f"); done; print -cP $colors; }
-
-alias ssh-arc="mosh arc-oscgate ssh arcus-htc"
