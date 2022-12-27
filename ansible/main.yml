@@ -130,6 +130,7 @@
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
         - docker
+        - discord
         - dropbox
         - firefox
         - google-chrome

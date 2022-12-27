@@ -1,10 +1,11 @@
 #!/usr/bin/env zsh
-
 ## Enables instant prompt.
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
+# Compinit is handled manually rather than through zgenom.
+export ZGEN_AUTOLOAD_COMPINIT=0
 source $ZDOTDIR/config.zsh
 
 # NOTE: ZDOTDIR needs to be defined before here!
@@ -44,36 +45,14 @@ if [[ $TERM != dumb ]]; then
   source $ZDOTDIR/keybindings.zsh
   source $ZDOTDIR/completion.zsh
   source $ZDOTDIR/aliases.zsh
+  # This is where all the nonsense should be contained.
+  source $ZDOTDIR/extras.zsh
+
+  # Initialise completion and other plugins as necessary
+  autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
   autopair-init
 
-  # fd > find
-  if type fd &>/dev/null; then
-      export FZF_DEFAULT_OPTS="--reverse --ansi"
-      export FZF_DEFAULT_COMMAND="fd ."
-      export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-      export FZF_ALT_C_COMMAND="fd -t d . $HOME"
-  fi
-
-  if type zoxide &>/dev/null; then
-      eval "$(zoxide init zsh)"
-  fi
-
-  if type direnv &>/dev/null; then
-      eval "$(direnv hook zsh)"
-  fi
-
-  test -e "$HOME/.iterm2_shell_integration.zsh" && source "$HOME/.iterm2_shell_integration.zsh"
-
-  # The next line updates PATH for the Google Cloud SDK.
-  if [ -f '$HOME/google-cloud-sdk/path.zsh.inc' ]; then . '$HOME/google-cloud-sdk/path.zsh.inc'; fi
-
-  # The next line enables shell command completion for gcloud.
-  if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-  # TODO: make it lazy!
-  [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
-
-  # To customize prompt, run `p10k configure` or edit ~/.zsh/.p10k.zsh.
+  # NOTE: p10k configure by default puts it somewhere else, so it always needs
+  # to be renamed in case it needs to be generated again.
   [[ ! -f $ZDOTDIR/prompt.zsh ]] || source $ZDOTDIR/prompt.zsh
 fi

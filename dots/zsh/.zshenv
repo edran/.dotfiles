@@ -3,4 +3,3 @@
 #
 # NOTE: don't set PATH here, as MacOS messes up with the PATH after
 # initializing .zshenv. See https://mattprice.me/2015/zsh-path-issues-osx-el-capitan/
-. "$HOME/.cargo/env"

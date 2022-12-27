@@ -1,78 +1,70 @@
 # -*- mode: sh -*-
 
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# zsh also doesn't use this by default, but I source it in zshrc
+# ~/.profile: executed by the command interpreter for login shells.  This file
+# is not read by bash if ~/.bash_profile or ~/.bash_login exist.  Zsh also
+# doesn't read it normally, so we load it in ~/.zprofile.
 
-add2path_if_exists()
+cond_add_path()
 {
-    to_add=$1
-    if [ -d "$to_add" ] ; then
-        PATH="$to_add:$PATH"
+    if [ -d "$1" ] ; then
+        PATH="$1:$PATH"
     fi
 }
 
-source_if_exists()
+cond_source_path()
 {
-    to_source=$1
-    if [ -f "$to_source" ] ; then
-        source "$to_source"
+    if [ -f "$1" ] ; then
+        source "$1"
     fi
 }
-
-# PATH
-add2path_if_exists "/usr/local/sbin"  # homebrew
-add2path_if_exists "$HOME/bin"
-add2path_if_exists "$HOME/.local/bin"
-add2path_if_exists "$HOME/.cabal/bin"
-add2path_if_exists "$HOME/.emacs.d/bin"
-add2path_if_exists "$HOME/.cargo/bin"
-add2path_if_exists "$HOME/.poetry/bin"
-
-export EDITOR=vim  # should be emacsclient
-export PAGER=less
-
-export CACHEDIR=$HOME/.cache
-export CONFIGDIR=$HOME/.config
-export LOCALDIR=$HOME/.local
-
-export ZDOTDIR="$HOME/.zsh"
-export ORGDIR="$HOME/mcc"
-export LABDIR="$HOME/lab"
-export DOTSREPO="$HOME/.dotfiles"
-
-export PYTHONBREAKPOINT=ipdb.set_trace
-export MPLBACKEND="module://itermplot"
-export ITERMPLOT=rv  # dark mode
-
-# NOTE: can't quite use XDG_CONFIG_HOME because
-export ASPELL_CONF="home-dir $HOME/.config/aspell/"
-
-# Next-gen building backend for docker
-export DOCKER_BUILDKIT=1
 
 # ### MACOS
 if echo "$OSTYPE" | grep -q "darwin" ; then
     export IS_MACOS=1
     eval $(/opt/homebrew/bin/brew shellenv)
 
-    # enable ls colors for
-    export CLICOLOR=1
-
-    # set term
-    export TERM="xterm-256color"
-
-    export LDFLAGS="-L/usr/local/opt/openblas/lib"
-    export CPPFLAGS="-I/usr/local/opt/openblas/include"
     export OPENBLAS="$(brew --prefix openblas)"
-
-    add2path_if_exists "$HOME/Library/Python/3.10/bin"
-    add2path_if_exists "/opt/homebrew/opt/python@3.10/libexec/bin"
+    export LDFLAGS="-L$OPENBLAS/lib"
+    export CPPFLAGS="-I$OPENBLAS/include"
 fi
 
-source_if_exists "$HOME/.profile_private"
-source_if_exists "$HOME/.config/broot/launcher/bash/br"
+# Essentials
+cond_add_path "$HOME/bin"
+cond_add_path "$HOME/.emacs.d/bin"
+cond_add_path "$HOME/.local/bin"
+export ZDOTDIR="$HOME/.zsh"
+export EDITOR=vim  # Should really be emacsclient...
+export PAGER=less
+export CACHEDIR=$HOME/.cache
+export CONFIGDIR=$HOME/.config
+export LOCALDIR=$HOME/.local
 
+# Python
+cond_add_path "$HOME/.poetry/bin"
+# cond_add_path "$HOME/Library/Python/3.10/bin"
+# cond_add_path "/opt/homebrew/opt/python@3.10/libexec/bin"
+export PYTHONBREAKPOINT=ipdb.set_trace
+export MPLBACKEND="module://itermplot"
+export ITERMPLOT=rv  # dark mode
+
+# Javascript / Typescript
 export NVM_DIR="$HOME/.nvm"
-. "$HOME/.cargo/env"
+
+# Rust
+cond_add_path "$HOME/.cargo/bin"
+
+# Haskell
+cond_add_path "$HOME/.cabal/bin"
+
+# Toolbox
+export ORGDIR="$HOME/mcc"
+export LABDIR="$HOME/lab"
+export DOTSREPO="$HOME/.dotfiles"
+
+# NOTE: can't quite use XDG_CONFIG_HOME because ?
+export ASPELL_CONF="home-dir $HOME/.config/aspell/"
+
+# Next-gen building backend for docker
+export DOCKER_BUILDKIT=1
+
+cond_source_path "$HOME/.profile_private"

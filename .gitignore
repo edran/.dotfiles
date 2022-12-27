@@ -125,3 +125,4 @@ dots/bin/nethack
 /ansible/roles/elliotweiser.osx-command-line-tools/
 /dots/zsh/.zsh_history
 *.zwc
+/dots/zsh/.zcompcache/
