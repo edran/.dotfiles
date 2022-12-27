@@ -6,9 +6,6 @@ if [[ $TERM == dumb || -n $INSIDE_EMACS ]]; then
   PS1='$ '
 fi
 
-export _FASD_DATA="$CACHEDIR/fasd"
-export _FASD_VIMINFO="$CACHEDIR/viminfo"
-
 # Treat these characters as part of a word.
 WORDCHARS='_-*?[]~&.;!#$%^(){}<>'
 

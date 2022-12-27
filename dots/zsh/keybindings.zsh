@@ -90,6 +90,7 @@ if [ -n "$TMUX" ]; then
   zstyle ':completion:tmux-pane-words-(prefix|anywhere):*' ignore-line current
   zstyle ':completion:tmux-pane-words-anywhere:*' matcher-list 'b:=* m:{A-Za-z}={a-zA-Z}'
 fi
+
 # Vim's C-x C-l in zsh
 history-beginning-search-backward-then-append() {
   zle history-beginning-search-backward

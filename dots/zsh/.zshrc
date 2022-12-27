@@ -44,7 +44,7 @@ if [[ $TERM != dumb ]]; then
   source $ZDOTDIR/keybindings.zsh
   source $ZDOTDIR/completion.zsh
   source $ZDOTDIR/aliases.zsh
-  source $ZDOTDIR/prompt2.zsh
+  autopair-init
 
   # fd > find
   if type fd &>/dev/null; then
@@ -70,9 +70,6 @@ if [[ $TERM != dumb ]]; then
   # The next line enables shell command completion for gcloud.
   if [ -f '$HOME/google-cloud-sdk/completion.zsh.inc' ]; then . '$HOME/google-cloud-sdk/completion.zsh.inc'; fi
 
-  ##
-  autoload -Uz compinit && compinit -u -d $CACHEDIR/zcompdump
-  autopair-init
 
   # TODO: make it lazy!
   [ -s "/opt/homebrew/opt/nvm/nvm.sh" ] && \. "/opt/homebrew/opt/nvm/nvm.sh"  # This loads nvm
