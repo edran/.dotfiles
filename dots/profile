@@ -38,6 +38,8 @@ export PAGER=less
 export CACHEDIR=$HOME/.cache
 export CONFIGDIR=$HOME/.config
 export LOCALDIR=$HOME/.local
+export LANG="en_US.UTF-8"
+export LC_ALL="en_US.UTF-8"
 
 # Python
 cond_add_path "$HOME/.poetry/bin"

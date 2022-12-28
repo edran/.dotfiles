@@ -66,6 +66,10 @@
         - bash # Because MacOS ships with an old version.
         - gpg
         # CLI essentials
+        # NOTE: I'd much rather use only hunspell, howerver spell-fu on Emacs
+        # does not support generating word lists with anything other than aspell
+        # yet.
+        - aspell
         - curl
         - { name: emacs-mac, install_options: with-modules }
         - fzf
@@ -79,7 +83,7 @@
         - pv # Progress bar for pipes.
         - ripgrep
         - wget
-        - wrk # HTTP benchmarking.
+        - tmux
         # Modern CLI tooling
         - angle-grinder # a.k.a. *agrinder*, log analysis.
         - bat # Replaces cat.
@@ -116,6 +120,7 @@
         - procs # ps
         - sd # sed
         - tealdeer # A fast tldr client.
+        - wrk # HTTP benchmarking.
         - xsv # CSV manipulator.
         - yq # jq for YAML.
         - zoxide # z, fast, autojump
@@ -123,8 +128,9 @@
         - go
         - nvm
         - pyenv
-        # Image manipulation
+        # Fun / useful
         - gifsicle
+        - fortune
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:

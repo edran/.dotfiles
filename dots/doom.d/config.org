@@ -1,4 +1,4 @@
-#+TITle: Doom Emacs Configuration
+#+title: Doom Emacs Configuration
 #+author: Nantas Nardelli
 #+language: en
 #+startup: fold
@@ -48,7 +48,7 @@ Rather than the last sentence / lines.
 
 *** TODO I should set bigger height for org headings only in the knowledge base
 
-Since this makes some of the organisational files a little painful to manage.
+Since this makes some of the organizational files a little painful to manage.
 
 *** TODO In org files, enter (in normal mode) should open links.
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
@@ -194,7 +194,7 @@ vterm                        ; the best terminal emulation in Emacs
 #+name: doom-checkers
 #+begin_src emacs-lisp
 syntax                       ; tasing you for every semicolon you forget
-(:if (executable-find "aspell") spell) ; tasing you for misspelling mispelling
+(spell +aspell)              ; tasing you for misspelling mispelling
 grammar                      ; tasing grammar mistake every you make
 #+end_src
 
@@ -633,7 +633,7 @@ let's setup a couple of keybindings.
       :desc "Open life file" "I" #'nn/org-open-life-file)
 #+end_src
 
-*** General behaviour
+*** General behavior
 
 #+begin_src emacs-lisp
 (setq org-return-follows-link t             ;; follow links on RET
@@ -1062,11 +1062,18 @@ I also want to refile only on non-done states.
 
 *** Spellcheck
 
-Enabling flyspell when visiting org files.
+We use =aspell= to spellcheck using the standard US dictionary, on top of which we
+add a bunch of private words.
 
 #+begin_src emacs-lisp
-(after! org (add-hook 'org-mode-hook 'turn-on-flyspell))
+(setq ispell-dictionary "en_US"
+      ispell-personal-dictionary (substitute-in-file-name "~/Dropbox/aspell/en_US.pws"))
 #+end_src
+
+NOTE: if you notice that =spell-fu= is flagging all words as incorrect, check that
+(1) aspell is installed, and (2) =~/.emacs.d/.local/etc/spell-fu= doesn't contain
+any files (since any files might be broken cache that the library doesn't know
+how to deal with).
 
 *** Roam
 

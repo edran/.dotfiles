@@ -34,9 +34,7 @@ take() {
   mkdir "$1" && cd "$1";
 }; compdef take=mkdir
 
-zman() {
-  PAGER="less -g -s '+/^       "$1"'" man zshall;
-}
+alias zman="man zshall"
 
 if [ -x "$(command -v exa)" ]; then
     alias ls="exa -s type"
