@@ -654,10 +654,41 @@ let's setup a couple of keybindings.
 #+begin_src emacs-lisp
 (after! org
   (setq org-todo-keywords
-       '((sequence "TODO(t)" "PROJ(p)" "LOOP(r)" "STRT(s)" "WAIT(w)" "HOLD(h)" "|" "DONE(d)" "KILL(k)")
-         (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)")
-         (sequence "HABIT(z)" "|" "TICKED(Z)")
-         (sequence "|" "OKAY(o)" "YES(y)" "NO(n)"))))
+       '((sequence
+          "TODO(t)"
+          "PROJ(p)"  ; A project.
+          "STRT(s)"  ; Started.
+          "HOLD(h)"  ; I've paused this.
+          "WAIT(w)"  ; Waiting on someone/something.
+          "DLGT(g)"  ; Delegated (hopefully with context!)
+          "IDEA(i)"  ; To consider at some point.
+          "LOOP(l)"  ; Recurrent tasks.
+          "|"
+          "DONE(d)"
+          "KILL(k)")
+         (sequence
+          "[ ](T)"   ; TODO
+          "[-](S)"   ; STRT
+          "[?](W)"   ; WAIT / HOLD / DLGT
+          "|"
+          "[X](D)"   ; DONE
+          "[k](K)")  ; KILL
+         (sequence
+          "|"
+          "OKAY(o)"
+          "YES(y)"
+          "NO(n)"))
+        org-todo-keyword-faces
+        '(("[-]"  . +org-todo-active)
+          ("STRT" . +org-todo-active)
+          ("[?]"  . +org-todo-onhold)
+          ("WAIT" . +org-todo-onhold)
+          ("HOLD" . +org-todo-onhold)
+          ("DLGT" . +org-todo-onhold)
+          ("PROJ" . +org-todo-project)
+          ("NO"   . +org-todo-cancel)
+          ("KILL" . +org-todo-cancel)
+          ("[k]"  . +org-todo-cancel))))
 #+end_src
 
 **** Indentation
@@ -688,13 +719,13 @@ finds ~last_modified: []~.
 
 *** Formatting
 
-I like to keep text hard-wrapped, but by default =auto-filled-mode= is not
-activated, so we enable it (on text buffers).
+First, let's make sure to switch =visual-fill-column= on when using =visual-line-mode=:
 
 #+begin_src emacs-lisp
-(add-hook 'text-mode-hook #'auto-fill-mode)
-(remove-hook 'text-mode-hook #'visual-line-mode)
+(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
 #+end_src
+
+*** ~orgfmt~
 
 I write messily, leaving destruction and despair in all my org files (in the
 form of random newlines, mostly). But I dislike mess! Thus, automation to the
@@ -952,12 +983,12 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
                ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo 'done))
                 (org-agenda-overriding-header "High-priority TODOs:")))
          (agenda ""
-                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '("HABIT")))
+                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'nottodo '("LOOP")))
                   (org-agenda-span 'day)
                   (org-agenda-start-day nil)
-                  (org-agenda-overriding-header "Habits:")))
+                  (org-agenda-overriding-header "Recurrent tasks:")))
          (agenda ""
-                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("HABIT")))
+                 ((org-agenda-skip-function '(org-agenda-skip-entry-if 'todo '("LOOP")))
                   (org-agenda-span 'week)
                   (org-agenda-start-day "-1d")
                   (org-agenda-overriding-header "Weekly schedule:")))

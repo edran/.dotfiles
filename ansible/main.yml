@@ -134,6 +134,7 @@
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
+        - alfred
         - docker
         - discord
         - dropbox
@@ -149,6 +150,7 @@
         - spotify
         - transmit
         - whatsapp
+        - zotero
 
     - mas_installed_apps:
         - { id: 682658836, name: GarageBand }

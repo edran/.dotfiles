@@ -126,3 +126,4 @@ dots/bin/nethack
 /dots/zsh/.zsh_history
 *.zwc
 /dots/zsh/.zcompcache/
+/dots/doom.d/custom.el

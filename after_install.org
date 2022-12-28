@@ -36,11 +36,14 @@ To export the config, run:
 $ defaults export com.manytricks.Moom dots/macos/Moom.plist
 #+end_src
 
+** Alfred
+
+Open it, set it up using its license, and set its preference folder to ~GDrive/configs/alfred~.
 
 * Poetry
 
-Emacs (and a bunch of other tools require ~poetry config virtualenvs.in-project true~.
+Emacs (and a bunch of other tools) require ~poetry config virtualenvs.in-project true~.
 
 * Logitech Options
 
-Install it from webiste.
+Install it from website.
