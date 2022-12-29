@@ -51,6 +51,7 @@ Rather than the last sentence / lines.
 Since this makes some of the organizational files a little painful to manage.
 
 *** TODO In org files, enter (in normal mode) should open links.
+
 *** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
 
 * Modules and Packages
@@ -578,6 +579,15 @@ snippet is not tangled). There's an [[github:Bad-ptr/persp-mode.el/issues/104][i
 (setq doom-fallback-buffer-name "*scratch*")
 #+end_src
 
+** Wrapping
+
+First, let's make sure to switch =visual-fill-column= on when using
+=visual-line-mode=:
+
+#+begin_src emacs-lisp
+(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
+#+end_src
+
 * Tools configuration
 ** org-mode
 
@@ -596,13 +606,10 @@ them most of them here.
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
       org-archive-location (concat org-directory ".archive/%s::")
-      org-default-notes-file (concat org-directory "inbox.org"))
+      org-default-notes-file (concat org-directory "main.org"))
 
-(defvar nn-org-inbox-file (concat org-directory "inbox.org")
-  "Path to the inbox file.")
-
-(defvar nn-org-life-file (concat org-directory "life.org")
-  "Path to the inbox file.")
+(defvar nn-org-reading-file (concat org-directory "reading.org")
+  "Path to file containing my reading list.")
 #+end_src
 
 I also employ =org-roam= to manage my knowledge base, so let's setup its directory
@@ -619,18 +626,13 @@ as ~$org-directory/kb~.
 let's setup a couple of keybindings.
 
 #+begin_src emacs-lisp
-(defun nn/org-open-inbox-file ()
+(defun nn/org-open-main()
   (interactive)
-  (find-file nn-org-inbox-file))
-
-(defun nn/org-open-life-file ()
-  (interactive)
-  (find-file nn-org-life-file))
+  (find-file org-default-notes-file))
 
 (map! :leader
       :prefix-map ("n" . "notes")
-      :desc "Open inbox file" "i" #'nn/org-open-inbox-file
-      :desc "Open life file" "I" #'nn/org-open-life-file)
+      :desc "Open main org file" "i" #'nn/org-open-main)
 #+end_src
 
 *** General behavior
@@ -646,8 +648,11 @@ let's setup a couple of keybindings.
       org-babel-load-languages '((dot . t)
                                  (emacs-lisp . t)
                                  (python . t)
+                                 (shell . t)
                                  (R . t)))
 #+end_src
+
+*** "TODO" keywords
 
 =TODO -> DONE= is just not enough.
 
@@ -674,34 +679,30 @@ let's setup a couple of keybindings.
           "[X](D)"   ; DONE
           "[k](K)")  ; KILL
          (sequence
+          "TOREAD(1!)"
+          "READING(2!)"
+          "|"
+          "READ(3!)")
+         (sequence
           "|"
           "OKAY(o)"
           "YES(y)"
           "NO(n)"))
         org-todo-keyword-faces
-        '(("[-]"  . +org-todo-active)
-          ("STRT" . +org-todo-active)
-          ("[?]"  . +org-todo-onhold)
+        '(("STRT" . +org-todo-active)
+          ("[-]"  . +org-todo-active)
+          ("READING" . +org-todo-active)
           ("WAIT" . +org-todo-onhold)
           ("HOLD" . +org-todo-onhold)
           ("DLGT" . +org-todo-onhold)
+          ("[?]"  . +org-todo-onhold)
           ("PROJ" . +org-todo-project)
           ("NO"   . +org-todo-cancel)
           ("KILL" . +org-todo-cancel)
           ("[k]"  . +org-todo-cancel))))
 #+end_src
 
-**** Indentation
-
-I want everything left-justified.
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-startup-indented nil  ;; I don't like indents
-        org-adapt-indentation nil))
-#+end_src
-
-**** Timestamps
+*** Timestamps
 
 In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
 
@@ -715,15 +716,7 @@ finds ~last_modified: []~.
 (add-hook 'before-save-hook 'time-stamp)
 #+end_src
 
-/*chef kiss*/
-
-*** Formatting
-
-First, let's make sure to switch =visual-fill-column= on when using =visual-line-mode=:
-
-#+begin_src emacs-lisp
-(add-hook 'visual-line-mode-hook #'visual-fill-column-mode)
-#+end_src
+So easy. /*chef kiss*/
 
 *** ~orgfmt~
 
@@ -786,7 +779,8 @@ SCOPE determines the scope of the command; see `org-map-entries' for a list."
       (replace-match "\n\n"))))
 #+end_src
 
-*** UI
+*** Look
+**** Use variable pitch fonts for prose
 
 I want org files to use =mixed-pitch-mode=, since it is nicer to read prose in
 variable pitch fonts.
@@ -795,7 +789,21 @@ variable pitch fonts.
 (add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
 #+end_src
 
-The title and the headings need to standout more.
+**** Headings gotta pop!
+
+I want the headings to be indented, as well as being represented using some
+[[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
+
+#+begin_src emacs-lisp
+(after! org-superstar
+  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+        org-superstar-prettify-item-bullets t
+        org-superstar-remove-leading-stars nil
+      ))
+#+end_src
+
+
+Also, headings (and the title) need to standout more.
 
 #+begin_src emacs-lisp
 (after! org
@@ -811,9 +819,7 @@ The title and the headings need to standout more.
     '(org-level-8 :inherit outline-8 :weight semi-bold)))
 #+end_src
 
-I also like to use the small black down-pointing triangle as the ellipsis, as I
-would normally not type it myself (and thus it is easier to differentiate it
-from actual usage of ellipsis).
+When cycling the headings down, I don't want to see actual ellipsis.
 
 #+begin_src emacs-lisp
 (after! org (setq org-ellipsis " ▾ "))
@@ -822,47 +828,43 @@ from actual usage of ellipsis).
 When using simple list, I want different levels to have different bullets.
 
 #+begin_src emacs-lisp
-(setq org-list-demote-modify-bullet '(("+" . "-")  ;; different depth => different bullets
+(setq org-list-demote-modify-bullet '(("+" . "-")
                                       ("-" . "+")))
 #+end_src
 
-**** Superstar
+**** Indentation
 
-I want the headings to be indented, as well as being represented using some
-[[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
+I want everything left-justified.
 
 #+begin_src emacs-lisp
-(after! org-superstar
-  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
-        org-superstar-prettify-item-bullets t
-        org-superstar-remove-leading-stars nil
-      ))
+(after! org
+  (setq org-startup-indented nil  ;; I don't like indents
+        org-adapt-indentation nil))
 #+end_src
-
 *** Capture
 
 #+begin_src emacs-lisp
 (after! org-capture
   (setq org-capture-templates
-        `(("i" "Quick inbox" entry (file+headline nn-org-inbox-file "Tasks")
+        `(("i" "Quick inbox" entry (file+headline org-default-notes-file "Inbox")
            "* TODO %^{Task description}"
            :immediate-finish t)
-          ("I" "Inbox" entry (file+headline nn-org-inbox-file "Tasks")
+          ("I" "Inbox" entry (file+headline org-default-notes-file "Inbox")
            "* TODO %?")
           ;; Dates
-          ("." "Today" entry (file+headline nn-org-inbox-file "Tasks")
+          ("." "Today" entry (file+headline org-default-notes-file "Inbox")
            ,(string-join '("* TODO %^{Task description (scheduled today)}"
                            "SCHEDULED: %t") "\n")
            :immediate-finish t)
           ("d" "Date")
-          ("ds" "Scheduled" entry (file+headline nn-org-inbox-file "Tasks")
+          ("ds" "Scheduled" entry (file+headline org-default-notes-file "Inbox")
            ,(string-join '("* TODO %?"
                            "SCHEDULED: %^{Scheduled date}t") "\n"))
-          ("dd" "Deadline" entry (file+headline nn-org-inbox-file "Tasks")
+          ("dd" "Deadline" entry (file+headline org-default-notes-file "Inbox")
            ,(string-join '("* TODO %?"
                            "DEADLINE: %^{Deadline date}t") "\n"))
-          ("w" "Web" entry (file+headline nn-org-inbox-file "Web")
-           "* TODO %:annotation \n%:i\n %i"
+          ("r" "reading" entry (file+headline nn-org-reading-file "Inbox")
+           "* TOREAD %:annotation \n%:i\n %i"
            :immediate-finish t))))
 #+end_src
 
@@ -1399,6 +1401,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 #+end_src
 
 * Language configuration
+
 ** Python
 
 #+begin_src emacs-lisp
@@ -1406,6 +1409,7 @@ also a good option). The [[https://chrome.google.com/webstore/detail/ghosttext/g
 #+end_src
 
 ** Emacs lisp
+
 *** Better eval-sexp
 
 I hate to manually having to do forward-list all the time I'm writing elisp and
