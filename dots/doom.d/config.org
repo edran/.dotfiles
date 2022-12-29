@@ -387,11 +387,9 @@ The following packages make ~org-mode~ even more awesome than usual.
 ~org-anki~ is a package I'm developing. Will be released Soon™.
 
 #+begin_src emacs-lisp
-;; (package! org-anki
-;;   :recipe (:local-repo "~/.doom.d/packages/org-anki" :no-byte-compile t))
+(package! org-anki
+  :recipe (:local-repo "lisp/org-anki"))
 #+end_src
-
-***** TODO Reenable org-anki
 
 **** Prettier org-mode
 

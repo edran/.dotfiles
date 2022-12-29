@@ -136,6 +136,7 @@
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
         - alfred
+        - anki
         - docker
         - discord
         - dropbox
