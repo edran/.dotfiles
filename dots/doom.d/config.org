@@ -604,7 +604,10 @@ them most of them here.
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
       org-archive-location (concat org-directory ".archive/%s::")
-      org-default-notes-file (concat org-directory "main.org"))
+      org-default-notes-file (concat org-directory "notes.org"))
+
+(defvar nn-org-main-file (concat org-directory "main.org")
+  "Path to file containing my main org data.")
 
 (defvar nn-org-reading-file (concat org-directory "reading.org")
   "Path to file containing my reading list.")
@@ -626,7 +629,7 @@ let's setup a couple of keybindings.
 #+begin_src emacs-lisp
 (defun nn/org-open-main()
   (interactive)
-  (find-file org-default-notes-file))
+  (find-file nn-org-main-file))
 
 (map! :leader
       :prefix-map ("n" . "notes")
@@ -844,21 +847,21 @@ I want everything left-justified.
 #+begin_src emacs-lisp
 (after! org-capture
   (setq org-capture-templates
-        `(("i" "Quick inbox" entry (file+headline org-default-notes-file "Inbox")
+        `(("i" "Quick inbox" entry (file+headline nn-org-main-file "Inbox")
            "* TODO %^{Task description}"
            :immediate-finish t)
-          ("I" "Inbox" entry (file+headline org-default-notes-file "Inbox")
+          ("I" "Inbox" entry (file+headline nn-org-main-file "Inbox")
            "* TODO %?")
           ;; Dates
-          ("." "Today" entry (file+headline org-default-notes-file "Inbox")
+          ("." "Today" entry (file+headline nn-org-main-file "Inbox")
            ,(string-join '("* TODO %^{Task description (scheduled today)}"
                            "SCHEDULED: %t") "\n")
            :immediate-finish t)
           ("d" "Date")
-          ("ds" "Scheduled" entry (file+headline org-default-notes-file "Inbox")
+          ("ds" "Scheduled" entry (file+headline nn-org-main-file "Inbox")
            ,(string-join '("* TODO %?"
                            "SCHEDULED: %^{Scheduled date}t") "\n"))
-          ("dd" "Deadline" entry (file+headline org-default-notes-file "Inbox")
+          ("dd" "Deadline" entry (file+headline nn-org-main-file "Inbox")
            ,(string-join '("* TODO %?"
                            "DEADLINE: %^{Deadline date}t") "\n"))
           ("r" "reading" entry (file+headline nn-org-reading-file "Inbox")
