@@ -53,6 +53,9 @@
         - name: Signal
           path: /Applications/Signal.app
           pos: 9
+        - name: Anki
+          path: /Applications/Anki.app
+          pos: 10
 
     - homebrew_taps:
         - homebrew/core
@@ -76,6 +79,7 @@
         - fzf
         - git
         - git-delta
+        - git-lfs
         - github/gh/gh
         - iperf3
         - nmap
@@ -150,6 +154,7 @@
         - signal
         - slack
         - spotify
+        - teamviewer
         - transmit
         - whatsapp
         - zotero
