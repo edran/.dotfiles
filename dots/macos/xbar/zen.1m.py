@@ -1,15 +1,14 @@
 #!/usr/bin/env python3
 
-# <xbar.title>GitHub Zen</xbar.title>
-# <xbar.version>v1.1.0</xbar.version>
-# <xbar.author>Josh</xbar.author>
-# <xbar.author.github>andjosh</xbar.author.github>
-# <xbar.desc>GitHub zen in your menu bar!</xbar.desc>
+# <xbar.title>Zen</xbar.title>
+# <xbar.version>v1.0.0</xbar.version>
+# <xbar.author>Nantas Nardelli</xbar.author>
+# <xbar.author.github>edran</xbar.author.github>
+# <xbar.desc>Pills of zen from GitHub.</xbar.desc>
 # <xbar.dependencies>python</xbar.dependencies>
-# <xbar.image>http://i.imgur.com/U4OHxDm.png</xbar.image>
 
-from urllib.request import urlopen
+from urllib import request
 
-url = 'https://api.github.com/zen'
-body = urlopen(url).read()
-print(body.decode('utf-8'))
+print(
+    request.urlopen('https://api.github.com/zen').read().decode('utf-8')
+)
