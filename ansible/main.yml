@@ -58,8 +58,6 @@
           pos: 10
 
     - homebrew_taps:
-        - homebrew/core
-        - homebrew/cask
         - railwaycat/emacsmacport
 
     - homebrew_installed_packages:
@@ -81,7 +79,7 @@
         - git
         - git-delta
         - git-lfs
-        - github/gh/gh
+        - gh
         - iperf3
         - nmap
         - nnn
@@ -160,6 +158,7 @@
         - teamviewer
         - transmit
         - whatsapp
+        - xbar
         - zotero
 
     - mas_installed_apps:
@@ -185,3 +184,12 @@
         apply:
           tags: [dock]
       tags: [always]
+
+    - name: Link script to xbar
+      file:
+        src: "{{ item }}"
+        dest: "{{ ansible_env.HOME }}/Library/Application Support/xbar/plugins/{{ item | basename }}"
+        state: link
+      with_fileglob:
+        - "{{ inventory_dir }}/../dots/macos/xbar/*"
+      tags: [quick]
