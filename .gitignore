@@ -128,3 +128,4 @@ dots/bin/nethack
 /dots/zsh/.zcompcache/
 /dots/doom.d/custom.el
 /dots/doom.d/lisp/
+/dots/macos/karabiner/automatic_backups/*.json
