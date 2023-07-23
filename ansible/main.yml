@@ -76,6 +76,7 @@
         - aspell
         - curl
         - { name: emacs-mac, install_options: with-modules }
+        - fish
         - fzf
         - git
         - git-delta
@@ -141,6 +142,7 @@
     - homebrew_cask_apps:
         - alfred
         - anki
+        - chrysalis
         - docker
         - discord
         - dropbox
@@ -151,6 +153,7 @@
         - karabiner-elements
         - linear-linear
         - notion
+        - postman
         - signal
         - slack
         - spotify
