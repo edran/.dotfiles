@@ -58,3 +58,15 @@ ipdb() {
 }
 
 palette() { local colors; for n in {000..255}; do colors+=("%F{$n}$n%f"); done; print -cP $colors; }
+
+itplot() {
+    if [ -z "$MPLBACKEND" ]; then
+        export MPLBACKEND="module://itermplot"
+        export ITERMPLOT="rv"  # dark mode
+        echo "itermplot enabled (dark mode)"
+    else
+        unset MPLBACKEND
+        unset ITERMPLOT
+        echo "itermplot disabled"
+    fi
+}

@@ -44,13 +44,14 @@ fi
 if [[ $TERM != dumb ]]; then
   source $ZDOTDIR/keybindings.zsh
   source $ZDOTDIR/completion.zsh
-  source $ZDOTDIR/aliases.zsh
-  # This is where all the nonsense should be contained.
-  source $ZDOTDIR/extras.zsh
 
   # Initialise completion and other plugins as necessary
   autoload -Uz compinit && compinit -u -d $ZSH_CACHE/zcompdump
   autopair-init
+
+  source $ZDOTDIR/aliases.zsh
+  # All the nonsense should be contained in here.
+  source $ZDOTDIR/extras.zsh
 
   # NOTE: p10k configure by default puts it somewhere else, so it always needs
   # to be renamed in case it needs to be generated again.

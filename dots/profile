@@ -32,6 +32,7 @@ fi
 cond_add_path "$HOME/bin"
 cond_add_path "$HOME/.emacs.d/bin"
 cond_add_path "$HOME/.local/bin"
+cond_add_path "$HOME/bin"
 export ZDOTDIR="$HOME/.zsh"
 export EDITOR=vim  # Should really be emacsclient...
 export PAGER=less
@@ -42,12 +43,8 @@ export LANG="en_US.UTF-8"
 export LC_ALL="en_US.UTF-8"
 
 # Python
-cond_add_path "$HOME/.poetry/bin"
-# cond_add_path "$HOME/Library/Python/3.10/bin"
-# cond_add_path "/opt/homebrew/opt/python@3.10/libexec/bin"
+# NOTE: pyenv is setup in extra.zsh
 export PYTHONBREAKPOINT=ipdb.set_trace
-export MPLBACKEND="module://itermplot"
-export ITERMPLOT=rv  # dark mode
 
 # Javascript / Typescript
 export NVM_DIR="$HOME/.nvm"
