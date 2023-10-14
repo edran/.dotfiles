@@ -2,7 +2,7 @@
 
 # To install:
 # $ ln -s ~/.dotfiles/dots/macos/xbar/sync-mcc.sh \
-#         ~/Library/Application\ Support/xbar/plugins/sync-mcc.1m.sh
+#         ~/Library/Application\ Support/xbar/plugins/sync-mcc.10m.sh
 
 # <xbar.title>MCC Sync</xbar.title>
 # <xbar.author>Nantas Nardelli</xbar.author>
@@ -14,7 +14,7 @@ set -e
 source "$HOME/.profile"
 
 clickable_history () {
-    logs=$(git log -3 --pretty=format:"%h;%ar")
+    logs=$(git log -5 --pretty=format:"%h;%ar")
     while read -r commit
     do
         commit=(${commit//;/ })
