@@ -138,6 +138,7 @@
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
+        - { name: nikitabobko/tap/aerospace, install_options: no-quarantine }
         - alfred
         - anki
         - chrysalis
@@ -145,7 +146,6 @@
         - discord
         - dropbox
         - firefox
-        - google-chrome
         - handbrake
         - iterm2
         - karabiner-elements
@@ -170,6 +170,25 @@
         - { id: 419330170, name: Moom }
         - { id: 1475387142, name: Tailscale }
 
+    - dots_links:
+        - { src: doom.d, dest: .doom.d }
+        - { src: git/config, dest: .gitconfig }
+        - { src: git/ignore, dest: .gitignore }
+        - { src: macos/aerospace.toml, dest: .aerospace.toml }
+        - { src: macos/Moom.plist, dest: Library/Preferences/Moom.plist }
+        - { src: macos/iterm2, dest: .iterm2 }
+        - { src: macos/karabiner, dest: .config/karabiner }
+        - { src: nethackrc, dest: .nethackrc }
+        - { src: profile, dest: .profile }
+        # TODO: this will normally fail. Needs a custom link task.
+        - { src: ssh, dest: .ssh }
+        - { src: tmux.conf, dest: .tmux.conf }
+        - { src: vimrc, dest: .vimrc }
+        - { src: zsh, dest: .zsh }
+        - { src: zsh/.zprofile, dest: .zprofile }
+        - { src: zsh/.zshenv, dest: .zshenv }
+        - { src: zsh/.zshrc, dest: .zshrc }
+
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
@@ -178,6 +197,15 @@
       tags: [mas]
 
   tasks:
+    - name: Link script to xbar
+      file:
+        src: "{{ inventory_dir }}/../dots/{{ item.src }}"
+        dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+        state: link
+      loop: "{{ dots_links }}"
+      tags: [quick]
+
+      tags: [quick]
     - name: Include Dock role.
       include_role:
         name: geerlingguy.mac.dock
@@ -193,3 +221,157 @@
       with_fileglob:
         - "{{ inventory_dir }}/../dots/macos/xbar/*"
       tags: [quick]
+
+    # TODO: requires killall Dock
+    - name: Group windows by application in expose
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: expose-group-apps
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Autohide dock
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: autohide
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Make dock icons small
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: tilesize
+        type: int
+        value: 24
+        state: present
+      tags: [quick]
+    - name: Use a simple window minimize animation
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: mineffect
+        type: string
+        value: genie
+        state: present
+      tags: [quick]
+    - name: Add ability to scroll up on dock icon to see app instances
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: scroll-to-open
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+
+    - name: Set OS languages 
+      community.general.osx_defaults:
+        key: applelanguages
+        type: array
+        value: 
+          - en-us
+      tags: [quick]
+
+    # NOTE: requires killall SystemUIServer & a logout to take effect
+    - name: Set displays to have separate spaces
+      community.general.osx_defaults:
+        domain: com.apple.spaces
+        key: spans-displays
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Set default directory for screenshots
+      community.general.osx_defaults:
+        domain: com.apple.screencapture
+        key: location
+        type: string
+        value: "~/Desktop/screenshots"
+        state: present
+      tags: [quick]
+    - name: Set default directory for Simulator screenshots
+      community.general.osx_defaults:
+        domain: com.apple.iphonesimulator
+        key: ScreenShotSaveLocation
+        type: string
+        value: "~/Desktop/screenshots/simulator"
+        state: present
+      tags: [quick]
+
+    # Finder
+    - name: Show hidden files
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: AppleShowAllFiles
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show file extensions
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: AppleShowAllExtensions
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show path bar
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: ShowPathbar
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show folders on top
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: _FXSortFoldersFirst
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Set default view to column
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXPreferredViewStyle
+        type: string
+        value: clmv
+        state: present
+      tags: [quick]
+    - name: Empty bin after 30 days
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXRemoveOldTrashItems
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Disable warning when chaning a file extension
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXEnableExtensionChangeWarning
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+
+
+    # TextEdit
+    - name: Disable smart quotes
+      community.general.osx_defaults:
+        domain: com.apple.TextEdit
+        key: SmartQuotes
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+    - name: Set TextEdit to default to txt
+      community.general.osx_defaults:
+        domain: com.apple.TextEdit
+        key: RichText
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+
