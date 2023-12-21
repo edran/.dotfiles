@@ -1,0 +1,82 @@
+start-at-login = true
+
+[mode.main.binding]
+ctrl-alt-cmd-enter = 'exec-and-forget osascript -e "tell application \"iTerm2\" to set newWindow to (create window with default profile)"'
+
+ctrl-alt-cmd-h = 'focus left'
+ctrl-alt-cmd-shift-h = 'move-through left'
+
+ctrl-alt-cmd-j = 'focus down'
+ctrl-alt-cmd-shift-j = 'move-through down'
+
+ctrl-alt-cmd-k = 'focus up'
+ctrl-alt-cmd-shift-k = 'move-through up'
+
+ctrl-alt-cmd-l = 'focus right'
+ctrl-alt-cmd-shift-l = 'move-through right'
+
+# ctrl-alt-cmd-h = 'split horizontal'
+# ctrl-alt-cmd-v = 'split vertical'
+
+ctrl-alt-cmd-f = 'fullscreen'
+
+ctrl-alt-cmd-minus = 'resize smart -50'
+ctrl-alt-cmd-equal = 'resize smart +50'
+
+ctrl-alt-cmd-slash = 'layout tiles horizontal vertical'
+ctrl-alt-cmd-comma = 'layout accordion horizontal vertical'
+ctrl-alt-cmd-shift-space = 'layout floating tiling'
+
+ctrl-alt-cmd-n = 'workspace next'
+ctrl-alt-cmd-p = 'workspace prev'
+
+ctrl-alt-cmd-1 = 'workspace 1'
+ctrl-alt-cmd-2 = 'workspace 2'
+ctrl-alt-cmd-3 = 'workspace 3'
+ctrl-alt-cmd-4 = 'workspace 4'
+ctrl-alt-cmd-5 = 'workspace 5'
+ctrl-alt-cmd-6 = 'workspace 6'
+ctrl-alt-cmd-7 = 'workspace 7'
+ctrl-alt-cmd-8 = 'workspace 8'
+ctrl-alt-cmd-9 = 'workspace 9'
+
+ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'
+ctrl-alt-cmd-shift-2 = 'move-node-to-workspace 2'
+ctrl-alt-cmd-shift-3 = 'move-node-to-workspace 3'
+ctrl-alt-cmd-shift-4 = 'move-node-to-workspace 4'
+ctrl-alt-cmd-shift-5 = 'move-node-to-workspace 5'
+ctrl-alt-cmd-shift-6 = 'move-node-to-workspace 6'
+ctrl-alt-cmd-shift-7 = 'move-node-to-workspace 7'
+ctrl-alt-cmd-shift-8 = 'move-node-to-workspace 8'
+ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
+
+ctrl-alt-cmd-tab = 'workspace-back-and-forth'
+
+ctrl-alt-cmd-shift-n = 'move-workspace-to-monitor next'
+ctrl-alt-cmd-shift-p = 'move-workspace-to-monitor prev'
+
+ctrl-alt-cmd-r = 'mode resize'
+ctrl-alt-cmd-semicolon = 'mode service'
+ctrl-alt-cmd-quote = 'mode join'
+
+[mode.resize.binding]
+minus = 'resize smart -50'
+equal = 'resize smart +50'
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+esc = 'mode main'
+
+[mode.service.binding]
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']
+
+[mode.join.binding]
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+esc = 'mode main'
