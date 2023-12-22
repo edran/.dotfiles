@@ -355,7 +355,31 @@
         value: false
         state: present
       tags: [quick]
+    - name: Make side icons smaller
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: NSTableViewDefaultSizeMode
+        type: int
+        value: 1
+        state: present
+      tags: [quick]
+    - name: Keep folders on top in desktop
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: _FXSortFoldersFirstOnDesktop
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
 
+    # Trackpad
+    - name: Switch to sane scrolling direction
+      community.general.osx_defaults:
+        key: com.apple.swipescrolldirection
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
 
     # TextEdit
     - name: Disable smart quotes
