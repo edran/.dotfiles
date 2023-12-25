@@ -171,6 +171,8 @@
         - { id: 1475387142, name: Tailscale }
 
     - dots_links:
+        - { src: bin, dest: bin }
+        - { src: fish, dest: .config/fish }
         - { src: doom.d, dest: .doom.d }
         - { src: git/config, dest: .gitconfig }
         - { src: git/ignore, dest: .gitignore }
@@ -399,3 +401,9 @@
         state: present
       tags: [quick]
 
+    - name: Disable terminal login message
+      file:
+        path: "{{ ansible_env.HOME }}/.hushlogin"
+        mode: "0644"
+        state: touch
+      tags: [quick]
