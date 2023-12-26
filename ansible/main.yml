@@ -73,7 +73,6 @@
         # yet.
         - aspell
         - curl
-        - { name: emacs-mac, install_options: with-modules }
         - fish
         - fzf
         - git
@@ -88,6 +87,24 @@
         - ripgrep
         - wget
         - tmux
+        # Needed for Emacs
+        # Remember to cp installation into /Applications
+        - tree-sitter
+        - jansson
+        - libxml2
+        - imagemagick
+        - { name: emacs-mac,
+            install_options: [
+              with-modules,
+              with-native-compilation,
+              with-no-title-bars,
+              with-xwidgets,
+              with-emacs-big-sur-icon,
+              with-librsvg,
+              with-tree-sitter,
+            ]
+          }
+
         # Modern CLI tooling
         - angle-grinder # a.k.a. *agrinder*, log analysis.
         - bat # Replaces cat.
