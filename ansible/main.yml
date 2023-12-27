@@ -152,6 +152,7 @@
         # Fun / useful
         - gifsicle
         - fortune
+        - neofetch
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
@@ -207,6 +208,7 @@
         - { src: zsh/.zprofile, dest: .zprofile }
         - { src: zsh/.zshenv, dest: .zshenv }
         - { src: zsh/.zshrc, dest: .zshrc }
+        - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
 
   roles:
     - role: elliotweiser.osx-command-line-tools
