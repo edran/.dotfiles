@@ -1,5 +1,8 @@
 # This file contains fish universal variable definitions.
 # VERSION: 3.0
+SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dstrip\x2dcwd\x2dprefix
+SETUVAR --export MANPAGER:most
+SETUVAR --export PAGER:most
 SETUVAR VIRTUAL_ENV_DISABLE_PROMPT:true
 SETUVAR --export ZELLIJ_AUTO_ATTACH:true
 SETUVAR __fish_initialized:3400
@@ -9,8 +12,10 @@ SETUVAR _fisher_jorgebucaran_2F_nvm_2E_fish_files:\x7e/\x2econfig/fish/functions
 SETUVAR _fisher_patrickf1_2F_fzf_2E_fish_files:\x7e/\x2econfig/fish/functions/_fzf_configure_bindings_help\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_extract_var_info\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_changed_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_preview_file\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_diff_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_report_file_type\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_directory\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_log\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_git_status\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_history\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_processes\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_search_variables\x2efish\x1e\x7e/\x2econfig/fish/functions/_fzf_wrapper\x2efish\x1e\x7e/\x2econfig/fish/functions/fzf_configure_bindings\x2efish\x1e\x7e/\x2econfig/fish/conf\x2ed/fzf\x2efish\x1e\x7e/\x2econfig/fish/completions/fzf_configure_bindings\x2efish
 SETUVAR _fisher_plugins:jorgebucaran/fisher\x1ejorgebucaran/nvm\x2efish\x1epatrickf1/fzf\x2efish\x1eilancosman/tide\x40v6
 SETUVAR _fisher_upgraded_to_4_4:\x1d
-SETUVAR _tide_left_items:os\x1epwd\x1egit\x1enewline\x1echaracter
-SETUVAR _tide_prompt_30627:\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\uf179\x1b\x5b38\x3b2\x3b148\x3b148\x3b148m\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x40PWD\x40\x1b\x5b38\x3b2\x3b148\x3b148\x3b148m\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\uf1d3\x20\x1b\x5b37m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0mmain\x1b\x5b38\x3b2\x3b255\x3b0\x3b0m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x1b\x5b38\x3b2\x3b255\x3b0\x3b0m\x1b\x5b38\x3b2\x3b215\x3b175\x3b0m\x20\x2b1\x1b\x5b38\x3b2\x3b215\x3b175\x3b0m\x20\x214\x1b\x5b38\x3b2\x3b0\x3b175\x3b255m\x20\x3f1\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\u276f
+SETUVAR _tide_left_items:pwd\x1egit\x1enewline\x1echaracter
+SETUVAR _tide_prompt_29265:\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x40PWD\x40\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x24
+SETUVAR _tide_prompt_30334:\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x40PWD\x40\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x24\x1e\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x5b38\x3b2\x3b135\x3b135\x3b95m\uf252\x200s\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm
+SETUVAR _tide_prompt_4383:\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x5b38\x3b2\x3b135\x3b175\x3b175mI\x1b\x5b38\x3b2\x3b148\x3b148\x3b148m\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x40PWD\x40\x1b\x5b38\x3b2\x3b148\x3b148\x3b148m\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\uf1d3\x20\x1b\x5b37m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0mmain\x1b\x5b38\x3b2\x3b255\x3b0\x3b0m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\x1b\x5b38\x3b2\x3b255\x3b0\x3b0m\x1b\x5b38\x3b2\x3b215\x3b175\x3b0m\x1b\x5b38\x3b2\x3b215\x3b175\x3b0m\x20\x212\x1b\x5b38\x3b2\x3b0\x3b175\x3b255m\x20\x3f2\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1e\x1b\x5b38\x3b2\x3b95\x3b215\x3b0m\u276f\x1e\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x20\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x5b38\x3b2\x3b247\x3b76\x3b0m\ue7a8\x201\x2e74\x2e1\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm\x1b\x28B\x1b\x5bm
 SETUVAR _tide_right_items:status\x1ecmd_duration\x1econtext\x1ejobs\x1enode\x1epython\x1erustc\x1ejava\x1eruby\x1ego\x1ekubectl
 SETUVAR fish_color_autosuggestion:555\x1ebrblack
 SETUVAR fish_color_cancel:\x2dr
@@ -46,20 +51,21 @@ SETUVAR fish_pager_color_prefix:normal\x1e\x2d\x2dbold\x1e\x2d\x2dunderline
 SETUVAR fish_pager_color_progress:brwhite\x1e\x2d\x2dbackground\x3dcyan
 SETUVAR fish_pager_color_selected_background:\x2dr
 SETUVAR fish_vi_key_bindings:\x1d
+SETUVAR --export fzf_preview_dir_cmd:eza\x1e\x2d\x2dall\x1e\x2d\x2dcolor\x3dalways
 SETUVAR tide_aws_bg_color:normal
 SETUVAR tide_aws_color:FF9900
 SETUVAR tide_aws_icon:\uf270
 SETUVAR tide_character_color:5FD700
 SETUVAR tide_character_color_failure:FF0000
-SETUVAR tide_character_icon:\u276f
-SETUVAR tide_character_vi_icon_default:\u276e
-SETUVAR tide_character_vi_icon_replace:\u25b6
-SETUVAR tide_character_vi_icon_visual:V
+SETUVAR tide_character_icon:\x24
+SETUVAR tide_character_vi_icon_default:\u03bb
+SETUVAR tide_character_vi_icon_replace:\u03b5
+SETUVAR tide_character_vi_icon_visual:\u03c6
 SETUVAR tide_cmd_duration_bg_color:normal
 SETUVAR tide_cmd_duration_color:87875F
 SETUVAR tide_cmd_duration_decimals:0
 SETUVAR tide_cmd_duration_icon:\uf252
-SETUVAR tide_cmd_duration_threshold:3000
+SETUVAR tide_cmd_duration_threshold:0
 SETUVAR tide_context_always_display:false
 SETUVAR tide_context_bg_color:normal
 SETUVAR tide_context_color_default:D7AF87
@@ -115,7 +121,7 @@ SETUVAR tide_kubectl_bg_color:normal
 SETUVAR tide_kubectl_color:326CE5
 SETUVAR tide_kubectl_icon:\U000f10fe
 SETUVAR tide_left_prompt_frame_enabled:false
-SETUVAR tide_left_prompt_items:os\x1epwd\x1egit\x1enewline\x1echaracter
+SETUVAR tide_left_prompt_items:pwd\x1egit\x1enewline\x1echaracter
 SETUVAR tide_left_prompt_prefix:
 SETUVAR tide_left_prompt_separator_diff_color:\x20
 SETUVAR tide_left_prompt_separator_same_color:\x20

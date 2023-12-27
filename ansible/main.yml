@@ -120,7 +120,7 @@
         - dive # Analyse docker images.
         - dust # du
         - entr # Run arbitrary commands on file changes.
-        - exa # ls
+        - eza # ls
         - duf # df
         - fd # find
         - fq # Explore binary files (like jq, ish).
@@ -137,6 +137,7 @@
         - jq
         - lazydocker # TUI for docker.
         - lnav # Curses-based log viewing.
+        - most # A better less
         - mtr # traceroute
         - pgcli # psql
         - procs # ps
@@ -196,9 +197,8 @@
         - { src: git/config, dest: .gitconfig }
         - { src: git/ignore, dest: .gitignore }
         - { src: macos/aerospace.toml, dest: .aerospace.toml }
-        - { src: macos/Moom.plist, dest: Library/Preferences/Moom.plist }
-        - { src: macos/iterm2, dest: .iterm2 }
         - { src: macos/karabiner, dest: .config/karabiner }
+        - { src: bat.config, dest: .config/bat/config}
         - { src: nethackrc, dest: .nethackrc }
         - { src: profile, dest: .profile }
         # TODO: this will normally fail. Needs a custom link task.
@@ -206,10 +206,6 @@
         - { src: tmux.conf, dest: .tmux.conf }
         - { src: zellij.kdl, dest: .config/zellij/config.kdl }
         - { src: vimrc, dest: .vimrc }
-        - { src: zsh, dest: .zsh }
-        - { src: zsh/.zprofile, dest: .zprofile }
-        - { src: zsh/.zshenv, dest: .zshenv }
-        - { src: zsh/.zshrc, dest: .zshrc }
         - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
 
   roles:
@@ -422,6 +418,7 @@
         state: present
       tags: [quick]
 
+    # Other stuff
     - name: Disable terminal login message
       file:
         path: "{{ ansible_env.HOME }}/.hushlogin"
