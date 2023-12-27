@@ -7,5 +7,12 @@ if status --is-interactive
     source $file
   end
 
-  eval (zellij setup --generate-auto-start fish | string collect)
+  zoxide init fish | source
+
+  if set -q ZELLIJ
+  else
+    zellij attach -c main
+  end
+
+  abbr --add zj 'zellij'
 end
