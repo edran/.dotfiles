@@ -29,9 +29,9 @@
         - name: Google Chrome
           path: /Applications/Google Chrome.app
           pos: 1
-        # Pos 2 is Emacs, but homebrew doesn't link emacs from emacsmacport
-        # correctly, and simlinks don't seem to be correctly supported by the
-        # dock.
+        - name: Emacs
+          path: /Applications/Emacs.app
+          pos: 2
         - name: iTerm
           path: /Applications/iTerm.app
           pos: 3
