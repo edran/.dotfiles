@@ -2,12 +2,6 @@
 private/
 /dots/ssh/*
 
-# Tangled output from literate config
-/dots/doom.d/init.el
-/dots/doom.d/config.el
-/dots/doom.d/config.sh
-/dots/doom.d/packages.el
-
 # temp files
 *.swp
 
@@ -105,14 +99,8 @@ private/
 /dots/config/skypeforlinux/
 /dots/config/vizdoom/vizdoom.ini
 /dots/config/evolution/sources/system-proxy.source
-/dots/macosx/config/fish/*
-!/dots/macosx/config/fish/config.fish
 /ergodox/ergodox_ez.hex
 /ergodox/teensy_loader_cli/
-dots/macosx/config/inkscape/extension-errors.log
-dots/macosx/config/karabiner/automatic_backups
-dots/macosx/config/gtk-2.0/gtkfilechooser.ini
-dots/macosx/config/configstore/update-notifier-npm.json
 dots/bin/nethack
 *.pyc
 
@@ -126,6 +114,25 @@ dots/bin/nethack
 /dots/zsh/.zsh_history
 *.zwc
 /dots/zsh/.zcompcache/
+
+# Emacs
 /dots/doom.d/custom.el
 /dots/doom.d/lisp/
+
+## Tangled output from literate config
+/dots/doom.d/init.el
+/dots/doom.d/config.el
+/dots/doom.d/config.sh
+/dots/doom.d/packages.el
+
+# fisher: tide
+dots/fish/functions/_tide*.fish
+/dots/fish/functions/tide/
+/dots/fish/functions/tide.fish
+/dots/fish/functions/fish_prompt.fish
+/dots/fish/functions/fish_mode_prompt.fish
+/dots/fish/conf.d/_tide_init.fish
+/dots/fish/completions/tide.fish
+
+# Karabiner
 /dots/macos/karabiner/automatic_backups/*.json
