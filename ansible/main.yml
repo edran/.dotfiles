@@ -87,6 +87,7 @@
         - ripgrep
         - wget
         - tmux
+        - zellij  # Replacement for tmux
         # Needed for Emacs
         # Remember to cp installation into /Applications
         - tree-sitter
@@ -203,6 +204,7 @@
         # TODO: this will normally fail. Needs a custom link task.
         - { src: ssh, dest: .ssh }
         - { src: tmux.conf, dest: .tmux.conf }
+        - { src: zellij.kdl, dest: .config/zellij/config.kdl }
         - { src: vimrc, dest: .vimrc }
         - { src: zsh, dest: .zsh }
         - { src: zsh/.zprofile, dest: .zprofile }
