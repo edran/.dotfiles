@@ -176,3 +176,10 @@
 
 [push]
 	default = current
+
+# Only used in .dotfiles
+[filter "clean_fish_vars"]
+	clean = awk '!/SETUVAR _.*/{print}'
+
+[diff "fish_variables"]
+	textconv = awk '!/SETUVAR _.*/{print}'
