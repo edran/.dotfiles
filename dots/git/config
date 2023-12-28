@@ -178,8 +178,8 @@
 	default = current
 
 # Only used in .dotfiles
-[filter "clean_fish_vars"]
-	clean = awk '!/SETUVAR _.*/{print}'
+[filter "clean_tide_fish_vars"]
+	clean = awk '!/SETUVAR _tide.*/{print}'
 
 [diff "fish_variables"]
-	textconv = awk '!/SETUVAR _.*/{print}'
+	textconv = awk '!/SETUVAR _tide.*/{print}'
