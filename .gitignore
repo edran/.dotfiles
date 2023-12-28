@@ -136,3 +136,6 @@ dots/fish/functions/_tide*.fish
 
 # Karabiner
 /dots/macos/karabiner/automatic_backups/*.json
+/dots/fish/functions/_puffer_fish_expand_lastarg.fish
+/dots/fish/functions/_puffer_fish_expand_bang.fish
+/dots/fish/functions/_puffer_fish_expand_dots.fish
