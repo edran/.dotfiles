@@ -92,6 +92,9 @@ run = 'move-node-to-workspace 1'
 [[on-window-detected]]
 if.app-id = 'org.gnu.Emacs'
 run = 'move-node-to-workspace 2'
+# My emacs build has window bar disabled, so AeroSpace thinks it's an ephemeral
+# window.
+run = 'layout tiling'
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
