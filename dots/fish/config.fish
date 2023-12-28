@@ -9,10 +9,11 @@ if status --is-interactive
 
   zoxide init fish | source
 
+  abbr --add zj 'zellij'
+  abbr --add za 'zellij attach -c main'
+
   if set -q ZELLIJ
   else
     zellij attach -c main
   end
-
-  abbr --add zj 'zellij'
 end
