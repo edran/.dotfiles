@@ -1,5 +1,20 @@
 start-at-login = true
 
+after-startup-command = [
+    # JankyBorders has a built-in detection of already running process,
+    # so it won't be run twice on AeroSpace restart
+    'exec-and-forget borders active_color=0xffe1e3e4 inactive_color=0xff494d64 width=5.0',
+    'exec-and-forget sketchybar'
+]
+exec-on-workspace-change = [
+    '/bin/bash', '-c',
+    '/opt/homebrew/opt/sketchybar/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+gaps.inner.horizontal = 0
+gaps.inner.vertical =   0
+gaps.outer.top =        40
+
 # Modes
 
 [mode.main.binding]
@@ -54,8 +69,8 @@ ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
 
 ctrl-alt-cmd-tab = 'workspace-back-and-forth'
 
-ctrl-alt-cmd-shift-n = 'move-workspace-to-monitor next'
-ctrl-alt-cmd-shift-p = 'move-workspace-to-monitor prev'
+ctrl-alt-cmd-shift-n = 'move-workspace-to-monitor next --wrap-around'
+ctrl-alt-cmd-shift-p = 'move-workspace-to-monitor prev --wrap-around'
 
 ctrl-alt-cmd-r = 'mode resize'
 ctrl-alt-cmd-semicolon = 'mode service'
@@ -91,10 +106,12 @@ run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
 if.app-id = 'org.gnu.Emacs'
-run = 'move-node-to-workspace 2'
-# My emacs build has window bar disabled, so AeroSpace thinks it's an ephemeral
-# window.
-run = 'layout tiling'
+run = [
+  # My emacs build has window bar disabled, so AeroSpace thinks it's an
+  # ephemeral window.
+  'layout tiling',
+  'move-node-to-workspace 2',
+]
 
 [[on-window-detected]]
 if.app-id = 'com.googlecode.iterm2'
@@ -111,3 +128,4 @@ run = 'move-node-to-workspace 9'
 [[on-window-detected]]
 if.app-id = 'org.whispersystems.signal-desktop'
 run = 'move-node-to-workspace 9'
+

@@ -59,6 +59,8 @@
 
     - homebrew_taps:
         - railwaycat/emacsmacport
+        - FelixKratz/formulae
+        - homebrew/cask-fonts
 
     - homebrew_installed_packages:
         # - ansible # Installed via Pip.
@@ -155,6 +157,9 @@
         - gifsicle
         - fortune
         - neofetch
+        # DX
+        - borders  # JankyBorders!
+        - sketchybar
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
@@ -166,6 +171,7 @@
         - discord
         - dropbox
         - firefox
+        - font-hack-nerd-font
         - handbrake
         - iterm2
         - karabiner-elements
@@ -198,6 +204,7 @@
         - { src: git/ignore, dest: .gitignore }
         - { src: macos/aerospace.toml, dest: .aerospace.toml }
         - { src: macos/karabiner, dest: .config/karabiner }
+        - { src: macos/sketchybar, dest: .config/sketchybar }
         - { src: bat.config, dest: .config/bat/config}
         - { src: nethackrc, dest: .nethackrc }
         - { src: profile, dest: .profile }
@@ -216,7 +223,7 @@
       tags: [mas]
 
   tasks:
-    - name: Link script to xbar
+    - name: Link dots in various places
       file:
         src: "{{ inventory_dir }}/../dots/{{ item.src }}"
         dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
@@ -224,7 +231,6 @@
       loop: "{{ dots_links }}"
       tags: [quick]
 
-      tags: [quick]
     - name: Include Dock role.
       include_role:
         name: geerlingguy.mac.dock
@@ -425,3 +431,8 @@
         mode: "0644"
         state: touch
       tags: [quick]
+
+    - name: Make sure that apps can use PATH
+      become: yes
+      become_method: sudo
+      command: "launchctl config user path {{ ansible_env.PATH }}"
