@@ -1,4 +1,4 @@
-POPUP_OFF='sketchybar --set apple.logo popup.drawing=off'
+POPUP_OFF='sketchybar --set home.logo popup.drawing=off'
 POPUP_CLICK_SCRIPT='sketchybar --set $NAME popup.drawing=toggle'
 
 home_logo=(
@@ -13,7 +13,7 @@ home_logo=(
 )
 
 home_prefs=(
-  icon=""
+  icon="􀍟"
   padding_left=10
   padding_right=10
   label="Preferences"
@@ -21,7 +21,7 @@ home_prefs=(
 )
 
 home_activity=(
-  icon=""
+  icon="􀫦"
   padding_left=10
   padding_right=10
   label="Activity"
@@ -29,21 +29,23 @@ home_activity=(
 )
 
 home_lock=(
-  icon=""
+  icon="􀎠"
+  icon.padding_left=3
+  icon.padding_right=5
   padding_left=10
   padding_right=10
   label="Lock Screen"
   click_script="osascript -e 'tell application \"System Events\" to keystroke \"q\" using {command down,control down}'; $POPUP_OFF"
 )
 
-sketchybar --add item apple.logo left                 \
-           --set apple.logo "${home_logo[@]}"         \
+sketchybar --add item home.logo left                 \
+           --set home.logo "${home_logo[@]}"         \
                                                       \
-           --add item apple.prefs popup.apple.logo    \
-           --set apple.prefs "${home_prefs[@]}"       \
+           --add item home.prefs popup.home.logo    \
+           --set home.prefs "${home_prefs[@]}"       \
                                                       \
-           --add item apple.activity popup.apple.logo \
-           --set apple.activity "${home_activity[@]}" \
+           --add item home.activity popup.home.logo \
+           --set home.activity "${home_activity[@]}" \
                                                       \
-           --add item apple.lock popup.apple.logo     \
-           --set apple.lock "${home_lock[@]}"
+           --add item home.lock popup.home.logo     \
+           --set home.lock "${home_lock[@]}"

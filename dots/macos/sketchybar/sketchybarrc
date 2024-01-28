@@ -2,13 +2,16 @@ PLUGIN_DIR="$CONFIG_DIR/plugins"
 ITEM_DIR="$CONFIG_DIR/items"
 
 source "$CONFIG_DIR/colors.sh"
+
+ICON_FONT="SF Symbols"
 FONT="BerkeleyMono Nerd Font Mono"
 
-DEFAULT_PADDING=1
+DEFAULT_PADDING=2
 defaults=(
   updates=when_shown
+  drawing=on
 
-  icon.font="$FONT:Bold:12.0"
+  icon.font="$ICON_FONT:Bold:12.0"
   icon.color=$ICON_COLOR
   icon.padding_left=$DEFAULT_PADDING
   icon.padding_right=$DEFAULT_PADDING
