@@ -30,7 +30,7 @@ defaults=(
   # background.border_width=2
 
   popup.background.shadow.drawing=on
-  popup.background.border_width=2
+  popup.background.border_width=1
   popup.background.corner_radius=9
   popup.background.border_color=$POPUP_BORDER_COLOR
   popup.background.color=$POPUP_BACKGROUND_COLOR
@@ -42,16 +42,20 @@ sketchybar --default "${defaults[@]}"
 
 # Setting up the general bar appearance of the bar
 bar=(
-  height=20
-  color=$BAR_COLOR
-  border_width=1
-  border_color=$BAR_BORDER_COLOR
-  shadow=off
-  position=top
-  sticky=on
+  height=24
+  blur_radius=0
   padding_right=10
   padding_left=10
-  topmost=window
+
+  color=$BAR_COLOR
+  # border_width=1
+  # border_color=$BAR_BORDER_COLOR
+  shadow=off
+
+  font_smoothing=on
+  position=top
+  sticky=on
+  topmost=off
 )
 
 sketchybar --bar "${bar[@]}"
