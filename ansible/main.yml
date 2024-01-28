@@ -157,6 +157,7 @@
         - gifsicle
         - fortune
         - neofetch
+        - switchaudio-osx
         # DX
         - borders  # JankyBorders!
         - sketchybar
@@ -178,6 +179,7 @@
         - linear-linear
         - notion
         - postman
+        - sf-symbols
         - signal
         - slack
         - spotify
