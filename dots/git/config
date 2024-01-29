@@ -177,6 +177,9 @@
 [push]
 	default = current
 
+[init]
+	defaultBranch = main
+
 # Only used in .dotfiles
 [filter "clean_tide_fish_vars"]
 	clean = awk '!/SETUVAR _tide.*/{print}'
