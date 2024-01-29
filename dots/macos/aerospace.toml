@@ -21,16 +21,18 @@ gaps.inner.vertical =   0
 gaps.outer.top =        [{ monitor."built-in" = 0 }, 30]
 gaps.outer.bottom =     0
 
-[workspace-to-monitor-force-assignment]
-1 = ['^DELL U2722D \(1\)$', 'main']
-2 = ['^DELL U2722D \(2\)$', 'main']
-3 = ['^DELL U2722D \(1\)$', 'main']
-4 = ['built-in']
-5 = ['main']
-6 = ['main']
-7 = ['main']
-8 = ['built-in']
-9 = ['built-in']
+# TODO: this makes move-workspace-to-monitor stop working. I should make a
+# command that "resets" workspaces to the correct monitors instead.
+# [workspace-to-monitor-force-assignment]
+# 1 = ['^DELL U2722D \(1\)$', 'main']
+# 2 = ['^DELL U2722D \(2\)$', 'main']
+# 3 = ['^DELL U2722D \(1\)$', 'main']
+# 4 = ['built-in']
+# 5 = ['main']
+# 6 = ['main']
+# 7 = ['main']
+# 8 = ['built-in']
+# 9 = ['built-in']
 
 # Modes
 
