@@ -473,15 +473,14 @@ At the moment, the only two lab-aware libraries are projectile and magit.
 
 ** Graphical configuration
 
-All of this stuff relates to visual behaviour.
+All of this stuff relates to visual behavior.
 
 *** Fonts
 
 #+begin_src emacs-lisp
-;; (setq doom-font (font-spec :family "FiraCode Nerd Font" :size 12)
-;;       doom-big-font (font-spec :family "FiraCode Nerd Font" :size 18)
-;;       doom-variable-pitch-font (font-spec :family "Helvetica Neue" :size 18)
-;;       doom-serif-font (font-spec :family "Times New Roman" :weight 'light))
+(setq doom-font (font-spec :family "BerkeleyMono Nerd Font Mono" :size 12)
+      doom-variable-pitch-font (font-spec :family "Helvetica Neue")
+      doom-serif-font (font-spec :family "Times New Roman"))
 #+end_src
 
 Sadly ~doom-variable-pitch-font~ actually doesn't control that much. In this

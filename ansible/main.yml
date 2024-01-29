@@ -29,9 +29,9 @@
         - name: Google Chrome
           path: /Applications/Google Chrome.app
           pos: 1
-        # Pos 2 is Emacs, but homebrew doesn't link emacs from emacsmacport
-        # correctly, and simlinks don't seem to be correctly supported by the
-        # dock.
+        - name: Emacs
+          path: /Applications/Emacs.app
+          pos: 2
         - name: iTerm
           path: /Applications/iTerm.app
           pos: 3
@@ -59,6 +59,8 @@
 
     - homebrew_taps:
         - railwaycat/emacsmacport
+        - FelixKratz/formulae
+        - homebrew/cask-fonts
 
     - homebrew_installed_packages:
         # - ansible # Installed via Pip.
@@ -73,7 +75,6 @@
         # yet.
         - aspell
         - curl
-        - { name: emacs-mac, install_options: with-modules }
         - fish
         - fzf
         - git
@@ -88,6 +89,25 @@
         - ripgrep
         - wget
         - tmux
+        - zellij  # Replacement for tmux
+        # Needed for Emacs
+        # Remember to cp installation into /Applications
+        - tree-sitter
+        - jansson
+        - libxml2
+        - imagemagick
+        - { name: emacs-mac,
+            install_options: [
+              with-modules,
+              with-native-compilation,
+              with-no-title-bars,
+              with-xwidgets,
+              with-emacs-big-sur-icon,
+              with-librsvg,
+              with-tree-sitter,
+            ]
+          }
+
         # Modern CLI tooling
         - angle-grinder # a.k.a. *agrinder*, log analysis.
         - bat # Replaces cat.
@@ -102,7 +122,7 @@
         - dive # Analyse docker images.
         - dust # du
         - entr # Run arbitrary commands on file changes.
-        - exa # ls
+        - eza # ls
         - duf # df
         - fd # find
         - fq # Explore binary files (like jq, ish).
@@ -119,6 +139,7 @@
         - jq
         - lazydocker # TUI for docker.
         - lnav # Curses-based log viewing.
+        - most # A better less
         - mtr # traceroute
         - pgcli # psql
         - procs # ps
@@ -135,9 +156,15 @@
         # Fun / useful
         - gifsicle
         - fortune
+        - neofetch
+        - switchaudio-osx
+        # DX
+        - borders  # JankyBorders!
+        - sketchybar
 
     - homebrew_cask_appdir: /Applications
     - homebrew_cask_apps:
+        - { name: nikitabobko/tap/aerospace, install_options: no-quarantine }
         - alfred
         - anki
         - chrysalis
@@ -145,13 +172,14 @@
         - discord
         - dropbox
         - firefox
-        - google-chrome
+        - font-hack-nerd-font
         - handbrake
         - iterm2
         - karabiner-elements
         - linear-linear
         - notion
         - postman
+        - sf-symbols
         - signal
         - slack
         - spotify
@@ -170,6 +198,25 @@
         - { id: 419330170, name: Moom }
         - { id: 1475387142, name: Tailscale }
 
+    - dots_links:
+        - { src: bin, dest: bin }
+        - { src: fish, dest: .config/fish }
+        - { src: doom.d, dest: .doom.d }
+        - { src: git/config, dest: .gitconfig }
+        - { src: git/ignore, dest: .gitignore }
+        - { src: macos/aerospace.toml, dest: .aerospace.toml }
+        - { src: macos/karabiner, dest: .config/karabiner }
+        - { src: macos/sketchybar, dest: .config/sketchybar }
+        - { src: bat.config, dest: .config/bat/config}
+        - { src: nethackrc, dest: .nethackrc }
+        - { src: profile, dest: .profile }
+        # TODO: this will normally fail. Needs a custom link task.
+        - { src: ssh, dest: .ssh }
+        - { src: tmux.conf, dest: .tmux.conf }
+        - { src: zellij.kdl, dest: .config/zellij/config.kdl }
+        - { src: vimrc, dest: .vimrc }
+        - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
+
   roles:
     - role: elliotweiser.osx-command-line-tools
     - role: geerlingguy.mac.homebrew
@@ -178,6 +225,14 @@
       tags: [mas]
 
   tasks:
+    - name: Link dots in various places
+      file:
+        src: "{{ inventory_dir }}/../dots/{{ item.src }}"
+        dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+        state: link
+      loop: "{{ dots_links }}"
+      tags: [quick]
+
     - name: Include Dock role.
       include_role:
         name: geerlingguy.mac.dock
@@ -193,3 +248,193 @@
       with_fileglob:
         - "{{ inventory_dir }}/../dots/macos/xbar/*"
       tags: [quick]
+
+    # TODO: requires killall Dock
+    - name: Group windows by application in expose
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: expose-group-apps
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Autohide dock
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: autohide
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Make dock icons small
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: tilesize
+        type: int
+        value: 24
+        state: present
+      tags: [quick]
+    - name: Use a simple window minimize animation
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: mineffect
+        type: string
+        value: genie
+        state: present
+      tags: [quick]
+    - name: Add ability to scroll up on dock icon to see app instances
+      community.general.osx_defaults:
+        domain: com.apple.dock
+        key: scroll-to-open
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+
+    - name: Set OS languages 
+      community.general.osx_defaults:
+        key: applelanguages
+        type: array
+        value: 
+          - en-us
+      tags: [quick]
+
+    # NOTE: requires killall SystemUIServer & a logout to take effect
+    - name: Set displays to have separate spaces
+      community.general.osx_defaults:
+        domain: com.apple.spaces
+        key: spans-displays
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Set default directory for screenshots
+      community.general.osx_defaults:
+        domain: com.apple.screencapture
+        key: location
+        type: string
+        value: "~/Desktop/screenshots"
+        state: present
+      tags: [quick]
+    - name: Set default directory for Simulator screenshots
+      community.general.osx_defaults:
+        domain: com.apple.iphonesimulator
+        key: ScreenShotSaveLocation
+        type: string
+        value: "~/Desktop/screenshots/simulator"
+        state: present
+      tags: [quick]
+
+    # Finder
+    - name: Show hidden files
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: AppleShowAllFiles
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show file extensions
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: AppleShowAllExtensions
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show path bar
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: ShowPathbar
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Show folders on top
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: _FXSortFoldersFirst
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Set default view to column
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXPreferredViewStyle
+        type: string
+        value: clmv
+        state: present
+      tags: [quick]
+    - name: Empty bin after 30 days
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXRemoveOldTrashItems
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+    - name: Disable warning when chaning a file extension
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: FXEnableExtensionChangeWarning
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+    - name: Make side icons smaller
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: NSTableViewDefaultSizeMode
+        type: int
+        value: 1
+        state: present
+      tags: [quick]
+    - name: Keep folders on top in desktop
+      community.general.osx_defaults:
+        domain: com.apple.finder
+        key: _FXSortFoldersFirstOnDesktop
+        type: bool
+        value: true
+        state: present
+      tags: [quick]
+
+    # Trackpad
+    - name: Switch to sane scrolling direction
+      community.general.osx_defaults:
+        key: com.apple.swipescrolldirection
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+
+    # TextEdit
+    - name: Disable smart quotes
+      community.general.osx_defaults:
+        domain: com.apple.TextEdit
+        key: SmartQuotes
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+    - name: Set TextEdit to default to txt
+      community.general.osx_defaults:
+        domain: com.apple.TextEdit
+        key: RichText
+        type: bool
+        value: false
+        state: present
+      tags: [quick]
+
+    # Other stuff
+    - name: Disable terminal login message
+      file:
+        path: "{{ ansible_env.HOME }}/.hushlogin"
+        mode: "0644"
+        state: touch
+      tags: [quick]
+
+    - name: Make sure that apps can use PATH
+      become: yes
+      become_method: sudo
+      command: "launchctl config user path {{ ansible_env.PATH }}"

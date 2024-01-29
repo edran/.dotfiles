@@ -2,84 +2,11 @@
 private/
 /dots/ssh/*
 
-# Tangled output from literate config
-/dots/doom.d/init.el
-/dots/doom.d/config.el
-/dots/doom.d/config.sh
-/dots/doom.d/packages.el
-
 # temp files
 *.swp
 
 # config files
-/dots/config/google-chrome/
-/dots/config/menus/
-/dots/config/Mendeley Ltd./
-/dots/config/dconf/
-/dots/config/nautilus/
-/dots/config/quassel-irc.org/
-/dots/config/update-notifier/
-/dots/config/user-dirs.dirs
-/dots/config/user-dirs.locale
-/dots/config/Skype/
-/dots/config/Trolltech.conf
-/dots/config/ros.org/
-/dots/config/eog/
-/dots/config/gnome-control-center/
-/dots/config/transmission/
-/dots/config/software-center/
-/dots/config/teamviewer10/
-/dots/config/totem/
-/dots/config/vlc/
-/dots/config/libreoffice/
-/dots/config/autostart/
-/dots/config/google-googletalkplugin/
-/dots/config/monitors.xml
-/dots/config/compiz-1/
-/dots/bin/idea-dir/
-/dots/config/gedit/
-/dots/config/evince/
-/dots/config/inkscape/
-/dots/bin/irony-server
-/dots/bin/clion-dir/
-/dots/config/brasero
-/dots/config/ibus/
-/dots/config/libaccounts-glib/
-/dots/config/pulse/
-/dots/config/unity/
-/dots/config/VirtualBox/
-/dots/config/Popcorn-Time/
-/dots/config/spotify/
-/dots/config/thefuck/
-/dots/config/guvcview/
-/dots/config/ipython/
-/dots/config/unity-tweak-tool
 /dots/fonts/adobe-fonts/source-code-pro/
-/dots/config/chromium/
-/dots/config/ranger/
-/dots/config/RescueTime.com/
-/dots/bin/ffmpeg
-/dots/bin/ffprobe
-/dots/bin/ffserver
-/dots/bin/x264
-/dots/config/QtProject.conf
-/dots/config/enchant/
-/dots/config/UDP Software/Dwarf Therapist.ini
-/dots/config/nitrogen/
-/dots/config/mopidy/secret.conf
-/dots/config/Franz/
-/dots/config/fish/
-/dots/config/omf/
-/dots/local/
-/dots/config/pavucontrol.ini
-/dots/config/SpeedCrunch/
-/dots/config/xfce4/
-/dots/config/transmission-daemon/
-/dots/config/opera-beta/
-/dots/config/pokemon-go-map/
-/dots/config/Unknown Organization/zoom.conf
-/dots/config/zoomus.conf
-/dots/config/obs-studio/
 /dots/ncmpcpp/error.log
 /dots/ncmpcpp/artists/
 /dots/weechat/sec.conf
@@ -92,28 +19,11 @@ private/
 /dots/weechat/perl/
 /dots/weechat/logs/
 /dots/urxvt/ext/
-/dots/config/guitarix/
-/dots/config/jack/conf.xml
-/dots/config/rncbc.org/QjackCtl.conf
-/dots/config/deluge/
-/dots/bin/lein
-/dots/fonts/tff-monaco/MONACO.TTF
-/dots/bin/gtkradiant
-/dots/config/Slack/
-/dots/config/Slack/
-/dots/config/Slack/
-/dots/config/skypeforlinux/
-/dots/config/vizdoom/vizdoom.ini
-/dots/config/evolution/sources/system-proxy.source
-/dots/macosx/config/fish/*
-!/dots/macosx/config/fish/config.fish
+
 /ergodox/ergodox_ez.hex
 /ergodox/teensy_loader_cli/
-dots/macosx/config/inkscape/extension-errors.log
-dots/macosx/config/karabiner/automatic_backups
-dots/macosx/config/gtk-2.0/gtkfilechooser.ini
-dots/macosx/config/configstore/update-notifier-npm.json
-dots/bin/nethack
+
+/dots/bin/nethack
 *.pyc
 
 /dots/zsh/local.zsh
@@ -126,6 +36,29 @@ dots/bin/nethack
 /dots/zsh/.zsh_history
 *.zwc
 /dots/zsh/.zcompcache/
+
+# Emacs
 /dots/doom.d/custom.el
 /dots/doom.d/lisp/
+## Tangled output from literate config
+/dots/doom.d/init.el
+/dots/doom.d/config.el
+/dots/doom.d/config.sh
+/dots/doom.d/packages.el
+
+# Fish
+# This one is controlled by fisher
+/dots/fish/conf.d/
+# fisher plugins
+/dots/fish/functions/_tide*.fish
+/dots/fish/functions/tide/
+/dots/fish/functions/tide.fish
+/dots/fish/completions/tide.fish
+/dots/fish/functions/fish_prompt.fish
+/dots/fish/functions/fish_mode_prompt.fish
+/dots/fish/functions/_puffer_fish_expand_lastarg.fish
+/dots/fish/functions/_puffer_fish_expand_bang.fish
+/dots/fish/functions/_puffer_fish_expand_dots.fish
+
+# Karabiner
 /dots/macos/karabiner/automatic_backups/*.json

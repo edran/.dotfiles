@@ -1,0 +1,1 @@
+set -gx DOCKER_BUILDKIT 1

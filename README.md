@@ -32,3 +32,24 @@ $ cd .dotfiles/ansible
 $ ansible-playbook main.yml --ask-become-pass
 ```
 
+
+## After install
+
+### Patching Berkeley Mono
+
+Worth maybe updating the first fonts on gdrive with a new version available at [Berkeley Graphics](https://berkeleygraphics.com).
+
+After starting the docker daemon:
+
+``` shell
+$ docker run --rm \
+  -v /path/to/fonts:/in \
+  -v /path/for/output:/out nerdfonts/patcher \
+  nerdfonts/patcher \
+  --progressbars \
+  --mono \
+  --adjust-line-height \
+  --complete
+```
+
+The open `Font Book` and install the fonts manually.

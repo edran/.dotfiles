@@ -1,0 +1,180 @@
+start-at-login = true
+
+after-startup-command = [
+    '''exec-and-forget \
+    /opt/homebrew/bin/borders \
+      active_color=0xffe1e3e4 \
+      inactive_color=0xff494d64 \
+      width=5.0
+    '''
+    # NOTE: sketchybar for the moment needs to be started with brew services. I
+    # can't seem to get it to work here.
+]
+exec-on-workspace-change = [
+  '/bin/bash',
+  '-c',
+  '/opt/homebrew/bin/sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE'
+]
+
+gaps.inner.horizontal = 0
+gaps.inner.vertical =   0
+gaps.outer.top =        [{ monitor."built-in" = 0 }, 30]
+gaps.outer.bottom =     0
+
+[workspace-to-monitor-force-assignment]
+1 = ['^DELL U2722D \(1\)$', 'main']
+2 = ['^DELL U2722D \(2\)$', 'main']
+3 = ['^DELL U2722D \(1\)$', 'main']
+4 = ['built-in']
+5 = ['main']
+6 = ['main']
+7 = ['main']
+8 = ['built-in']
+9 = ['built-in']
+
+# Modes
+
+[mode.main.binding]
+ctrl-alt-cmd-enter = 'exec-and-forget osascript -e "tell application \"iTerm2\" to set newWindow to (create window with default profile)"'
+
+ctrl-alt-cmd-h = 'focus left'
+ctrl-alt-cmd-shift-h = 'move-through left'
+
+ctrl-alt-cmd-j = 'focus down'
+ctrl-alt-cmd-shift-j = 'move-through down'
+
+ctrl-alt-cmd-k = 'focus up'
+ctrl-alt-cmd-shift-k = 'move-through up'
+
+ctrl-alt-cmd-l = 'focus right'
+ctrl-alt-cmd-shift-l = 'move-through right'
+
+# ctrl-alt-cmd-h = 'split horizontal'
+# ctrl-alt-cmd-v = 'split vertical'
+
+ctrl-alt-cmd-f = 'fullscreen'
+
+ctrl-alt-cmd-minus = 'resize smart -50'
+ctrl-alt-cmd-equal = 'resize smart +50'
+
+ctrl-alt-cmd-slash = 'layout tiles horizontal vertical'
+ctrl-alt-cmd-comma = 'layout accordion horizontal vertical'
+ctrl-alt-cmd-shift-space = 'layout floating tiling'
+
+ctrl-alt-cmd-n = 'workspace next'
+ctrl-alt-cmd-p = 'workspace prev'
+
+ctrl-alt-cmd-1 = 'workspace 1'
+ctrl-alt-cmd-2 = 'workspace 2'
+ctrl-alt-cmd-3 = 'workspace 3'
+ctrl-alt-cmd-4 = 'workspace 4'
+ctrl-alt-cmd-5 = 'workspace 5'
+ctrl-alt-cmd-6 = 'workspace 6'
+ctrl-alt-cmd-7 = 'workspace 7'
+ctrl-alt-cmd-8 = 'workspace 8'
+ctrl-alt-cmd-9 = 'workspace 9'
+
+ctrl-alt-cmd-shift-1 = 'move-node-to-workspace 1'
+ctrl-alt-cmd-shift-2 = 'move-node-to-workspace 2'
+ctrl-alt-cmd-shift-3 = 'move-node-to-workspace 3'
+ctrl-alt-cmd-shift-4 = 'move-node-to-workspace 4'
+ctrl-alt-cmd-shift-5 = 'move-node-to-workspace 5'
+ctrl-alt-cmd-shift-6 = 'move-node-to-workspace 6'
+ctrl-alt-cmd-shift-7 = 'move-node-to-workspace 7'
+ctrl-alt-cmd-shift-8 = 'move-node-to-workspace 8'
+ctrl-alt-cmd-shift-9 = 'move-node-to-workspace 9'
+
+ctrl-alt-cmd-tab = 'workspace-back-and-forth'
+
+ctrl-alt-cmd-shift-n = 'move-workspace-to-monitor next --wrap-around'
+ctrl-alt-cmd-shift-p = 'move-workspace-to-monitor prev --wrap-around'
+
+ctrl-alt-cmd-r = 'mode resize'
+ctrl-alt-cmd-semicolon = 'mode service'
+ctrl-alt-cmd-quote = 'mode join'
+
+[mode.resize.binding]
+minus = 'resize smart -50'
+equal = 'resize smart +50'
+h = 'resize width -50'
+j = 'resize height +50'
+k = 'resize height -50'
+l = 'resize width +50'
+esc = 'mode main'
+
+[mode.service.binding]
+r = ['flatten-workspace-tree', 'mode main'] # reset layout
+f = ['layout floating tiling', 'mode main'] # Toggle between floating and tiling layout
+backspace = ['close-all-windows-but-current', 'mode main']
+esc = ['reload-config', 'mode main']
+
+[mode.join.binding]
+h = ['join-with left', 'mode main']
+j = ['join-with down', 'mode main']
+k = ['join-with up', 'mode main']
+l = ['join-with right', 'mode main']
+esc = 'mode main'
+
+# Workspace callbacks
+
+# 1
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = 'move-node-to-workspace 1'
+
+# 2
+
+[[on-window-detected]]
+if.app-id = 'org.gnu.Emacs'
+run = [
+  # My emacs build has window bar disabled, so AeroSpace thinks it's an
+  # ephemeral window.
+  'layout tiling',
+  'move-node-to-workspace 2',
+]
+
+[[on-window-detected]]
+if.during-aerospace-startup = true
+if.app-id = 'com.googlecode.iterm2'
+run = 'move-node-to-workspace 3'
+
+# 4
+
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+# 8
+
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 8'
+
+# 9
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+if.app-id = 'org.whispersystems.signal-desktop'
+run = 'move-node-to-workspace 9'
+
+# Tiling issues
+
+[[on-window-detected]]
+if.app-id = 'com.apple.audio.AudioMIDISetup'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.audio.AudioMIDISetup'
+run = 'layout floating'

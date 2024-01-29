@@ -1,0 +1,8 @@
+abbr --add am 'git amend'
+abbr --add g 'git'
+abbr --add gbr 'git br'
+abbr --add gco 'git co'
+abbr --add gd 'git diff -w'
+abbr --add gds 'git diff -w --staged'
+abbr --add gp 'git push'
+abbr --add gs 'git status'

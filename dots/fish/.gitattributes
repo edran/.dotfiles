@@ -1,0 +1,1 @@
+fish_variables text filter=clean_tide_fish_vars diff=fish_variables
