@@ -130,7 +130,7 @@ literate
 
 #+name: doom-ui
 #+begin_src emacs-lisp
-deft                         ; notational velocity for Emacs
+;; deft                         ; notational velocity for Emacs
 doom                         ; what makes DOOM look the way it does
 doom-dashboard               ; a nifty splash screen for Emacs
 ;; doom-quit                    ; DOOM quit-message prompts when you quit Emacs
@@ -382,13 +382,13 @@ Do not byte compile the tangled =.el= file.
 
 The following packages make ~org-mode~ even more awesome than usual.
 
-**** org-anki
+**** org-babel-srs
 
-~org-anki~ is a package I'm developing. Will be released Soon™.
+~org-babel-srs~ is a package I'm developing. Will be released Soon™.
 
 #+begin_src emacs-lisp
-(package! org-anki
-  :recipe (:local-repo "lisp/org-anki"))
+(package! mochi
+  :recipe (:local-repo "lisp/mochi"))
 #+end_src
 
 **** Prettier org-mode
@@ -1307,9 +1307,18 @@ org-roam gives me...), so I set it up here:
         "M-p" #'org-previous-visible-heading))
 #+end_src
 
-*** org-anki
+*** Mochi
 
 #+begin_src emacs-lisp
+(use-package! mochi
+  :mode "\\.org\\'"
+  :after org-babel
+  ;; :commands mochi-sync
+  :config
+  (mochi-setup-org-babel)
+  (setq mochi-api-key (getenv "MOCHI_API_KEY"))
+  (setq mochi-directory (concat (file-name-as-directory org-directory) "kb/"))
+  (setq mochi-inbox-file (concat org-directory "mochi.org")))
 ;; (use-package! org-anki
 ;;   :after org
 ;;   :commands (org-anki-push-notes
