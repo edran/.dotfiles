@@ -104,11 +104,19 @@ k = ['join-with up', 'mode main']
 l = ['join-with right', 'mode main']
 esc = 'mode main'
 
-# Callbacks
+# Workspace callbacks
+
+# 1
 
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+if.app-id = 'company.thebrowser.Browser'
+run = 'move-node-to-workspace 1'
+
+# 2
 
 [[on-window-detected]]
 if.app-id = 'org.gnu.Emacs'
@@ -120,12 +128,27 @@ run = [
 ]
 
 [[on-window-detected]]
+if.during-aerospace-startup = true
 if.app-id = 'com.googlecode.iterm2'
-run = 'move-node-to-workspace 2'
+run = 'move-node-to-workspace 3'
+
+# 4
+
+[[on-window-detected]]
+if.app-id = 'com.linear'
+run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = 'move-node-to-workspace 4'
+
+# 8
 
 [[on-window-detected]]
 if.app-id = 'com.spotify.client'
 run = 'move-node-to-workspace 8'
+
+# 9
 
 [[on-window-detected]]
 if.app-id = 'net.whatsapp.WhatsApp'
@@ -135,3 +158,12 @@ run = 'move-node-to-workspace 9'
 if.app-id = 'org.whispersystems.signal-desktop'
 run = 'move-node-to-workspace 9'
 
+# Tiling issues
+
+[[on-window-detected]]
+if.app-id = 'com.apple.audio.AudioMIDISetup'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.apple.audio.AudioMIDISetup'
+run = 'layout floating'
