@@ -126,6 +126,7 @@ if.app-id = 'com.google.Chrome'
 run = 'move-node-to-workspace 1'
 
 [[on-window-detected]]
+if.during-aerospace-startup = true
 if.app-id = 'company.thebrowser.Browser'
 run = 'move-node-to-workspace 1'
 
