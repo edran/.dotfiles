@@ -158,6 +158,8 @@
         - fortune
         - neofetch
         - switchaudio-osx
+        # Hell
+        - awscli
         # DX
         - borders  # JankyBorders!
         - sketchybar
@@ -188,6 +190,8 @@
         - whatsapp
         - xbar
         - zotero
+        # Why tho
+        - google-cloud-sdk
 
     - mas_installed_apps:
         - { id: 682658836, name: GarageBand }
