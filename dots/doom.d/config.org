@@ -374,7 +374,7 @@ will be inherited):
 
 Do not byte compile the tangled =.el= file.
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :comments no
 ;; -*- no-byte-compile: t; -*-
 #+end_src
 
@@ -388,6 +388,7 @@ The following packages make ~org-mode~ even more awesome than usual.
 
 #+begin_src emacs-lisp
 (package! mochi
+  :type 'local
   :recipe (:local-repo "lisp/mochi"))
 #+end_src
 
@@ -598,7 +599,7 @@ this community!
 *** Basic files and folders
 
 =org-mode= tends to want to reason around a few files and directories, so we set
-them most of them here.
+most of them here.
 
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
@@ -1308,11 +1309,11 @@ org-roam gives me...), so I set it up here:
 
 *** Mochi
 
-#+begin_src emacs-lisp
+#+begin_src emacs-lisp :tangle no
 (use-package! mochi
   :mode "\\.org\\'"
-  :after org-babel
-  ;; :commands mochi-sync
+  :hook org-mode
+  :commands mochi-sync
   :config
   (mochi-setup-org-babel)
   (setq mochi-api-key (getenv "MOCHI_API_KEY"))

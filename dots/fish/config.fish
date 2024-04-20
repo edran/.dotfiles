@@ -16,8 +16,8 @@ if status --is-interactive
   abbr --add t 'zellij'
   abbr --add ta 'zellij attach -c main'
 
-  if set -q ZELLIJ
-  else
-    zellij attach -c main
-  end
+  # if set -q ZELLIJ
+  # else
+  #   zellij attach -c main
+  # end
 end
