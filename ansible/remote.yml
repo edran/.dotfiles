@@ -1,0 +1,38 @@
+- hosts: all
+  vars:
+    - downloads: ~/.ansible-downloads/
+
+    - dots_dirs:
+      - .config/bat
+      - .config/zellij
+      - .config/neofetch
+
+    - dots_links:
+        - { src: bin, dest: bin }
+        - { src: fish, dest: .config/fish }
+        - { src: doom.d, dest: .doom.d }
+        - { src: git/config, dest: .gitconfig }
+        - { src: git/ignore, dest: .gitignore }
+        - { src: bat.config, dest: .config/bat/config}
+        - { src: nethackrc, dest: .nethackrc }
+        - { src: profile, dest: .profile }
+        # FIXME: this will normally fail. Needs a custom link task.
+        - { src: zellij.kdl, dest: .config/zellij/config.kdl }
+        - { src: vimrc, dest: .vimrc }
+        - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
+
+  tasks:
+    - name: Ensure config directories exist
+      file:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: directory
+      loop: "{{ dots_dirs }}"
+      tags: [quick]
+
+    - name: Link dots in various places
+      file:
+        src: "{{ inventory_dir }}/../dots/{{ item.src }}"
+        dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+        state: link
+      loop: "{{ dots_links }}"
+      tags: [quick]
