@@ -387,9 +387,9 @@ The following packages make ~org-mode~ even more awesome than usual.
 ~org-babel-srs~ is a package I'm developing. Will be released Soon™.
 
 #+begin_src emacs-lisp
-(package! mochi
-  :type 'local
-  :recipe (:local-repo "lisp/mochi"))
+;; (package! mochi
+;;   :type 'local
+;;   :recipe (:local-repo "lisp/mochi"))
 #+end_src
 
 **** Prettier org-mode
