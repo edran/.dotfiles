@@ -1,19 +1,19 @@
 [user]
-	name = Nantas Nardelli
-	email = nantas@arbitrarygravitas.com
+    name = Nantas Nardelli
+    email = nantas@arbitrarygravitas.com
 
 [includeIf "gitdir:$HOME/lab/pfc/**"]
-	email = nantas@pacificfusion.com
+    email = nantas@pacificfusion.com
 
 [includeIf "gitdir:$HOME/lab/ignite/**"]
-	email = nantas@pacificfusion.com
+    email = nantas@pacificfusion.com
 
 [core]
-	autocrlf = input
-	compression = -1
-	# Whitespace detection (only warnings)
-	whitespace = trailing-space,space-before-tab
-	pager = delta
+    autocrlf = input
+    compression = -1
+    # Whitespace detection (only warnings)
+    whitespace = trailing-space,space-before-tab
+    pager = delta
 
 [interactive]
     diffFilter = delta --color-only --features=interactive
@@ -27,167 +27,167 @@
     commit-decoration-style = blue ol
 
 [credential]
-	helper = cache --timeout=3600
+    helper = cache --timeout=3600
 
 [status]
-	submodulesummary = true
-	showUntrackedFiles = all
+    submodulesummary = true
+    showUntrackedFiles = all
 
 [branch]
-	autosetuprebase = always
+    autosetuprebase = always
 
 [diff]
-	algorithm = patience
-	renames = copies
-	mnemonicprefix = true
-	compactionHeuristic = true
-	tool = bc3
+    algorithm = patience
+    renames = copies
+    mnemonicprefix = true
+    compactionHeuristic = true
+    tool = bc3
     colorMoved = default
 
 [pretty]
-	log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
-	detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
-	shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
-	multiline = %C(blue)──────%Creset%n %C(auto)commit %h %C(auto) %D%Creset%n %C(cyan)%an%Creset | %Cgreen%cr%Creset%n%+B
+    log = %C(240)%h%C(reset) -%C(auto)%d%Creset %s %C(242)(%an %ar)
+    detailed = %C(cyan)%h %C(red)%ad %C(blue)[%an]%C(magenta)%d %C(white)%s
+    shorter = %C(auto)%D %C(240)--%C(242)%gD%N %ad by %C(white)%cn%C(reset)
+    multiline = %C(blue)──────%Creset%n %C(auto)commit %h %C(auto) %D%Creset%n %C(cyan)%an%Creset | %Cgreen%cr%Creset%n%+B
 
 [fetch]
-	recurseSubmodules = true
+    recurseSubmodules = true
 
 [merge]
-	tool = bc3
-	summary = true
-	verbosity = 1
-	stat = true
-	# This introduces the original text before each side's changes.
-	# https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
-	conflictstyle = diff3
+    tool = bc3
+    summary = true
+    verbosity = 1
+    stat = true
+    # This introduces the original text before each side's changes.
+    # https://git-scm.com/docs/git-config#git-config-mergeconflictStyle
+    conflictstyle = diff3
 
 [mergetool]
-	prompt = false
-	keepBackup = true
-	writeToTemp = true
+    prompt = false
+    keepBackup = true
+    writeToTemp = true
 
 [submodule]
-	fetchJobs = 8
+    fetchJobs = 8
 
 [color]
-	ui = true
-	pager = true
-	showbranch = true
-	diff = auto
-	status = auto
-	branch = auto
-	interactive = auto
+    ui = true
+    pager = true
+    showbranch = true
+    diff = auto
+    status = auto
+    branch = auto
+    interactive = auto
 
 [color "branch"]
-	plain = yellow
-	current = green bold
-	local = blue bold
-	remote = white
-	upstream = magenta bold
+    plain = yellow
+    current = green bold
+    local = blue bold
+    remote = white
+    upstream = magenta bold
 
 [color "diff"]
-	plain = normal
-	old = red
-	new = green
-	commit = yellow
-	meta = blue
-	frag = cyan
-	func = yellow bold
-	whitespace = red reverse
+    plain = normal
+    old = red
+    new = green
+    commit = yellow
+    meta = blue
+    frag = cyan
+    func = yellow bold
+    whitespace = red reverse
 
 [color "diff-highlight"]
-	oldNormal = red bold
-	oldHighlight = red bold 52
-	newNormal = green bold
-	newHighlight = green bold 22
+    oldNormal = red bold
+    oldHighlight = red bold 52
+    newNormal = green bold
+    newHighlight = green bold 22
 
 [color "status"]
-	header = 243
-	added = green
-	changed = red
-	untracked = blue
-	branch = green bold
-	nobranch = red
+    header = 243
+    added = green
+    changed = red
+    untracked = blue
+    branch = green bold
+    nobranch = red
 
 [url "git@github.com:"]
-	insteadOf = gh:
+    insteadOf = gh:
 
 [url "git@gitlab.com:"]
-	insteadOf = gl:
+    insteadOf = gl:
 
 [github]
-	user = edran
+    user = edran
 
 [magithub]
-	online = false
+    online = false
 
 [magithub "status"]
-	includeStatusHeader = false
-	includePullRequestsSection = false
-	includeIssuesSection = false
+    includeStatusHeader = false
+    includePullRequestsSection = false
+    includeIssuesSection = false
 
 [alias]
-	aliases = config --get-regexp alias
-	s  = status -sb
-	st = status
-	f  = fetch --prune
-	c  = commit -v
-	cm = commit -vm
-	ci = commit
-	co = checkout
-	br = branch
-	d  = diff
-	ds = diff --staged
-	dw = diff --color-words
-	dh = diff --color-words HEAD
-	dp = !git log --pretty=oneline | fzf | cut -d ' ' -f1 | xargs -o git show
-	patch = !git --no-pager diff --no-color
-	prune = fetch --prune
-	stash-all = stash save --include-untracked
-	w  = whatchanged --decorate
-	wp = whatchanged --decorate -p
-	t  = tag --column
-	tn = tag -n
-	#===============================================
-	sm    = submodule
-	smu   = submodule foreach git pull origin master
-	lcrev = log --reverse --no-merges --stat @{1}..
-	lcp   = diff @{1}..
-	#===============================================
-	tree = log --graph --all --oneline --decorate
-	lb   = log --graph --simplify-by-decoration --pretty=shorter --all --notes --date-order --relative-date
-	log  = log --pretty=log
-	lg   = log --graph --pretty=log --all
-	lgd  = log --graph --pretty=log
-	lgw  = !sh -c '"while true; do clear; git lg -15; sleep 5; done"'
-	#===============================================
-	# bf = !git diff --name-only "$(git base-branch)..@"
-	post  = !sh -c 'git format-patch --stdout $1 | ix' -
-	sync-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
-	recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
-	ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
-	theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
-	#===============================================
-	# Take a snapshot of your current working tree without removing the changes from your tree.
-	# via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
-	snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
-	snapshots = !git stash list --grep snapshot
+    aliases = config --get-regexp alias
+    s  = status -sb
+    st = status
+    f  = fetch --prune
+    c  = commit -v
+    cm = commit -vm
+    ci = commit
+    co = checkout
+    br = branch
+    d  = diff
+    ds = diff --staged
+    dw = diff --color-words
+    dh = diff --color-words HEAD
+    dp = !git log --pretty=oneline | fzf | cut -d ' ' -f1 | xargs -o git show
+    patch = !git --no-pager diff --no-color
+    prune = fetch --prune
+    stash-all = stash save --include-untracked
+    w  = whatchanged --decorate
+    wp = whatchanged --decorate -p
+    t  = tag --column
+    tn = tag -n
+    #===============================================
+    sm    = submodule
+    smu   = submodule foreach git pull origin master
+    lcrev = log --reverse --no-merges --stat @{1}..
+    lcp   = diff @{1}..
+    #===============================================
+    tree = log --graph --all --oneline --decorate
+    lb   = log --graph --simplify-by-decoration --pretty=shorter --all --notes --date-order --relative-date
+    log  = log --pretty=log
+    lg   = log --graph --pretty=log --all
+    lgd  = log --graph --pretty=log
+    lgw  = !sh -c '"while true; do clear; git lg -15; sleep 5; done"'
+    #===============================================
+    # bf = !git diff --name-only "$(git base-branch)..@"
+    post  = !sh -c 'git format-patch --stdout $1 | ix' -
+    sync-tags = fetch --prune origin '+refs/tags/*:refs/tags/*'
+    recent-branches = !git for-each-ref --count=15 --sort=-committerdate refs/heads/ --format='%(refname:short)'
+    ours   = "!f() { git checkout --ours $@ && git add $@; }; f"
+    theirs = "!f() { git checkout --theirs $@ && git add $@; }; f"
+    #===============================================
+    # Take a snapshot of your current working tree without removing the changes from your tree.
+    # via http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+    snapshot = !git stash save "snapshot: $(date)" && git stash apply "stash@{0}"
+    snapshots = !git stash list --grep snapshot
 
 [pull]
-	ff = only
+    ff = only
 
 [push]
-	default = current
-	# NOTE: needs git>=2.37
-	autosetupremote = true
+    default = current
+    # NOTE: needs git>=2.37
+    autosetupremote = true
 
 [init]
-	defaultBranch = main
+    defaultBranch = main
 
 # Only used in .dotfiles
 [filter "clean_tide_fish_vars"]
-	clean = awk '!/SETUVAR _tide.*/{print}'
+    clean = awk '!/SETUVAR _tide.*/{print}'
 
 [diff "fish_variables"]
-	textconv = awk '!/SETUVAR _tide.*/{print}'
+    textconv = awk '!/SETUVAR _tide.*/{print}'
