@@ -3,7 +3,7 @@
 	email = nantas@arbitrarygravitas.com
 
 [core]
-	autocrlf = input
+	# autocrlf = input
 	compression = -1
 	# Whitespace detection (only warnings)
 	whitespace = trailing-space,space-before-tab
@@ -29,6 +29,7 @@
 
 [branch]
 	autosetuprebase = always
+	sort = -committerdate
 
 [diff]
 	algorithm = patience
@@ -180,3 +181,9 @@
 
 [diff "fish_variables"]
 	textconv = awk '!/SETUVAR _tide.*/{print}'
+
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
