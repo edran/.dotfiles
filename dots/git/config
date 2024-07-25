@@ -9,7 +9,7 @@
     email = nantas@pacificfusion.com
 
 [core]
-    autocrlf = input
+    # autocrlf = input
     compression = -1
     # Whitespace detection (only warnings)
     whitespace = trailing-space,space-before-tab
@@ -34,7 +34,8 @@
     showUntrackedFiles = all
 
 [branch]
-    autosetuprebase = always
+	  autosetuprebase = always
+	  sort = -committerdate
 
 [diff]
     algorithm = patience
@@ -191,5 +192,10 @@
 
 [diff "fish_variables"]
     textconv = awk '!/SETUVAR _tide.*/{print}'
-[diff "lfs"]
-	textconv = cat
+
+[filter "lfs"]
+    clean = git-lfs clean -- %f
+    smudge = git-lfs smudge -- %f
+    process = git-lfs filter-process
+    required = true
+    textconv = cat
