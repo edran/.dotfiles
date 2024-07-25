@@ -472,6 +472,15 @@ At the moment, the only two lab-aware libraries are projectile and magit.
       magit-repository-directories (list (cons nn-lab-path 2)))
 #+end_src
 
+** Dealing with fish
+
+We want emacs to use bash as a shell wherever possible, since fish seems to
+inject some garbage into various subprocesses.
+
+#+begin_src emacs-lisp
+(setq shell-file-name (executable-find "bash"))
+#+end_src
+
 ** Graphical configuration
 
 All of this stuff relates to visual behavior.
