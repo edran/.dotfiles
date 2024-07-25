@@ -29,6 +29,7 @@ You have been warned. Hopefully.
 ``` sh
 $ git clone git@github.com:edran/.dotfiles ~/.dotfiles
 $ cd .dotfiles/ansible
+$ ansible-galaxy install -r requirements.yml
 $ ansible-playbook main.yml --ask-become-pass
 ```
 
