@@ -32,13 +32,10 @@ if status --is-interactive
 
     source $file
   end
-    zoxide init fish | source
+
+  direnv hook fish | source
+  zoxide init fish | source
 
   abbr --add t 'zellij'
   abbr --add ta 'zellij attach -c main'
-
-  # if set -q ZELLIJ
-  # else
-  #   zellij attach -c main
-  # end
 end
