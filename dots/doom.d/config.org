@@ -262,7 +262,7 @@ ess                           ; emacs speaks statistics
 json                          ; At least it ain't XML
 ;; (java +meghanada)          ; the poster child for carpal tunnel syndrome
 (javascript +lsp)             ; all(hope(abandon(ye(who(enter(here))))))
-(julia +lsp)                  ; Python, R, and MATLAB in a blender
+;; (julia +lsp)                  ; Python, R, and MATLAB in a blender
 ;; kotlin                     ; a better, slicker Java(Script)
 (latex                        ; writing papers in Emacs has never been so fun
  +latexmk                     ; what else would you use?
@@ -470,6 +470,15 @@ At the moment, the only two lab-aware libraries are projectile and magit.
 #+begin_src emacs-lisp
 (setq projectile-project-search-path (list (cons nn-lab-path 2))
       magit-repository-directories (list (cons nn-lab-path 2)))
+#+end_src
+
+** Dealing with fish
+
+We want emacs to use bash as a shell wherever possible, since fish seems to
+inject some garbage into various subprocesses.
+
+#+begin_src emacs-lisp
+(setq shell-file-name (executable-find "bash"))
 #+end_src
 
 ** Graphical configuration

@@ -17,10 +17,6 @@ fish_add_path -g "$HOME/.emacs.d/bin"
 fish_add_path -g "$HOME/.config/emacs/bin"
 fish_add_path -g "$HOME/.local/bin"
 
-if test -f "$HOME/.private.fish"
-    source "$HOME/.private.fish"
-end
-
 if status --is-interactive
   for file in (status dirname)/interactive/*.fish
     if test (uname) != "Darwin"
@@ -33,9 +29,18 @@ if status --is-interactive
     source $file
   end
 
-  direnv hook fish | source
-  zoxide init fish | source
+  if command -v zoxide >/dev/null 2>&1
+     zoxide init fish | source
+  end
 
   abbr --add t 'zellij'
   abbr --add ta 'zellij attach -c main'
+
+  if command -v direnv >/dev/null 2>&1
+    direnv hook fish | source
+  end
+
+  if test -f "$HOME/.private.fish"
+    source "$HOME/.private.fish"
+  end
 end
