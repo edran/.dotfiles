@@ -374,7 +374,7 @@ The following packages make ~org-mode~ even more awesome than usual.
 
 **** org-babel-srs
 
-~org-babel-srs~ is a package I'm developing. Will be released Soon™.
+~mochi~ is a package I'm developing. Will be released Soon™.
 
 #+begin_src emacs-lisp
 ;; (package! mochi
@@ -394,6 +394,16 @@ The following packages make ~org-mode~ even more awesome than usual.
 
 #+begin_src emacs-lisp
 (package! org-pretty-tags :pin "e127a1e0...")
+#+end_src
+
+**** Org-roam fix
+
+=org-roam= relies on [[https://github.com/magit/emacsql][emacsql]] to integrate with SQLite. Unfortunately, the
+current HEAD of =org-roam= is not compatible with =emacsql>=4.1=. Until [[https://github.com/org-roam/org-roam/pull/2486][this PR]]
+goes through, we need to pin the dependency:
+
+#+begin_src emacs-lisp
+(package! emacsql :pin "491105a")
 #+end_src
 
 *** mathpix integration
@@ -589,10 +599,10 @@ First, let's make sure to switch =visual-fill-column= on when using
 ** org-mode
 This one maybe should deserve a whole level-1 heading :)
 
-What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
-org packages cover pretty much almost anything I want; compared to the past,
-there's minimal setup that one needs to do to have a decent workflow. I love
-this community!
+What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom +
+modern org packages cover pretty much almost anything I want; compared to the
+past, there's minimal setup that one needs to do to have a decent workflow. I
+love this community!
 
 *** Basic files and folders
 
@@ -611,8 +621,8 @@ most of them here.
   "Path to file containing my reading list.")
 #+end_src
 
-I also employ =org-roam= to manage my knowledge base, so let's setup its directory
-as ~$org-directory/kb~.
+I also employ =org-roam= to manage my knowledge base, so let's setup its
+directory as ~$org-directory/kb~.
 
 #+begin_src emacs-lisp
 (setq org-roam-directory (concat
@@ -703,11 +713,12 @@ let's setup a couple of keybindings.
 
 *** Timestamps
 
-In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
+In some org buffers, I wish to have a ~last_modified~ property that auto-updates
+on save.
 
-To implement this, I can use =time-stamp= which will search the first 8 lines for
-the pattern below before saving, and insert a org-mode readable time-stamp if it
-finds ~last_modified: []~.
+To implement this, I can use =time-stamp= which will search the first 8 lines
+for the pattern below before saving, and insert a org-mode readable time-stamp
+if it finds ~last_modified: []~.
 
 #+begin_src emacs-lisp
 (setq time-stamp-pattern "last_modified: %%$"
@@ -778,19 +789,15 @@ SCOPE determines the scope of the command; see `org-map-entries' for a list."
       (replace-match "\n\n"))))
 #+end_src
 
-
 *** Look
-
 **** Headlines and indentation
 
 I want the headings to be indented, as well as being represented using some
-[[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an
-indication of the indent level.
+[[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
 
 #+begin_src emacs-lisp
 (after! org-superstar
   (setq
-        ; org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
         org-superstar-headline-bullets-list '("一" "二" "三" "四" "五" "六" "七")
         org-superstar-prettify-item-bullets t
         org-superstar-remove-leading-stars nil
@@ -812,7 +819,6 @@ When using simple list, I want different levels to have different bullets.
 (setq org-list-demote-modify-bullet '(("+" . "-")
                                       ("-" . "+")))
 #+end_src
-
 
 *** Capture
 
@@ -836,14 +842,15 @@ When using simple list, I want different levels to have different bullets.
           ("dd" "Deadline" entry (file+headline nn-org-main-file "Inbox")
            ,(string-join '("* TODO %?"
                            "DEADLINE: %^{Deadline date}t") "\n"))
+          ;; Special
           ("r" "reading" entry (file+headline nn-org-reading-file "Inbox")
            "* TOREAD %:annotation \n%:i\n %i"
            :immediate-finish t))))
 #+end_src
 
-~org-capture~ by default is mapped to =SPC-X= but we want it accessible via =SPC-x=,
-which normally is mapped to ~doom/open-scratch-buffer~. However this last function
-is also available at =SPC b x=), so it's not a major loss.
+~org-capture~ by default is mapped to =SPC-X= but we want it accessible via
+=SPC-x=, which normally is mapped to ~doom/open-scratch-buffer~. However this
+last function is also available at =SPC b x=), so it's not a major loss.
 
 #+begin_src emacs-lisp
 (map! :after org
@@ -982,21 +989,21 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 **** Keybindings
 
-Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
-extra "n a d" is way too many strokes.
+Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that
+the extra "n a d" is way too many strokes.
 
 #+begin_src emacs-lisp
-(after! org
-  (defun nn/open-default-agenda ()
-    (interactive)
-    (org-agenda nil "d"))
+;; (after! org
+;;   (defun nn/open-default-agenda ()
+;;     (interactive)
+;;     (org-agenda nil "d"))
 
-  (map! :leader "a" #'nn/open-default-agenda))
+;;   (map! :leader "a" #'nn/open-default-agenda))
 #+end_src
 
 Furthermore, I want to quickly be able to save all buffers, and to have a view
-of the context of each agenda item whenever I wish it. Thus, I'm remapping =w= and
-=f= so that they are actually useful in the agenda map.
+of the context of each agenda item whenever I wish it. Thus, I'm remapping =w=
+and =f= so that they are actually useful in the agenda map.
 
 #+begin_src emacs-lisp
 (after! org
@@ -1102,32 +1109,69 @@ compendium files.
 Finally, it's time to set the capture templates that are exclusive to =org-roam=.
 
 #+begin_src emacs-lisp
-
-(defvar nn-roam-header (string-join '("#+title: ${title}"
+(defvar nn-org-roam-header (string-join '("#+title: ${title}"
                                       "#+created: %u"
                                       "#+last_modified: %U"
-                                      ""
-                                      " - related :: "
                                       "") "\n")
   "Boilerplate header used in knowledge base files.")
 
+(defvar nn-org-roam-review-template
+  (string-join '("Authors: %^{Authors}"
+                 "Year: %^{Year}"
+                 ""
+                 "* What?"
+                 "%?"
+                 "* Why?"
+                 "* How?"
+                 "* And?") "\n")
+  "Capture template for generic reviews")
+
+(defvar nn-org-roam-review-tmlr-template
+  (string-join '("Authors: Anonymous"
+                 "Year: %<%Y>"
+                 ""
+                 "* Summary"
+                 "%?"
+                 "* Strengths"
+                 "* Weaknesses"
+                 "* Requested Changes") "\n")
+  "Capture template for TMLR reviews")
+
 (setq org-roam-capture-templates
-      `(("d" "default" plain (function org-roam--capture-get-point) "%?"
-         :file-name "${slug}"
-         :head ,nn-roam-header
+      `(("d" "default" plain "%?"
+         :target (file+head
+                  "${slug}.org"
+                  ,nn-org-roam-header)
          :unnarrowed t)
-        ("p" "project" plain (function org-roam--capture-get-point) "%?"
-         :file-name "projects/${slug}"
-         :head ,nn-roam-header
+        ("h" "human" plain "%?"
+         :target (file+head
+                  "humans/${slug}.org"
+                  ,(concat nn-org-roam-header "#+filetags: :human:\n"))
          :unnarrowed t)
-        ("h" "human" plain (function org-roam--capture-get-point) "%?"
-         :file-name "humans/${slug}"
-         :head ,nn-roam-header
-         :unnarrowed t)
-        ("r" "review" plain (function org-roam-capture--get-point) "%?"
-         :file-name "reviews/${slug}"
-         :head ,nn-roam-header
-         :unnarrowed t)))
+        ("p" "project" plain "%?"
+         :target (file+head
+                  "projects/${slug}.org"
+                  ,(concat nn-org-roam-header "#+filetags: :project:\n"))
+         :unnarrowed t
+         :jump-to-captured t)
+        ("r" "review")
+        ("rr" "regular paper review" plain
+         ,nn-org-roam-review-template
+         :target (file+head
+                  "reviews/${slug}.org"
+                  ,(concat nn-org-roam-header
+                           "#+filetags: :review:\n"))
+         :unnarrowed t
+         :jump-to-captured t)
+        ("rt" "TMLR review" plain
+         ,nn-org-roam-review-tmlr-template
+         :target (file+head
+                  "reviews/tmlr%<%Y>${slug}.org"
+                  ,(concat nn-org-roam-header
+                           "#+filetags: :review:conf/tmlr:\n"))
+         :unnarrowed t
+         :jump-to-captured t))
+)
 #+end_src
 
 *** Journal
@@ -1140,15 +1184,15 @@ template for creating the journal file.
 Thus, I now make use of =org-roam= "dailies" facilities.
 
 #+begin_src emacs-lisp
-(setq org-roam-dailies-capture-templates
-      `(("d" "daily" plain (function org-roam-capture--get-point)
-         ""
-         :immediate-finish t
-         :file-name "journal/%<%Y-%m-%d>"
-         :head ,(string-join '("#+title: %<%Y-%m-%d>"
-                               "#+created: %u"
-                               "#+last_modified: %U") "\n")
-         :unnarrowed t)))
+;; (setq org-roam-dailies-capture-templates
+;;       `(("d" "daily" plain (function org-roam-capture--get-point)
+;;          ""
+;;          :immediate-finish t
+;;          :file-name "journal/%<%Y-%m-%d>"
+;;          :head ,(string-join '("#+title: %<%Y-%m-%d>"
+;;                                "#+created: %u"
+;;                                "#+last_modified: %U") "\n")
+;;          :unnarrowed t)))
 #+end_src
 
 Finally, I like to start the week by listing overall goals, and I don't want
@@ -1158,14 +1202,14 @@ bindings.
 =SPC n j= by default is used for =org-journal=, but we can remap it.
 
 #+begin_src emacs-lisp
-(after! org-roam
-  (map! :leader
-        :prefix-map ("n" . "notes")
-        (:prefix ("j" . "journal")
-         :desc "Open daily journal" "j" #'org-roam-dailies-today
-         :desc "Open tomorrow's journal" "t" #'org-roam-dailies-tomorrow
-         :desc "Open yesterday's journal" "y" #'org-roam-dailies-yesterday
-         :desc "Open journal at date" "d" #'org-roam-dailies-date)))
+;; (after! org-roam
+;;   (map! :leader
+;;         :prefix-map ("n" . "notes")
+;;         (:prefix ("j" . "journal")
+;;          :desc "Open daily journal" "j" #'org-roam-dailies-today
+;;          :desc "Open tomorrow's journal" "t" #'org-roam-dailies-tomorrow
+;;          :desc "Open yesterday's journal" "y" #'org-roam-dailies-yesterday
+;;          :desc "Open journal at date" "d" #'org-roam-dailies-date)))
 #+end_src
 
 **** Logging meetings
@@ -1178,22 +1222,22 @@ capture, which in turn cannot be easily done inside another capture process...
 So, let's just custom make our own "capture" function.
 
 #+begin_src emacs-lisp
-(after! org-roam
-  (defun nn/org-roam-dailies-today-meeting ()
-    (interactive)
-    (org-roam-dailies-today)
-    (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org")
-                                       org-roam-directory)))
-      (progn (set-buffer (org-capture-target-buffer file-name))
-             (goto-char (point-max))
-             (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :meeting:"))
-             (search-backward-regexp "%")
-             (delete-char 1))))
+;; (after! org-roam
+;;   (defun nn/org-roam-dailies-today-meeting ()
+;;     (interactive)
+;;     (org-roam-dailies-today)
+;;     (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org")
+;;                                        org-roam-directory)))
+;;       (progn (set-buffer (org-capture-target-buffer file-name))
+;;              (goto-char (point-max))
+;;              (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :meeting:"))
+;;              (search-backward-regexp "%")
+;;              (delete-char 1))))
 
-  (map! :leader
-        :prefix-map ("n" . "notes")
-        (:prefix ("j" . "journal")
-         :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
+;;   (map! :leader
+;;         :prefix-map ("n" . "notes")
+;;         (:prefix ("j" . "journal")
+;;          :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
 #+end_src
 
 *** Bibtex setup
