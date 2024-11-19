@@ -1192,10 +1192,12 @@ we are ever capturing a past date.
 (setq org-roam-dailies-capture-templates
       `(("d" "default" entry "* %<%I:%M %p>: %?"
          :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
-         :jump-to-captured t)
+         :jump-to-captured t
+         :empty-lines-before 1)
         ("m" "meeting" entry "* %<%I:%M %p> %? :meeting:"
          :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
-         :jump-to-captured t)))
+         :jump-to-captured t
+         :empty-lines-before 1)))
 #+end_src
 
 
