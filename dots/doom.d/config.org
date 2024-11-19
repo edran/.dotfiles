@@ -13,10 +13,10 @@ so far.
 
 My configuration has gone through many [[https://www.emacswiki.org/emacs/DotEmacsBankruptcy][bankruptcies]], including a bunch that
 predate any usage (and knowledge!) of version control on my part. It's current
-form, which most certainly is not its final (but which I hope to be its /present/
-for at least a few more years), is based on the amazing =doom emacs= and =org-mode=.
-Thanks to these frameworks, it is much, much slimmer than it used to be at
-various points of its history.
+form, which most certainly is not its final (but which I hope to be its
+/present/ for at least a few more years), is based on the amazing =doom emacs=
+and =org-mode=. Thanks to these frameworks, it is much, much slimmer than it
+used to be at various points of its history.
 
 Which is both good and bad. But /c'est la vie/ :)
 
@@ -42,18 +42,6 @@ This config is a /Forever Work In Progress™/, and thus there are things that I
 wish were fixed / implemented that either I haven't had the time to tackle
 and/or have the capabilities to properly do so.
 
-*** TODO I would like hard wrap to work its magic on the paragraph automatically
-
-Rather than the last sentence / lines.
-
-*** TODO I should set bigger height for org headings only in the knowledge base
-
-Since this makes some of the organizational files a little painful to manage.
-
-*** TODO In org files, enter (in normal mode) should open links.
-
-*** TODO indent-guides + mixed-pitch-mode messes up code blocks in org buffers
-
 * Modules and Packages
 ** Doom modules
 :PROPERTIES:
@@ -66,7 +54,8 @@ Since this makes some of the organizational files a little painful to manage.
 ;;; init.el -*- lexical-binding: t; -*-
 
 ;; This file controls what Doom modules get enabled and what order they load in.
-;; Press 'K' on a module to view its documentation, and 'gd' to browse its directory.
+;; Press 'K' on a module to view its documentation, and 'gd' to browse its
+;; directory.
 
 (doom! :completion
        <<doom-completion>>
@@ -118,28 +107,28 @@ literate
 
 #+name: doom-completion
 #+begin_src emacs-lisp
-(company                     ; the ultimate code completion backend
- +childframe)                ; ... when your children are better than you
-;; helm                      ; the *other* search engine for love and life
-;; ido                       ; the other *other* search engine...
+;; company                   ; the ultimate code completion backend
+(corfu +orderless +dabbrev)  ; complete with cap(f), cape and a flying feather!
+;;helm                       ; the *other* search engine for love and life
+;;ido                        ; the other *other* search engine...
 ;; (ivy                      ; a search engine for love and life
 ;;  +icons                   ; ... icons are nice
 ;;  +prescient)              ; ... I know what I want(ed)
-(vertico +icons)             ; the search engine of the futurecompany
+(vertico +icons)             ; the search engine of the future
 #+end_src
 
 #+name: doom-ui
 #+begin_src emacs-lisp
-;; deft                         ; notational velocity for Emacs
+;; deft                      ; notational velocity for Emacs
 doom                         ; what makes DOOM look the way it does
 doom-dashboard               ; a nifty splash screen for Emacs
-;; doom-quit                    ; DOOM quit-message prompts when you quit Emacs
+;; doom-quit                 ; DOOM quit-message prompts when you quit Emacs
 (emoji +unicode)             ; 🙂
 ;; fill-column               ; a `fill-column' indicator
 hl-todo                      ; highlight TODO/FIXME/NOTE/DEPRECATED/HACK/REVIEW
 ;; hydra                     ; quick documentation for related commands
 ;; indent-guides             ; highlighted indent columns, notoriously slow
-;; (ligatures +extra)           ; ligatures and symbols to make your code pretty again
+;; (ligatures +extra)        ; ligatures and symbols to make your code pretty again
 ;; minimap                   ; show a map of the code on the side
 modeline                     ; snazzy, Atom-inspired modeline, plus API
 nav-flash                    ; blink the current line after jumping
@@ -152,8 +141,8 @@ ophints                      ; highlight the region an operation acts on
 ;;   +centaur-tabs)          ; ... with prettier tabs
 treemacs                     ; a project drawer, like neotree but cooler
 ;; unicode                   ; extended unicode support for various languages
-vc-gutter                    ; vcs diff in the fringe
-;; vi-tilde-fringe              ; fringe tildes to mark beyond EOB
+(vc-gutter +pretty)          ; vcs diff in the fringe
+vi-tilde-fringe              ; fringe tildes to mark beyond EOB
 (window-select +numbers)     ; visually switch windows
 workspaces                   ; tab emulation, persistence & separate workspaces
 zen                          ; distraction-free coding or writing
@@ -179,32 +168,33 @@ snippets                     ; my elves. They type so I don't have to
 #+begin_src emacs-lisp
 (dired +icons)               ; making dired pretty [functional]
 electric                     ; smarter, keyword-based electric-indent
-;; (ibuffer +icons)             ; interactive buffer management
+(ibuffer +icons)             ; interactive buffer management
 undo                         ; persistent, smarter undo for your inevitable mistakes
 vc                           ; version-control and Emacs, sitting in a tree
 #+end_src
 
 #+name: doom-term
 #+begin_src emacs-lisp
-;; eshell                     ; the elisp shell that works everywhere
-;; shell                      ; simple shell REPL for Emacs
-;; term                       ; basic terminal emulator for Emacs
+;; eshell                    ; the elisp shell that works everywhere
+;; shell                     ; simple shell REPL for Emacs
+;; term                      ; basic terminal emulator for Emacs
 vterm                        ; the best terminal emulation in Emacs
 #+end_src
 
 #+name: doom-checkers
 #+begin_src emacs-lisp
 syntax                       ; tasing you for every semicolon you forget
-(spell +aspell)              ; tasing you for misspelling mispelling
+;; (spell +aspell)              ; tasing you for misspelling mispelling
 grammar                      ; tasing grammar mistake every you make
 #+end_src
 
 #+name: doom-tools
 #+begin_src emacs-lisp
-ansible                      ; a crucible for infrastructure as code
+;; ansible                   ; a crucible for infrastructure as code
+;; biblio                    ; Writes a PhD for you (citation needed)
 ;; debugger                  ; FIXME stepping through code, to help you add bugs
 ;; direnv                    ; be direct about your environment
-docker                       ; port everything to containers
+;; docker                       ; port everything to containers
 ;; editorconfig              ; let someone else argue about tabs vs spaces
 ;; ein                       ; tame Jupyter notebooks with emacs
 (eval +overlay)              ; run code, run (also, repls)
@@ -216,28 +206,29 @@ lsp                          ; Language Server Protocol
 ;; macos                     ; MacOS-specific commands
 (magit                       ; a git porcelain for Emacs
  +forge)                     ; interface with git forges
-make                         ; run make tasks from Emacs
+;; make                      ; run make tasks from Emacs
 ;; pass                      ; password manager for nerds
 pdf                          ; pdf enhancements
 ;; prodigy                   ; FIXME managing external services & code builders
 rgb                          ; creating color strings
 ;; taskrunner                ; taskrunner for all your projects
-terraform                    ; infrastructure as code
-;; tmux                         ; an API for interacting with tmux
-;; upload                       ; map local to remote projects via ssh/ftp
+;; terraform                 ; infrastructure as code
+;; tmux                      ; an API for interacting with tmux
+tree-sitter                  ; syntax and parsing, sitting in a tree...
+;; upload                    ; map local to remote projects via ssh/ftp
 #+end_src
 
 #+name: doom-os
 #+begin_src emacs-lisp
 (:if IS-MAC macos)           ; *sigh*
-;; tty                          ; improve the terminal Emacs experience
+;; tty                       ; improve the terminal Emacs experience
 #+end_src
 
 #+name: doom-lang
 #+begin_src emacs-lisp
 ;; agda                       ; types of types of types of types...
 ;; beancount                  ; mind the GAAP
-(cc +lsp)                     ; C/C++/Obj-C madness
+;; (cc +lsp)                  ; C/C++/Obj-C madness
 ;; clojure                    ; java with a lisp
 ;; common-lisp                ; if you've seen one lisp, you've seen them all
 ;; coq                        ; proofs-as-programs
@@ -250,7 +241,7 @@ data                          ; config/data formats
 ;; elm                        ; care for a cup of TEA?
 emacs-lisp                    ; drown in parentheses
 ;; erlang                     ; an elegant language for a more civilized age
-ess                           ; emacs speaks statistics
+;; ess                        ; emacs speaks statistics
 ;; faust                      ; dsp, but you get to keep your soul
 ;; fsharp                     ; ML stands for Microsoft's Language
 ;; fstar                      ; (dependent) types and (monadic) effects and Z3
@@ -259,10 +250,10 @@ ess                           ; emacs speaks statistics
 ;; (haskell +lsp)             ; a language that's lazier than I am
 ;; hy                         ; readability of scheme w/ speed of python
 ;; idris                      ;
-json                          ; At least it ain't XML
+;; json                       ; At least it ain't XML
 ;; (java +meghanada)          ; the poster child for carpal tunnel syndrome
-(javascript +lsp)             ; all(hope(abandon(ye(who(enter(here))))))
-(julia +lsp)                  ; Python, R, and MATLAB in a blender
+;; (javascript +lsp)          ; all(hope(abandon(ye(who(enter(here))))))
+;; (julia +lsp)               ; Python, R, and MATLAB in a blender
 ;; kotlin                     ; a better, slicker Java(Script)
 (latex                        ; writing papers in Emacs has never been so fun
  +latexmk                     ; what else would you use?
@@ -271,7 +262,7 @@ json                          ; At least it ain't XML
 ;; lean                       ; proof that mathematicians need help
 ;; factor                     ; for when scripts are stacked against you
 ;; ledger                     ; an accounting system in Emacs
-lua                           ; one-based indices? one-based indices
+;; lua                        ; one-based indices? one-based indices
 markdown                      ; writing docs for people to ignore
 ;; nim                        ; python + lisp at the speed of c
 ;; nix                        ; I hereby declare "nix geht mehr!"
@@ -279,10 +270,10 @@ markdown                      ; writing docs for people to ignore
 (org                          ; organize your plain life in plain text
  +dragndrop                   ; drag & drop files/images into org buffers
  ;; +hugo                     ; use Emacs for hugo blogging
- ;; +noter                       ; enhanced PDF notetaking
- +jupyter                     ; ipython/jupyter support for babel
+ ;; +noter                    ; enhanced PDF notetaking
+ ;; +jupyter                  ; ipython/jupyter support for babel
  +pandoc                      ; export-with-pandoc support
- +gnuplot                     ; who doesn't like pretty pictures
+ ;; +gnuplot                  ; who doesn't like pretty pictures
  ;; +pomodoro                 ; be fruitful with the tomato technique
  +present                     ; using org-mode for presentations
  +pretty                      ; yessss my pretties! (nice unicode symbols)
@@ -291,26 +282,25 @@ markdown                      ; writing docs for people to ignore
 ;; php                        ; perl's insecure younger brother
 ;; plantuml                   ; diagrams for confusing people more
 ;; purescript                 ; javascript, but functional
-(python                       ; beautiful is better than ugly
- +lsp
- +pyright
- +poetry)
+;; (python                    ; beautiful is better than ugly
+;;  +lsp
+;;  +pyright)
 ;; qt                         ; the 'cutest' gui framework ever
 ;; racket                     ; a DSL for DSLs
 ;; raku                       ; the artist formerly known as perl6
 ;; rest                       ; Emacs as a REST client
 ;; rst                        ; ReST in peace
 ;; (ruby +rails)              ; 1.step {|i| p "Ruby is #{i.even? ? 'love' : 'life'}"}
-(rust +lsp)                   ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
+;; (rust +lsp)                ; Fe2O3.unwrap().unwrap().unwrap().unwrap()
 ;; scala                      ; java, but good
-;; scheme                        ; a fully conniving family of lisps
-sh                            ; she sells {ba,z,fi}sh shells on the C xor
+;; scheme                     ; a fully conniving family of lisps
+;; sh                         ; she sells {ba,z,fi}sh shells on the C xor
 ;; sml                        ; no, the /other/ ML
 ;; solidity                   ; do you need a blockchain? No.
 ;; swift                      ; who asked for emoji variables?
 ;; terra                      ; Earth and Moon in alignment for performance.
-web                           ; the tubes
-yaml                          ; JSON, but readable
+;; web                        ; the tubes
+;; yaml                       ; JSON, but readable
 ;; zig                        ; C, but simpler
 #+end_src
 
@@ -384,12 +374,12 @@ The following packages make ~org-mode~ even more awesome than usual.
 
 **** org-babel-srs
 
-~org-babel-srs~ is a package I'm developing. Will be released Soon™.
+~mochi~ is a package I'm developing. Will be released Soon™.
 
 #+begin_src emacs-lisp
-(package! mochi
-  :type 'local
-  :recipe (:local-repo "lisp/mochi"))
+;; (package! mochi
+;;   :type 'local
+;;   :recipe (:local-repo "lisp/mochi"))
 #+end_src
 
 **** Prettier org-mode
@@ -404,6 +394,16 @@ The following packages make ~org-mode~ even more awesome than usual.
 
 #+begin_src emacs-lisp
 (package! org-pretty-tags :pin "e127a1e0...")
+#+end_src
+
+**** Org-roam fix
+
+=org-roam= relies on [[https://github.com/magit/emacsql][emacsql]] to integrate with SQLite. Unfortunately, the
+current HEAD of =org-roam= is not compatible with =emacsql>=4.1=. Until [[https://github.com/org-roam/org-roam/pull/2486][this PR]]
+goes through, we need to pin the dependency:
+
+#+begin_src emacs-lisp
+(package! emacsql :pin "491105a")
 #+end_src
 
 *** mathpix integration
@@ -452,7 +452,7 @@ These are some basic information that are necessary for e.g., =GPG=, =org-export
 
 #+begin_src emacs-lisp
 (setq user-full-name "Nantas Nardelli"
-      user-mail-address "nantas.nardelli@gmail.com")
+      user-mail-address "nantas@arbitrarygravitas.com")
 #+end_src
 
 ** Setting the lab
@@ -470,6 +470,15 @@ At the moment, the only two lab-aware libraries are projectile and magit.
 #+begin_src emacs-lisp
 (setq projectile-project-search-path (list (cons nn-lab-path 2))
       magit-repository-directories (list (cons nn-lab-path 2)))
+#+end_src
+
+** Dealing with fish
+
+We want emacs to use bash as a shell wherever possible, since fish seems to
+inject some garbage into various subprocesses.
+
+#+begin_src emacs-lisp
+(setq shell-file-name (executable-find "bash"))
 #+end_src
 
 ** Graphical configuration
@@ -588,13 +597,12 @@ First, let's make sure to switch =visual-fill-column= on when using
 
 * Tools configuration
 ** org-mode
-
 This one maybe should deserve a whole level-1 heading :)
 
-What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom + modern
-org packages cover pretty much almost anything I want; compared to the past,
-there's minimal setup that one needs to do to have a decent workflow. I love
-this community!
+What follows is what /remains/ of my org-mode setup. Unsurprisingly, Doom +
+modern org packages cover pretty much almost anything I want; compared to the
+past, there's minimal setup that one needs to do to have a decent workflow. I
+love this community!
 
 *** Basic files and folders
 
@@ -613,8 +621,8 @@ most of them here.
   "Path to file containing my reading list.")
 #+end_src
 
-I also employ =org-roam= to manage my knowledge base, so let's setup its directory
-as ~$org-directory/kb~.
+I also employ =org-roam= to manage my knowledge base, so let's setup its
+directory as ~$org-directory/kb~.
 
 #+begin_src emacs-lisp
 (setq org-roam-directory (concat
@@ -705,11 +713,12 @@ let's setup a couple of keybindings.
 
 *** Timestamps
 
-In some org buffers, I wish to have a ~last_modified~ property that auto-updates on save.
+In some org buffers, I wish to have a ~last_modified~ property that auto-updates
+on save.
 
-To implement this, I can use =time-stamp= which will search the first 8 lines for
-the pattern below before saving, and insert a org-mode readable time-stamp if it
-finds ~last_modified: []~.
+To implement this, I can use =time-stamp= which will search the first 8 lines
+for the pattern below before saving, and insert a org-mode readable time-stamp
+if it finds ~last_modified: []~.
 
 #+begin_src emacs-lisp
 (setq time-stamp-pattern "last_modified: %%$"
@@ -781,50 +790,28 @@ SCOPE determines the scope of the command; see `org-map-entries' for a list."
 #+end_src
 
 *** Look
-**** Use variable pitch fonts for prose
-
-I want org files to use =mixed-pitch-mode=, since it is nicer to read prose in
-variable pitch fonts.
-
-#+begin_src emacs-lisp
-(add-hook! 'org-mode-hook #'+org-pretty-mode #'mixed-pitch-mode)
-#+end_src
-
-**** Headings gotta pop!
+**** Headlines and indentation
 
 I want the headings to be indented, as well as being represented using some
 [[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
 
 #+begin_src emacs-lisp
 (after! org-superstar
-  (setq org-superstar-headline-bullets-list '("☰" "☱" "☲" "☳" "☴" "☵" "☶" "☷" "☷" "☷" "☷")
+  (setq
+        org-superstar-headline-bullets-list '("一" "二" "三" "四" "五" "六" "七")
         org-superstar-prettify-item-bullets t
         org-superstar-remove-leading-stars nil
       ))
 #+end_src
 
 
-Also, headings (and the title) need to standout more.
+However, while small indentations are OK for headings, they are not okay for
+text and simple listings. Let's disable that.
 
 #+begin_src emacs-lisp
-(after! org
-  (custom-set-faces!
-    '(org-document-title :height 1.3)
-    '(org-level-1 :inherit outline-1 :weight extra-bold :height 1.4)
-    '(org-level-2 :inherit outline-2 :weight bold :height 1.15)
-    '(org-level-3 :inherit outline-3 :weight bold :height 1.12)
-    '(org-level-4 :inherit outline-4 :weight bold :height 1.09)
-    '(org-level-5 :inherit outline-5 :weight semi-bold :height 1.06)
-    '(org-level-6 :inherit outline-6 :weight semi-bold :height 1.03)
-    '(org-level-7 :inherit outline-7 :weight semi-bold)
-    '(org-level-8 :inherit outline-8 :weight semi-bold)))
+(after! org (setq org-startup-indented nil))
 #+end_src
 
-When cycling the headings down, I don't want to see actual ellipsis.
-
-#+begin_src emacs-lisp
-(after! org (setq org-ellipsis " ▾ "))
-#+end_src
 
 When using simple list, I want different levels to have different bullets.
 
@@ -833,15 +820,6 @@ When using simple list, I want different levels to have different bullets.
                                       ("-" . "+")))
 #+end_src
 
-**** Indentation
-
-I want everything left-justified.
-
-#+begin_src emacs-lisp
-(after! org
-  (setq org-startup-indented nil  ;; I don't like indents
-        org-adapt-indentation nil))
-#+end_src
 *** Capture
 
 #+begin_src emacs-lisp
@@ -864,14 +842,15 @@ I want everything left-justified.
           ("dd" "Deadline" entry (file+headline nn-org-main-file "Inbox")
            ,(string-join '("* TODO %?"
                            "DEADLINE: %^{Deadline date}t") "\n"))
+          ;; Special
           ("r" "reading" entry (file+headline nn-org-reading-file "Inbox")
            "* TOREAD %:annotation \n%:i\n %i"
            :immediate-finish t))))
 #+end_src
 
-~org-capture~ by default is mapped to =SPC-X= but we want it accessible via =SPC-x=,
-which normally is mapped to ~doom/open-scratch-buffer~. However this last function
-is also available at =SPC b x=), so it's not a major loss.
+~org-capture~ by default is mapped to =SPC-X= but we want it accessible via
+=SPC-x=, which normally is mapped to ~doom/open-scratch-buffer~. However this
+last function is also available at =SPC b x=), so it's not a major loss.
 
 #+begin_src emacs-lisp
 (map! :after org
@@ -1010,21 +989,21 @@ PRIORITY may be one of the characters ?A, ?B, or ?C."
 
 **** Keybindings
 
-Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that the
-extra "n a d" is way too many strokes.
+Doom by default uses =SPC o a= for =org-agenda=, however I use it so often that
+the extra "n a d" is way too many strokes.
 
 #+begin_src emacs-lisp
-(after! org
-  (defun nn/open-default-agenda ()
-    (interactive)
-    (org-agenda nil "d"))
+;; (after! org
+;;   (defun nn/open-default-agenda ()
+;;     (interactive)
+;;     (org-agenda nil "d"))
 
-  (map! :leader "a" #'nn/open-default-agenda))
+;;   (map! :leader "a" #'nn/open-default-agenda))
 #+end_src
 
 Furthermore, I want to quickly be able to save all buffers, and to have a view
-of the context of each agenda item whenever I wish it. Thus, I'm remapping =w= and
-=f= so that they are actually useful in the agenda map.
+of the context of each agenda item whenever I wish it. Thus, I'm remapping =w=
+and =f= so that they are actually useful in the agenda map.
 
 #+begin_src emacs-lisp
 (after! org
@@ -1120,42 +1099,72 @@ directories:
                             "org-roam.db"))
 #+end_src
 
-Next, let's use directories as roam tags, since it's useful (at least) for my
-compendium files.
+Now, let's setup some capture templates.
 
 #+begin_src emacs-lisp
-(setq org-roam-tag-sources '(prop all-directories))
-#+end_src
-
-Finally, it's time to set the capture templates that are exclusive to =org-roam=.
-
-#+begin_src emacs-lisp
-
-(defvar nn-roam-header (string-join '("#+title: ${title}"
+(defvar nn-org-roam-header (string-join '("#+title: ${title}"
                                       "#+created: %u"
                                       "#+last_modified: %U"
-                                      ""
-                                      " - related :: "
                                       "") "\n")
   "Boilerplate header used in knowledge base files.")
 
+(defvar nn-org-roam-review-template
+  (string-join '("Authors: %^{Authors}"
+                 "Year: %^{Year}"
+                 ""
+                 "* What?"
+                 "%?"
+                 "* Why?"
+                 "* How?"
+                 "* And?") "\n")
+  "Capture template for generic reviews")
+
+(defvar nn-org-roam-review-tmlr-template
+  (string-join '("Authors: Anonymous"
+                 "Year: %<%Y>"
+                 ""
+                 "* Summary"
+                 "%?"
+                 "* Strengths"
+                 "* Weaknesses"
+                 "* Requested Changes") "\n")
+  "Capture template for TMLR reviews")
+
 (setq org-roam-capture-templates
-      `(("d" "default" plain (function org-roam--capture-get-point) "%?"
-         :file-name "${slug}"
-         :head ,nn-roam-header
+      `(("d" "default" plain "%?"
+         :target (file+head
+                  "${slug}.org"
+                  ,nn-org-roam-header)
          :unnarrowed t)
-        ("p" "project" plain (function org-roam--capture-get-point) "%?"
-         :file-name "projects/${slug}"
-         :head ,nn-roam-header
+        ("h" "human" plain "%?"
+         :target (file+head
+                  "human/${slug}.org"
+                  ,(concat nn-org-roam-header "#+filetags: :human:\n"))
          :unnarrowed t)
-        ("h" "human" plain (function org-roam--capture-get-point) "%?"
-         :file-name "humans/${slug}"
-         :head ,nn-roam-header
-         :unnarrowed t)
-        ("r" "review" plain (function org-roam-capture--get-point) "%?"
-         :file-name "reviews/${slug}"
-         :head ,nn-roam-header
-         :unnarrowed t)))
+        ("p" "project" plain "%?"
+         :target (file+head
+                  "project/${slug}.org"
+                  ,(concat nn-org-roam-header "#+filetags: :project:\n"))
+         :unnarrowed t
+         :jump-to-captured t)
+        ("r" "review")
+        ("rr" "regular paper review" plain
+         ,nn-org-roam-review-template
+         :target (file+head
+                  "review/${slug}.org"
+                  ,(concat nn-org-roam-header
+                           "#+filetags: :review:\n"))
+         :unnarrowed t
+         :jump-to-captured t)
+        ("rt" "TMLR review" plain
+         ,nn-org-roam-review-tmlr-template
+         :target (file+head
+                  "review/tmlr%<%Y>${slug}.org"
+                  ,(concat nn-org-roam-header
+                           "#+filetags: :review:conf/tmlr:\n"))
+         :unnarrowed t
+         :jump-to-captured t))
+)
 #+end_src
 
 *** Journal
@@ -1165,64 +1174,46 @@ Originally I was using =org-journal= for this, but truthfully it never really
 provided any particular value for me, beyond serving as an easy-to-use daily
 template for creating the journal file.
 
-Thus, I now make use of =org-roam= "dailies" facilities.
+Thus, I now make use of =org-roam= "dailies" facilities. First, let's set a
+journal directory (relative to =org-roam-directory=).
 
 #+begin_src emacs-lisp
+(setq org-roam-dailies-directory "journal/")
+#+end_src
+
+The template is also pretty similar. Note that we also add =#+created:= in case
+we are ever capturing a past date.
+
+#+begin_src emacs-lisp
+(defvar nn-org-roam-dailies-header (string-join '("#+title: %<%Y-%m-%d>"
+                                                  "#+created: %u"
+                                                  "#+last_modified: %U"
+                                                  "") "\n"))
 (setq org-roam-dailies-capture-templates
-      `(("d" "daily" plain (function org-roam-capture--get-point)
-         ""
-         :immediate-finish t
-         :file-name "journal/%<%Y-%m-%d>"
-         :head ,(string-join '("#+title: %<%Y-%m-%d>"
-                               "#+created: %u"
-                               "#+last_modified: %U") "\n")
-         :unnarrowed t)))
+      `(("d" "default" entry "* %<%I:%M %p>: %?"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t)
+        ("m" "meeting" entry "* %<%I:%M %p> %? :meeting:"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t)))
 #+end_src
 
-Finally, I like to start the week by listing overall goals, and I don't want
-that to have a proper journal entry. Thus, I need some functions and nice
-bindings.
 
-=SPC n j= by default is used for =org-journal=, but we can remap it.
+=SPC n j= by default is used for =org-journal=, so we can remap it.
 
 #+begin_src emacs-lisp
 (after! org-roam
   (map! :leader
         :prefix-map ("n" . "notes")
         (:prefix ("j" . "journal")
-         :desc "Open daily journal" "j" #'org-roam-dailies-today
-         :desc "Open tomorrow's journal" "t" #'org-roam-dailies-tomorrow
-         :desc "Open yesterday's journal" "y" #'org-roam-dailies-yesterday
-         :desc "Open journal at date" "d" #'org-roam-dailies-date)))
+         :desc "Journal now!" "j" #'org-roam-dailies-capture-today
+         :desc "Today's journal" "t" #'org-roam-dailies-find-today
+         :desc "Tomorrow's journal" "T" #'org-roam-dailies-find-tomorrow
+         :desc "Yesterday's journal" "y" #'org-roam-dailies-find-yesterday
+         :desc "Open journal at date" "d" #'org-roam-dailies-find-date)))
 #+end_src
 
-**** Logging meetings
-
-I also want the ability to add meetings to daily entries, but the templating
-system built with =org-roam= doesn't allow to easily disable the search system. I
-don't want to mess with its functions. Directly using =org-capture= is also
-painful, since I would need to maybe-create the dailies file, which invokes
-capture, which in turn cannot be easily done inside another capture process...
-So, let's just custom make our own "capture" function.
-
-#+begin_src emacs-lisp
-(after! org-roam
-  (defun nn/org-roam-dailies-today-meeting ()
-    (interactive)
-    (org-roam-dailies-today)
-    (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org")
-                                       org-roam-directory)))
-      (progn (set-buffer (org-capture-target-buffer file-name))
-             (goto-char (point-max))
-             (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :meeting:"))
-             (search-backward-regexp "%")
-             (delete-char 1))))
-
-  (map! :leader
-        :prefix-map ("n" . "notes")
-        (:prefix ("j" . "journal")
-         :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
-#+end_src
+And we are done! (jk lol sure)
 
 *** Bibtex setup
 

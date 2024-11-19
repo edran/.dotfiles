@@ -29,6 +29,7 @@ if [ -z "$ORGDIR" ]; then
     exit
 fi
 
+ssh-add ~/.ssh/github
 pushd $ORGDIR > /dev/null
 
 if [[ -z $(git status -s) ]]; then
@@ -36,6 +37,7 @@ if [[ -z $(git status -s) ]]; then
     echo "---"
     echo "No changes detected in $ORGDIR at $(date)."
     echo "---"
+    git pull
     clickable_history
 else
     echo ":rocket::full_moon:"

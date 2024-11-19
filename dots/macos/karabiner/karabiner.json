@@ -44,10 +44,18 @@
                     "identifiers": {
                         "is_keyboard": true,
                         "is_pointing_device": true,
-                        "product_id": 64007,
-                        "vendor_id": 13652
+                        "product_id": 1072,
+                        "vendor_id": 13364
                     },
                     "ignore": false
+                },
+                {
+                    "identifiers": {
+                        "is_keyboard": true,
+                        "product_id": 152,
+                        "vendor_id": 5426
+                    },
+                    "ignore": true
                 }
             ],
             "fn_function_keys": [
@@ -72,10 +80,11 @@
                     "to": [{ "consumer_key_code": "fastforward" }]
                 }
             ],
-            "name": "Default profile",
+            "name": "Std",
             "selected": true,
             "virtual_hid_keyboard": {
                 "caps_lock_delay_milliseconds": 0,
+                "country_code": 0,
                 "keyboard_type": "iso",
                 "keyboard_type_v2": "ansi"
             }
@@ -108,7 +117,8 @@
                     "manipulate_caps_lock_led": false
                 }
             ],
-            "name": "Minecraft"
+            "name": "Minecraft",
+            "virtual_hid_keyboard": { "country_code": 0 }
         }
     ]
 }

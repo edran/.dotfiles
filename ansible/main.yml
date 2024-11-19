@@ -96,17 +96,24 @@
         - jansson
         - libxml2
         - imagemagick
-        - { name: emacs-mac,
-            install_options: [
-              with-modules,
-              with-native-compilation,
-              with-no-title-bars,
-              with-xwidgets,
-              with-emacs-big-sur-icon,
-              with-librsvg,
-              with-tree-sitter,
-            ]
-          }
+        # FIXME: this doesn't work -- the emacs-mac formula seems to generate a
+        # warning due to the equivalent cask, which breaks the task.
+        # The workaround is to do a manual install:
+        # $ brew install emacs-mac --with-modules \
+        #     --with-native-compilation --with-no-title-bars \
+        #     --with-xwidgets --with-emacs-bi-sur-icon \
+        #     --with-librsvg --with-tree-sitter
+        # - { name: emacs-mac,
+        #     install_options: [
+        #       with-modules,
+        #       with-native-compilation,
+        #       with-no-title-bars,
+        #       with-xwidgets,
+        #       with-emacs-big-sur-icon,
+        #       with-librsvg,
+        #       with-tree-sitter,
+        #     ]
+        #   }
 
         # Modern CLI tooling
         - angle-grinder # a.k.a. *agrinder*, log analysis.
@@ -131,7 +138,6 @@
         - gping # Graphical ping.
         - hexyl # hexdump
         - htmlq # jq for html.
-        - httpie # A friendly curl replacement.
         - hyperfine # Benchmarking tool.
         - jc # Convert various tools' output to json.
         - jless # JSON pager.
@@ -176,14 +182,15 @@
         - firefox
         - font-hack-nerd-font
         - handbrake
+        - httpie # A friendly curl replacement.
         - iterm2
         - karabiner-elements
         - linear-linear
-        - notion
+        # - notion
         - postman
         - sf-symbols
         - signal
-        - slack
+        # - slack
         - spotify
         - teamviewer
         - transmit
@@ -202,6 +209,11 @@
         - { id: 419330170, name: Moom }
         - { id: 1475387142, name: Tailscale }
 
+    - dots_dirs:
+      - .config/bat
+      - .config/zellij
+      - .config/neofetch
+
     - dots_links:
         - { src: bin, dest: bin }
         - { src: fish, dest: .config/fish }
@@ -214,7 +226,7 @@
         - { src: bat.config, dest: .config/bat/config}
         - { src: nethackrc, dest: .nethackrc }
         - { src: profile, dest: .profile }
-        # TODO: this will normally fail. Needs a custom link task.
+        # FIXME: this will normally fail. Needs a custom link task.
         - { src: ssh, dest: .ssh }
         - { src: tmux.conf, dest: .tmux.conf }
         - { src: zellij.kdl, dest: .config/zellij/config.kdl }
@@ -229,6 +241,13 @@
       tags: [mas]
 
   tasks:
+    - name: Ensure config directories exist
+      file:
+        path: "{{ ansible_env.HOME }}/{{ item }}"
+        state: directory
+      loop: "{{ dots_dirs }}"
+      tags: [quick]
+
     - name: Link dots in various places
       file:
         src: "{{ inventory_dir }}/../dots/{{ item.src }}"
@@ -244,6 +263,8 @@
           tags: [dock]
       tags: [always]
 
+    # FIXME: This fails if xbar hasn't been opened yet (since the dest
+    # directory doesn't exist).
     - name: Link script to xbar
       file:
         src: "{{ item }}"
