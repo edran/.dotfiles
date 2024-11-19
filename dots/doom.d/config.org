@@ -1099,14 +1099,7 @@ directories:
                             "org-roam.db"))
 #+end_src
 
-Next, let's use directories as roam tags, since it's useful (at least) for my
-compendium files.
-
-#+begin_src emacs-lisp
-(setq org-roam-tag-sources '(prop all-directories))
-#+end_src
-
-Finally, it's time to set the capture templates that are exclusive to =org-roam=.
+Now, let's setup some capture templates.
 
 #+begin_src emacs-lisp
 (defvar nn-org-roam-header (string-join '("#+title: ${title}"
@@ -1145,12 +1138,12 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
          :unnarrowed t)
         ("h" "human" plain "%?"
          :target (file+head
-                  "humans/${slug}.org"
+                  "human/${slug}.org"
                   ,(concat nn-org-roam-header "#+filetags: :human:\n"))
          :unnarrowed t)
         ("p" "project" plain "%?"
          :target (file+head
-                  "projects/${slug}.org"
+                  "project/${slug}.org"
                   ,(concat nn-org-roam-header "#+filetags: :project:\n"))
          :unnarrowed t
          :jump-to-captured t)
@@ -1158,7 +1151,7 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
         ("rr" "regular paper review" plain
          ,nn-org-roam-review-template
          :target (file+head
-                  "reviews/${slug}.org"
+                  "review/${slug}.org"
                   ,(concat nn-org-roam-header
                            "#+filetags: :review:\n"))
          :unnarrowed t
@@ -1166,7 +1159,7 @@ Finally, it's time to set the capture templates that are exclusive to =org-roam=
         ("rt" "TMLR review" plain
          ,nn-org-roam-review-tmlr-template
          :target (file+head
-                  "reviews/tmlr%<%Y>${slug}.org"
+                  "review/tmlr%<%Y>${slug}.org"
                   ,(concat nn-org-roam-header
                            "#+filetags: :review:conf/tmlr:\n"))
          :unnarrowed t
@@ -1181,36 +1174,46 @@ Originally I was using =org-journal= for this, but truthfully it never really
 provided any particular value for me, beyond serving as an easy-to-use daily
 template for creating the journal file.
 
-Thus, I now make use of =org-roam= "dailies" facilities.
+Thus, I now make use of =org-roam= "dailies" facilities. First, let's set a
+journal directory (relative to =org-roam-directory=).
 
 #+begin_src emacs-lisp
-;; (setq org-roam-dailies-capture-templates
-;;       `(("d" "daily" plain (function org-roam-capture--get-point)
-;;          ""
-;;          :immediate-finish t
-;;          :file-name "journal/%<%Y-%m-%d>"
-;;          :head ,(string-join '("#+title: %<%Y-%m-%d>"
-;;                                "#+created: %u"
-;;                                "#+last_modified: %U") "\n")
-;;          :unnarrowed t)))
+(setq org-roam-dailies-directory "journal/")
 #+end_src
 
-Finally, I like to start the week by listing overall goals, and I don't want
-that to have a proper journal entry. Thus, I need some functions and nice
-bindings.
-
-=SPC n j= by default is used for =org-journal=, but we can remap it.
+The template is also pretty similar. Note that we also add =#+created:= in case
+we are ever capturing a past date.
 
 #+begin_src emacs-lisp
-;; (after! org-roam
-;;   (map! :leader
-;;         :prefix-map ("n" . "notes")
-;;         (:prefix ("j" . "journal")
-;;          :desc "Open daily journal" "j" #'org-roam-dailies-today
-;;          :desc "Open tomorrow's journal" "t" #'org-roam-dailies-tomorrow
-;;          :desc "Open yesterday's journal" "y" #'org-roam-dailies-yesterday
-;;          :desc "Open journal at date" "d" #'org-roam-dailies-date)))
+(defvar nn-org-roam-dailies-header (string-join '("#+title: %<%Y-%m-%d>"
+                                                  "#+created: %u"
+                                                  "#+last_modified: %U"
+                                                  "") "\n"))
+(setq org-roam-dailies-capture-templates
+      `(("d" "default" entry "* %<%I:%M %p>: %?"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t)
+        ("m" "meeting" entry "* %<%I:%M %p> %? :meeting:"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t)))
 #+end_src
+
+
+=SPC n j= by default is used for =org-journal=, so we can remap it.
+
+#+begin_src emacs-lisp
+(after! org-roam
+  (map! :leader
+        :prefix-map ("n" . "notes")
+        (:prefix ("j" . "journal")
+         :desc "Journal now!" "j" #'org-roam-dailies-capture-today
+         :desc "Today's journal" "t" #'org-roam-dailies-find-today
+         :desc "Tomorrow's journal" "T" #'org-roam-dailies-find-tomorrow
+         :desc "Yesterday's journal" "y" #'org-roam-dailies-find-yesterday
+         :desc "Open journal at date" "d" #'org-roam-dailies-find-date)))
+#+end_src
+
+And we are done! (jk lol sure)
 
 **** Logging meetings
 
