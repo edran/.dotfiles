@@ -1215,34 +1215,6 @@ we are ever capturing a past date.
 
 And we are done! (jk lol sure)
 
-**** Logging meetings
-
-I also want the ability to add meetings to daily entries, but the templating
-system built with =org-roam= doesn't allow to easily disable the search system. I
-don't want to mess with its functions. Directly using =org-capture= is also
-painful, since I would need to maybe-create the dailies file, which invokes
-capture, which in turn cannot be easily done inside another capture process...
-So, let's just custom make our own "capture" function.
-
-#+begin_src emacs-lisp
-;; (after! org-roam
-;;   (defun nn/org-roam-dailies-today-meeting ()
-;;     (interactive)
-;;     (org-roam-dailies-today)
-;;     (let ((file-name (expand-file-name (format-time-string "journal/%Y-%m-%d.org")
-;;                                        org-roam-directory)))
-;;       (progn (set-buffer (org-capture-target-buffer file-name))
-;;              (goto-char (point-max))
-;;              (insert (format-time-string "\n\n* %02H:%02M Meeting w/ %  :meeting:"))
-;;              (search-backward-regexp "%")
-;;              (delete-char 1))))
-
-;;   (map! :leader
-;;         :prefix-map ("n" . "notes")
-;;         (:prefix ("j" . "journal")
-;;          :desc "Log meeting now" "m" #'nn/org-roam-dailies-today-meeting)))
-#+end_src
-
 *** Bibtex setup
 
 We use all sort of packages to manage our bibliography. Here's where we
