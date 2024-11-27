@@ -1145,8 +1145,7 @@ Now, let's setup some capture templates.
          :target (file+head
                   "project/${slug}.org"
                   ,(concat nn-org-roam-header "#+filetags: :project:\n"))
-         :unnarrowed t
-         :jump-to-captured t)
+         :unnarrowed t)
         ("r" "review")
         ("rr" "regular paper review" plain
          ,nn-org-roam-review-template
@@ -1154,16 +1153,14 @@ Now, let's setup some capture templates.
                   "review/${slug}.org"
                   ,(concat nn-org-roam-header
                            "#+filetags: :review:\n"))
-         :unnarrowed t
-         :jump-to-captured t)
+         :unnarrowed t)
         ("rt" "TMLR review" plain
          ,nn-org-roam-review-tmlr-template
          :target (file+head
                   "review/tmlr%<%Y>${slug}.org"
                   ,(concat nn-org-roam-header
                            "#+filetags: :review:conf/tmlr:\n"))
-         :unnarrowed t
-         :jump-to-captured t))
+         :unnarrowed t))
 )
 #+end_src
 
@@ -1190,16 +1187,25 @@ we are ever capturing a past date.
                                                   "#+last_modified: %U"
                                                   "") "\n"))
 (setq org-roam-dailies-capture-templates
-      `(("d" "default" entry "* %<%I:%M %p>: %?"
+      `(("d" "default" entry "* %<%I:%M %p>\n%?"
          :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
          :jump-to-captured t
          :empty-lines-before 1)
-        ("m" "meeting" entry "* %<%I:%M %p> %? :meeting:"
+        ("w" "work")
+        ("wd" "default" entry "* %<%I:%M %p> :pf:\n%?"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t
+         :empty-lines-before 1)
+        ("wl", "linear" entry
+         "* %<%I:%M %p> [[https://linear.app/pacificfusion/issue/%^{Linear issue}][%\\1]] :pf:\n%?"
+         :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
+         :jump-to-captured t
+         :empty-lines-before 1)
+        ("wm" "meeting" entry "* %<%I:%M %p> %? :pf:meeting:"
          :target (file+head "%<%Y-%m-%d>.org" ,nn-org-roam-dailies-header)
          :jump-to-captured t
          :empty-lines-before 1)))
 #+end_src
-
 
 =SPC n j= by default is used for =org-journal=, so we can remap it.
 
@@ -1209,10 +1215,10 @@ we are ever capturing a past date.
         :prefix-map ("n" . "notes")
         (:prefix ("j" . "journal")
          :desc "Journal now!" "j" #'org-roam-dailies-capture-today
-         :desc "Today's journal" "t" #'org-roam-dailies-find-today
-         :desc "Tomorrow's journal" "T" #'org-roam-dailies-find-tomorrow
-         :desc "Yesterday's journal" "y" #'org-roam-dailies-find-yesterday
-         :desc "Open journal at date" "d" #'org-roam-dailies-find-date)))
+         :desc "Today's journal" "t" (cmd! (org-roam-dailies-goto-today "d"))
+         :desc "Tomorrow's journal" "T" (cmd! (org-roam-dailies-goto-tomorrow 1 "d"))
+         :desc "Yesterday's journal" "y" (cmd! (org-roam-dailies-goto-yesterday 1 "d"))
+         :desc "Open journal at date" "d" (cmd! (org-roam-dailies-goto-date "d")))))
 #+end_src
 
 And we are done! (jk lol sure)
