@@ -3,7 +3,7 @@
 SETUVAR --export EDITOR:vim
 SETUVAR --export FZF_DEFAULT_COMMAND:fd\x20\x2d\x2dtype\x20f\x20\x2d\x2dstrip\x2dcwd\x2dprefix
 SETUVAR --export KALEIDOSCOPE_DIR:/Users/nantas/lab/Kaleidoscope
-SETUVAR --export MANPAGER:most
+SETUVAR --export MANPAGER:less
 SETUVAR VIRTUAL_ENV_DISABLE_PROMPT:true
 SETUVAR --export ZELLIJ_AUTO_ATTACH:true
 SETUVAR __fish_initialized:3400

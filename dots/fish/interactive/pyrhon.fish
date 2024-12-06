@@ -1,4 +1,4 @@
-# fish_add_path -g "/fsx/users/nantas/tools/rye/shims"
+fish_add_path -g "$HOME/.rye/shims"
+eval "$(rye self completion -s fish)"
 
 set -gx PYTHONBREAKPOINT ipdb.set_trace
-

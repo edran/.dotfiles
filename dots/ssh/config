@@ -7,40 +7,11 @@ Host *.github.com
   AddKeysToAgent yes
   IdentityFile ~/.ssh/github
 
-Host tardis
-   User edran
-   HostName ssh.tardis.ed.ac.uk
+Host *.gitlab.com
+  UseKeychain yes
+  AddKeysToAgent yes
+  IdentityFile ~/.ssh/gitlab
 
-###############
-## nardel.li ##
-###############
 
-Host nardelli-znc
-   User edran
-   HostName znc.nardel.li
 
-Host nardelli-data
-   User edran
-   HostName data.nardel.li
 
-############
-## robots ##
-############
-
-Host robots
-   User nantas
-   HostName robots.ox.ac.uk
-
-Host marvin
-   HostName marvin.robots.ox.ac.uk
-   User nantas
-   ProxyCommand ssh -W %h:%p robots
-   ControlMaster auto
-
-Host pineapples
-   HostName 129.67.94.221
-   User nantas
-   ProxyCommand ssh -W %h:%p robots
-   ControlMaster auto
-   HostName arcus-htc.arcus-htc.arc.local
-   ProxyCommand ssh -W %h:%p arc-oscgate

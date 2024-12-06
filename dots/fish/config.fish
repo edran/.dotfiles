@@ -28,7 +28,10 @@ if status --is-interactive
 
     source $file
   end
-  zoxide init fish | source
+
+  if command -v zoxide >/dev/null 2>&1
+     zoxide init fish | source
+  end
 
   abbr --add t 'zellij'
   abbr --add ta 'zellij attach -c main'

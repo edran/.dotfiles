@@ -5,7 +5,7 @@
 [includeIf "gitdir:$HOME/lab/pfc/**"]
     email = nantas@pacificfusion.com
 
-[includeIf "gitdir:$HOME/lab/ignite/**"]
+[includeIf "gitdir:$HOME/lab/ignite"]
     email = nantas@pacificfusion.com
 
 [core]
@@ -34,8 +34,8 @@
     showUntrackedFiles = all
 
 [branch]
-	  autosetuprebase = always
-	  sort = -committerdate
+    autosetuprebase = always
+    sort = -committerdate
 
 [diff]
     algorithm = patience
@@ -198,3 +198,7 @@
     smudge = git-lfs smudge -- %f
     process = git-lfs filter-process
     required = true
+    textconv = cat
+
+[lfs]
+    locksverify = true
