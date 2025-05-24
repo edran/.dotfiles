@@ -50,6 +50,7 @@ private/
 # This one is controlled by fisher
 /dots/fish/conf.d/
 # fisher plugins
+/dots/fish/fish_variables
 /dots/fish/functions/_tide*.fish
 /dots/fish/functions/tide/
 /dots/fish/functions/tide.fish
