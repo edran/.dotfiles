@@ -84,9 +84,10 @@
         - iperf3
         - nmap
         - nnn
-        - ssh-copy-id
         - pv # Progress bar for pipes.
         - ripgrep
+        - ssh-copy-id
+        - starship
         - wget
         - tmux
         - zellij  # Replacement for tmux
@@ -181,6 +182,7 @@
         - dropbox
         - firefox
         - font-hack-nerd-font
+        - ghostty
         - handbrake
         - httpie # A friendly curl replacement.
         - iterm2
@@ -194,6 +196,7 @@
         - spotify
         - teamviewer
         - transmit
+        - wezterm
         - whatsapp
         - xbar
         - zotero
