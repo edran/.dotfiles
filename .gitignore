@@ -51,10 +51,6 @@ private/
 /dots/fish/conf.d/
 # fisher plugins
 /dots/fish/fish_variables
-/dots/fish/functions/_tide*.fish
-/dots/fish/functions/tide/
-/dots/fish/functions/tide.fish
-/dots/fish/completions/tide.fish
 /dots/fish/functions/fish_prompt.fish
 /dots/fish/functions/fish_mode_prompt.fish
 /dots/fish/functions/_puffer_fish_expand_lastarg.fish
