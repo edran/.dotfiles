@@ -233,6 +233,7 @@
         - { src: vimrc, dest: .vimrc }
         - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
         - { src: wezterm.lua, dest: .wezterm.lua }
+        - { src: starship.toml, dest: .config/starship.toml }
 
   roles:
     - role: elliotweiser.osx-command-line-tools

@@ -43,4 +43,6 @@ if status --is-interactive
   if test -f "$HOME/.private.fish"
     source "$HOME/.private.fish"
   end
+
+  starship init fish | source
 end

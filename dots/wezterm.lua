@@ -2,6 +2,7 @@ local wezterm = require 'wezterm'
 local config = wezterm.config_builder()
 
 config.color_scheme = 'Dracula (Gogh)'
+config.font = wezterm.font 'Berkeley Mono'
 
 config.keys = {
   {
