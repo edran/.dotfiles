@@ -3,5 +3,5 @@ function ls --description 'Use eza instead of ls'
 end
 
 function l --description 'Use eza instead of ls'
-  eza -al --icons --no-user --no-time $argv
+  eza -als type --icons --no-user --no-time $arg
 end
