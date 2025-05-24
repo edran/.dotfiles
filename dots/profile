@@ -23,9 +23,9 @@ if echo "$OSTYPE" | grep -q "darwin" ; then
     export IS_MACOS=1
     eval $(/opt/homebrew/bin/brew shellenv)
 
-    export OPENBLAS="$(brew --prefix openblas)"
-    export LDFLAGS="-L$OPENBLAS/lib"
-    export CPPFLAGS="-I$OPENBLAS/include"
+    # export OPENBLAS="$(brew --prefix openblas)"
+    # export LDFLAGS="-L$OPENBLAS/lib"
+    # export CPPFLAGS="-I$OPENBLAS/include"
 fi
 
 # Essentials
@@ -67,3 +67,5 @@ export ASPELL_CONF="home-dir $HOME/.config/aspell/"
 export DOCKER_BUILDKIT=1
 
 cond_source_path "$HOME/.profile_private"
+
+cond_source_path "$HOME/.cargo/env"

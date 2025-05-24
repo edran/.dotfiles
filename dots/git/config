@@ -2,18 +2,13 @@
     name = Nantas Nardelli
     email = nantas@arbitrarygravitas.com
 
-[includeIf "gitdir:$HOME/lab/pfc/**"]
-    email = nantas@pacificfusion.com
-
-[includeIf "gitdir:$HOME/lab/ignite"]
-    email = nantas@pacificfusion.com
-
 [core]
     # autocrlf = input
     compression = -1
     # Whitespace detection (only warnings)
     whitespace = trailing-space,space-before-tab
     pager = delta
+    excludesfile = ~/.gitignore
 
 [interactive]
     diffFilter = delta --color-only --features=interactive

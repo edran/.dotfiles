@@ -9,6 +9,11 @@ sketchybar --add event aerospace_workspace_change
 # whether the workspace has anythign in it.
 # TODO: likewise for the current mode.
 for sid in $(aerospace list-workspaces --all); do
+    # Workaround for temporary workspaces.
+    if ((sid > 9)); then
+        continue
+    fi
+
     icon_index=$((sid - 1))
     icon="${SPACE_ICONS[$icon_index]}"
 

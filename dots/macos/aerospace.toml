@@ -38,6 +38,22 @@ gaps.outer.bottom =     0
 # Modes
 
 [mode.main.binding]
+# ctrl-alt-cmd-enter = [
+# '''
+# exec-and-forget \
+# osascript -e \"tell application "Ghostty"\
+#   if it is running then\
+#   activate\
+#   tell application "System Events" to keystroke "n" using {command down}\
+#   else\
+#   activate\
+#   end if\
+#   end tell\"
+# '''
+# ]
+# ctrl-alt-cmd-enter = 'exec-and-forget osascript "/Users/nantas/.dotfiles/dots/macos/new_term_window.applescript"'
+# ctrl-alt-cmd-enter = 'exec-and-forget osascript "/Users/nantas/.dotfiles/dots/macos/new_term_window.applescript"'
+# ctrl-alt-cmd-enter = 'exec-and-forget osascript -e "tell application \"Ghostty\" to activate" -e "sleep 1" -e "tell application \"System Events\" to keystroke \"n\" using {command down}"'
 ctrl-alt-cmd-enter = 'exec-and-forget osascript -e "tell application \"iTerm2\" to set newWindow to (create window with default profile)"'
 
 ctrl-alt-cmd-h = 'focus left'
@@ -147,6 +163,16 @@ if.during-aerospace-startup = true
 if.app-id = 'com.googlecode.iterm2'
 run = 'move-node-to-workspace 3'
 
+[[on-window-detected]]
+if.during-aerospace-startup = true
+if.app-id = 'com.mitchellh.ghostty'
+run = [
+  # My emacs build has window bar disabled, so AeroSpace thinks it's an
+  # ephemeral window.
+  'layout tiling',
+  'move-node-to-workspace 3',
+]
+
 # 4
 
 [[on-window-detected]]
@@ -181,4 +207,8 @@ run = 'layout floating'
 
 [[on-window-detected]]
 if.app-id = 'com.1password.1password'
+run = 'layout floating'
+
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
 run = 'layout floating'
