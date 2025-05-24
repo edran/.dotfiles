@@ -232,6 +232,7 @@
         - { src: zellij.kdl, dest: .config/zellij/config.kdl }
         - { src: vimrc, dest: .vimrc }
         - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
+        - { src: wezterm.lua, dest: .wezterm.lua }
 
   roles:
     - role: elliotweiser.osx-command-line-tools
