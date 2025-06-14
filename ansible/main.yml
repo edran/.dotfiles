@@ -75,6 +75,7 @@
         # yet.
         - aspell
         - curl
+        - direnv
         - fish
         - fzf
         - git

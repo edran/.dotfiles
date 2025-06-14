@@ -109,6 +109,9 @@
 [url "git@github.com:"]
     insteadOf = gh:
 
+[url "git@github.com:edran/"]
+    insteadOf = edran:
+
 [url "git@gitlab.com:"]
     insteadOf = gl:
 
