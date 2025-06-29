@@ -796,12 +796,14 @@ I want the headings to be indented, as well as being represented using some
 [[https://en.wikipedia.org/wiki/Bagua][symbols]] that roughly give me an indication of the indent level.
 
 #+begin_src emacs-lisp
-(after! org-superstar
-  (setq
-        org-superstar-headline-bullets-list '("一" "二" "三" "四" "五" "六" "七")
-        org-superstar-prettify-item-bullets t
-        org-superstar-remove-leading-stars nil
-      ))
+(after! org-modern
+  (setq org-modern-fold-stars '(("一" . "一")
+                                ("二" . "二")
+                                ("三" . "三")
+                                ("四" . "四")
+                                ("五" . "五")
+                                ("六" . "六")
+                                ("七" . "七"))))
 #+end_src
 
 
