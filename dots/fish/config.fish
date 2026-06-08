@@ -12,10 +12,11 @@ set -gx DOTSREPO "$HOME/.dotfiles"
 # ASPELL config
 set -gx ASPELL_CONF "home-dir $HOME/.config/aspell/"
 
-fish_add_path -g "$HOME/bin"
-fish_add_path -g "$HOME/.emacs.d/bin"
-fish_add_path -g "$HOME/.config/emacs/bin"
-fish_add_path -g "$HOME/.local/bin"
+fish_add_path -gP "$HOME/bin"
+fish_add_path -gP "$HOME/.emacs.d/bin"
+fish_add_path -gP "$HOME/.config/emacs/bin"
+fish_add_path -gP "$HOME/.cargo/bin"
+fish_add_path -gP "$HOME/.local/bin"
 
 if status --is-interactive
   for file in (status dirname)/interactive/*.fish
@@ -46,3 +47,4 @@ if status --is-interactive
 
   starship init fish | source
 end
+/Users/nantas/.local/bin/mise activate fish | source

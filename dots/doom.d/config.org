@@ -612,7 +612,8 @@ most of them here.
 #+begin_src emacs-lisp
 (setq org-directory (file-name-as-directory (getenv "ORGDIR"))
       org-archive-location (concat org-directory ".archive/%s::")
-      org-default-notes-file (concat org-directory "notes.org"))
+      org-default-notes-file (concat org-directory "notes.org")
+      )
 
 (defvar nn-org-main-file (concat org-directory "main.org")
   "Path to file containing my main org data.")
@@ -710,6 +711,58 @@ let's setup a couple of keybindings.
           ("KILL" . +org-todo-cancel)
           ("[k]"  . +org-todo-cancel))))
 #+end_src
+
+*** Archiving into DONE file
+
+Managing DONE issues is annoying, because I tend to be messy and spread them across multiple files. Let's set a single "archiving" file:
+
+#+begin_src emacs-lisp
+(defvar nn/org-done-file (concat org-directory "done.org")
+  "Path to DONE file.")
+#+end_src
+
+We also need to automate the boring work:
+
+#+begin_src emacs-lisp
+(defun nn/org-archive-to-done (&optional date)
+  "Archive the current subtree to `nn/org-done-file'.
+
+If DATE is a string like \"2025-06-29\" use it; otherwise default
+to today.  Creates (or reuses) a level‑1 heading ‘* [DATE]’ and
+puts the subtree beneath it."
+  (interactive)
+  (let* ((date (or date (format-time-string "%Y-%m-%d")))
+         (org-archive-location
+          (format "%s::* [%s]" nn/org-done-file date)))
+    (org-archive-subtree)))
+
+(defun nn/org-archive-buffer-done ()
+  "Archive all DONE or KILL headlines in the current buffer."
+  (interactive)
+  (let ((count 0))
+    (org-map-entries
+     (lambda ()
+       (setq count (1+ count))
+       ;; CLOSED date → 2025-06-27, else today
+       (let* ((closed (org-entry-get (point) "CLOSED"))
+              (date   (if (and closed
+                               (string-match
+                                "\\([0-9]\\{4\\}-[0-9]\\{2\\}-[0-9]\\{2\\}\\)"
+                                closed))
+                          (match-string 1 closed)
+                        nil)))
+         (nn/org-archive-to-done date)))
+     "TODO=\"DONE\"|TODO=\"KILL\"TODO=\"READ\"")
+    (message "Archived %d finished items." count)))
+
+(after! org
+  (map! :map org-mode-map
+        :localleader
+        "Z" #'nn/org-archive-to-done
+        "z" #'nn/org-archive-buffer-done))
+#+end_src
+
+=<leader> m z= for the buffer wide, and =Z= for the finetuned one in case I care to run it.
 
 *** Timestamps
 

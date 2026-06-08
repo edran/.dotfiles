@@ -2,6 +2,9 @@
     name = Nantas Nardelli
     email = nantas@arbitrarygravitas.com
 
+[includeIf "gitdir:~/lab/europa/"]
+    path = ~/.gitconfig-europa
+
 [core]
     # autocrlf = input
     compression = -1
@@ -200,3 +203,9 @@
 
 [lfs]
     locksverify = true
+[credential "https://github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/opt/homebrew/bin/gh auth git-credential
