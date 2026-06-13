@@ -77,6 +77,16 @@
 
     fish_shell_path: "{{ '/opt/homebrew/bin/fish' if ansible_facts.architecture == 'arm64' else '/usr/local/bin/fish' }}"
 
+    mise_bin: "{{ ansible_facts.env.HOME }}/.local/bin/mise"
+    simple_bar_repo: https://github.com/Jean-Tinland/simple-bar.git
+    simple_bar_server_repo: https://github.com/Jean-Tinland/simple-bar-server.git
+    simple_bar_server_dir: "{{ ansible_facts.env.HOME }}/.local/share/simple-bar-server"
+    simple_bar_server_mise_config_src: "{{ inventory_dir }}/../dots/macos/simple-bar-server.mise.toml"
+    simple_bar_widgets_dir: "{{ ansible_facts.env.HOME }}/Library/Application Support/Übersicht/widgets"
+    simple_bar_widget_dir: "{{ simple_bar_widgets_dir }}/simple-bar"
+    simple_bar_config_src: "{{ inventory_dir }}/../dots/macos/simplebarrc"
+    simple_bar_config_dest: "{{ ansible_facts.env.HOME }}/.simplebarrc"
+
     homebrew_installed_packages:
         # - ansible # Installed via Pip.
         # GNU tools
@@ -304,6 +314,238 @@
         state: "{{ item.state | default('present') }}"
       loop: "{{ homebrew_trusted_installed_packages }}"
       tags: [homebrew]
+
+    - name: Ensure Übersicht is installed
+      community.general.homebrew_cask:
+        name: ubersicht
+        state: present
+        install_options: "appdir={{ homebrew_cask_appdir }}"
+        accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
+        sudo_password: "{{ ansible_become_password | default(omit) }}"
+      tags: [homebrew, simple_bar]
+
+    - name: Ensure Übersicht widgets directory exists
+      file:
+        path: "{{ simple_bar_widgets_dir }}"
+        state: directory
+        mode: "0755"
+      tags: [simple_bar]
+
+    - name: Install simple-bar widget
+      git:
+        repo: "{{ simple_bar_repo }}"
+        dest: "{{ simple_bar_widget_dir }}"
+        version: master
+        depth: 1
+        update: true
+        force: true
+      tags: [simple_bar]
+
+    - name: Inspect simple-bar config destination
+      stat:
+        path: "{{ simple_bar_config_dest }}"
+        follow: false
+      register: simple_bar_config_dest_stat
+      tags: [simple_bar]
+
+    - name: Remove symlinked simple-bar config
+      file:
+        path: "{{ simple_bar_config_dest }}"
+        state: absent
+      when: simple_bar_config_dest_stat.stat.islnk | default(false)
+      tags: [simple_bar]
+
+    - name: Copy simple-bar config
+      copy:
+        src: "{{ simple_bar_config_src }}"
+        dest: "{{ simple_bar_config_dest }}"
+        mode: "0644"
+        force: false
+      tags: [simple_bar]
+
+    - name: Configure simple-bar window manager
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"windowManager": "[^"]+"'
+        replace: '"windowManager": "aerospace"'
+      tags: [simple_bar]
+
+    - name: Configure simple-bar AeroSpace path
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"aerospacePath": "[^"]+"'
+        replace: '"aerospacePath": "/opt/homebrew/bin/aerospace"'
+      tags: [simple_bar]
+
+    - name: Configure simple-bar shell
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"shell": "[^"]+"'
+        replace: '"shell": "/bin/zsh"'
+      tags: [simple_bar]
+
+    - name: Configure simple-bar server socket port
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"serverSocketPort": [0-9]+'
+        replace: '"serverSocketPort": 7777'
+      tags: [simple_bar]
+
+    - name: Enable simple-bar server support
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"enableServer": (true|false)'
+        replace: '"enableServer": true'
+      tags: [simple_bar]
+
+    - name: Enable simple-bar AeroSpace server refresh
+      replace:
+        path: "{{ simple_bar_config_dest }}"
+        regexp: '"aerospaceServerRefresh": (true|false)'
+        replace: '"aerospaceServerRefresh": true'
+      tags: [simple_bar]
+
+    - name: Ensure mise is installed
+      community.general.homebrew:
+        path: "{{ homebrew_brew_bin_path }}"
+        name: mise
+        state: present
+      tags: [homebrew, simple_bar]
+
+    - name: Ensure mise local bin directory exists
+      file:
+        path: "{{ mise_bin | dirname }}"
+        state: directory
+        mode: "0755"
+      tags: [simple_bar]
+
+    - name: Inspect mise local binary
+      stat:
+        path: "{{ mise_bin }}"
+      register: mise_local_binary
+      tags: [simple_bar]
+
+    - name: Link Homebrew mise into local bin
+      file:
+        src: "{{ homebrew_brew_bin_path }}/mise"
+        dest: "{{ mise_bin }}"
+        state: link
+      when: not mise_local_binary.stat.exists
+      tags: [simple_bar]
+
+    - name: Check mise is installed
+      stat:
+        path: "{{ mise_bin }}"
+      register: mise_binary
+      tags: [simple_bar]
+
+    - name: Require mise for simple-bar-server
+      fail:
+        msg: "mise is required to manage simple-bar-server's Node runtime. Install mise before running the simple_bar tag."
+      when: not mise_binary.stat.exists
+      tags: [simple_bar]
+
+    - name: Ensure simple-bar-server parent directory exists
+      file:
+        path: "{{ ansible_facts.env.HOME }}/.local/share"
+        state: directory
+        mode: "0755"
+      tags: [simple_bar]
+
+    - name: Install simple-bar-server
+      git:
+        repo: "{{ simple_bar_server_repo }}"
+        dest: "{{ simple_bar_server_dir }}"
+        version: main
+        depth: 1
+        update: true
+      tags: [simple_bar]
+
+    - name: Configure simple-bar-server mise tools
+      copy:
+        src: "{{ simple_bar_server_mise_config_src }}"
+        dest: "{{ simple_bar_server_dir }}/mise.toml"
+        mode: "0644"
+      tags: [simple_bar]
+
+    - name: Trust simple-bar-server mise config
+      command:
+        argv:
+          - "{{ mise_bin }}"
+          - trust
+          - "{{ simple_bar_server_dir }}/mise.toml"
+      changed_when: false
+      tags: [simple_bar]
+
+    - name: Install simple-bar-server mise tools
+      command:
+        argv:
+          - "{{ mise_bin }}"
+          - install
+          - -C
+          - "{{ simple_bar_server_dir }}"
+          - -y
+      register: simple_bar_server_mise_install
+      changed_when: "'installed' in simple_bar_server_mise_install.stdout or 'installing' in simple_bar_server_mise_install.stdout"
+      tags: [simple_bar]
+
+    - name: Install simple-bar-server dependencies
+      command:
+        argv:
+          - "{{ mise_bin }}"
+          - exec
+          - -C
+          - "{{ simple_bar_server_dir }}"
+          - --
+          - npm
+          - install
+      args:
+        creates: "{{ simple_bar_server_dir }}/node_modules/ws/package.json"
+      tags: [simple_bar]
+
+    - name: Start simple-bar-server
+      command:
+        argv:
+          - "{{ mise_bin }}"
+          - run
+          - -C
+          - "{{ simple_bar_server_dir }}"
+          - start
+      register: simple_bar_server_start
+      changed_when: "'online' in simple_bar_server_start.stdout or 'started' in simple_bar_server_start.stdout or 'restarted' in simple_bar_server_start.stdout"
+      tags: [simple_bar]
+
+    - name: Stop SketchyBar Homebrew service while using simple-bar
+      command: "{{ homebrew_brew_bin_path }}/brew services stop sketchybar"
+      register: sketchybar_service_stop
+      changed_when: "'Successfully stopped' in sketchybar_service_stop.stdout"
+      tags: [simple_bar]
+
+    - name: Stop running SketchyBar process while using simple-bar
+      command: killall sketchybar
+      register: sketchybar_process_stop
+      failed_when: sketchybar_process_stop.rc not in [0, 1]
+      changed_when: sketchybar_process_stop.rc == 0
+      tags: [simple_bar]
+
+    - name: Launch Übersicht
+      command:
+        argv:
+          - open
+          - -g
+          - -b
+          - tracesOf.Uebersicht
+      changed_when: false
+      tags: [simple_bar]
+
+    - name: Refresh simple-bar widget
+      command:
+        argv:
+          - osascript
+          - -e
+          - tell application id "tracesOf.Uebersicht" to refresh widget id "simple-bar-index-jsx"
+      changed_when: false
+      tags: [simple_bar]
 
     - name: Ensure fish is an allowed login shell
       become: true

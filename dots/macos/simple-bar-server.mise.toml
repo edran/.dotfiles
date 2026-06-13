@@ -1,0 +1,6 @@
+[tools]
+node = "24"
+
+[tasks.start]
+description = "Start or restart simple-bar-server under PM2."
+run = "npx --yes pm2@5.3.0 startOrRestart ./ecosystem.config.cjs"
