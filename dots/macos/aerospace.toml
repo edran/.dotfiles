@@ -23,7 +23,7 @@ exec-on-workspace-change = [
 
 gaps.inner.horizontal = 0
 gaps.inner.vertical =   0
-gaps.outer.top =        30
+gaps.outer.top =        [{ monitor."built-in" = 0 }, 30]
 gaps.outer.bottom =     0
 
 # TODO: this makes move-workspace-to-monitor stop working. I should make a

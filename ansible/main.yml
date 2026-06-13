@@ -698,6 +698,16 @@
       changed_when: false
       tags: [quick, menu_bar]
 
+    - name: Make menu bar material opaque
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: AppleReduceTransparency
+        type: bool
+        value: true
+        state: present
+      notify: Restart SystemUIServer
+      tags: [quick, menu_bar]
+
     - name: Set displays to have separate spaces
       community.general.osx_defaults:
         domain: com.apple.spaces
