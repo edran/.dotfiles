@@ -36,10 +36,10 @@ take() {
 
 alias zman="man zshall"
 
-if [ -x "$(command -v exa)" ]; then
-    alias ls="exa -s type"
-    alias l="exa -Fs type"
-    alias ll="exa -ls type"
+if [ -x "$(command -v eza)" ]; then
+    alias ls="eza --sort type"
+    alias l="eza -F --sort type"
+    alias ll="eza -l --sort type"
 fi
 
 # _dev is prefixed to make it always session 0 in list

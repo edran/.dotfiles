@@ -5,7 +5,6 @@ tap "homebrew/services"
 tap "homebrew/bundle"
 tap "homebrew/cask"
 tap "homebrew/core"
-tap "homebrew/cask-fonts"
 tap "koekeishiya/formulae"
 tap "d12frosted/emacs-plus"
 tap "getantibody/tap"
@@ -45,7 +44,7 @@ brew "d12frosted/emacs-plus/emacs-plus",
             "without-spacemacs-icon"]
 brew "diff-so-fancy"
 brew "direnv"
-brew "exa"
+brew "eza"
 brew "fd"  # better find
 brew "findutils"
 brew "fish"
@@ -178,7 +177,7 @@ brew "hdf5"
 brew "openblas"
 brew "bdw-gc"  # C++ gc
 brew "boost"
-brew "boost-python"
+brew "boost-python3"
 brew "cfitsio"  # FITS data
 brew "expat"  # XML parser
 brew "ffmpeg"
@@ -209,7 +208,7 @@ brew "gdal"  # geospacial data
 brew "geos"  # geometry engine
 brew "giflib"
 brew "gobject-introspection"
-brew "ilmbase"  # ILM (image format)
+brew "imath"  # ILM/OpenEXR math library
 brew "isl"  # integer set library
 brew "json-c"  # json C lib
 brew "lame"
@@ -225,7 +224,6 @@ brew "opus"  # audio codec
 brew "poppler"  # fork of xpdf-3.0
 brew "popt"  # getopt++
 brew "proj"  # cartographic projections
-brew "python@2"
 brew "sdl2"
 brew "shapelib"
 brew "shared-mime-info"  # common mime types

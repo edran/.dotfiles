@@ -1,9 +1,14 @@
 ---
 - hosts: all
-  vars:
-    - downloads: ~/.ansible-downloads/
+  vars_prompt:
+    - name: ansible_become_password
+      prompt: BECOME password
+      private: true
 
-    - dockitems_remove:
+  vars:
+    downloads: ~/.ansible-downloads/
+
+    dockitems_remove:
         - Launchpad
         - Safari
         - Messages
@@ -23,9 +28,9 @@
         - Numbers
         - Pages
         - App Store
-        - System Preferences
+        - System Settings
 
-    - dockitems_persist:
+    dockitems_persist:
         - name: Google Chrome
           path: /Applications/Google Chrome.app
           pos: 1
@@ -57,12 +62,22 @@
           path: /Applications/Anki.app
           pos: 10
 
-    - homebrew_taps:
+    homebrew_taps:
         - railwaycat/emacsmacport
         - FelixKratz/formulae
-        - homebrew/cask-fonts
+        - getantibody/tap
+        - nikitabobko/tap
 
-    - homebrew_installed_packages:
+    homebrew_prefix: "{{ '/opt/homebrew' if ansible_facts.machine == 'arm64' else '/usr/local' }}"
+    homebrew_brew_bin_path: "{{ homebrew_prefix }}/bin"
+
+    homebrew_trusted_taps:
+        - felixkratz/formulae
+        - nikitabobko/tap
+
+    fish_shell_path: "{{ '/opt/homebrew/bin/fish' if ansible_facts.architecture == 'arm64' else '/usr/local/bin/fish' }}"
+
+    homebrew_installed_packages:
         # - ansible # Installed via Pip.
         # GNU tools
         - autoconf
@@ -95,6 +110,7 @@
         # Needed for Emacs
         # Remember to cp installation into /Applications
         - tree-sitter
+        - tree-sitter-cli
         - jansson
         - libxml2
         - imagemagick
@@ -122,7 +138,7 @@
         - bat # Replaces cat.
         - bottom # a.k.a. *btm*, replaces htop.
         - broot # a.k.a. *br*, replaces tree (?).
-        - choose # cut
+        - choose-rust # cut
         - croc # Send files across devices.
         - ctop # Top for containers.
         - difftastic # a.k.a. *difft*, replaces diff.
@@ -164,17 +180,21 @@
         # Fun / useful
         - gifsicle
         - fortune
-        - neofetch
+        - fastfetch
         - switchaudio-osx
         # Hell
         - awscli
-        # DX
+
+    homebrew_trusted_installed_packages:
         - borders  # JankyBorders!
         - sketchybar
 
-    - homebrew_cask_appdir: /Applications
-    - homebrew_cask_apps:
-        - { name: nikitabobko/tap/aerospace, install_options: no-quarantine }
+    homebrew_trusted_cask_apps:
+        - nikitabobko/tap/aerospace
+
+    homebrew_cask_appdir: /Applications
+    homebrew_cask_accept_external_apps: true
+    homebrew_cask_apps:
         - alfred
         - anki
         - chrysalis
@@ -188,7 +208,7 @@
         - httpie # A friendly curl replacement.
         - iterm2
         - karabiner-elements
-        - linear-linear
+        - linear
         # - notion
         - postman
         - sf-symbols
@@ -204,40 +224,46 @@
         # Why tho
         - google-cloud-sdk
 
-    - mas_installed_apps:
+    mas_installed_apps:
         - { id: 682658836, name: GarageBand }
         - { id: 408981434, name: iMovie }
-        - { id: 409201541, name: Pages }
-        - { id: 409203825, name: Numbers }
-        - { id: 409183694, name: Keynote }
+        # These iWork apps are account/region dependent in `mas` and can fail
+        # with an empty install error even when other MAS apps install cleanly.
+        # - { id: 409201541, name: Pages }
+        # - { id: 409203825, name: Numbers }
+        # - { id: 409183694, name: Keynote }
         - { id: 419330170, name: Moom }
         - { id: 1475387142, name: Tailscale }
 
-    - dots_dirs:
+    dots_dirs:
       - .config/bat
       - .config/zellij
-      - .config/neofetch
+      - .config/karabiner
+      - .config/karabiner/assets/complex_modifications
 
-    - dots_links:
+    dots_links:
         - { src: bin, dest: bin }
         - { src: fish, dest: .config/fish }
         - { src: doom.d, dest: .doom.d }
         - { src: git/config, dest: .gitconfig }
         - { src: git/ignore, dest: .gitignore }
         - { src: macos/aerospace.toml, dest: .aerospace.toml }
-        - { src: macos/karabiner, dest: .config/karabiner }
         - { src: macos/sketchybar, dest: .config/sketchybar }
         - { src: bat.config, dest: .config/bat/config}
         - { src: nethackrc, dest: .nethackrc }
         - { src: profile, dest: .profile }
-        # FIXME: this will normally fail. Needs a custom link task.
-        - { src: ssh, dest: .ssh }
+        # Keep ~/.ssh as a real directory; replacing it with a symlink fails on
+        # existing macOS installs and risks mixing private host-specific files.
+        # - { src: ssh, dest: .ssh }
         - { src: tmux.conf, dest: .tmux.conf }
         - { src: zellij.kdl, dest: .config/zellij/config.kdl }
         - { src: vimrc, dest: .vimrc }
-        - { src: neofetch/berkeley.conf, dest: .config/neofetch/config.conf }
         - { src: wezterm.lua, dest: .wezterm.lua }
         - { src: starship.toml, dest: .config/starship.toml }
+
+    karabiner_links:
+        - { src: karabiner.json, dest: .config/karabiner/karabiner.json }
+        - { src: assets/complex_modifications/1511610894.json, dest: .config/karabiner/assets/complex_modifications/1511610894.json }
 
   roles:
     - role: elliotweiser.osx-command-line-tools
@@ -247,9 +273,61 @@
       tags: [mas]
 
   tasks:
+    - name: Read trusted Homebrew entries
+      command: "{{ homebrew_brew_bin_path }}/brew trust --json=v1"
+      register: homebrew_trust
+      changed_when: false
+      check_mode: false
+      tags: [homebrew]
+
+    - name: Trust Homebrew taps required by this installer
+      command: "{{ homebrew_brew_bin_path }}/brew trust --tap {{ item }}"
+      loop: "{{ homebrew_trusted_taps }}"
+      when: item not in (homebrew_trust.stdout | from_json).taps
+      tags: [homebrew]
+
+    - name: Ensure trusted Homebrew cask applications are installed
+      community.general.homebrew_cask:
+        name: "{{ item.name | default(item) }}"
+        state: present
+        install_options: "{{ item.install_options | default('appdir=' + homebrew_cask_appdir) }}"
+        accept_external_apps: "{{ homebrew_cask_accept_external_apps }}"
+        sudo_password: "{{ ansible_become_password | default(omit) }}"
+      loop: "{{ homebrew_trusted_cask_apps }}"
+      tags: [homebrew]
+
+    - name: Ensure trusted Homebrew packages are installed
+      community.general.homebrew:
+        path: "{{ homebrew_brew_bin_path }}"
+        name: "{{ item.name | default(item) }}"
+        install_options: "{{ item.install_options | default(omit) }}"
+        state: "{{ item.state | default('present') }}"
+      loop: "{{ homebrew_trusted_installed_packages }}"
+      tags: [homebrew]
+
+    - name: Ensure fish is an allowed login shell
+      become: true
+      lineinfile:
+        path: /etc/shells
+        line: "{{ fish_shell_path }}"
+        state: present
+      tags: [shell]
+
+    - name: Read current login shell
+      command: "dscl . -read /Users/{{ ansible_facts.env.USER }} UserShell"
+      register: current_login_shell
+      changed_when: false
+      tags: [shell]
+
+    - name: Use fish as login shell
+      become: true
+      command: "chsh -s {{ fish_shell_path }} {{ ansible_facts.env.USER }}"
+      when: fish_shell_path not in current_login_shell.stdout
+      tags: [shell]
+
     - name: Ensure config directories exist
       file:
-        path: "{{ ansible_env.HOME }}/{{ item }}"
+        path: "{{ ansible_facts.env.HOME }}/{{ item }}"
         state: directory
       loop: "{{ dots_dirs }}"
       tags: [quick]
@@ -257,9 +335,18 @@
     - name: Link dots in various places
       file:
         src: "{{ inventory_dir }}/../dots/{{ item.src }}"
-        dest: "{{ ansible_env.HOME }}/{{ item.dest }}"
+        dest: "{{ ansible_facts.env.HOME }}/{{ item.dest }}"
         state: link
       loop: "{{ dots_links }}"
+      tags: [quick]
+
+    - name: Link Karabiner config files
+      file:
+        src: "{{ inventory_dir }}/../dots/macos/karabiner/{{ item.src }}"
+        dest: "{{ ansible_facts.env.HOME }}/{{ item.dest }}"
+        state: link
+        force: true
+      loop: "{{ karabiner_links }}"
       tags: [quick]
 
     - name: Include Dock role.
@@ -269,18 +356,22 @@
           tags: [dock]
       tags: [always]
 
-    # FIXME: This fails if xbar hasn't been opened yet (since the dest
-    # directory doesn't exist).
+    - name: Ensure xbar plugin directory exists
+      file:
+        path: "{{ ansible_facts.env.HOME }}/Library/Application Support/xbar/plugins"
+        state: directory
+        mode: "0755"
+      tags: [quick]
+
     - name: Link script to xbar
       file:
         src: "{{ item }}"
-        dest: "{{ ansible_env.HOME }}/Library/Application Support/xbar/plugins/{{ item | basename }}"
+        dest: "{{ ansible_facts.env.HOME }}/Library/Application Support/xbar/plugins/{{ item | basename }}"
         state: link
       with_fileglob:
         - "{{ inventory_dir }}/../dots/macos/xbar/*"
       tags: [quick]
 
-    # TODO: requires killall Dock
     - name: Group windows by application in expose
       community.general.osx_defaults:
         domain: com.apple.dock
@@ -288,6 +379,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Dock
       tags: [quick]
     - name: Autohide dock
       community.general.osx_defaults:
@@ -296,14 +388,16 @@
         type: bool
         value: true
         state: present
+      notify: Restart Dock
       tags: [quick]
     - name: Make dock icons small
       community.general.osx_defaults:
         domain: com.apple.dock
         key: tilesize
-        type: int
-        value: 24
+        type: float
+        value: 24.0
         state: present
+      notify: Restart Dock
       tags: [quick]
     - name: Use a simple window minimize animation
       community.general.osx_defaults:
@@ -312,6 +406,7 @@
         type: string
         value: genie
         state: present
+      notify: Restart Dock
       tags: [quick]
     - name: Add ability to scroll up on dock icon to see app instances
       community.general.osx_defaults:
@@ -320,17 +415,47 @@
         type: bool
         value: true
         state: present
+      notify: Restart Dock
       tags: [quick]
 
-    - name: Set OS languages 
+    - name: Set OS languages
       community.general.osx_defaults:
-        key: applelanguages
+        key: AppleLanguages
         type: array
-        value: 
-          - en-us
+        value:
+          - en-US
+      notify: Restart SystemUIServer
       tags: [quick]
 
-    # NOTE: requires killall SystemUIServer & a logout to take effect
+    - name: Hide menu bar until mouse hover
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: _HIHideMenuBar
+        type: bool
+        value: true
+        state: present
+      notify: Restart SystemUIServer
+      tags: [quick, menu_bar]
+
+    - name: Hide menu bar in full screen too
+      community.general.osx_defaults:
+        domain: NSGlobalDomain
+        key: AppleMenuBarVisibleInFullscreen
+        type: bool
+        value: false
+        state: present
+      notify: Restart SystemUIServer
+      tags: [quick, menu_bar]
+
+    - name: Apply live menu bar autohide preference
+      command:
+        argv:
+          - osascript
+          - -e
+          - tell application "System Events" to set autohide menu bar of dock preferences to true
+      changed_when: false
+      tags: [quick, menu_bar]
+
     - name: Set displays to have separate spaces
       community.general.osx_defaults:
         domain: com.apple.spaces
@@ -338,21 +463,32 @@
         type: bool
         value: true
         state: present
+      notify: Restart SystemUIServer
+      tags: [quick]
+    - name: Ensure screenshot directories exist
+      file:
+        path: "{{ item }}"
+        state: directory
+        mode: "0755"
+      loop:
+        - "{{ ansible_facts.env.HOME }}/Desktop/screenshots"
+        - "{{ ansible_facts.env.HOME }}/Desktop/screenshots/simulator"
       tags: [quick]
     - name: Set default directory for screenshots
       community.general.osx_defaults:
         domain: com.apple.screencapture
         key: location
         type: string
-        value: "~/Desktop/screenshots"
+        value: "{{ ansible_facts.env.HOME }}/Desktop/screenshots"
         state: present
+      notify: Restart SystemUIServer
       tags: [quick]
     - name: Set default directory for Simulator screenshots
       community.general.osx_defaults:
         domain: com.apple.iphonesimulator
         key: ScreenShotSaveLocation
         type: string
-        value: "~/Desktop/screenshots/simulator"
+        value: "{{ ansible_facts.env.HOME }}/Desktop/screenshots/simulator"
         state: present
       tags: [quick]
 
@@ -364,6 +500,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Show file extensions
       community.general.osx_defaults:
@@ -372,6 +509,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Show path bar
       community.general.osx_defaults:
@@ -380,6 +518,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Show folders on top
       community.general.osx_defaults:
@@ -388,6 +527,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Set default view to column
       community.general.osx_defaults:
@@ -396,6 +536,7 @@
         type: string
         value: clmv
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Empty bin after 30 days
       community.general.osx_defaults:
@@ -404,14 +545,16 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
-    - name: Disable warning when chaning a file extension
+    - name: Disable warning when changing a file extension
       community.general.osx_defaults:
         domain: com.apple.finder
         key: FXEnableExtensionChangeWarning
         type: bool
         value: false
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Make side icons smaller
       community.general.osx_defaults:
@@ -420,6 +563,7 @@
         type: int
         value: 1
         state: present
+      notify: Restart Finder
       tags: [quick]
     - name: Keep folders on top in desktop
       community.general.osx_defaults:
@@ -428,6 +572,7 @@
         type: bool
         value: true
         state: present
+      notify: Restart Finder
       tags: [quick]
 
     # Trackpad
@@ -452,20 +597,33 @@
       community.general.osx_defaults:
         domain: com.apple.TextEdit
         key: RichText
-        type: bool
-        value: false
+        type: int
+        value: 0
         state: present
       tags: [quick]
 
     # Other stuff
     - name: Disable terminal login message
       file:
-        path: "{{ ansible_env.HOME }}/.hushlogin"
+        path: "{{ ansible_facts.env.HOME }}/.hushlogin"
         mode: "0644"
         state: touch
       tags: [quick]
 
-    - name: Make sure that apps can use PATH
-      become: yes
-      become_method: sudo
-      command: "launchctl config user path {{ ansible_env.PATH }}"
+    # Disabled for now: this writes a persistent launchd PATH for user
+    # sessions, requires sudo plus a reboot, and {{ ansible_facts.env.PATH }} depends
+    # on how Ansible was launched rather than an explicit desired GUI PATH.
+    # - name: Make sure that apps can use PATH
+    #   become: yes
+    #   become_method: sudo
+    #   command: "launchctl config user path {{ ansible_facts.env.PATH }}"
+
+  handlers:
+    - name: Restart Dock
+      command: killall Dock
+
+    - name: Restart Finder
+      command: killall Finder
+
+    - name: Restart SystemUIServer
+      command: killall SystemUIServer

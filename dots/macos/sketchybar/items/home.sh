@@ -16,8 +16,8 @@ home_prefs=(
   icon="􀍟"
   padding_left=10
   padding_right=10
-  label="Preferences"
-  click_script="open -a 'System Preferences'; $POPUP_OFF"
+  label="Settings"
+  click_script="open -a 'System Settings'; $POPUP_OFF"
 )
 
 home_activity=(

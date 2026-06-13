@@ -1,5 +1,6 @@
-These dotfiles are compatible with `MacOS Monterey`, and with a good amount
-massaging they can probably work across a bunch of recent linux distributions.
+These dotfiles are maintained for current `macOS` installs, and with a good
+amount of massaging they can probably work across a bunch of recent linux
+distributions. The macOS installer was last checked on `macOS 26.4`.
 
 Feel free to check things out, and copy whatever may be necessary (since I've
 done the same), but please don't run it as-is, as it might mess up your system.
@@ -29,8 +30,9 @@ You have been warned. Hopefully.
 ``` sh
 $ git clone git@github.com:edran/.dotfiles ~/.dotfiles
 $ cd .dotfiles/ansible
-$ ansible-galaxy install -r requirements.yml
-$ ansible-playbook main.yml --ask-become-pass
+$ ansible-galaxy role install -r requirements.yml
+$ ansible-galaxy collection install -r requirements.yml
+$ ansible-playbook main.yml
 ```
 
 

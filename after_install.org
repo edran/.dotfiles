@@ -13,7 +13,7 @@ Then install Doom.
 ** iTerm2
 
 1. Open iTerm2.
-2. Select ~iTerm2 > Preferences~.
+2. Select ~iTerm2 > Settings~.
 3. In ~General tab~, point  ~Load preferences from a custom folder or URL:~ to ~~/.dotfiles/dots/macos//com.googlecode.iterm2.plist~.
 4. Restart iTerm2.
 
